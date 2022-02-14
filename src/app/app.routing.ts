@@ -10,14 +10,14 @@ import { InitialDataResolver } from 'app/app.resolvers';
 export const appRoutes: Route[] = [
 
     // Redirect empty path to '/example'
-    {path: '', pathMatch : 'full', redirectTo: 'example'},
+    {path: '', pathMatch : 'full', redirectTo: 'userconfig'},
 
     // Redirect signed in user to the '/example'
     //
     // After the user signs in, the sign in page will redirect the user to the 'signed-in-redirect'
     // path. Below is another redirection for that path to redirect the user to the desired
     // location. This is a small convenience to keep all main routes together here on this file.
-    {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'example'},
+    {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'userconfig'},
 
     // Auth routes for guests
     {
@@ -75,6 +75,22 @@ export const appRoutes: Route[] = [
         },
         children   : [
             {path: 'example', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
+            {path: 'userconfig', loadChildren: () => import('app/modules/userconfig/userconfig.module').then(m => m.UserconfigModule)},
+            {path: 'emailconfig', loadChildren: () => import('app/modules/emailconfig/emailconfig.module').then(m => m.EmailModule)},
+            {path: 'courses', loadChildren: () => import('app/modules/courses/courses.module').then(m => m.CoursesModule)},
+            {path: 'selflrvds', loadChildren: () => import('app/modules/selflearningvideos/selflearningvideos.module').then(m => m.SelflearningvideosModule)},
+            {path: 'reports', loadChildren: () => import('app/modules/reports/reports.module').then(m => m.ReportsModule)},
+            {path: 'enqrmgmt', loadChildren: () => import('app/modules/enquirymanagement/enquirymanagement.module').then(m => m.EnquirymanagementModule)},
+            {path: 'masters', loadChildren: () => import('app/modules/masters/masters.module').then(m => m.MastersModule)},
+            {path: 'batches', loadChildren: () => import('app/modules/batches/batches.module').then(m => m.BatchesModule)},
+            {path: 'students', loadChildren: () => import('app/modules/students/students.module').then(m => m.StudentsModule)},
+            {path: 'feedetails', loadChildren: () => import('app/modules/feedetails/feedetails.module').then(m => m.FeedetailsModule)},
+            {path: 'faculty', loadChildren: () => import('app/modules/faculty/faculty.module').then(m => m.FacultyModule)},
+
+
+
+
+
         ]
     }
 ];
