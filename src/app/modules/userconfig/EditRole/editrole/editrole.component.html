@@ -1,0 +1,69 @@
+
+
+<div class="flex flex-col w-full">
+    <ng-container>
+        <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
+            <div class="w-full max-w-5xl">
+                 <form [formGroup]="roleForm" class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
+                    
+                        <div class="flex">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Role Name</mat-label>
+                                <input
+                                    matInput
+                                    [formControlName]="'roleName'"
+                                    [placeholder]="'Enter Role Name'" >
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matPrefix
+                                    [svgIcon]="'heroicons_solid:user'"></mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Description</mat-label>
+                                <input
+                                    matInput
+                                    [formControlName]="'description'"
+                                    [placeholder]="'Description'" >
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matPrefix
+                                    [svgIcon]="'heroicons_solid:menu-alt-1'"></mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <!-- Active Toggle -->
+                        <!-- <div class="flex">
+                        <div class="space-y-4">
+                            <ng-container>
+                                <div class="flex">
+                                    <div class="fuse-mat-no-subscript flex-auto">
+                                        <mat-slide-toggle class="mt-8 sm:mt-0 sm:ml-auto" [color]="'primary'"
+                                        id="userchkactive" [formControlName]="'isActive'" (change)="toggleCompleted($event)" [checked]="true">
+                                            IsActive
+                                        </mat-slide-toggle>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div> -->
+                      
+                        <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
+                           <!-- Cancel -->
+                            <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="cancel()">
+                                Cancel
+                            </button>
+                            <!--Save-->
+                            <button
+                                class="px-6 ml-3"
+                                mat-flat-button
+                                [color]="'primary'" (click)="UpdateRole()">
+                                Update
+                            </button>
+                        </div>
+                </form>
+            </div>
+        </div>
+
+    </ng-container>
+</div>

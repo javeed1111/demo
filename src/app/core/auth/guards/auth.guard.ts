@@ -54,6 +54,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
      */
     canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean
     {
+        debugger
         return this._check('/');
     }
 
@@ -69,6 +70,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
      */
     private _check(redirectURL: string): Observable<boolean>
     {
+        //debugger
         // Check the authentication status
         return this._authService.check()
                    .pipe(

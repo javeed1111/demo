@@ -30,49 +30,75 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 ]
             },
             {
-                id      : 'emailconfig',
-                title   : 'Email',
+                id      : 'masters',
+                title   : 'Masters',
                 type    : 'collapsable',
-                icon    : 'heroicons_outline:mail',
+                icon    : 'heroicons_solid:collection',
                 children: [
                     {
-                        id   : 'emailconfig.emaillist',
-                        title: 'Email List',
+                        id   : 'masters.enquirystatus',
+                        title: 'Enquiry Status',
                         type : 'basic',
-                        link : '/emailconfig/emaillist'
+                        link : '/masters/enquirystatus'
                     },
                     {
-                        id   : 'emailconfig.emailschedular',
-                        title: 'Email Schedular',
+                        id   : 'masters.enquirytype',
+                        title: 'Enquiry Type',
                         type : 'basic',
-                        link : '/emailconfig/emailschedular'
+                        link : '/masters/enquirytype'
                     },
                     {
-                        id   : 'emailconfig.emailservers',
-                        title: 'Email Servers',
+                        id   : 'masters.learningmode',
+                        title: 'Learning Mode',
                         type : 'basic',
-                        link : '/emailconfig/emailservers'
-                    },
-                    {
-                        id   : 'emailconfig.unsubscribeemail',
-                        title: 'UnSubscribe Email',
-                        type : 'basic',
-                        link : '/emailconfig/unsubscribeemail'
-                    },
-                    {
-                        id   : 'emailconfig.emailsending',
-                        title: 'Email Sending',
-                        type : 'basic',
-                        link : '/emailconfig/emailsending'
-                    },
-                    {
-                        id   : 'emailconfig.emailsmstemp',
-                        title: 'Email Sms Template',
-                        type : 'basic',
-                        link : '/emailconfig/emailsmstemplate'
+                        link : '/masters/learningmode'
                     }
                 ]
             },
+            // {
+            //     id      : 'emailconfig',
+            //     title   : 'Email',
+            //     type    : 'collapsable',
+            //     icon    : 'heroicons_outline:mail',
+            //     children: [
+            //         {
+            //             id   : 'emailconfig.emaillist',
+            //             title: 'Email List',
+            //             type : 'basic',
+            //             link : '/emailconfig/emaillist'
+            //         },
+            //         {
+            //             id   : 'emailconfig.emailschedular',
+            //             title: 'Email Schedular',
+            //             type : 'basic',
+            //             link : '/emailconfig/emailschedular'
+            //         },
+            //         {
+            //             id   : 'emailconfig.emailservers',
+            //             title: 'Email Servers',
+            //             type : 'basic',
+            //             link : '/emailconfig/emailservers'
+            //         },
+            //         {
+            //             id   : 'emailconfig.unsubscribeemail',
+            //             title: 'UnSubscribe Email',
+            //             type : 'basic',
+            //             link : '/emailconfig/unsubscribeemail'
+            //         },
+            //         {
+            //             id   : 'emailconfig.emailsending',
+            //             title: 'Email Sending',
+            //             type : 'basic',
+            //             link : '/emailconfig/emailsending'
+            //         },
+            //         {
+            //             id   : 'emailconfig.emailsmstemp',
+            //             title: 'Email Sms Template',
+            //             type : 'basic',
+            //             link : '/emailconfig/emailsmstemplate'
+            //         }
+            //     ]
+            // },
             {
                 id      : 'courses',
                 title   : 'Courses',
@@ -119,110 +145,47 @@ export const defaultNavigation: FuseNavigationItem[] = [
                     }
                 ]
             },
-            {
-                id      : 'reports',
-                title   : 'Reports',
-                type    : 'collapsable',
-                icon    : 'heroicons_outline:clipboard-check',
-                children: [
-                    {
-                        id   : 'reports.referencelist',
-                        title: 'Reference List',
-                        type : 'basic',
-                        link : '/reports/referencelist'
-                    },
-                    {
-                        id   : 'reports.usersenquiry',
-                        title: 'Users Enquiry',
-                        type : 'basic',
-                        link : '/reports/usersenquiry'
-                    },
-                    {
-                        id   : 'reports.userssubcourses',
-                        title: 'Users Subscribed Courses',
-                        type : 'basic',
-                        link : '/reports/userssubcourses'
-                    },
-                    {
-                        id   : 'reports.daywiseenquire',
-                        title: 'Day Wise Enquire',
-                        type : 'basic',
-                        link : '/reports/daywiseenquire'
-                    },
-                    {
-                        id   : 'reports.referralrequests',
-                        title: 'Referral Requests',
-                        type : 'basic',
-                        link : '/reports/referralrequests'
-                    }
-                ]
-            },
-            {
-                id      : 'enqrmgmt',
-                title   : 'Enquiry Managment',
-                type    : 'collapsable',
-                icon    : 'heroicons_outline:chat-alt',
-                children: [
-                    {
-                        id   : 'enqrmgmt.enquirymanagement',
-                        title: 'Enquiry Managment',
-                        type : 'basic',
-                        link : '/enqrmgmt/enquirymanagement'
-                    },
-                    {
-                        id   : 'enqrmgmt.enquirefollowup',
-                        title: 'Enquiry FollowUp',
-                        type : 'basic',
-                        link : '/enqrmgmt/enquirefollowup'
-                    }
-                ]
-            },
-            {
-                id      : 'masters',
-                title   : 'Masters',
-                type    : 'collapsable',
-                icon    : 'heroicons_solid:collection',
-                children: [
-                    {
-                        id   : 'masters.enquirystatus',
-                        title: 'Enquiry Status',
-                        type : 'basic',
-                        link : '/masters/enquirystatus'
-                    },
-                    {
-                        id   : 'masters.enquirytype',
-                        title: 'Enquiry Type',
-                        type : 'basic',
-                        link : '/masters/enquirytype'
-                    },
-                    {
-                        id   : 'masters.learningmode',
-                        title: 'Learning Mode',
-                        type : 'basic',
-                        link : '/masters/learningmode'
-                    }
-                ]
-            },
-            {
-                id      : 'batches',
-                title   : 'Batches',
-                type    : 'collapsable',
-                icon    : 'heroicons_outline:view-list',
-                children: [
-                    {
-                        id   : 'batches.batchdetails',
-                        title: 'Batch Details',
-                        type : 'basic',
-                        link : '/batches/batchdetails'
-                    },
-                    {
-                        id   : 'batches.batchstatus',
-                        title: 'Batch Status',
-                        type : 'basic',
-                        link : '/batches/batchstatus'
-                    }
-                ]
-            },
+            // {
+            //     id      : 'enqrmgmt',
+            //     title   : 'Enquiry Managment',
+            //     type    : 'collapsable',
+            //     icon    : 'heroicons_outline:chat-alt',
+            //     children: [
+            //         {
+            //             id   : 'enqrmgmt.enquirymanagement',
+            //             title: 'Enquiry Managment',
+            //             type : 'basic',
+            //             link : '/enqrmgmt/enquirymanagement'
+            //         },
+            //         {
+            //             id   : 'enqrmgmt.enquirefollowup',
+            //             title: 'Enquiry FollowUp',
+            //             type : 'basic',
+            //             link : '/enqrmgmt/enquirefollowup'
+            //         }
+            //     ]
+            // },
+            
+            // {
+            //     id      : 'batches',
+            //     title   : 'Batches',
+            //     type    : 'collapsable',
+            //     icon    : 'heroicons_outline:view-list',
+            //     children: [
+            //         {
+            //             id   : 'batches.batchdetails',
+            //             title: 'Batch Details',
+            //             type : 'basic',
+            //             link : '/batches/batchdetails'
+            //         },
+            //         {
+            //             id   : 'batches.batchstatus',
+            //             title: 'Batch Status',
+            //             type : 'basic',
+            //             link : '/batches/batchstatus'
+            //         }
+            //     ]
+            // },
             {
                 id      : 'students',
                 title   : 'Students',
@@ -282,7 +245,45 @@ export const defaultNavigation: FuseNavigationItem[] = [
                         link : '/faculty/facultypayment'
                     }   
                 ]
-            }
+            },
+            {
+                id      : 'reports',
+                title   : 'Reports',
+                type    : 'collapsable',
+                icon    : 'heroicons_outline:clipboard-check',
+                children: [
+                    {
+                        id   : 'reports.referencelist',
+                        title: 'Reference List',
+                        type : 'basic',
+                        link : '/reports/referencelist'
+                    },
+                    {
+                        id   : 'reports.usersenquiry',
+                        title: 'Users Enquiry',
+                        type : 'basic',
+                        link : '/reports/usersenquiry'
+                    },
+                    {
+                        id   : 'reports.userssubcourses',
+                        title: 'Users Subscribed Courses',
+                        type : 'basic',
+                        link : '/reports/userssubcourses'
+                    },
+                    {
+                        id   : 'reports.daywiseenquire',
+                        title: 'Day Wise Enquire',
+                        type : 'basic',
+                        link : '/reports/daywiseenquire'
+                    },
+                    {
+                        id   : 'reports.referralrequests',
+                        title: 'Referral Requests',
+                        type : 'basic',
+                        link : '/reports/referralrequests'
+                    }
+                ]
+            },
 ];
 export const compactNavigation: FuseNavigationItem[] = [
     {
@@ -294,13 +295,21 @@ export const compactNavigation: FuseNavigationItem[] = [
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
     {
-        id      : 'emailconfig',
-        title   : 'Email',
-        icon    : 'heroicons_outline:mail',
-        tooltip : 'email',
+        id      : 'masters',
+        title   : 'Masters',
+        icon    : 'heroicons_solid:collection',
+        tooltip : 'masters',
         type    : 'aside',
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
+    // {
+    //     id      : 'emailconfig',
+    //     title   : 'Email',
+    //     icon    : 'heroicons_outline:mail',
+    //     tooltip : 'email',
+    //     type    : 'aside',
+    //     children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    // },
     {
         id      : 'courses',
         title   : 'Courses',
@@ -317,38 +326,22 @@ export const compactNavigation: FuseNavigationItem[] = [
         type    : 'aside',
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
-    {
-        id      : 'reports',
-        title   : 'Reports',
-        icon    : 'heroicons_outline:clipboard-check',
-        tooltip : 'reports',
-        type    : 'aside',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
-    {
-        id      : 'enqrmgmt',
-        title   : 'Enquiry Managment',
-        icon    : 'heroicons_outline:chat-alt',
-        tooltip : 'enquirymanagment',
-        type    : 'aside',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
-    {
-        id      : 'masters',
-        title   : 'Masters',
-        icon    : 'heroicons_solid:collection',
-        tooltip : 'masters',
-        type    : 'aside',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
-    {
-        id      : 'batches',
-        title   : 'Batches',
-        icon    : 'heroicons_outline:view-list',
-        tooltip : 'batches',
-        type    : 'aside',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
+    // {
+    //     id      : 'enqrmgmt',
+    //     title   : 'Enquiry Managment',
+    //     icon    : 'heroicons_outline:chat-alt',
+    //     tooltip : 'enquirymanagment',
+    //     type    : 'aside',
+    //     children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    // },
+    // {
+    //     id      : 'batches',
+    //     title   : 'Batches',
+    //     icon    : 'heroicons_outline:view-list',
+    //     tooltip : 'batches',
+    //     type    : 'aside',
+    //     children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    // },
     {
         id      : 'students',
         title   : 'Students',
@@ -373,6 +366,14 @@ export const compactNavigation: FuseNavigationItem[] = [
         type    : 'aside',
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
+    {
+        id      : 'reports',
+        title   : 'Reports',
+        icon    : 'heroicons_outline:clipboard-check',
+        tooltip : 'reports',
+        type    : 'aside',
+        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    },
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
@@ -383,12 +384,19 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
     {
-        id      : 'emailconfig',
-        title   : 'Email',
-        icon    : 'heroicons_outline:mail',
+        id      : 'masters',
+        title   : 'Masters',
+        icon    : 'heroicons_solid:collection',
         type    : 'group',
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
+    // {
+    //     id      : 'emailconfig',
+    //     title   : 'Email',
+    //     icon    : 'heroicons_outline:mail',
+    //     type    : 'group',
+    //     children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    // },
     {
         id      : 'courses',
         title   : 'Courses',
@@ -403,34 +411,20 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         type    : 'group',
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
-    {
-        id      : 'reports',
-        title   : 'Reports',
-        icon    : 'heroicons_outline:clipboard-check',
-        type    : 'group',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
-    {
-        id      : 'enqrmgmt',
-        title   : 'Enquiry Managment',
-        icon    : 'heroicons_outline:chat-alt',
-        type    : 'group',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
-    {
-        id      : 'masters',
-        title   : 'Masters',
-        icon    : 'heroicons_solid:collection',
-        type    : 'group',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
-    {
-        id      : 'batches',
-        title   : 'Batches',
-        icon    : 'heroicons_outline:view-list',
-        type    : 'group',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
+    // {
+    //     id      : 'enqrmgmt',
+    //     title   : 'Enquiry Managment',
+    //     icon    : 'heroicons_outline:chat-alt',
+    //     type    : 'group',
+    //     children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    // },
+    // {
+    //     id      : 'batches',
+    //     title   : 'Batches',
+    //     icon    : 'heroicons_outline:view-list',
+    //     type    : 'group',
+    //     children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    // },
     {
         id      : 'students',
         title   : 'Students',
@@ -451,7 +445,14 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         icon    : 'iconsmind:administrator',
         type    : 'group',
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    }
+    },
+    {
+        id      : 'reports',
+        title   : 'Reports',
+        icon    : 'heroicons_outline:clipboard-check',
+        type    : 'group',
+        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    },
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
     {
@@ -462,12 +463,19 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
     {
-        id      : 'emailconfig',
-        title   : 'Email',
-        icon    : 'heroicons_outline:mail',
+        id      : 'masters',
+        title   : 'Masters',
+        icon    : 'heroicons_solid:collection',
         type    : 'group',
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
+    // {
+    //     id      : 'emailconfig',
+    //     title   : 'Email',
+    //     icon    : 'heroicons_outline:mail',
+    //     type    : 'group',
+    //     children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    // },
     {
         id      : 'courses',
         title   : 'Courses',
@@ -482,34 +490,20 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         type    : 'group',
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
-    {
-        id      : 'reports',
-        title   : 'Reports',
-        icon    : 'heroicons_outline:clipboard-check',
-        type    : 'group',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
-    {
-        id      : 'enqrmgmt',
-        title   : 'Enquiry Managment',
-        icon    : 'heroicons_outline:chat-alt',
-        type    : 'group',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
-    {
-        id      : 'masters',
-        title   : 'Masters',
-        icon    : 'heroicons_solid:collection',
-        type    : 'group',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
-    {
-        id      : 'batches',
-        title   : 'Batches',
-        icon    : 'heroicons_outline:view-list',
-        type    : 'group',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
+    // {
+    //     id      : 'enqrmgmt',
+    //     title   : 'Enquiry Managment',
+    //     icon    : 'heroicons_outline:chat-alt',
+    //     type    : 'group',
+    //     children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    // },
+    // {
+    //     id      : 'batches',
+    //     title   : 'Batches',
+    //     icon    : 'heroicons_outline:view-list',
+    //     type    : 'group',
+    //     children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    // },
     {
         id      : 'students',
         title   : 'Students',
@@ -530,5 +524,12 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         icon    : 'iconsmind:administrator',
         type    : 'group',
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    }
+    },
+    {
+        id      : 'reports',
+        title   : 'Reports',
+        icon    : 'heroicons_outline:clipboard-check',
+        type    : 'group',
+        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    },
 ];

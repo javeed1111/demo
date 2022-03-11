@@ -21,7 +21,6 @@ export class AuthSignInComponent implements OnInit
     };
     signInForm: FormGroup;
     showAlert: boolean = false;
-
     /**
      * Constructor
      */
@@ -45,8 +44,8 @@ export class AuthSignInComponent implements OnInit
     {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            email     : ['hughes.brian@company.com', [Validators.required, Validators.email]],
-            password  : ['admin', Validators.required],
+            mobileno : ['', [Validators.required]],
+            password  : ['', Validators.required],
             rememberMe: ['']
         });
     }
@@ -58,52 +57,194 @@ export class AuthSignInComponent implements OnInit
     /**
      * Sign in
      */
-    signIn(): void
-    {
-        // Return if the form is invalid
-        if ( this.signInForm.invalid )
-        {
-            return;
-        }
+     signIn(): void
+     {
+         // Return if the form is invalid
+         if ( this.signInForm.invalid )
+         {
+             return;
+         }
+ 
+         // Disable the form
+         this.signInForm.disable();
+ 
+         // Hide the alert
+         this.showAlert = false;
+ 
+         // Sign in
+         this._authService.signIn(this.signInForm.value)
+             .subscribe(
+                 () => {
+ 
+                     // Set the redirect url.
+                     // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
+                     // to the correct page after a successful sign in. This way, that url can be set via
+                     // routing file and we don't have to touch here.
+                     const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
+ 
+                     // Navigate to the redirect url
+                     this._router.navigateByUrl(redirectURL);
+ 
+                 },
+                 (response) => {
+                     debugger
+                     if(response.status=='200'){
+                         debugger
+                        localStorage.setItem("firstname", response.result.firstName);
+                        localStorage.setItem("lastname", response.result.lastName);
+                        localStorage.setItem("email", response.result.email);
+                        localStorage.setItem("LoginId", response.result.id);
+                        localStorage.setItem("token", response.result.token);
+                     }
+                     // Re-enable the form
+                     this.signInForm.enable();
+ 
+                     // Reset the form
+                     this.signInNgForm.resetForm();
+ 
+                     // Set the alert
+                     this.alert = {
+                         type   : 'error',
+                         message: 'Wrong UserName or password'
+                     };
+ 
+                     // Show the alert
+                     this.showAlert = true;
+                 }
+             );
+     }
+    //  signIn(): void
+    //  {
+    //      debugger
+    //      // Return if the form is invalid
+    //      if ( this.signInForm.invalid )
+    //      {
+    //          return;
+    //      }
+ 
+    //      // Disable the form
+    //      this.signInForm.disable();
+ 
+    //      // Hide the alert
+    //      this.showAlert = false;
+    //      var data= {
+    //         mobileno:this.signInForm.value.mobileno,
+    //         password:this.signInForm.value.password
+    //        }
+ 
+    //      // Sign in
+    //      this._authService.UserLogin(data)
+    //          .subscribe(
+    //              () => {
+    //                  debugger
+ 
+    //                  // Set the redirect url.
+    //                  // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
+    //                  // to the correct page after a successful sign in. This way, that url can be set via
+    //                  // routing file and we don't have to touch here.
+    //                 //  if(response){}
+    //                  const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
+ 
+    //                  // Navigate to the redirect url
+    //                  this._router.navigateByUrl(redirectURL);
+ 
+    //              },
+    //              (response) => {
+    //                 debugger
+    //                 if(response.status=='200'){
+    //                     localStorage.setItem("firstname", response.result.firstName);
+    //             localStorage.setItem("lastname", response.result.lastName);
+    //             localStorage.setItem("email", response.result.email);
+    //             localStorage.setItem("LoginId", response.result.userId);
+    //             localStorage.setItem("token", response.result.token);
+    //                 }
+    //                 // Re-enable the form
+    //                 this.signInForm.enable();
 
-        // Disable the form
-        this.signInForm.disable();
+    //                 // Reset the form
+    //                 this.signInNgForm.resetForm();
 
-        // Hide the alert
-        this.showAlert = false;
+    //                 // Set the alert
+    //                 this.alert = {
+    //                     type   : 'error',
+    //                     message: 'Wrong UserName or password'
+    //                 };
 
-        // Sign in
-        this._authService.signIn(this.signInForm.value)
-            .subscribe(
-                () => {
+    //                 // Show the alert
+    //                 this.showAlert = true;
+    //             }
+    //         );
+    //  }
+     
+ 
+    /**
+     * Sign in
+     */
+    // signInm(){
+    //     debugger
+    //     // Return if the form is invalid
+    //     if ( this.signInForm.invalid )
+    //     {
+    //         return;
+    //     }
+    //     // Disable the form
+    //     this.signInForm.disable();
 
-                    // Set the redirect url.
-                    // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
-                    // to the correct page after a successful sign in. This way, that url can be set via
-                    // routing file and we don't have to touch here.
-                    const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
+    //     // Hide the alert
+    //     this.showAlert = false;
+    //     var data= {
+    //      mobileno:this.signInForm.value.mobileno,
+    //      password:this.signInForm.value.password
+    //     }
 
-                    // Navigate to the redirect url
-                    this._router.navigateByUrl(redirectURL);
+    //     // Sign in
+    //     this._authService.UserLogin(data).subscribe(
+    //         (finalresult: any) => {
+    //             debugger;
+    //             const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
+ 
+    //                  // Navigate to the redirect url
+    //                  this._router.navigateByUrl(redirectURL);
+            
+    //         if (finalresult.status == "200") {
+    //             debugger
+    //             localStorage.setItem("firstname", finalresult.result.firstName);
+    //             localStorage.setItem("lastname", finalresult.result.lastName);
+    //             localStorage.setItem("email", finalresult.result.email);
+    //             localStorage.setItem("LoginId", finalresult.result.userId);
+    //             localStorage.setItem("token", finalresult.result.token);
 
-                },
-                (response) => {
-
-                    // Re-enable the form
-                    this.signInForm.enable();
-
-                    // Reset the form
-                    this.signInNgForm.resetForm();
-
-                    // Set the alert
-                    this.alert = {
-                        type   : 'error',
-                        message: 'Wrong email or password'
-                    };
-
-                    // Show the alert
-                    this.showAlert = true;
-                }
-            );
-    }
+    //           }
+              
+    //         else {
+    //             // Re-enable the form
+    //             this.signInForm.enable();
+ 
+    //             // Reset the form
+    //             this.signInNgForm.resetForm();
+    //             this.alert = {
+    //                 type   : 'error',
+    //                 message: finalresult.message
+    //             }
+    //             // Show the alert
+    //             this.showAlert = true;
+    //            // this.notifications.alert('Alert', finalresult.message, NotificationType.Alert, { theClass: 'outline primary', timeOut: 2000, showProgressBar: false });
+    //           }
+    //         (error) => {
+    //             // Re-enable the form
+    //             this.signInForm.enable();
+ 
+    //             // Reset the form
+    //             this.signInNgForm.resetForm();
+    //           this.alert = {
+    //             type   : 'error',
+    //             message: error.message
+            
+    //         };
+    //         // Show the alert
+    //         this.showAlert = true;
+    //     }
+    //          // this.notifications.create('Error', error.message, NotificationType.Bare, { theClass: 'outline primary', timeOut: 2000, showProgressBar: false });
+    //         });
+    //       }
 }

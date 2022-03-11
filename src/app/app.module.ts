@@ -12,6 +12,7 @@ import { mockApiServices } from 'app/mock-api';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
+import { MatInputModule } from '@angular/material/input';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -20,7 +21,7 @@ const routerConfig: ExtraOptions = {
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     imports     : [
         BrowserModule,
@@ -37,6 +38,8 @@ const routerConfig: ExtraOptions = {
 
         // Layout module of your application
         LayoutModule,
+        
+        MatInputModule,
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({})

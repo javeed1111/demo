@@ -109,14 +109,12 @@ export class ContactsMockApi
                     name        : 'New Contact',
                     emails      : [],
                     phoneNumbers: [],
-                    job         : {
-                        title  : '',
-                        company: ''
-                    },
-                    birthday    : null,
+            alternateemail      : [],
+            alternatephoneNumber: [],
+                          gender: [],
+                          roletype:[],
                     address     : null,
                     notes       : null,
-                    tags        : []
                 };
 
                 // Unshift the new contact

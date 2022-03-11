@@ -1,0 +1,37 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+  }
+  
+  .example-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+  // .inventory-grid {
+  //               grid-template-columns: 48px auto 40px;
+    
+  //               @screen sm {
+  //                   grid-template-columns: 48px auto 112px 72px;
+  //               }
+    
+  //               @screen md {
+  //                   grid-template-columns: 48px 112px auto 112px 72px;
+  //               }
+    
+  //               @screen lg {
+  //                   grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+  //               }
+  //           }
+    
+  
