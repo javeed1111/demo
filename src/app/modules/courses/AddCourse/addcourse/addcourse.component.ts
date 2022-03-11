@@ -24,6 +24,13 @@ showAlert:  boolean = false;
   files: Array<any> = new Array<any>();
 fileToUpload: File = null;
 name: string;
+quillModules: any = {
+  toolbar: [
+      ['bold', 'italic', 'underline'],
+      [{align: []}, {list: 'ordered'}, {list: 'bullet'}],
+      ['clean']
+  ]
+};
   
 
   constructor(

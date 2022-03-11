@@ -1,39 +1,33 @@
-
 <div class="flex flex-col w-full">
     <ng-container>
         <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
             <div class="w-full max-w-5xl">
-                 <form [formGroup]="courseForm" class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
-                    
-                    
-                        
-                        <div class="flex">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Course Name</mat-label>
-                                <input
-                                    matInput appAutofocus
-                                    [formControlName]="'courseName'"
-                                    [placeholder]="'Course Name'" >
-                                <mat-icon
-                                    class="icon-size-5"
-                                    matPrefix
-                                    [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <!--Technologdrop-->
-                        <div class="flex">
-                            <mat-form-field class="flex-auto gt-xs:pr-3">
-                                <mat-label>Technology</mat-label>
-                                 <mat-select name="technologyId" placeholder="Technology" [formControlName]="'technologyId'"
-                               class="input-full-width">
+                <form [formGroup]="courseForm"
+                    class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
+
+
+
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Course Name</mat-label>
+                            <input matInput appAutofocus [formControlName]="'courseName'" [placeholder]="'Course Name'">
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <!--Technologdrop-->
+                    <div class="flex">
+                        <mat-form-field class="flex-auto gt-xs:pr-3">
+                            <mat-label>Technology</mat-label>
+                            <mat-select name="technologyId" placeholder="Technology" [formControlName]="'technologyId'"
+                                class="input-full-width">
                                 <mat-option value="">Select Technology</mat-option>
-                                 <mat-option *ngFor="let tech of technology "
-                                  [value]="tech.technologyId">{{ tech.technologyName }}</mat-option>
-                                 </mat-select>
-                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
-                                </mat-icon>
-                                 </mat-form-field>
-                            <!-- <mat-form-field class="flex-auto gt-xs:pr-3">
+                                <mat-option *ngFor="let tech of technology " [value]="tech.technologyId">{{
+                                    tech.technologyName }}</mat-option>
+                            </mat-select>
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
+                            </mat-icon>
+                        </mat-form-field>
+                        <!-- <mat-form-field class="flex-auto gt-xs:pr-3">
                                 <mat-label>Technology</mat-label>
                                 <mat-select *ngFor="let tech of technology" [placeholder]="'Technology'" [formControlName]="'technologyId'">
                                     <mat-option value="">Select Role Type</mat-option>
@@ -42,7 +36,7 @@
                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'">
                                 </mat-icon>
                             </mat-form-field> -->
-                            <!-- <mat-form-field class="flex-auto">
+                        <!-- <mat-form-field class="flex-auto">
                                 <mat-label>Technology</mat-label>
                                 <input
                                     matInput appAutofocus
@@ -53,74 +47,56 @@
                                     matPrefix
                                     [svgIcon]="'heroicons_solid:office-building'"></mat-icon>
                             </mat-form-field> -->
-                        </div>
-                        <!--Technologdrop-->
-                        <div class="flex">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Description</mat-label>
-                                <input
-                                    matInput 
-                                    [formControlName]="'Description'"
-                                    [placeholder]="'Description'" >
-                                <mat-icon
-                                    class="icon-size-5"
-                                    matPrefix
-                                    [svgIcon]="'heroicons_solid:menu-alt-1'"></mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <!--Technologdrop-->
-                        <div class="flex">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Title</mat-label>
-                                <input
-                                    matInput 
-                                    [formControlName]="'Title'"
-                                    [placeholder]="'Title'" >
-                                <mat-icon
-                                    class="icon-size-5"
-                                    matPrefix
-                                    [svgIcon]="'heroicons_solid:document-text'"></mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <!--Technologdrop-->
-                        <div class="flex">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Duration (in Days)</mat-label>
-                                <input
-                                    matInput 
-                                    [formControlName]="'Duration'"
-                                    [placeholder]="'Duration (in Days)'" >
-                                <mat-icon
-                                    class="icon-size-5"
-                                    matPrefix
-                                    [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <!--Technologdrop-->
-                        <div class="flex">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Fees</mat-label>
-                                <input
-                                    matInput 
-                                    [formControlName]="'Fees'"
-                                    [placeholder]="'Fees'" >
-                                <mat-icon
-                                    class="icon-size-5"
-                                    matPrefix
-                                    [svgIcon]="'heroicons_solid:cash'"></mat-icon>
-                            </mat-form-field>
-                        </div>
-                         <!-- Image Add remove -->
-                         <div class="flex">
-                             <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>  -->
+                    </div>
+                    <!--Technologdrop-->
+                    <mat-label>Description</mat-label>
+                    <div class="flex mb-8">
+                    <!-- <mat-form-field class="flex-auto"> -->
+                        <quill-editor class="flex-auto"
+                         [formControlName]="'Description'" [modules]="quillModules">
+                        </quill-editor>
+                    <!-- </mat-form-field> -->
+                        <!-- <mat-form-field class="flex-auto">
+                            <mat-label>Description</mat-label>
+                            <input matInput [formControlName]="'Description'" [placeholder]="'Description'">
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:menu-alt-1'"></mat-icon>
+                        </mat-form-field> -->
+                    </div>
+                    <!--Technologdrop-->
+                    <div class="mt-6 flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Title</mat-label>
+                            <input matInput [formControlName]="'Title'" [placeholder]="'Title'">
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <!--Technologdrop-->
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Duration (in Days)</mat-label>
+                            <input matInput [formControlName]="'Duration'" [placeholder]="'Duration (in Days)'">
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <!--Technologdrop-->
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Fees</mat-label>
+                            <input matInput [formControlName]="'Fees'" [placeholder]="'Fees'">
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:cash'"></mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <!-- Image Add remove -->
+                    <div class="flex">
+                        <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>  -->
                         <!-- <div class="absolute inset-0 flex items-center justify-center z-20"> -->
                         <div>
                             <!-- Actions -->
                             <div class="mt-4 sm:mt-0">
                                 <!-- Upload button -->
                                 <button mat-flat-button [color]="'primary'"
-                                onclick="document.getElementById('txtfileupload').click()"
-                                >
+                                    onclick="document.getElementById('txtfileupload').click()">
                                     <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                                     <span class="ml-1 mr-0">Upload file</span>
 
@@ -135,8 +111,8 @@
                                     onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
-                                <input type='file' class="form-control" accept=".jpg, .png, .jpeg " 
-                                id="txtfileupload"  name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none">
+                                <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload"
+                                    name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none">
                                 <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                                     id="txtfileupload"  name="fileupload" 
                                     (change)="onSelectFile($event.target.files)"> -->
@@ -162,7 +138,7 @@
                                         [svgIcon]="'heroicons_outline:camera'"></mat-icon>
                                 </label> -->
                         </div>
-                            <!-- <div>
+                        <!-- <div>
                                 <button
                                     mat-icon-button
                                     (click)="removeAvatar()">
@@ -171,10 +147,10 @@
                                         [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                                 </button>
                             </div> -->
-                            <!-- </div> -->
+                        <!-- </div> -->
                     </div>
-                        <!-- Active Toggle -->
-                        <!-- <div class="flex">
+                    <!-- Active Toggle -->
+                    <!-- <div class="flex">
                         <div class="space-y-4">
                             <ng-container>
                                 <div class="flex">
@@ -188,20 +164,18 @@
                             </ng-container>
                         </div>
                     </div> -->
-                      
-                        <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
-                           <!-- Cancel -->
-                            <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="cancel()">
-                                Cancel
-                            </button>
-                            <!--Save-->
-                            <button
-                                class="px-6 ml-3"
-                                mat-flat-button
-                                [color]="'primary'" (click)="AddCourse()">
-                                Save
-                            </button>
-                        </div>
+
+                    <div
+                        class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
+                        <!-- Cancel -->
+                        <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="cancel()">
+                            Cancel
+                        </button>
+                        <!--Save-->
+                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="AddCourse()">
+                            Save
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

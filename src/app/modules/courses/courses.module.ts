@@ -35,6 +35,8 @@ import { AddcourseComponent } from './AddCourse/addcourse/addcourse.component';
 import { AutofocusDirective } from './directive/autofocus.directive';
 import { EditcourseComponent } from './EditCourse/editcourse/editcourse.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+
+import { QuillModule } from 'ngx-quill';
 @NgModule({
   declarations: [
     TechnologyComponent,
@@ -76,6 +78,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatInputModule,
     MatPaginatorModule,
     SharedModule,
+    QuillModule
   ]
 })
 export class CoursesModule { }
