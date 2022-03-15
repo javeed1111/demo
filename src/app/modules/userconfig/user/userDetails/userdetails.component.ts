@@ -12,12 +12,14 @@ import { UsersService } from 'app/modules/userconfig/user/users.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { AuthService } from 'app/core/auth/auth.service';
 import { FuseAlertType } from '@fuse/components/alert';
+import { fuseAnimations } from '@fuse/animations';
 
 @Component({
     selector       : 'contacts-details',
     templateUrl    : './userdetails.component.html',
     encapsulation  : ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations   : fuseAnimations
 })
 export class UsersDetailsComponent implements OnInit, OnDestroy
 {
@@ -99,8 +101,8 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
         this.contactForm = this._formBuilder.group({
             id          : [''],
             avatar      : [null],
-            name        : ['', [Validators.required]],
             firstName   : ['', [Validators.required]],
+            password   : ['', [Validators.required]],
             lastName   : ['', []],
             email      : ['', []],
             mobileNo: ['', []],
@@ -393,7 +395,37 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
         // contact.phoneNumbers = contact.phoneNumbers.filter(phoneNumber => phoneNumber.phoneNumber);
 
         // Update the contact on the server
-        this._contactsService.UpdateUser(contact).subscribe(() => {
+        this._contactsService.UpdateUser(contact).subscribe((result: any) => {
+            debugger
+              var result = JSON.parse(result);
+               if (result.status == "200") {
+                   debugger
+                   
+                    // Show the alert
+                   this.showAlert = true;
+                   this.alert = {
+                    type   : 'success',
+                    message: result.message
+                };
+                this.showAlert = true;
+                   setTimeout(() => {
+                 
+                       this._router.navigate(['/userconfig/user']);
+                   }, 1000);
+             //}
+   
+             //   });
+               }
+               else {
+                this.alert = {
+                    type   : 'error',
+                    message: result.message
+                };
+                // Show the alert
+                this.showAlert = true;
+                 //   this.alert(result.message);
+   
+               }
 
             // Toggle the edit mode off
             this.toggleEditMode(false);
@@ -413,12 +445,13 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
     /**
      * add the user
      */
-     AddUser()
+     updateUser()
      {
          debugger
          if (this.contactForm.invalid) {
              return;
          }
+         this.showAlert=false;
          
          // Get the contact object
          const contact = this.contactForm.getRawValue();
@@ -450,12 +483,13 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
             AlternateEmail: contact.alternateemail,
             Address: contact.address,
             RoleId: contact.roleId,
+            Password:contact.password,
             //LoginId: parseInt(localStorage.getItem("LoginId")),
             IsActive: this.active,
         }
  
          // Update the contact on the server
-         this._authService.Adduser(data).subscribe((result: any) => {
+         this._contactsService.UpdateUser(data).subscribe((result: any) => {
              debugger
               var result = JSON.parse(result);
                if (result.status == "200") {
@@ -463,13 +497,12 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
                    
                     // Show the alert
                    this.showAlert = true;
+                   this.alert = {
+                    type   : 'success',
+                    message: result.message
+                };
+                this.showAlert = true;
                    setTimeout(() => {
-                    
-                    this.alert = {
-                        type   : 'success',
-                        message: result.message
-                    
-                    };
                  
                        this._router.navigate(['/userconfig/user']);
                    }, 1000);
@@ -480,8 +513,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
                else {
                 this.alert = {
                     type   : 'error',
-                    message: result.error
-                
+                    message: result.message
                 };
                 // Show the alert
                 this.showAlert = true;
@@ -513,6 +545,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
                 }
             }
         });
+        this.showAlert =false;
 
         // Subscribe to the confirmation dialog closed action
         confirmation.afterClosed().subscribe((result) => {
@@ -532,13 +565,14 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
                 this._contactsService.deleteUser(id).subscribe((data:any) => {
                     debugger
                     if (data.status == "200") {
-                        
-                          
-                        this.alert = {
-                            type   : 'success',
-                            message: data.message
-                        
-                        };
+                      // Set the alert
+                this.alert = {
+                    type   : 'success',
+                    message: result.message 
+                };
+  
+                // Show the alert
+                this.showAlert = true;
                        this._router.navigate(['/userconfig/user/']);
                         setTimeout(() => {
                             window.location.reload();
@@ -546,12 +580,14 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
                         
                       }
                       else {
-                        // this.spinner.hide();
-                        this.alert = {
-                            type   : 'success',
-                            message: "Invalid Id."
-                        
-                        };
+                        // Set the alert
+                this.alert = {
+                    type   : 'error',
+                    message: result.message 
+                };
+  
+                // Show the alert
+                this.showAlert = true;
                         // this.notifications.alert('Alert', result.message, NotificationType.Alert, { theClass: 'outline primary', timeOut: 2000, showProgressBar: false });
                       }
 

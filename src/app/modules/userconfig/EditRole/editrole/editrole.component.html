@@ -4,6 +4,11 @@
     <ng-container>
         <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
             <div class="w-full max-w-5xl">
+                <!-- Alert -->
+                <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+                [type]="alert.type" [@shake]="alert.type === 'success'">
+                {{alert.message}}
+            </fuse-alert>
                  <form [formGroup]="roleForm" class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
                     
                         <div class="flex">
@@ -57,7 +62,7 @@
                             <button
                                 class="px-6 ml-3"
                                 mat-flat-button
-                                [color]="'primary'" (click)="UpdateRole()">
+                                [color]="'primary'" (click)="UpdateRole()" [disabled]="butdisabled">
                                 Update
                             </button>
                         </div>

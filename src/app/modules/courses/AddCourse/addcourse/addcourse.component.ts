@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import {MatInputModule} from '@angular/material/input'
+import { fuseAnimations } from '@fuse/animations';
 
 @Component({
   selector: 'app-addcourse',
   templateUrl: './addcourse.component.html',
-  styleUrls: ['./addcourse.component.scss']
+  styleUrls: ['./addcourse.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+    animations   : fuseAnimations
 })
 export class AddcourseComponent implements OnInit {
   active: boolean;
@@ -19,6 +22,7 @@ export class AddcourseComponent implements OnInit {
     message: ''
 };
 showAlert:  boolean = false;
+  Id: any;
   technology: any;
   technologyId
   files: Array<any> = new Array<any>();
@@ -26,9 +30,26 @@ fileToUpload: File = null;
 name: string;
 quillModules: any = {
   toolbar: [
-      ['bold', 'italic', 'underline'],
-      [{align: []}, {list: 'ordered'}, {list: 'bullet'}],
-      ['clean']
+    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+['blockquote', 'code-block'],
+
+[{ 'header': 1 }, { 'header': 2 }],               // custom button values
+[{ 'list': 'ordered'}, { 'list': 'bullet' }],
+[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+[{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+[{ 'direction': 'rtl' }],                         // text direction
+
+[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+[{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+[{ 'font': [] }],
+[{ 'align': [] }],
+
+['clean'] 
+      // ['bold', 'italic', 'underline'],
+      // [{align: []}, {list: 'ordered'}, {list: 'bullet'}],
+      // ['clean']
   ]
 };
   
@@ -46,8 +67,9 @@ quillModules: any = {
       technologyId : ['', []],
       Description  : ['', []],
       Title        :['', []],
-      Duration     :['', []],
+      Duration     :['', [Validators.required]],
       Fees         :['', []],
+      units        :['', []],
       // userchkactive: ['']
 
     });
@@ -95,6 +117,7 @@ quillModules: any = {
   AddCourse()
   {
       debugger
+      this.showAlert=false;
       if (this.courseForm.invalid) {
           return;
       }
@@ -126,6 +149,7 @@ quillModules: any = {
             formData.append("Description",course.Description)
             formData.append("Title",course.Title)
             formData.append("Duration",course.Duration)
+            formData.append("Units",course.units)
             formData.append("Fees",course.Fees)
         if (this.files.length == 1) {
             formData.append("fileupload",this.fileToUpload , this.name);
@@ -144,26 +168,27 @@ quillModules: any = {
            var result = JSON.parse(result);
             if (result.status == "200") {
                 debugger
-                
-                 // Show the alert
-                this.showAlert = true;
-                
-                this.alert = {
-                 type   : 'success',
-                 message: result.message
-             };
-             
+                 // Set the alert
+                 this.alert = {
+                  type   : 'success',
+                  message: result.message
+              };
+
+              // Show the alert
+              this.showAlert = true;
                 setTimeout(() => {
                   this._router.navigate(['/courses/course']);
                 }, 1000);
             }
             else {
+             // Set the alert
              this.alert = {
-                 type   : 'error',
-                 message: result.error
-             
-             };
-             this.showAlert = true;
+              type   : 'error',
+              message: result.message
+          };
+
+          // Show the alert
+          this.showAlert = true;
             }
             (error) => {
    

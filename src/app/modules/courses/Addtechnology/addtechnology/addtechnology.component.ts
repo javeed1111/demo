@@ -1,14 +1,17 @@
-import { Component, ElementRef, OnInit, ViewChild,AfterViewInit,ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild,AfterViewInit,ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
+import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 
 @Component({
   selector: 'app-addtechnology',
   templateUrl: './addtechnology.component.html',
-  styleUrls: ['./addtechnology.component.scss']
+  styleUrls: ['./addtechnology.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+    animations   : fuseAnimations
 })
 export class AddtechnologyComponent implements OnInit {
   // @ViewChild('avatarFileInput') private _avatarFileInput: ElementRef;
@@ -82,6 +85,7 @@ imageSrc
 //   }
   AddTechnology()
   {
+    this.showAlert=false
       debugger
       if (this.techForm.invalid) {
           return;
@@ -103,26 +107,28 @@ imageSrc
            var result = JSON.parse(result);
             if (result.status == "200") {
                 debugger
-                
-                 // Show the alert
-                this.showAlert = true;
-                
-                this.alert = {
-                 type   : 'success',
-                 message: result.message
-             };
+                 // Set the alert
+                 this.alert = {
+                  type   : 'success',
+                  message: result.message
+              };
+
+              // Show the alert
+              this.showAlert = true;
              
                 setTimeout(() => {
                   this._router.navigate(['/courses/technology']);
                 }, 1000);
             }
             else {
+             // Set the alert
              this.alert = {
-                 type   : 'error',
-                 message: result.error
-             
-             };
-             this.showAlert = true;
+              type   : 'error',
+              message: result.message
+          };
+
+          // Show the alert
+          this.showAlert = true;
             }
             (error) => {
    

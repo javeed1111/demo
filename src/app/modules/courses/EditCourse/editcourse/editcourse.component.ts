@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
+import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 @Component({
   selector: 'app-editcourse',
   templateUrl: './editcourse.component.html',
-  styleUrls: ['./editcourse.component.scss']
+  styleUrls: ['./editcourse.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
 })
 export class EditcourseComponent implements OnInit {
   active: boolean;
@@ -26,28 +29,29 @@ export class EditcourseComponent implements OnInit {
   name: string;
   profileImage: any;
   ImageURL: any;
+  butdisabled:boolean=false;
   quillModules: any = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-  ['blockquote', 'code-block'],
+      ['blockquote', 'code-block'],
 
-  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-  [{ 'direction': 'rtl' }],                         // text direction
+      [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+      [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+      [{ 'direction': 'rtl' }],                         // text direction
 
-  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
-  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-  [{ 'font': [] }],
-  [{ 'align': [] }],
+      [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+      [{ 'font': [] }],
+      [{ 'align': [] }],
 
-  ['clean'] 
-        // ['bold', 'italic', 'underline'],
-        // [{align: []}, {list: 'ordered'}, {list: 'bullet'}],
-        // ['clean']
+      ['clean']
+      // ['bold', 'italic', 'underline'],
+      // [{align: []}, {list: 'ordered'}, {list: 'bullet'}],
+      // ['clean']
     ]
   };
 
@@ -62,8 +66,9 @@ export class EditcourseComponent implements OnInit {
   ngOnInit(): void {
     debugger;
     var loginId = localStorage.getItem("LoginId");
-    var id = this.approute.snapshot.params['id']
-    this.Edit(id);
+    var id = this.approute.snapshot.params['id'];
+    var value = this.approute.snapshot.params['value'];
+    
     this.GetTechnologys();
 
 
@@ -72,12 +77,14 @@ export class EditcourseComponent implements OnInit {
       technologyId: ['', []],
       description: ['', []],
       title: ['', []],
-      duration: ['', []],
+      duration: ['', [Validators.required]],
+      units: ['', []],
       fees: [''],
       imageURL: ['', []],
       //isActive       : ['']
 
     });
+    this.Edit(id,value);
   }
   cancel() {
     this._router.navigate(['/courses/course']);
@@ -118,12 +125,41 @@ export class EditcourseComponent implements OnInit {
       }
     });
   }
-  Edit(id) {
+  Edit(id:any,value:any) {
     debugger
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
       baseurl = "https://localhost:44358"
     }
+    if (baseurl == "http://testugetitapi.fadelsoft.com/") {
+      baseurl = "http://testugetitapi.fadelsoft.com"
+    }
+    if (value == "view") {
+      // this.editsite=false;
+      this.butdisabled=true;
+      this.courseForm.controls['courseName'].disable();
+      this.courseForm.controls['technologyId'].disable();
+      this.courseForm.controls['description'].disable();
+      this.courseForm.controls['title'].disable();
+      this.courseForm.controls['duration'].disable();
+      this.courseForm.controls['units'].disable();
+      this.courseForm.controls['fees'].disable();
+
+
+
+  }
+  else
+  {
+    this.butdisabled=false;
+    this.courseForm.controls['courseName'].enable();
+    this.courseForm.controls['technologyId'].enable();
+    this.courseForm.controls['description'].enable();
+    this.courseForm.controls['title'].enable();
+    this.courseForm.controls['duration'].enable();
+    this.courseForm.controls['units'].enable();
+    this.courseForm.controls['fees'].enable();
+
+  }
     this.Id = id;
     this._authService.GetcourseById(this.Id).subscribe((finalresult: any) => {
       debugger
@@ -135,10 +171,10 @@ export class EditcourseComponent implements OnInit {
 
         this.courseForm.patchValue(finalresult.result);
         const course = this.courseForm.getRawValue();
-        if(course.duration==0){
+        if (course.duration == 0) {
           this.courseForm.controls['duration'].setValue("")
         }
-        if(course.fees==0){
+        if (course.fees == 0) {
           this.courseForm.controls['fees'].setValue("")
           // course.fees="";
         }
@@ -169,6 +205,7 @@ export class EditcourseComponent implements OnInit {
   }
   Updatecourse() {
     debugger
+    this.showAlert = false;
     if (this.courseForm.invalid) {
       return;
     }
@@ -184,24 +221,25 @@ export class EditcourseComponent implements OnInit {
     // if (course.isActive == undefined) {
     //   course.isActive = true;
     // }
-    if(course.duration==""){
-      course.duration=0
-         // this.courseForm.controls['Duration'].setValue(0)
-       }
-       if(course.fees==""){
-         course.fees=0
-         // this.courseForm.controls['Fees'].setValue(0)
-         // course.fees="";
-       }
+    if (course.duration == "") {
+      course.duration = 0
+      // this.courseForm.controls['Duration'].setValue(0)
+    }
+    if (course.fees == "") {
+      course.fees = 0
+      // this.courseForm.controls['Fees'].setValue(0)
+      // course.fees="";
+    }
     const formData: FormData = new FormData();
     formData.append("CourseName", course.courseName)
-    formData.append("TechnologyId",course.technologyId)
+    formData.append("TechnologyId", course.technologyId)
     formData.append("UpdatedBy", (localStorage.getItem("LoginId")));
     formData.append("Description", course.description)
     formData.append("Title", course.title)
     formData.append("CourseId", this.approute.snapshot.params['id'])
-    formData.append("Duration",course.duration)
-    formData.append("Fees",course.fees)
+    formData.append("Duration", course.duration)
+    formData.append("Units",course.units)
+    formData.append("Fees", course.fees)
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
     }
@@ -223,27 +261,28 @@ export class EditcourseComponent implements OnInit {
       var result = JSON.parse(result);
       if (result.status == "200") {
         debugger
-
-        // Show the alert
-        this.showAlert = true;
-
+        // Set the alert
         this.alert = {
           type: 'success',
           message: result.message
         };
 
+        // Show the alert
+        this.showAlert = true;
         setTimeout(() => {
           window.location.reload();
           // this._router.navigate(['/courses/course']);
         }, 1000);
       }
       else {
-        this.alert = {
-          type: 'error',
-          message: result.error
+         // Set the alert
+         this.alert = {
+          type   : 'error',
+          message: result.message
+      };
 
-        };
-        this.showAlert = true;
+      // Show the alert
+      this.showAlert = true;
       }
       (error) => {
 

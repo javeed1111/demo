@@ -13,6 +13,7 @@ import { AuthService } from 'app/core/auth/auth.service';
 })
 export class AuthSignInComponent implements OnInit
 {
+    
     @ViewChild('signInNgForm') signInNgForm: NgForm;
 
     alert: { type: FuseAlertType; message: string } = {

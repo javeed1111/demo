@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
+import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 
 @Component({
   selector: 'app-editrole',
   templateUrl: './editrole.component.html',
-  styleUrls: ['./editrole.component.scss']
+  styleUrls: ['./editrole.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+    animations   : fuseAnimations
 })
 export class EditroleComponent implements OnInit {
   active: boolean;
@@ -20,6 +23,7 @@ export class EditroleComponent implements OnInit {
 showAlert:  boolean = false;
   Id: any;
   userId: any;
+  butdisabled:Boolean=false;
 
 
   
@@ -34,8 +38,9 @@ showAlert:  boolean = false;
   ngOnInit(): void {
     debugger;
     var loginId = localStorage.getItem("LoginId"); 
-    var id = this.approute.snapshot.params['id']
-    this.Edit(id);
+    var id = this.approute.snapshot.params['id'];
+    var value = this.approute.snapshot.params['value'];
+    
 
 
     this.roleForm = this._formBuilder.group({
@@ -44,6 +49,7 @@ showAlert:  boolean = false;
       // isActive       : ['']
 
     });
+    this.Edit(id, value);
   }
   cancel(){
     this._router.navigate(['/userconfig/role/']);
@@ -52,8 +58,21 @@ showAlert:  boolean = false;
            }, 10);
 
   }
-  Edit(id) {
+  Edit(id: any, value: any) {
     debugger
+    if (value == "view") {
+      // this.editsite=false;
+      this.butdisabled=true;
+      this.roleForm.controls['roleName'].disable();
+      this.roleForm.controls['description'].disable();
+  }
+  else
+  {
+    this.butdisabled=false;
+            this.roleForm.controls['roleName'].enable();
+            this.roleForm.controls['description'].enable();
+
+  }
     this.Id = id;
     this._authService.GetRoleById(this.Id).subscribe((finalresult: any) => {
         debugger
@@ -86,6 +105,7 @@ showAlert:  boolean = false;
       if (this.roleForm.invalid) {
           return;
       }
+      this.showAlert = false;
       
       // Get the contact object
       const contact = this.roleForm.getRawValue();
@@ -112,13 +132,14 @@ showAlert:  boolean = false;
             if (result.status == "200") {
                 debugger
                 
-                 // Show the alert
-                this.showAlert = true;
-                
-                this.alert = {
-                 type   : 'success',
-                 message: result.message
-             };
+                 // Set the alert
+                 this.alert = {
+                  type   : 'success',
+                  message: result.message 
+              };
+
+              // Show the alert
+              this.showAlert = true;
              
                 setTimeout(() => {
                   this._router.navigate(['/userconfig/role']);
@@ -127,7 +148,7 @@ showAlert:  boolean = false;
             else {
              this.alert = {
                  type   : 'error',
-                 message: result.error
+                 message: result.message
              
              };
              this.showAlert = true;

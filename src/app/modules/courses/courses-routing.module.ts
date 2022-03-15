@@ -20,9 +20,9 @@ const routes: Routes = [
             { path: 'upcomingtraining', component: UpcomingtrainingComponent },
             { path: 'courseplan', component: CourseplanComponent},
             { path: 'addtechnology', component: AddtechnologyComponent },
-            { path: 'edittechnology/:id', component: EdittechnologyComponent },
+            { path: 'edittechnology/:id/:value', component: EdittechnologyComponent },
             { path: 'addcourse', component: AddcourseComponent },
-            { path: 'editcourse/:id', component: EditcourseComponent },
+            { path: 'editcourse/:id/:value', component: EditcourseComponent },
 
 
         ]

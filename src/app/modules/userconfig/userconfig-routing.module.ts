@@ -22,7 +22,7 @@ const routes: Routes = [
       { path: 'Setprivileges', component: SetprivilegesComponent },
       { path: 'role', component: RoleComponent },
       { path: 'addrole', component: AddrolesComponent },
-      { path: 'editrole/:id', component: EditroleComponent },
+      { path: 'editrole/:id/:value', component: EditroleComponent },
       {
         path: 'user',
         component: UserComponent,

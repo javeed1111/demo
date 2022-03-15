@@ -37,6 +37,7 @@ import { EditcourseComponent } from './EditCourse/editcourse/editcourse.componen
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { QuillModule } from 'ngx-quill';
+import { FuseAlertModule } from '@fuse/components/alert';
 @NgModule({
   declarations: [
     TechnologyComponent,
@@ -78,7 +79,9 @@ import { QuillModule } from 'ngx-quill';
     MatInputModule,
     MatPaginatorModule,
     SharedModule,
-    QuillModule
+    QuillModule,
+    FuseAlertModule,
+
   ]
 })
 export class CoursesModule { }

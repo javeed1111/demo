@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
+import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 
 @Component({
   selector: 'app-addroles',
   templateUrl: './addroles.component.html',
-  styleUrls: ['./addroles.component.scss']
+  styleUrls: ['./addroles.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+    animations   : fuseAnimations
 })
 export class AddrolesComponent implements OnInit {
   active: boolean;
@@ -49,6 +52,7 @@ showAlert:  boolean = false;
       if (this.roleForm.invalid) {
           return;
       }
+      this.showAlert = false;
       
       // Get the contact object
       const contact = this.roleForm.getRawValue();
@@ -73,25 +77,28 @@ showAlert:  boolean = false;
             if (result.status == "200") {
                 debugger
                 
-                 // Show the alert
-                this.showAlert = true;
-                
-                this.alert = {
-                 type   : 'success',
-                 message: result.message
-             };
+                 // Set the alert
+                 this.alert = {
+                  type   : 'success',
+                  message: result.message
+              };
+
+              // Show the alert
+              this.showAlert = true;
              
                 setTimeout(() => {
                   this._router.navigate(['/userconfig/role']);
                 }, 1000);
             }
             else {
+             // Set the alert
              this.alert = {
-                 type   : 'error',
-                 message: result.error
-             
-             };
-             this.showAlert = true;
+              type   : 'success',
+              message: result.message
+          };
+
+          // Show the alert
+          this.showAlert = true;
             }
             (error) => {
    

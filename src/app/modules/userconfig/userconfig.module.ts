@@ -35,6 +35,7 @@ import { AddrolesComponent } from './Addrole/addroles/addroles.component';
 import { EditroleComponent } from './EditRole/editrole/editrole.component';
 import { AutofocusDirective } from './Directive/autofocus.directive';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { FuseAlertModule } from '@fuse/components/alert';
 
 //import {MatPaginator} from '@angular/material/paginator'
 
@@ -77,7 +78,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     FuseFindByKeyPipeModule,
     MatSortModule,
     MatPaginatorModule,
-    SharedModule
+    SharedModule,
+    FuseAlertModule,
   ],
   providers   : [
     {

@@ -20,7 +20,8 @@ export class UsersService
      */
     constructor(private _httpClient: HttpClient)
     {
-        this.baseUrl = 'https://localhost:44358/';
+        //this.baseUrl = 'https://localhost:44358/';
+        this.baseUrl = 'http://testugetitapi.fadelsoft.com/';
     }
 
     // -----------------------------------------------------------------------------------------------------

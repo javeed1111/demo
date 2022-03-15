@@ -45,10 +45,11 @@
                         </div>
                         <!--Technologdrop-->
                         <!--Technologdrop-->
+                        <div class="flex-auto">
                     <mat-label>Description</mat-label>
-                    <div class="flex mb-8">
+                    <!-- <div class="flex"> -->
                     <!-- <mat-form-field class="flex-auto"> -->
-                        <quill-editor class="flex-auto"
+                        <quill-editor
                          [formControlName]="'description'" [modules]="quillModules">
                         </quill-editor>
                     <!-- </mat-form-field> -->
@@ -57,9 +58,10 @@
                             <input matInput [formControlName]="'Description'" [placeholder]="'Description'">
                             <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:menu-alt-1'"></mat-icon>
                         </mat-form-field> -->
-                    </div>
+                    <!-- </div> -->
+                </div>
                         <!--Technologdrop-->
-                        <div class="flex mt-6">
+                        <div class="flex mt-4">
                             <mat-form-field class="flex-auto">
                                 <mat-label>Title</mat-label>
                                 <input
@@ -84,6 +86,17 @@
                                     class="icon-size-5"
                                     matPrefix
                                     [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
+                            </mat-form-field>
+                            <mat-form-field class="flex-auto gt-xs:pr-3">
+                                <mat-label>Units</mat-label>
+                                <mat-select  [formControlName]="'units'">
+                                    <mat-option value="Days">Days</mat-option>
+                                    <mat-option value="Hours">Hours</mat-option>
+                                    <mat-option value="Minutes">Minutes</mat-option>
+    
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:cog'">
+                                </mat-icon>
                             </mat-form-field>
                         </div>
                         <!--Technologdrop-->
@@ -110,7 +123,7 @@
                                 <!-- Upload button -->
                                 <button mat-flat-button [color]="'primary'"
                                 onclick="document.getElementById('txtfileupload').click()"
-                                >
+                                [disabled]="butdisabled">
                                     <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                                     <span class="ml-1 mr-0">Upload file</span>
 
@@ -181,6 +194,11 @@
                             </ng-container>
                         </div>
                     </div> -->
+                    <!-- Alert -->
+                    <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+                        [type]="alert.type" [@shake]="alert.type === 'success'">
+                        {{alert.message}}
+                    </fuse-alert>
                       
                         <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
                            <!-- Cancel -->
@@ -191,7 +209,7 @@
                             <button
                                 class="px-6 ml-3"
                                 mat-flat-button
-                                [color]="'primary'" (click)="Updatecourse()">
+                                [color]="'primary'" (click)="Updatecourse()" [disabled]="butdisabled">
                                 Save
                             </button>
                         </div>

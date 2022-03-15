@@ -1,6 +1,6 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'app/core/auth/auth.service';
 import { MatSort } from '@angular/material/sort';
 import { debounceTime, map, merge, Observable, Subject, switchMap, takeUntil } from 'rxjs';
@@ -20,32 +20,34 @@ export interface RoleData {
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',
-   styleUrls: ['./role.component.scss']
-//   styles         : [
-//     /* language=SCSS */
-//     `
-//         .inventory-grid {
-//             grid-template-columns: 48px auto 40px;
+  styleUrls: ['./role.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
+  //   styles         : [
+  //     /* language=SCSS */
+  //     `
+  //         .inventory-grid {
+  //             grid-template-columns: 48px auto 40px;
 
-//             @screen sm {
-//                 grid-template-columns: 48px auto 112px 72px;
-//             }
+  //             @screen sm {
+  //                 grid-template-columns: 48px auto 112px 72px;
+  //             }
 
-//             @screen md {
-//                 grid-template-columns: 48px 112px auto 112px 72px;
-//             }
+  //             @screen md {
+  //                 grid-template-columns: 48px 112px auto 112px 72px;
+  //             }
 
-//             @screen lg {
-//                 grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
-//             }
-//         }
-//     `
-// ],
+  //             @screen lg {
+  //                 grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+  //             }
+  //         }
+  //     `
+  // ],
 })
-export class RoleComponent implements OnInit ,AfterViewInit{
+export class RoleComponent implements OnInit, AfterViewInit {
   isLoading: boolean = false;
   selectedProduct: any | null = null;
-  displayedColumns = ['sno','roleName','actions'];
+  displayedColumns = ['sno', 'roleName', 'actions'];
   dataSource: MatTableDataSource<RoleData>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -56,14 +58,14 @@ export class RoleComponent implements OnInit ,AfterViewInit{
   roles: any;
   role: any;
   alert: { type: FuseAlertType; message: string } = {
-    type   : 'success',
+    type: 'success',
     message: ''
-};
-showAlert:  boolean = false;
+  };
+  showAlert: boolean = false;
 
-  
 
-  constructor( private _activatedRoute: ActivatedRoute,
+
+  constructor(private _activatedRoute: ActivatedRoute,
     private _changeDetectorRef: ChangeDetectorRef,
     private _formBuilder: FormBuilder,
     private _fuseConfirmationService: FuseConfirmationService,
@@ -73,62 +75,66 @@ showAlert:  boolean = false;
     private _viewContainerRef: ViewContainerRef,
     private _authService: AuthService,
     // private _venturesService:VenturesService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     debugger
-     this.GetRoles();
+    this.GetRoles();
 
-        // this.searchInputControl.valueChanges
-        // .pipe(
-        //     takeUntil(this._unsubscribeAll),
-        //     debounceTime(300),
-        //     switchMap((query) => {
-        //       debugger
-        //         this.closeDetails();
-        //         this.isLoading = true;
-        //         return this._authService.GetRoles(0, 10, 'roleName', 'asc', query);
-        //     }),
-        //     map(() => {
-        //         this.isLoading = false;
-        //     })
-        // )
-        // .subscribe();
+    // this.searchInputControl.valueChanges
+    // .pipe(
+    //     takeUntil(this._unsubscribeAll),
+    //     debounceTime(300),
+    //     switchMap((query) => {
+    //       debugger
+    //         this.closeDetails();
+    //         this.isLoading = true;
+    //         return this._authService.GetRoles(0, 10, 'roleName', 'asc', query);
+    //     }),
+    //     map(() => {
+    //         this.isLoading = false;
+    //     })
+    // )
+    // .subscribe();
 
-        //    // Get the pagination
-        //    this._venturesService.pagination$
-        //    .pipe(takeUntil(this._unsubscribeAll))
-        //    .subscribe((pagination: VenturePagination) => {
+    //    // Get the pagination
+    //    this._venturesService.pagination$
+    //    .pipe(takeUntil(this._unsubscribeAll))
+    //    .subscribe((pagination: VenturePagination) => {
 
-        //        // Update the pagination
-        //        this.pagination = pagination;
+    //        // Update the pagination
+    //        this.pagination = pagination;
 
-        //        // Mark for check
-        //        this._changeDetectorRef.markForCheck();
-        //    });
+    //        // Mark for check
+    //        this._changeDetectorRef.markForCheck();
+    //    });
 
   }
-    ngAfterViewInit() {
-      
-    }
+  ngAfterViewInit() {
 
-  closeDetails(): void
-    {
-        this.selectedProduct = null;
-    }
+  }
+
+  closeDetails(): void {
+    this.selectedProduct = null;
+  }
 
   showEditModal(id) {
+    var value = "edit";
     debugger
-    this._router.navigate(['/userconfig/editrole/'+id])
+    this._router.navigate(['/userconfig/editrole/' + id + '/' + value])
+  }
+  showViewModal(id) {
+    var value = "view";
+    debugger
+    this._router.navigate(['/userconfig/editrole/' + id + '/' + value])
   }
 
-  ngOnDestroy(): void
-  {
-      // Unsubscribe from all subscriptions
-      this._unsubscribeAll.next(null);
-      this._unsubscribeAll.complete();
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.complete();
   }
-  createProduct(){
+  createProduct() {
     debugger
 
     // this._router.navigate(['/userconfig/role/addrole'])
@@ -144,7 +150,7 @@ showAlert:  boolean = false;
     debugger
     this._authService.GetRoles().subscribe((finalresult: any) => {
       debugger
-     var finalresult = JSON.parse(finalresult);
+      var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
         debugger
         //this.dataSource= finalresult.result;
@@ -155,89 +161,108 @@ showAlert:  boolean = false;
         this.dataSource.sort = this.sort;
       }
       else {
-        
+
       }
-  });
+    });
   }
 
-   /**
-     * Delete the role
-     */
-    deleteRole(id:any): void
-    {
-      debugger
-        // Open the confirmation dialog
-        const confirmation = this._fuseConfirmationService.open({
-            title  : 'Delete Role',
-            message: 'Are you sure you want to delete this Role?',
-            actions: {
-                confirm: {
-                    label: 'Delete'
-                }
-            }
+  /**
+    * Delete the role
+    */
+  deleteRole(id: any): void {
+    debugger
+    // Open the confirmation dialog
+    const confirmation = this._fuseConfirmationService.open({
+      title: 'Delete Role',
+      message: 'Are you sure you want to delete this Role?',
+      actions: {
+        confirm: {
+          label: 'Delete'
+        }
+      }
+    });
+    this.showAlert = false;
+
+    // Subscribe to the confirmation dialog closed action
+    confirmation.afterClosed().subscribe((result) => {
+
+      // If the confirm button pressed...
+      if (result === 'confirmed') {
+        var CreatedBy = parseInt(localStorage.getItem("LoginId"))
+
+        // Delete the contact
+        this._authService.deleteRole(id).subscribe((data: any) => {
+          debugger
+          if (data.status == "200") {
+            // Set the alert
+            this.alert = {
+              type: 'success',
+              message: data.message
+            };
+
+            // Show the alert
+            this.showAlert = true;
+            setTimeout(() => {
+              this.showAlert = false
+            }, 2000);
+            //  this._router.navigate(['/userconfig/role/']);
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+
+          }
+          else if (data.status == "202") {
+            this.alert = {
+              type: 'error',
+              message: data.message
+
+            };
+            this.showAlert = true
+            setTimeout(() => {
+              this.showAlert = false
+            }, 2000);
+
+
+          }
+          else {
+            this.alert = {
+              type: 'success',
+              message: "Invalid Id."
+
+            };
+            this.showAlert = true
+            setTimeout(() => {
+              this.showAlert = false
+            }, 2000);
+            // this.notifications.alert('Alert', result.message, NotificationType.Alert, { theClass: 'outline primary', timeOut: 2000, showProgressBar: false });
+          }
+
+          // Return if the contact wasn't deleted...
+          // if ( !isDeleted )
+          // {
+          //     return;
+          // }
+
+          // // Navigate to the next contact if available
+          // if ( nextContactId )
+          // {
+          //     this._router.navigate(['../', nextContactId], {relativeTo: this._activatedRoute});
+          // }
+          // // Otherwise, navigate to the parent
+          // else
+          // {
+          //     this._router.navigate(['../'], {relativeTo: this._activatedRoute});
+          // }
+
+          // Toggle the edit mode off
+          // this.toggleEditMode(false);
         });
 
-        // Subscribe to the confirmation dialog closed action
-        confirmation.afterClosed().subscribe((result) => {
+        // Mark for check
+        this._changeDetectorRef.markForCheck();
+      }
+    });
 
-            // If the confirm button pressed...
-            if ( result === 'confirmed' )
-            {
-           var CreatedBy= parseInt(localStorage.getItem("LoginId"))
-
-                // Delete the contact
-                this._authService.deleteRole(id).subscribe((data:any) => {
-                    debugger
-                    if (data.status == "200") {
-                        
-                          
-                        this.alert = {
-                            type   : 'success',
-                            message: data.message
-                        
-                        };
-                      //  this._router.navigate(['/userconfig/role/']);
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 2000);
-                        
-                      }
-                      else {
-                        // this.spinner.hide();
-                        this.alert = {
-                            type   : 'success',
-                            message: "Invalid Id."
-                        
-                        };
-                        // this.notifications.alert('Alert', result.message, NotificationType.Alert, { theClass: 'outline primary', timeOut: 2000, showProgressBar: false });
-                      }
-
-                        // Return if the contact wasn't deleted...
-                        // if ( !isDeleted )
-                        // {
-                        //     return;
-                        // }
-
-                        // // Navigate to the next contact if available
-                        // if ( nextContactId )
-                        // {
-                        //     this._router.navigate(['../', nextContactId], {relativeTo: this._activatedRoute});
-                        // }
-                        // // Otherwise, navigate to the parent
-                        // else
-                        // {
-                        //     this._router.navigate(['../'], {relativeTo: this._activatedRoute});
-                        // }
-
-                        // Toggle the edit mode off
-                        // this.toggleEditMode(false);
-                    });
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            }
-        });
-
-    }
+  }
 }
 

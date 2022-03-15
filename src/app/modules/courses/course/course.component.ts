@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 // import {MatPaginator} from '@angular/material/paginator';
 // import {MatTableDataSource} from '@angular/material/table';
 import { AuthService } from 'app/core/auth/auth.service';
@@ -27,7 +27,9 @@ export interface CourseData {
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
- styleUrls: ['./course.component.scss']
+ styleUrls: ['./course.component.scss'],
+ encapsulation: ViewEncapsulation.None,
+    animations   : fuseAnimations
 //   styles         : [
 //     /* language=SCSS */
 //     `
@@ -52,7 +54,7 @@ export interface CourseData {
 export class CourseComponent implements OnInit {
   isLoading: boolean = false;
   selectedProduct: any | null = null;
-  displayedColumns = ['sno', 'courseName', 'technologyName', 'title','duration','fees','actions'];
+  displayedColumns = ['sno',  'title', 'courseName', 'technologyName','duration','fees','actions'];
   dataSource: MatTableDataSource<CourseData>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -135,7 +137,13 @@ course: any;
 
   showEditModal(id) {
     debugger
-    this._router.navigate(['/courses/editcourse/'+id])
+    var value="edit"
+    this._router.navigate(['/courses/editcourse/'+id+'/'+value])
+  }
+  showViewModal(id) {
+    debugger
+    var value="view"
+    this._router.navigate(['/courses/editcourse/'+id+'/'+value])
   }
 
   ngOnDestroy(): void
@@ -163,7 +171,12 @@ course: any;
           // finalresult.result[i].sno=i+1;
           if(finalresult.result[i].duration==0){
             finalresult.result[i].duration="";
-            finalresult.result[i].fees="";
+          }
+          else{
+            finalresult.result[i].duration=finalresult.result[i].duration+""+finalresult.result[i].units;
+          }
+          if(finalresult.result[i].fees==0){
+            finalresult.result[i].fees="Free";
           }
 
         }
@@ -201,6 +214,7 @@ course: any;
   deleteCourse(id:any): void
     {
       debugger
+      this.showAlert=false
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
             title  : 'Delete course',
@@ -231,6 +245,7 @@ course: any;
                             message: data.message
                         
                         };
+                        this.showAlert=true
                       //  this._router.navigate(['/userconfig/role/']);
                         setTimeout(() => {
                             window.location.reload();
@@ -238,12 +253,12 @@ course: any;
                         
                       }
                       else {
-                        // this.spinner.hide();
                         this.alert = {
-                            type   : 'success',
-                            message: "Invalid Id."
-                        
-                        };
+                          type   : 'error',
+                          message: data.message
+                      
+                      };
+                      this.showAlert=true
                         // this.notifications.alert('Alert', result.message, NotificationType.Alert, { theClass: 'outline primary', timeOut: 2000, showProgressBar: false });
                       }
 

@@ -2,6 +2,11 @@
     <ng-container>
         <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
             <div class="w-full max-w-5xl">
+                <!-- Alert -->
+                <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+                    [type]="alert.type" [@shake]="alert.type === 'success'">
+                    {{alert.message}}
+                </fuse-alert>
                 <form [formGroup]="techForm"
                     class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
 
@@ -39,7 +44,7 @@
                                         [src]="imageSrc || 'http://placehold.it/180'" alt="your image">
                                 </div>
 
-                                
+
                                 <!-- <img id="blah" [src]="imageSrc || 'http://placehold.it/180'" alt="your image" /> -->
                                 <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
                                 <!-- <button style="display:block;width:120px; height:30px;"

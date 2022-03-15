@@ -12,12 +12,14 @@ import { UsersService } from 'app/modules/userconfig/user/users.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { AuthService } from 'app/core/auth/auth.service';
 import { FuseAlertType } from '@fuse/components/alert';
+import { fuseAnimations } from '@fuse/animations';
 
 @Component({
     selector       : 'Add-users',
     templateUrl    : './adduser.component.html',
     encapsulation  : ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations   : fuseAnimations
 })
 
 export class AddUserComponent implements OnInit, OnDestroy
@@ -100,6 +102,7 @@ export class AddUserComponent implements OnInit, OnDestroy
             gender: [''],
             roleId: [''],
             address: [''],
+            password: ['', [Validators.required]],
 
         });
 
@@ -388,6 +391,8 @@ export class AddUserComponent implements OnInit, OnDestroy
          if (this.contactForm.invalid) {
              return;
          }
+      this.showAlert = false;
+
          
          // Get the contact object
          const contact = this.contactForm.getRawValue();
@@ -410,7 +415,8 @@ export class AddUserComponent implements OnInit, OnDestroy
             AlternateEmail: contact.alternateemail,
             Address: contact.address,
             RoleId: contact.roleId,
-            //LoginId: parseInt(localStorage.getItem("LoginId")),
+            Password: contact.password,
+            CreatedBy: parseInt(localStorage.getItem("LoginId")),
             IsActive: this.active,
         }
          this._authService.Adduser(data).subscribe((result: any) => {
@@ -419,24 +425,27 @@ export class AddUserComponent implements OnInit, OnDestroy
                if (result.status == "200") {
                    debugger
                    
-                    // Show the alert
-                   this.showAlert = true;
-                   
-                   this.alert = {
+                    // Set the alert
+                 this.alert = {
                     type   : 'success',
-                    message: result.message
+                    message: result.message 
                 };
+  
+                // Show the alert
+                this.showAlert = true;
                 this._router.navigate(['/userconfig/user']);
                    setTimeout(() => {
                     window.location.reload();
                    }, 1000);
                }
                else {
+                // Set the alert
                 this.alert = {
                     type   : 'error',
-                    message: result.error
-                
+                    message: result.message 
                 };
+  
+                // Show the alert
                 this.showAlert = true;
                }
                (error) => {
