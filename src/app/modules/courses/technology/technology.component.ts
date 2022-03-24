@@ -61,6 +61,7 @@ export class TechnologyComponent implements OnInit {
   };
   showAlert: boolean = false;
   techs: any;
+  
 
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -75,7 +76,7 @@ export class TechnologyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger
+    //debugger
     this.GetTechnologys();
 
     // this.searchInputControl.valueChanges
@@ -83,7 +84,7 @@ export class TechnologyComponent implements OnInit {
     //     takeUntil(this._unsubscribeAll),
     //     debounceTime(300),
     //     switchMap((query) => {
-    //       debugger
+    //       //debugger
     //         this.closeDetails();
     //         this.isLoading = true;
     //         return this._authService.GetRoles(0, 10, 'roleName', 'asc', query);
@@ -111,19 +112,19 @@ export class TechnologyComponent implements OnInit {
     this.selectedProduct = null;
   }
   applyFilter(filterValue: string) {
-    debugger
+    //debugger
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
 
   showEditModal(id) {
-    debugger
+    //debugger
     var value = "edit";
     this._router.navigate(['/courses/edittechnology/' + id + '/' + value])
   }
   showViewModal(id) {
-    debugger
+    //debugger
     var value = "view"
     this._router.navigate(['/courses/edittechnology/' + id + '/' + value])
   }
@@ -135,18 +136,18 @@ export class TechnologyComponent implements OnInit {
   //     this._unsubscribeAll.complete();
   // }
   createProduct() {
-    debugger
+    //debugger
 
     // this._router.navigate(['/userconfig/role/addrole'])
     this._router.navigate(['/courses/addtechnology'])
   }
   GetTechnologys() {
-    debugger
+    //debugger
     this._authService.GetTechnologies().subscribe((finalresult: any) => {
-      debugger
+      //debugger
       var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
-        debugger
+        //debugger
         //this.dataSource= finalresult.result;
         //this.techs= finalresult.result;
         this.dataSource = new MatTableDataSource(finalresult.result);
@@ -160,7 +161,7 @@ export class TechnologyComponent implements OnInit {
     });
   }
   deletetechnology(id: any): void {
-    debugger
+    //debugger
     this.showAlert = false
     // Open the confirmation dialog
     const confirmation = this._fuseConfirmationService.open({
@@ -182,7 +183,7 @@ export class TechnologyComponent implements OnInit {
 
         // Delete the contact
         this._authService.deletetechnology(id).subscribe((data: any) => {
-          debugger
+          //debugger
           if (data.status == "200") {
             // Set the alert
             this.alert = {

@@ -26,7 +26,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { CoursesRoutingModule } from './courses-routing.module';
 import { TechnologyComponent } from './technology/technology.component';
 import { CourseComponent } from './course/course.component';
-import { UpcomingtrainingComponent } from './upcomingtraining/upcomingtraining.component';
+import { AddcoursecontentComponent } from './AddCoursecontent/Addcoursecontent.component';
 import { CourseplanComponent } from './courseplan/courseplan.component';
 import { CoursesComponent } from './courses.component';
 import { AddtechnologyComponent } from './Addtechnology/addtechnology/addtechnology.component';
@@ -38,18 +38,23 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { QuillModule } from 'ngx-quill';
 import { FuseAlertModule } from '@fuse/components/alert';
+import { MatStepperModule } from '@angular/material/stepper';
+import { CourseContentComponent } from './Coursecontent/course-content/course-content.component';
+// import { CourseContentComponent } from './AddCoursecontent/course-content/course-content.component';
 @NgModule({
   declarations: [
     TechnologyComponent,
     CourseComponent,
-    UpcomingtrainingComponent,
+    AddcoursecontentComponent,
     CourseplanComponent,
     CoursesComponent,
     AddtechnologyComponent,
     EdittechnologyComponent,
     AddcourseComponent,
     AutofocusDirective,
-    EditcourseComponent
+    EditcourseComponent,
+    CourseContentComponent,
+    // CourseContentComponent
   ],
   imports: [
     CommonModule,
@@ -81,6 +86,7 @@ import { FuseAlertModule } from '@fuse/components/alert';
     SharedModule,
     QuillModule,
     FuseAlertModule,
+    MatStepperModule
 
   ]
 })

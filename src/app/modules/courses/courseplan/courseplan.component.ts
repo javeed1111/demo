@@ -1,36 +1,51 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 // import { DatePipe } from '@angular/common'
+export interface TitleData {
+  // sno: number;
+  Actions: string;
+  titleName: string;
+}
 
 @Component({
   selector: 'app-courseplan',
   templateUrl: './courseplan.component.html',
-  styleUrls: ['./courseplan.component.scss']
+  styleUrls: ['./courseplan.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
 })
 export class CourseplanComponent implements OnInit {
-  // @ViewChild('comingSoonNgForm') comingSoonNgForm: NgForm;
-
+  selectedProduct: any | null = null;
+  displayedColumns = ['actions','titleName', ];
+  dataSource: MatTableDataSource<TitleData>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   alert: { type: FuseAlertType; message: string } = {
     type: 'success',
     message: ''
   };
-  FreeForm: FormGroup;
   showAlert: boolean = false;
-  Free: boolean = false;
-  Monthly: boolean = false;
-  Quaterly: boolean = false;
-  Yearly: boolean = false;
   cours: any;
   planId: number;
   startdate = new Date();
   EndDate = new Date();
-
-
+  horizontalStepperForm: FormGroup;
+  verticalStepperForm: FormGroup;
+  active: boolean;
+  selected: boolean = false;
+  offerapply: boolean = true;
+  OfferPrice: any;
+  todayDate = new Date();
+  ListOfCourses: any = [];
   constructor(
     private _authService: AuthService,
     private _formBuilder: FormBuilder,
@@ -40,20 +55,118 @@ export class CourseplanComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetCourse();
-    this.Freeclick();
-    this.FreeForm = this._formBuilder.group({
-      days: ['7', []],
-      description: ['', []],
-      courseId: ['', []],
+    // Horizontal stepper form
+    this.horizontalStepperForm = this._formBuilder.group({
+      step1: this._formBuilder.group({
+        planName: ['', [Validators.required]],
+        price: ['0', [Validators.required]],
+        offerApplicable: [''],
+        offerPrice: ['0'],
+        effectiveDate: ['', Validators.required],
+        effectiveTill: ['', Validators.required],
+      }),
+      step2: this._formBuilder.group({
+        courseId: [''],
+        //   title          : this._formBuilder.group({
+        //     titleId     : ['']
+        // })
+        // title : ['']
+      })
     });
+    const ctrl = this.horizontalStepperForm.controls.step1.get('offerPrice');
+    ctrl.disable();
+
+  }
+  change(event) {
+    debugger
+    if (this.horizontalStepperForm.invalid) {
+      return;
+    }
+    const dataa = this.horizontalStepperForm.getRawValue();
+    this.ListOfCourses= dataa.step2.courseId;
+    if (event.isUserInput) {
+      console.log(event.source.value, event.source.selected);
+      // this._authService.GettitleById(this.ListOfCourses).subscribe((finalresult: any) => {
+      //   debugger
+      //   // var finalresult = JSON.parse(finalresult);
+      //   if (finalresult.status == "200") {
+      //     debugger
+      //     this.dataSource = new MatTableDataSource(finalresult.result);
+      //     this.dataSource.paginator = this.paginator;
+      //     this.dataSource.sort = this.sort;
+      //     this.cours = finalresult.result;
+      //     this.selected = true
+      //     console.log('techs', this.cours)
+      //   }
+      //   else {
+
+      //   }
+      // });
+    }
+  }
+  onChange() {
+    debugger
+    if (this.horizontalStepperForm.invalid) {
+      return;
+    }
+    const dataa = this.horizontalStepperForm.getRawValue();
+    this.ListOfCourses= dataa.step2.courseId;
+    var data = {
+      Id: this.ListOfCourses,
+    }
+      this._authService.GettitleById(data).subscribe((finalresult: any) => {
+        debugger
+        // var finalresult = JSON.parse(finalresult);
+        if (finalresult.status == "200") {
+          debugger
+          this.dataSource = new MatTableDataSource(finalresult.result);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          this.cours = finalresult.result;
+          this.selected = true
+          console.log('course', this.cours)
+        }
+        else {
+
+        }
+      });
+  }
+  toggleCompleted($event: MatSlideToggleChange): void {
+    debugger
+    if ($event.checked != undefined) {
+      this.active = $event.checked;
+      if (this.active == true) {
+        const ctrl = this.horizontalStepperForm.controls.step1.get('offerPrice');
+        ctrl.enable();
+      }
+      else {
+        const ctrl = this.horizontalStepperForm.controls.step1.get('offerPrice');
+        ctrl.disable();
+        ctrl.setValue('0')
+        
+      }
+
+    }
+    else {
+      this.active = false;
+      // this.horizontalStepperForm.controls.step1['offerPrice'].enable();
+
+    }
+    //this.active=this.filters.hideCompleted$.next(change.checked);
+  }
+  applyFilter(filterValue: string) {
+    //debugger
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
   GetCourse() {
-    debugger
+    //debugger
     this._authService.GetCourses().subscribe((finalresult: any) => {
-      debugger
+      //debugger
       var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
-        debugger
+        //debugger
         //this.dataSource= finalresult.result;
         this.cours = finalresult.result;
         //this.roles = finalresult.result;
@@ -65,55 +178,58 @@ export class CourseplanComponent implements OnInit {
       }
     });
   }
-  Freeclick() {
-    this.Free = true;
-    this.planId = 1;
-    this.Monthly = false;
-    this.Quaterly = false;
-    this.Yearly = false;
-
-  }
-  Monthlyclick() {
-    debugger
-    this.Monthly = true;
-    this.planId = 2;
-    this.Free = false;
-    this.Quaterly = false;
-    this.Yearly = false;
-  }
-  Quaterlyclick() {
-    this.Quaterly = true;
-    this.planId = 3;
-    this.Free = false;
-    this.Monthly = false;
-    this.Yearly = false;
-  }
-  Yearlyclick() {
-    this.Yearly = true;
-    this.planId = 4;
-    this.Free = false;
-    this.Monthly = false;
-    this.Quaterly = false;
-  }
   onChangeDemo(ob: MatCheckboxChange) {
     console.log(ob.checked + " => " + ob.source.id);
   }
-
+  // getDateItem(date: Date): string {
+  //   debugger
+  //   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+  // }
 
   savefree(): void {
     debugger
     // Return if the form is invalid
-    if (this.FreeForm.invalid) {
+    if (this.horizontalStepperForm.invalid) {
       return;
     }
-    const freedata = this.FreeForm.getRawValue();
-    var days = parseInt(freedata.days);
-    this.EndDate.setDate(this.startdate.getDate() + days);
+    const dataa = this.horizontalStepperForm.getRawValue();
+    if (this.active == undefined) {
+      this.active = false;
+      // this.horizontalStepperForm.controls['offerPrice'].disable();
+      this.OfferPrice = '0'
+    }
+    else {
+      // this.horizontalStepperForm.controls['offerPrice'].enable();
+      this.OfferPrice = dataa.step1.offerPrice;
+    }
+    var mindate = new Date(dataa.step1.effectiveDate);
+    var maxdate = new Date(dataa.step1.effectiveTill);
+
+    if (mindate >= maxdate) {
+      this.showAlert = true;
+
+      this.alert = {
+        type: 'success',
+        message: "EffectiveFromdate Should not be Greaterthan or equal to EffectiveTillDate"
+      };
+      setTimeout(() => {
+        this.showAlert = false;
+        // this._router.navigate(['/courses/course']);
+      }, 3500);
+     
+      return;
+    }
+    // var days = parseInt(dataa.days);
+    // this.EndDate.setDate(this.startdate.getDate() + days);
     var data = {
-      EffectiveFrom: this.startdate,
-      EffectiveTill: this.EndDate,
-      Description: freedata.description,
-      ListOfCourses: freedata.courseId,
+      PlanName: dataa.step1.planName,
+      Price: dataa.step1.price,
+      OfferPrice: this.OfferPrice,
+      EffectiveFrom: dataa.step1.effectiveDate,
+      EffectiveTill: dataa.step1.effectiveTill,
+      ListOfCourses: dataa.step2.courseId,
+      IsOffer: this.active,
+      // Title:dataa.step2.titleId,
       CreatedBy: parseInt(localStorage.getItem("LoginId")),
     }
     this._authService.AddCoursePlan(data).subscribe((result: any) => {
@@ -124,10 +240,10 @@ export class CourseplanComponent implements OnInit {
       //     //  IsActive: this.active,
       //  }
       //   this._authService.Addtechnology(data).subscribe((result: any) => {
-      debugger
+      //debugger
       var result = JSON.parse(result);
       if (result.status == "200") {
-        debugger
+        //debugger
 
         // Show the alert
         this.showAlert = true;

@@ -67,15 +67,15 @@ quillModules: any = {
       technologyId : ['', []],
       Description  : ['', []],
       Title        :['', []],
-      Duration     :['', [Validators.required]],
-      Fees         :['', []],
-      units        :['', []],
+      // Duration     :['', [Validators.required]],
+      // Fees         :['', []],
+      // units        :['', []],
       // userchkactive: ['']
 
     });
   }
   onSelectFile(files: FileList) {
-    debugger
+    //debugger
     if (files.length === 0)
         return;
     if (files.length > 0) {
@@ -90,12 +90,12 @@ quillModules: any = {
     }
 }
   GetTechnologys() {
-    debugger
+    //debugger
     this._authService.GetTechnologies().subscribe((finalresult: any) => {
-      debugger
+      //debugger
      var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
-        debugger
+        //debugger
         //this.dataSource= finalresult.result;
         this.technology= finalresult.result;
         //this.roles = finalresult.result;
@@ -133,24 +133,21 @@ quillModules: any = {
     //   if(this.active==undefined){
     //      this.active = true;
     //  }
-     if(course.Duration==""){
-       course.Duration=0
-          // this.courseForm.controls['Duration'].setValue(0)
-        }
-        if(course.Fees==""){
-          course.Fees=0
-          // this.courseForm.controls['Fees'].setValue(0)
-          // course.fees="";
-        }
+    //  if(course.Duration==""){
+    //    course.Duration=0
+    //     }
+    //     if(course.Fees==""){
+    //       course.Fees=0
+    //     }
      const formData: FormData = new FormData();
             formData.append("CourseName",course.courseName)
             formData.append("CreatedBy",(localStorage.getItem("LoginId")));
             formData.append("TechnologyId",course.technologyId)
             formData.append("Description",course.Description)
             formData.append("Title",course.Title)
-            formData.append("Duration",course.Duration)
-            formData.append("Units",course.units)
-            formData.append("Fees",course.Fees)
+            // formData.append("Duration",course.Duration)
+            // formData.append("Units",course.units)
+            // formData.append("Fees",course.Fees)
         if (this.files.length == 1) {
             formData.append("fileupload",this.fileToUpload , this.name);
         }
@@ -164,10 +161,10 @@ quillModules: any = {
         //  IsActive: this.active,
     //  }
       this._authService.Addcourse(formData).subscribe((result: any) => {
-          debugger
+          //debugger
            var result = JSON.parse(result);
             if (result.status == "200") {
-                debugger
+                //debugger
                  // Set the alert
                  this.alert = {
                   type   : 'success',
@@ -197,7 +194,7 @@ quillModules: any = {
   }
   toggleCompleted($event: MatSlideToggleChange): void
     {
-        debugger
+        //debugger
         if($event.checked!=undefined){
             this.active = $event.checked;
         }

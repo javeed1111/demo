@@ -54,7 +54,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
      */
     canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean
     {
-        debugger
+        //debugger
         return this._check('/');
     }
 

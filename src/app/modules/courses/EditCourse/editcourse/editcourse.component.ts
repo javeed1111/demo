@@ -64,7 +64,7 @@ export class EditcourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger;
+    //debugger;
     var loginId = localStorage.getItem("LoginId");
     var id = this.approute.snapshot.params['id'];
     var value = this.approute.snapshot.params['value'];
@@ -77,9 +77,9 @@ export class EditcourseComponent implements OnInit {
       technologyId: ['', []],
       description: ['', []],
       title: ['', []],
-      duration: ['', [Validators.required]],
-      units: ['', []],
-      fees: [''],
+      // duration: ['', [Validators.required]],
+      // units: ['', []],
+      // fees: [''],
       imageURL: ['', []],
       //isActive       : ['']
 
@@ -93,7 +93,7 @@ export class EditcourseComponent implements OnInit {
     }, 10);
   }
   onSelectFile(files: FileList) {
-    debugger
+    //debugger
     if (files.length === 0)
       return;
     if (files.length > 0) {
@@ -108,12 +108,12 @@ export class EditcourseComponent implements OnInit {
     }
   }
   GetTechnologys() {
-    debugger
+    //debugger
     this._authService.GetTechnologies().subscribe((finalresult: any) => {
-      debugger
+      //debugger
       var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
-        debugger
+        //debugger
         //this.dataSource= finalresult.result;
         this.technology = finalresult.result;
         //this.roles = finalresult.result;
@@ -126,7 +126,7 @@ export class EditcourseComponent implements OnInit {
     });
   }
   Edit(id:any,value:any) {
-    debugger
+    //debugger
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
       baseurl = "https://localhost:44358"
@@ -141,9 +141,9 @@ export class EditcourseComponent implements OnInit {
       this.courseForm.controls['technologyId'].disable();
       this.courseForm.controls['description'].disable();
       this.courseForm.controls['title'].disable();
-      this.courseForm.controls['duration'].disable();
-      this.courseForm.controls['units'].disable();
-      this.courseForm.controls['fees'].disable();
+      // this.courseForm.controls['duration'].disable();
+      // this.courseForm.controls['units'].disable();
+      // this.courseForm.controls['fees'].disable();
 
 
 
@@ -155,29 +155,28 @@ export class EditcourseComponent implements OnInit {
     this.courseForm.controls['technologyId'].enable();
     this.courseForm.controls['description'].enable();
     this.courseForm.controls['title'].enable();
-    this.courseForm.controls['duration'].enable();
-    this.courseForm.controls['units'].enable();
-    this.courseForm.controls['fees'].enable();
+    // this.courseForm.controls['duration'].enable();
+    // this.courseForm.controls['units'].enable();
+    // this.courseForm.controls['fees'].enable();
 
   }
     this.Id = id;
     this._authService.GetcourseById(this.Id).subscribe((finalresult: any) => {
-      debugger
+      //debugger
       console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
       if (finalresult.status == "200") {
-        debugger
+        //debugger
 
         this.courseForm.patchValue(finalresult.result);
         const course = this.courseForm.getRawValue();
-        if (course.duration == 0) {
-          this.courseForm.controls['duration'].setValue("")
-        }
-        if (course.fees == 0) {
-          this.courseForm.controls['fees'].setValue("")
-          // course.fees="";
-        }
+        // if (course.duration == 0) {
+        //   this.courseForm.controls['duration'].setValue("")
+        // }
+        // if (course.fees == 0) {
+        //   this.courseForm.controls['fees'].setValue("")
+        // }
         if (finalresult.result.imageURL != null) {
           this.ImageURL = baseurl + finalresult.result.imageURL;
           // this.noimage=true;;
@@ -204,7 +203,7 @@ export class EditcourseComponent implements OnInit {
     });
   }
   Updatecourse() {
-    debugger
+    //debugger
     this.showAlert = false;
     if (this.courseForm.invalid) {
       return;
@@ -221,15 +220,15 @@ export class EditcourseComponent implements OnInit {
     // if (course.isActive == undefined) {
     //   course.isActive = true;
     // }
-    if (course.duration == "") {
-      course.duration = 0
-      // this.courseForm.controls['Duration'].setValue(0)
-    }
-    if (course.fees == "") {
-      course.fees = 0
-      // this.courseForm.controls['Fees'].setValue(0)
-      // course.fees="";
-    }
+    // if (course.duration == "") {
+    //   course.duration = 0
+    //   // this.courseForm.controls['Duration'].setValue(0)
+    // }
+    // if (course.fees == "") {
+    //   course.fees = 0
+    //   // this.courseForm.controls['Fees'].setValue(0)
+    //   // course.fees="";
+    // }
     const formData: FormData = new FormData();
     formData.append("CourseName", course.courseName)
     formData.append("TechnologyId", course.technologyId)
@@ -237,9 +236,9 @@ export class EditcourseComponent implements OnInit {
     formData.append("Description", course.description)
     formData.append("Title", course.title)
     formData.append("CourseId", this.approute.snapshot.params['id'])
-    formData.append("Duration", course.duration)
-    formData.append("Units",course.units)
-    formData.append("Fees", course.fees)
+    // formData.append("Duration", course.duration)
+    // formData.append("Units",course.units)
+    // formData.append("Fees", course.fees)
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
     }
@@ -257,10 +256,10 @@ export class EditcourseComponent implements OnInit {
     // }
     this._authService.UpdateCourse(formData).subscribe((result: any) => {
 
-      debugger
+      //debugger
       var result = JSON.parse(result);
       if (result.status == "200") {
-        debugger
+        //debugger
         // Set the alert
         this.alert = {
           type: 'success',
@@ -290,7 +289,7 @@ export class EditcourseComponent implements OnInit {
     });
   }
   toggleCompleted($event: MatSlideToggleChange): void {
-    debugger
+    //debugger
     if ($event.checked != undefined) {
       this.isActive = $event.checked;
     }

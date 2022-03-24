@@ -1,8 +1,10 @@
-import { Route } from '@angular/router';
+import { Route, RouterModule} from '@angular/router';
 import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
+import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -93,4 +95,18 @@ export const appRoutes: Route[] = [
 
         ]
     }
+        
 ];
+// @NgModule({
+
+//     imports: [RouterModule.forRoot(appRoutes, {
+//         scrollPositionRestoration: 'enabled',
+//         anchorScrolling: 'enabled',
+//         initialNavigation: 'enabled',
+//         useHash:true,
+//         enableTracing:true
+//     })],
+//     exports: [RouterModule]
+// })
+// export class AppRoutingModule { }
+

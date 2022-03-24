@@ -13,46 +13,25 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-// import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 export interface CourseData {
   sno: string;
   courseName: string;
-  technologyName: string;
+  noofchapters: string;
   title: string;
   Actions: string;
 }
 
 @Component({
-  selector: 'app-course',
-  templateUrl: './course.component.html',
- styleUrls: ['./course.component.scss'],
- encapsulation: ViewEncapsulation.None,
+  selector: 'app-course-content',
+  templateUrl: './course-content.component.html',
+  styleUrls: ['./course-content.component.scss'],
+  encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
-//   styles         : [
-//     /* language=SCSS */
-//     `
-//         .inventory-grid {
-//             grid-template-columns: 48px auto 40px;
-
-//             @screen sm {
-//                 grid-template-columns: 48px auto 112px 72px;
-//             }
-
-//             @screen md {
-//                 grid-template-columns: 48px 112px auto 112px 72px;
-//             }
-
-//             @screen lg {
-//                 grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
-//             }
-//         }
-//     `
-// ],
 })
-export class CourseComponent implements OnInit {
+export class CourseContentComponent implements OnInit {
   isLoading: boolean = false;
   selectedProduct: any | null = null;
-  displayedColumns = ['sno',  'title', 'courseName', 'technologyName','actions'];
+  displayedColumns = ['sno',  'title', 'courseName', 'noofchapters','actions'];
   dataSource: MatTableDataSource<CourseData>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -70,7 +49,6 @@ showAlert:  boolean = false;
 course: any;
 
   constructor(
-    
     private _activatedRoute: ActivatedRoute,
     private _changeDetectorRef: ChangeDetectorRef,
     private _formBuilder: FormBuilder,
@@ -80,47 +58,10 @@ course: any;
     private _overlay: Overlay,
     private _viewContainerRef: ViewContainerRef,
     private _authService: AuthService,
-  ) { 
-
-    // const users: CourseData[] = [];
-    // this.dataSource = new MatTableDataSource(users);
-    this.GetCourses();
-  }
+  ) { }
 
   ngOnInit(): void {
-    //debugger
-   
-    
-       // this.searchInputControl.valueChanges
-       // .pipe(
-       //     takeUntil(this._unsubscribeAll),
-       //     debounceTime(300),
-       //     switchMap((query) => {
-       //       //debugger
-       //         this.closeDetails();
-       //         this.isLoading = true;
-       //         return this._authService.GetRoles(0, 10, 'roleName', 'asc', query);
-       //     }),
-       //     map(() => {
-       //         this.isLoading = false;
-       //     })
-       // )
-       // .subscribe();
-
-       //    // Get the pagination
-       //    this._venturesService.pagination$
-       //    .pipe(takeUntil(this._unsubscribeAll))
-       //    .subscribe((pagination: VenturePagination) => {
-
-       //        // Update the pagination
-       //        this.pagination = pagination;
-
-       //        // Mark for check
-       //        this._changeDetectorRef.markForCheck();
-       //    });
-  }
-  ngAfterViewInit() {
-
+    this.GetCourses();
   }
   applyFilter(filterValue: string) {
     //debugger
@@ -129,34 +70,25 @@ course: any;
     this.dataSource.filter = filterValue;
   }
   closeDetails(): void
-    {
-        this.selectedProduct = null;
-    }
-
+  {
+      this.selectedProduct = null;
+  }
   showEditModal(id) {
     //debugger
     var value="edit"
-    this._router.navigate(['/courses/editcourse/'+id+'/'+value])
+    this._router.navigate(['/courses/addcoursecontent/'+id+'/'+value])
   }
   showViewModal(id) {
     //debugger
-    var value="view"
-    this._router.navigate(['/courses/editcourse/'+id+'/'+value])
+    var value="add"
+    this._router.navigate(['/courses/addcoursecontent/'+id+'/'+value])
   }
-
   ngOnDestroy(): void
   {
       // Unsubscribe from all subscriptions
       this._unsubscribeAll.next(null);
       this._unsubscribeAll.complete();
   }
-  createProduct(){
-    //debugger
-
-    // this._router.navigate(['/userconfig/role/addrole'])
-    this._router.navigate(['/courses/addcourse'])
-  }
-
   courseData :any= []
   GetCourses() {
     //debugger
@@ -165,17 +97,17 @@ course: any;
      var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
         //debugger
+        finalresult.result.noofchapters =0
         // for(let i=0;i<finalresult.result.length;i++){
-        //   if(finalresult.result[i].duration==0){
-        //     finalresult.result[i].duration="";
-        //   }
-        //   else{
-        //     finalresult.result[i].duration=finalresult.result[i].duration+""+finalresult.result[i].units;
-        //   }
-        //   if(finalresult.result[i].fees==0){
-        //     finalresult.result[i].fees="Free";
-        //   }
-
+          // if(finalresult.result[i].noOfChapters==0){
+          //   finalresult.result[i].duration="";
+          // }
+          // else{
+          //   finalresult.result[i].duration=finalresult.result[i].duration+""+finalresult.result[i].units;
+          // }
+          // if(finalresult.result[i].fees==0){
+          //   finalresult.result[i].fees="Free";
+          // }
         // }
         this.dataSource = new MatTableDataSource(finalresult.result);
         // this.course= finalresult.result;
@@ -269,5 +201,4 @@ course: any;
         });
 
     }
-
 }

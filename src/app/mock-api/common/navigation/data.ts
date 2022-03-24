@@ -118,10 +118,10 @@ export const defaultNavigation: FuseNavigationItem[] = [
                         link : '/courses/course'
                     },
                     {
-                        id   : 'courses.upcmgtrng',
-                        title: 'UpComing Training',
+                        id   : 'courses.coursecontent',
+                        title: 'Course Content',
                         type : 'basic',
-                        link : '/courses/upcomingtraining'
+                        link : '/courses/coursecontent'
                     },
                     {
                         id   : 'courses.courseplan',

@@ -28,7 +28,7 @@ export class AuthUtils
     {
      //debugger
         // Return if there is no token
-        if ( !token || token === '' )
+        if ( !token || token === '' || token === 'undefined' )
         {
             return true;
         }

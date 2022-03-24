@@ -41,7 +41,7 @@ export class EdittechnologyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger;
+    //debugger;
     var loginId = localStorage.getItem("LoginId");
     var id = this.approute.snapshot.params['id'];
     var value = this.approute.snapshot.params['value'];
@@ -63,7 +63,7 @@ export class EdittechnologyComponent implements OnInit {
     }, 10);
   }
   onSelectFile(files: FileList) {
-    debugger
+    //debugger
     if (files.length === 0)
       return;
     if (files.length > 0) {
@@ -85,7 +85,7 @@ export class EdittechnologyComponent implements OnInit {
     }
   }
   Edit(id: any, value: any) {
-    debugger
+    //debugger
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
       baseurl = "https://localhost:44358"
@@ -107,12 +107,12 @@ export class EdittechnologyComponent implements OnInit {
     }
     this.Id = id;
     this._authService.GetechnologyById(this.Id).subscribe((finalresult: any) => {
-      debugger
+      //debugger
       console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
       if (finalresult.status == "200") {
-        debugger
+        //debugger
 
         this.techForm.patchValue(finalresult.result);
         if (finalresult.result.imageURL != null) {
@@ -144,7 +144,7 @@ export class EdittechnologyComponent implements OnInit {
 
   Updatetechnology() {
     this.showAlert = false;
-    debugger
+    //debugger
     if (this.techForm.invalid) {
       return;
     }
@@ -180,10 +180,10 @@ export class EdittechnologyComponent implements OnInit {
     //  }
     this._authService.Updatetechnology(formData).subscribe((result: any) => {
 
-      debugger
+      //debugger
       var result = JSON.parse(result);
       if (result.status == "200") {
-        debugger
+        //debugger
         // Show the alert
         this.alert = {
           type: 'success',
@@ -210,7 +210,7 @@ export class EdittechnologyComponent implements OnInit {
     });
   }
   toggleCompleted($event: MatSlideToggleChange): void {
-    debugger
+    //debugger
     if ($event.checked != undefined) {
       this.isActive = $event.checked;
     }

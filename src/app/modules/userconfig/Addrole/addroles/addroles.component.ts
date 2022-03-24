@@ -48,7 +48,7 @@ showAlert:  boolean = false;
   }
   AddRole()
   {
-      debugger
+      //debugger
       if (this.roleForm.invalid) {
           return;
       }
@@ -72,10 +72,10 @@ showAlert:  boolean = false;
         //  IsActive: this.active,
      }
       this._authService.Addrole(data).subscribe((result: any) => {
-          debugger
+          //debugger
            var result = JSON.parse(result);
             if (result.status == "200") {
-                debugger
+                //debugger
                 
                  // Set the alert
                  this.alert = {
@@ -107,7 +107,7 @@ showAlert:  boolean = false;
   }
   // toggleCompleted($event: MatSlideToggleChange): void
   //   {
-  //       debugger
+  //       //debugger
   //       if($event.checked!=undefined){
   //           this.active = $event.checked;
   //       }

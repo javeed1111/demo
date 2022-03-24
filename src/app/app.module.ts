@@ -13,6 +13,7 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { MatInputModule } from '@angular/material/input';
+// import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -26,7 +27,7 @@ const routerConfig: ExtraOptions = {
     imports     : [
         BrowserModule,
         BrowserAnimationsModule,
-        RouterModule.forRoot(appRoutes, routerConfig),
+        RouterModule.forRoot(appRoutes, {useHash:true}),
 
         // Fuse, FuseConfig & FuseMockAPI
         FuseModule,
@@ -42,11 +43,17 @@ const routerConfig: ExtraOptions = {
         MatInputModule,
 
         // 3rd party modules that require global configuration via forRoot
-        MarkdownModule.forRoot({})
+        MarkdownModule.forRoot({}),
+        // AppRoutingModule
     ],
     bootstrap   : [
         AppComponent
     ]
+    // bootstrap(MyApp, [
+    //     ROUTER_PROVIDERS,
+    //     {provide: LocationStrategy, useClass: HashLocationStrategy}
+    //   ]);
+      
 })
 export class AppModule
 {

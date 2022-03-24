@@ -8,7 +8,8 @@ import { CoursesComponent } from './courses.component';
 import { EditcourseComponent } from './EditCourse/editcourse/editcourse.component';
 import { EdittechnologyComponent } from './Edittechnology/edittechnology/edittechnology.component';
 import { TechnologyComponent } from './technology/technology.component';
-import { UpcomingtrainingComponent } from './upcomingtraining/upcomingtraining.component';
+import { AddcoursecontentComponent } from './AddCoursecontent/Addcoursecontent.component';
+import { CourseContentComponent } from './Coursecontent/course-content/course-content.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
             { path: '', redirectTo: 'technology', pathMatch: 'full' },
             { path: 'technology', component: TechnologyComponent },
             { path: 'course', component: CourseComponent },
-            { path: 'upcomingtraining', component: UpcomingtrainingComponent },
+            { path: 'addcoursecontent/:id/:value', component: AddcoursecontentComponent },
+            { path: 'coursecontent', component: CourseContentComponent },
             { path: 'courseplan', component: CourseplanComponent},
             { path: 'addtechnology', component: AddtechnologyComponent },
             { path: 'edittechnology/:id/:value', component: EdittechnologyComponent },

@@ -54,12 +54,12 @@ imageSrc
 
   // ngAfterViewInit()
   // {
-  //   debugger;
+  //   //debugger;
   //   this.item.nativeElement.focus();
   //   this.cdr.detectChanges();
   // }
   onSelectFile(files: FileList) {
-    debugger
+    //debugger
     if (files.length === 0)
         return;
     if (files.length > 0) {
@@ -86,7 +86,7 @@ imageSrc
   AddTechnology()
   {
     this.showAlert=false
-      debugger
+      //debugger
       if (this.techForm.invalid) {
           return;
       }
@@ -103,10 +103,10 @@ imageSrc
         }
         console.log('formdata',formData)
         this._authService.Addtechnology(formData).subscribe((result: any) => {
-          debugger
+          //debugger
            var result = JSON.parse(result);
             if (result.status == "200") {
-                debugger
+                //debugger
                  // Set the alert
                  this.alert = {
                   type   : 'success',
@@ -137,7 +137,7 @@ imageSrc
   }
   // toggleCompleted($event: MatSlideToggleChange): void
   //   {
-  //       debugger
+  //       //debugger
   //       if($event.checked!=undefined){
   //           this.active = $event.checked;
   //       }

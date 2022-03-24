@@ -15,8 +15,8 @@ export class AuthService
      * Constructor
      */
     constructor(private _httpClient: HttpClient,private _userService: UserService){
-    // this.baseUrl = 'https://localhost:44358/';
-    this.baseUrl = 'http://testugetitapi.fadelsoft.com/';
+      this.baseUrl = 'https://localhost:44358/';
+    //this.baseUrl = 'http://testugetitapi.fadelsoft.com/';
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -28,8 +28,9 @@ export class AuthService
      */
     set accessToken(token: string)
     {
-    //debugger
-       token ==undefined?'': localStorage.setItem('accessToken', token);
+    debugger
+    //localStorage.setItem('accessToken', token);
+        token ==undefined?'': localStorage.setItem('accessToken', token);
     }
 
     get accessToken(): string
@@ -68,6 +69,7 @@ export class AuthService
      */
     public signIn(credentials: { mobileno: string; password: string }): Observable<any>
     {
+      debugger
         // Throw error, if the user is already logged in
         if ( this._authenticated )
         {
@@ -77,7 +79,7 @@ export class AuthService
         return this._httpClient.post(this.baseUrl + "api/Admin/userlogin", credentials).pipe(
             switchMap((response: any) => {
                 debugger
-
+                // if(response.status=='200'){
                 // Store the access token in the local storage
                 this.accessToken = response.result.token;
                 localStorage.setItem("firstname", response.result.firstName);
@@ -85,6 +87,7 @@ export class AuthService
                         localStorage.setItem("email", response.result.email);
                         localStorage.setItem("LoginId", response.result.id);
                         localStorage.setItem("token", response.result.token);
+                // }
 
                 // Set the authenticated flag to true
                 this._authenticated = true;
@@ -157,14 +160,14 @@ export class AuthService
     }
     public Addcourse(formData) {
         debugger
-        return this._httpClient.post(this.baseUrl + "api/Admin/AddCourses  ", formData, {responseType: 'text'});
+        return this._httpClient.post(this.baseUrl + "api/Admin/AddCourses", formData, {responseType: 'text'});
       }
     public uploadAvatar(id, file) {
         debugger
       return this._httpClient.get(this.baseUrl + "api/Admin/GetAllCourses",{responseType: 'text'});
     }
     public GetcourseById(id) {
-        debugger
+        //debugger
         return this._httpClient.get(this.baseUrl + "api/Admin/GetCourseById", {params: {id}});
       }
     public UpdateCourse(formData) {
@@ -179,6 +182,41 @@ export class AuthService
         //debugger
         return this._httpClient.post(this.baseUrl + "api/Admin/AddPlanCourse", data, {responseType: 'text'});
       }
+      public GetPlanmasters() {
+        return this._httpClient.get(this.baseUrl + "api/Admin/GetAllPlanMaster",{responseType: 'text'});
+      }
+      public GetPlanmastersById(id) {
+        debugger
+        return this._httpClient.get(this.baseUrl + "api/Admin/GetPlanMasterById", {params: {id}});
+      }
+
+      // yet to implement
+      public GettitleById(ListId) {
+        debugger
+        return this._httpClient.get(this.baseUrl + "api/Admin/GetTitleById",ListId);
+      }
+      public gridcoursecontentbycourseid(id) {
+        debugger
+      return this._httpClient.get(this.baseUrl + "api/Admin/Getcoursecontentbycourseid",{params: {id}});
+    }
+    public GetcoursecontentById(id) {
+      debugger
+      return this._httpClient.get(this.baseUrl + "api/Admin/Getcoursecontentbyid", {params: {id}});
+    }
+    Addcoursecontent(data) {
+      //debugger
+      return this._httpClient.post(this.baseUrl + "api/Admin/Addcoursecontent", data, {responseType: 'text'});
+    }
+    Updatecoursecontent(data) {
+      //debugger
+      return this._httpClient.post(this.baseUrl + "api/Admin/Updatecoursecontent", data, {responseType: 'text'});
+    }
+    public deletecoursecontent(id) {
+      debugger
+      return this._httpClient.delete(this.baseUrl + "api/Admin/Deletecoursecontent", {params: {id}});
+    }
+    
+      
     
       
 
@@ -187,7 +225,7 @@ export class AuthService
      */
     signInUsingToken(): Observable<any>
     {
-        //debugger
+        debugger
         // Renew token
         return this._httpClient.post('api/auth/refresh-access-token', {
             accessToken: this.accessToken
@@ -255,7 +293,7 @@ export class AuthService
      */
     check(): Observable<boolean>
     {
-        //debugger
+        debugger
         // Check if the user is logged in
         if ( this._authenticated )
         {

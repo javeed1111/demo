@@ -120,7 +120,7 @@ export class AddUserComponent implements OnInit, OnDestroy
         this._contactsService.contact$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((contact: Contact) => {
-                debugger
+                //debugger
 
                 // Open the drawer in case it is closed
                 this._contactsListComponent.matDrawer.open();
@@ -143,7 +143,7 @@ export class AddUserComponent implements OnInit, OnDestroy
 
                 // if ( contact.emails.length > 0 )
                 // {
-                //     debugger
+                //     //debugger
                 //     // Iterate through them
                 //     contact.emails.forEach((email) => {
 
@@ -273,7 +273,7 @@ export class AddUserComponent implements OnInit, OnDestroy
         this._contactsService.countries$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((codes: Country[]) => {
-                debugger
+                //debugger
                 this.countries = codes;
 
                 // Mark for check
@@ -331,7 +331,7 @@ export class AddUserComponent implements OnInit, OnDestroy
      */
     toggleEditMode(editMode: boolean | null = null): void
     {
-        debugger
+        //debugger
         if ( editMode === null )
         {
             this.editMode = !this.editMode;
@@ -373,7 +373,7 @@ export class AddUserComponent implements OnInit, OnDestroy
     }
     toggleCompleted($event: MatSlideToggleChange): void
     {
-        debugger
+        //debugger
         if($event.checked!=undefined){
             this.active = $event.checked;
         }
@@ -387,7 +387,7 @@ export class AddUserComponent implements OnInit, OnDestroy
      */
      AddUser()
      {
-         debugger
+         //debugger
          if (this.contactForm.invalid) {
              return;
          }
@@ -420,10 +420,10 @@ export class AddUserComponent implements OnInit, OnDestroy
             IsActive: this.active,
         }
          this._authService.Adduser(data).subscribe((result: any) => {
-             debugger
+             //debugger
               var result = JSON.parse(result);
                if (result.status == "200") {
-                   debugger
+                   //debugger
                    
                     // Set the alert
                  this.alert = {
@@ -487,7 +487,7 @@ export class AddUserComponent implements OnInit, OnDestroy
 
                 // Delete the contact
                 this._contactsService.deleteUser(id).subscribe((data:any) => {
-                    debugger
+                    //debugger
                     if (data.status == "200") {
                         
                           

@@ -20,8 +20,8 @@ export class UsersService
      */
     constructor(private _httpClient: HttpClient)
     {
-        //this.baseUrl = 'https://localhost:44358/';
-        this.baseUrl = 'http://testugetitapi.fadelsoft.com/';
+        this.baseUrl = 'https://localhost:44358/';
+        //this.baseUrl = 'http://testugetitapi.fadelsoft.com/';
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -69,10 +69,10 @@ export class UsersService
      */
     getContacts(): Observable<Contact[]>
     {
-        debugger
+        //debugger
         return this._httpClient.get<Contact[]>(this.baseUrl + "api/Admin/GetAllusers").pipe(
             tap((contacts) => {
-                debugger
+                //debugger
                 this._contacts.next(contacts);
             })
         );
@@ -90,7 +90,7 @@ export class UsersService
          }).pipe(
              tap((contacts) => {
                  contacts = contacts.filter(contact => contact.firstName && contact.firstName.toLowerCase().includes(query.toLowerCase()));
-                 debugger
+                 //debugger
                  this._contacts.next(contacts);
              })
          );
@@ -111,11 +111,11 @@ export class UsersService
      */
     getContactById(id: string): Observable<Contact>
     {
-        debugger
+        //debugger
         return this._contacts.pipe(
             take(1),
             map((contacts) => {
-                debugger
+                //debugger
 
                 // Find the contact
                 const contact = contacts.find(item => item.id == id) || null;
@@ -159,7 +159,7 @@ export class UsersService
         );
     }
     public UpdateUser(data) {
-        debugger
+        //debugger
         return this._httpClient.post(this.baseUrl + "api/Admin/UpdateUser", data);
       }
 
@@ -218,7 +218,7 @@ export class UsersService
     //         take(1),
     //         switchMap(contacts => this._httpClient.delete(this.baseUrl + "api/Admin/DeleteUser", {params: {id}}).pipe(
     //             map((isDeleted: boolean) => {
-    //             debugger
+    //             //debugger
 
     //                 // Find the index of the deleted contact
     //                 const index = contacts.findIndex(item => item.id === id);
@@ -236,7 +236,7 @@ export class UsersService
     //     );
     // }
     public deleteUser(id) {
-        debugger
+        //debugger
         return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteUser", {params: {id}});
       }
 

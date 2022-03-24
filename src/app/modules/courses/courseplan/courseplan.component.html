@@ -1,94 +1,185 @@
-<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+<div class="flex flex-col flex-auto min-w-0">
 
     <!-- Header -->
     <div
-        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
-        <!-- Loader -->
-
-        <!-- Title -->
-        <div class="text-4xl font-extrabold tracking-tight">Courses Plan</div>
-
-        <!-- Actions -->
-        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <!-- Search -->
-            <!-- <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
-                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                <input matInput [formControl]="searchInputControl" [autocomplete]="'off'"
-                    [placeholder]="'Search Courses'">
-            </mat-form-field> -->
-            <!-- Add product button -->
-            <button class="ml-4" mat-flat-button [color]="'primary'" (click)="Freeclick()">
-                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-2 mr-1">Free</span>
-            </button>
-            <button class="ml-4" mat-flat-button [color]="'primary'" (click)="Monthlyclick()">
-                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-2 mr-1">Monthly</span>
-            </button>
-            <button class="ml-4" mat-flat-button [color]="'primary'" (click)="Quaterlyclick()">
-                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-2 mr-1">Quaterly</span>
-            </button>
-            <button class="ml-4" mat-flat-button [color]="'primary'" (click)="Yearlyclick()">
-                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-2 mr-1">Yearly</span>
-            </button>
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <!-- <div>
+                    <a class="whitespace-nowrap text-primary-500">User Interface</a>
+                </div> -->
+                <!-- <div class="flex items-center ml-1 whitespace-nowrap">
+                    <mat-icon
+                        class="icon-size-5 text-secondary"
+                        [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+                    <a class="ml-1 text-primary-500">Forms</a>
+                </div> -->
+            </div>
+            <!-- Title -->
+            <div class="mt-2">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    CoursePlan
+                </h2>
+            </div>
         </div>
     </div>
 
-    <!-- Free Main -->
-    <div class="flex flex-auto overflow-hidden" *ngIf="Free">
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
 
-        <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
-            <div class="w-full sm:w-auto py-8 px-4 sm:p-12 sm:rounded-2xl sm:shadow sm:bg-card">
-                <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
-                    <!-- Logo -->
-                    <!-- <div class="w-12">
-                        <img src="assets/images/logo/logo.svg">
-                    </div> -->
+        <div class="max-w-3xl">
 
-                    <!-- Title -->
-                    <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Free</div>
-                    <!-- <div class="mt-0.5">
-                        Do you want to be notified when we are ready? Register below so we can notify you about the launch!
-                    </div> -->
+            <!-- <div class="prose prose-sm max-w-3xl">
+                <p>
+                    Form wizard examples in this page uses <code>mat-horizontal-stepper</code> and <code>mat-vertical-stepper</code> components from Angular Material. You can get
+                    more information about them over here:
+                    <a
+                        class="link"
+                        href="https://material.angular.io/components/stepper/overview"
+                        rel="noreferrer"
+                        target="_blank">https://material.angular.io/components/stepper/overview
+                    </a>
+                    .
+                </p>
+                <p>
+                    We prepared couple examples to get you started. You are not limited with these examples, there are lots of options to steppers and you can configure them to
+                    have different behaviors. Take a look at the official guide to learn more about them.
+                </p>
+            </div> -->
 
-                    <!-- Alert -->
-                    <!-- <fuse-alert
-                        class="mt-8 -mb-4"
-                        *ngIf="showAlert"
-                        [appearance]="'outline'"
-                        [showIcon]="false"
-                        [type]="alert.type">
-                        {{alert.message}}
-                    </fuse-alert> -->
+            <!-- Horizontal stepper -->
+            <!-- <div class=" mb-8 text-3xl font-bold">Horizontal Stepper</div> -->
 
-                    <!-- Free form -->
-                    <form class="mt-8" [formGroup]="FreeForm">
+            <form class="p-4 bg-card shadow rounded overflow-hidden" [formGroup]="horizontalStepperForm">
+                <mat-horizontal-stepper [linear]="true" #horizontalStepper>
+                    <mat-step [formGroupName]="'step1'" [stepControl]="horizontalStepperForm.get('step1')"
+                        #horizontalStepperStep1>
+                        <ng-template matStepLabel>Plan Details</ng-template>
+                        <p class="my-6 font-medium">
+                            Fill in your plan details information to let us know your preferences
+                        </p>
+                        <div class="flex">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Plan Name</mat-label>
+                                <input matInput [formControlName]="'planName'" [placeholder]="'Plan Name'" required>
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:inbox'"></mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Price</mat-label>
+                                <input type="number" matInput [formControlName]="'price'" [placeholder]="'Price'"
+                                    required>
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex">
+                            <div class="space-y-4">
+                                <ng-container>
+                                    <!-- <div class="flex"> -->
+                                    <div class="fuse-mat-no-subscript flex-auto">
+                                        <mat-slide-toggle class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
+                                            id="offerApplicable" (change)="toggleCompleted($event)" [checked]="false">
+                                            Offer Applicable
+                                        </mat-slide-toggle>
+                                    </div>
+                                    <!-- </div> -->
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Offer Price</mat-label>
+                                <input type="number" matInput [formControlName]="'offerPrice'"
+                                    [placeholder]="'Offer Price'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex mb-4">
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-label>Effective Date</mat-label>
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                    [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
+                                <input matInput [matDatepicker]="effectiveDateDatepicker" [min]="todayDate"
+                                    [formControlName]="'effectiveDate'" [placeholder]="'EffectiveDate'">
+                                <mat-datepicker-toggle matSuffix [for]="effectiveDateDatepicker">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #effectiveDateDatepicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex mb-4">
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-label>Effective Till</mat-label>
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                    [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
+                                <input matInput [matDatepicker]="effectiveTillDatepicker" [min]="todayDate"
+                                    [formControlName]="'effectiveTill'" [placeholder]="'EffectiveTill'">
+                                <mat-datepicker-toggle matSuffix [for]="effectiveTillDatepicker">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #effectiveTillDatepicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <!-- <div class="flex flex-col gt-xs:flex-row">
+                            <mat-form-field class="flex-auto gt-xs:pr-3">
+                                <mat-select
+                                    [formControlName]="'country'"
+                                    [placeholder]="'Country / Region'"
+                                    required>
+                                    <mat-option value="country-1">Country 1</mat-option>
+                                    <mat-option value="country-2">Country 2</mat-option>
+                                    <mat-option value="country-3">Country 3</mat-option>
+                                </mat-select>
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matPrefix
+                                    [svgIcon]="'heroicons_solid:location-marker'"></mat-icon>
+                            </mat-form-field>
+                            <mat-form-field class="flex-auto gt-xs:pl-3">
+                                <mat-select
+                                    [formControlName]="'language'"
+                                    [placeholder]="'Language'"
+                                    required>
+                                    <mat-option value="language-1">Language 1</mat-option>
+                                    <mat-option value="language-2">Language 2</mat-option>
+                                    <mat-option value="language-3">Language 3</mat-option>
+                                </mat-select>
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matPrefix
+                                    [svgIcon]="'heroicons_solid:translate'"></mat-icon>
+                            </mat-form-field>
+                        </div> -->
+                        <div class="flex justify-end">
+                            <button class="px-8" mat-flat-button [color]="'primary'"
+                                [disabled]="horizontalStepperStep1.stepControl.pristine || horizontalStepperStep1.stepControl.invalid"
+                                type="button" matStepperNext>
+                                Next
+                            </button>
+                        </div>
+                    </mat-step>
 
-                        <!-- Email field -->
-                        <mat-form-field class="w-full">
-                            <mat-label>Days</mat-label>
-                            <input id="days" matInput [formControlName]="'days'">
-                        </mat-form-field>
-                        <!-- Email field -->
-                        <mat-form-field class="w-full">
-                            <mat-label>Description</mat-label>
-                            <input id="description" matInput [formControlName]="'description'">
-                        </mat-form-field>
-                        <div class="flex flex-col gt-sm:flex-row">
+                    <mat-step [formGroupName]="'step2'" [stepControl]="horizontalStepperForm.get('step2')"
+                        #horizontalStepperStep2>
+                        <ng-template matStepLabel>Plan Content</ng-template>
+                        <p class="my-6 font-medium">
+                            People here will get to know you with this information
+                        </p>
+                        <div class="flex flex-col gt-xs:flex-row">
                             <div class="flex flex-col">
                                 <mat-form-field class="flex-auto gt-xs:pr-3">
                                     <mat-label>Course</mat-label>
-                                     <mat-select name="courseId" placeholder="Courses" [formControlName]="'courseId'"
-                                   class="input-full-width" multiple>
-                                    <!-- <mat-option value="">Select Technology</mat-option> -->
-                                     <mat-option *ngFor="let item of cours "
-                                      [value]="item.courseId">{{ item.courseName }}</mat-option>
-                                     </mat-select> 
-                                     <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
+                                    <mat-select name="courseId" placeholder="Courses" [formControlName]="'courseId'"
+                                        class="input-full-width" multiple>
+                                        <!-- <mat-option value="">Select Course</mat-option> -->
+                                        <mat-option *ngFor="let item of cours " [value]="item.courseId"
+                                            (onSelectionChange)="change($event)">{{ item.courseName }}</mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
                                     </mat-icon>
-                                     </mat-form-field>
+                                </mat-form-field>
                                 <!-- <mat-form-field>
                                     <mat-select placeholder="tech" (selectionChange)="someMethod($event.value)">
                                         <mat-option *ngFor="let state of techs" [value]="state.value">
@@ -97,236 +188,260 @@
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field> -->
-                                </div>
-                                <!-- <div class="flex flex-col" *ngFor="let item of techs">
+                            </div>
+                            <div class="flex justify-end mt-1">
+                            <button class="px-8" mat-flat-button [color]="'primary'" type="submit"
+                                (click)="onChange();">
+                                Select
+                            </button>
+                            </div>
+                            <!-- <div class="flex flex-col" *ngFor="let item of techs">
                                     <mat-checkbox class="mb-2" [formControlName]="'techcheck'" [color]="'primary'"[checked]="item.technologyId">
                                         {{item.technologyName}}
                                     </mat-checkbox>
                                 </div> -->
+                            <!-- <mat-form-field class="flex-auto gt-xs:pr-3">
+                                <input
+                                    matInput
+                                    [formControlName]="'firstName'"
+                                    [placeholder]="'First name'"
+                                    required>
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matPrefix
+                                    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                            </mat-form-field> -->
+                            <!-- <mat-form-field class="flex-auto gt-xs:pl-3">
+                                <input
+                                    matInput
+                                    [formControlName]="'lastName'"
+                                    [placeholder]="'Last name'"
+                                    required>
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matPrefix
+                                    [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                            </mat-form-field> -->
+                        </div>
+                        <div class="flex" *ngIf="selected">
+                            <!-- Products list -->
+                            <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                                <ng-container>
+                                    <ng-container>
+                                        <div class="example-header">
+                                            <mat-form-field>
+                                                <input matInput (keyup)="applyFilter($event.target.value)"
+                                                    placeholder="Filter">
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="example-container mat-elevation-z8">
+
+                                            <mat-table [dataSource]="dataSource" matSort>
+
+                                                <!-- ID Column -->
+                                                <!-- <ng-container matColumnDef="sno">
+                                                    <mat-header-cell *matHeaderCellDef> SNO. </mat-header-cell>
+                                                    <mat-cell *matCellDef="let row; let i=index">
+                                                        {{ (i+1) + (myPaginator.pageIndex * myPaginator.pageSize) }}
+                                                    </mat-cell>
+                                                </ng-container> -->
+
+                                                <ng-container matColumnDef="actions">
+                                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Action
+                                                    </mat-header-cell>
+                                                    <mat-cell *matCellDef="let row">
+                                                        <mat-checkbox class="mb-2" [formControlName]="'titlecheck'"
+                                                            [color]="'primary'" [checked]="row.titleId">
+                                                        </mat-checkbox>
+                                                    </mat-cell>
+                                                </ng-container>
+                                                <!-- Progress Column -->
+                                                <ng-container matColumnDef="titleName">
+                                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Title Name
+                                                    </mat-header-cell>
+                                                    <mat-cell *matCellDef="let row"> {{row.titleName}} </mat-cell>
+                                                </ng-container>
+
+                                                <!-- Color Column -->
+                                                <!-- <ng-container matColumnDef="title">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+                              <mat-cell *matCellDef="let row"> {{row.title}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="duration">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header> Duration </mat-header-cell>
+                              <mat-cell *matCellDef="let row"> {{row.duration}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="fees">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header> Fees </mat-header-cell>
+                              <mat-cell *matCellDef="let row"> {{row.fees}} </mat-cell>
+                            </ng-container> -->
+
+
+                                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                                <mat-row *matRowDef="let row; columns: displayedColumns;">
+                                                </mat-row>
+                                            </mat-table>
+
+                                            <mat-paginator #myPaginator [pageSize]="5"
+                                                [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users">
+                                            </mat-paginator>
+                                        </div>
+
+                                    </ng-container>
+
+                                </ng-container>
+
+
+
+
+
                             </div>
 
-                        <!-- </div> -->
-
-                        <!-- Submit button -->
-                        <button class="fuse-mat-button-large w-full mt-3" mat-flat-button type="button"
-                            [color]="'primary'" (click)="savefree()">
-                            <span>
+                        </div>
+                        <!-- <div class="flex">
+                            <mat-form-field class="fuse-mat-textarea flex-auto">
+                                <textarea
+                                    matInput
+                                    [formControlName]="'about'"
+                                    [placeholder]="'About'"
+                                    [rows]="3"></textarea>
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matPrefix
+                                    [svgIcon]="'heroicons_solid:menu-alt-2'"></mat-icon>
+                            </mat-form-field>
+                        </div> -->
+                        <!-- Alert -->
+                        <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+                            [type]="alert.type" [@shake]="alert.type === 'success'">
+                            {{alert.message}}
+                        </fuse-alert>
+                        <div class="flex justify-end mt-8">
+                            <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button"
+                                matStepperPrevious>
+                                Back
+                            </button>
+                            <button class="px-8 mr-2" mat-flat-button [color]="'primary'" type="reset"
+                                (click)="horizontalStepper.reset();">
+                                Reset
+                            </button>
+                            <button class="px-8" mat-flat-button [color]="'primary'" type="submit"
+                                (click)="savefree();">
                                 Save
-                            </span>
-                        </button>
+                            </button>
+                        </div>
+                    </mat-step>
 
-                        <!-- Form footer -->
-                        <!-- <div class="mt-8 text-md font-medium text-secondary">
-                            This isn't a newsletter subscription. We will send one email to you when
-                            we launch and then you will be removed from the list.
-                        </div> -->
+                    <!-- <mat-step
+                        [formGroupName]="'step3'"
+                        [stepControl]="horizontalStepperForm.get('step3')">
+                        <ng-template matStepLabel>Notifications</ng-template>
+                        <p class="my-6 font-medium">
+                            We'll always let you know about important changes, but you pick what else you want to hear about.
+                        </p>
+                        <div class="flex flex-col gt-sm:flex-row">
+                            <div class="flex flex-col">
+                                <span class="font-medium mb-2">By Email</span>
+                                <div
+                                    class="flex flex-col"
+                                    [formGroupName]="'byEmail'">
+                                    <mat-checkbox
+                                        class="mb-1"
+                                        [color]="'primary'"
+                                        [formControlName]="'companyNews'">
+                                        Company News
+                                    </mat-checkbox>
+                                    <mat-checkbox
+                                        class="mb-1"
+                                        [color]="'primary'"
+                                        [formControlName]="'featuredProducts'">
+                                        Featured Products
+                                    </mat-checkbox>
+                                    <mat-checkbox
+                                        [color]="'primary'"
+                                        [formControlName]="'messages'">
+                                        Messages
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                            <div class="flex flex-col mt-8 gt-sm:mt-0 gt-sm:ml-16">
+                                <span class="font-medium mb-2">Push Notifications</span>
+                                <mat-radio-group
+                                    class="flex flex-col"
+                                    [color]="'primary'"
+                                    [formControlName]="'pushNotifications'">
+                                    <mat-radio-button
+                                        class="mb-2"
+                                        [value]="'everything'">
+                                        Everything
+                                    </mat-radio-button>
+                                    <mat-radio-button
+                                        class="mb-2"
+                                        [value]="'just-good'">
+                                        Just the good stuff
+                                    </mat-radio-button>
+                                    <mat-radio-button [value]="'no-push'">
+                                        No push notifications
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <div class="flex justify-end mt-8">
+                            <button
+                                class="px-8 mr-2"
+                                mat-flat-button
+                                [color]="'accent'"
+                                type="button"
+                                matStepperPrevious>
+                                Back
+                            </button>
+                            <button
+                                class="px-8"
+                                mat-flat-button
+                                [color]="'primary'"
+                                type="button"
+                                matStepperNext>
+                                Next
+                            </button>
+                        </div>
+                    </mat-step>
 
-                    </form>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <!-- Monthy Main -->
-    <div class="flex flex-auto overflow-hidden" *ngIf="Monthly">
-        <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
-            <div class="w-full sm:w-auto py-8 px-4 sm:p-12 sm:rounded-2xl sm:shadow sm:bg-card">
-                <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
-                    <!-- Logo -->
-                    <!-- <div class="w-12">
-                        <img src="assets/images/logo/logo.svg">
-                    </div> -->
-
-                    <!-- Title -->
-                    <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight"></div>
-                    <!-- <div class="mt-0.5">
-                        Do you want to be notified when we are ready? Register below so we can notify you about the launch!
-                    </div> -->
-
-                    <!-- Alert -->
-                    <!-- <fuse-alert
-                        class="mt-8 -mb-4"
-                        *ngIf="showAlert"
-                        [appearance]="'outline'"
-                        [showIcon]="false"
-                        [type]="alert.type">
-                        {{alert.message}}
-                    </fuse-alert> -->
-
-                    <!-- Coming soon form -->
-                    <form class="mt-8" [formGroup]="FreeForm">
-
-                        <!-- Email field -->
-                        <mat-form-field class="w-full">
-                            <mat-label>Price</mat-label>
-                            <input id="price" matInput [formControlName]="'price'">
-                        </mat-form-field>
-                        <!-- Email field -->
-                        <mat-form-field class="w-full">
-                            <mat-label>Description</mat-label>
-                            <input id="description" matInput [formControlName]="'description'">
-                        </mat-form-field>
-
-                        <!-- Submit button -->
-                        <button class="fuse-mat-button-large w-full mt-3" mat-flat-button type="button"
-                            [color]="'primary'" (click)="savefree()">
-                            <span>
+                    <mat-step>
+                        <ng-template matStepLabel>Done</ng-template>
+                        <p class="my-6 font-medium">
+                            Thank you for completing our form! You can reset the form if you would like to change your information.
+                        </p>
+                        <div class="flex justify-end mt-8">
+                            <button
+                                class="px-8 mr-2"
+                                mat-flat-button
+                                [color]="'accent'"
+                                type="button"
+                                matStepperPrevious>
+                                Back
+                            </button>
+                            <button
+                                class="px-8"
+                                mat-flat-button
+                                [color]="'primary'"
+                                type="reset"
+                                (click)="horizontalStepper.reset();">
+                                Reset
+                            </button>
+                            <button
+                                class="px-8"
+                                mat-flat-button
+                                [color]="'primary'"
+                                type="submit"
+                                (click)="savefree();">
                                 Save
-                            </span>
-                            <mat-progress-spinner [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
-                        </button>
+                            </button>
+                        </div>
+                    </mat-step> -->
+                </mat-horizontal-stepper>
+            </form>
 
-                        <!-- Form footer -->
-                        <!-- <div class="mt-8 text-md font-medium text-secondary">
-                            This isn't a newsletter subscription. We will send one email to you when
-                            we launch and then you will be removed from the list.
-                        </div> -->
-
-                    </form>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <!-- Quaterly Main -->
-    <div class="flex flex-auto overflow-hidden" *ngIf="Quaterly">
-
-        <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
-            <div class="w-full sm:w-auto py-8 px-4 sm:p-12 sm:rounded-2xl sm:shadow sm:bg-card">
-                <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
-                    <!-- Logo -->
-                    <!-- <div class="w-12">
-                        <img src="assets/images/logo/logo.svg">
-                    </div> -->
-
-                    <!-- Title -->
-                    <!-- <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Almost there!</div>
-                    <div class="mt-0.5">
-                        Do you want to be notified when we are ready? Register below so we can notify you about the launch!
-                    </div> -->
-
-                    <!-- Alert -->
-                    <!-- <fuse-alert
-                        class="mt-8 -mb-4"
-                        *ngIf="showAlert"
-                        [appearance]="'outline'"
-                        [showIcon]="false"
-                        [type]="alert.type">
-                        {{alert.message}}
-                    </fuse-alert> -->
-
-                    <!-- Coming soon form -->
-                    <form class="mt-8" [formGroup]="comingSoonForm" #comingSoonNgForm="ngForm">
-
-                        <!-- Email field -->
-                        <mat-form-field class="w-full">
-                            <mat-label>Email address</mat-label>
-                            <input id="email" matInput [formControlName]="'email'">
-                            <mat-error *ngIf="comingSoonForm.get('email').hasError('required')">
-                                Email address is required
-                            </mat-error>
-                            <mat-error *ngIf="comingSoonForm.get('email').hasError('email')">
-                                Please enter a valid email address
-                            </mat-error>
-                        </mat-form-field>
-
-                        <!-- Submit button -->
-                        <!-- <button
-                            class="fuse-mat-button-large w-full mt-3"
-                            mat-flat-button
-                            type="button"
-                            [color]="'primary'"
-                            [disabled]="comingSoonForm.disabled"
-                            (click)="register()">
-                            <span *ngIf="!comingSoonForm.disabled">
-                                Notify me when you launch
-                            </span>
-                            <mat-progress-spinner
-                                *ngIf="comingSoonForm.disabled"
-                                [diameter]="24"
-                                [mode]="'indeterminate'"></mat-progress-spinner>
-                        </button> -->
-
-                        <!-- Form footer -->
-                        <!-- <div class="mt-8 text-md font-medium text-secondary">
-                            This isn't a newsletter subscription. We will send one email to you when
-                            we launch and then you will be removed from the list.
-                        </div> -->
-
-                    </form>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <!-- Yearly Main -->
-    <div class="flex flex-auto overflow-hidden" *ngIf="Yearly">
-
-        <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
-            <div class="w-full sm:w-auto py-8 px-4 sm:p-12 sm:rounded-2xl sm:shadow sm:bg-card">
-                <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
-                    <!-- Logo -->
-                    <!-- <div class="w-12">
-                        <img src="assets/images/logo/logo.svg">
-                    </div> -->
-
-                    <!-- Title -->
-                    <!-- <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Almost there!</div>
-                    <div class="mt-0.5">
-                        Do you want to be notified when we are ready? Register below so we can notify you about the launch!
-                    </div> -->
-
-                    <!-- Alert -->
-                    <!-- <fuse-alert
-                        class="mt-8 -mb-4"
-                        *ngIf="showAlert"
-                        [appearance]="'outline'"
-                        [showIcon]="false"
-                        [type]="alert.type">
-                        {{alert.message}}
-                    </fuse-alert> -->
-
-                    <!-- Coming soon form -->
-                    <form class="mt-8" [formGroup]="comingSoonForm" #comingSoonNgForm="ngForm">
-
-                        <!-- Email field -->
-                        <mat-form-field class="w-full">
-                            <mat-label>Email address</mat-label>
-                            <input id="email" matInput [formControlName]="'email'">
-                            <mat-error *ngIf="comingSoonForm.get('email').hasError('required')">
-                                Email address is required
-                            </mat-error>
-                            <mat-error *ngIf="comingSoonForm.get('email').hasError('email')">
-                                Please enter a valid email address
-                            </mat-error>
-                        </mat-form-field>
-
-                        <!-- Submit button -->
-                        <!-- <button
-                            class="fuse-mat-button-large w-full mt-3"
-                            mat-flat-button
-                            type="button"
-                            [color]="'primary'"
-                            [disabled]="comingSoonForm.disabled"
-                            (click)="register()">
-                            <span *ngIf="!comingSoonForm.disabled">
-                                Notify me when you launch
-                            </span>
-                            <mat-progress-spinner
-                                *ngIf="comingSoonForm.disabled"
-                                [diameter]="24"
-                                [mode]="'indeterminate'"></mat-progress-spinner>
-                        </button> -->
-
-                        <!-- Form footer -->
-                        <!-- <div class="mt-8 text-md font-medium text-secondary">
-                            This isn't a newsletter subscription. We will send one email to you when
-                            we launch and then you will be removed from the list.
-                        </div> -->
-
-                    </form>
-                </div>
-            </div>
         </div>
 
     </div>

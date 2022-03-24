@@ -78,7 +78,7 @@ export class RoleComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    debugger
+    //debugger
     this.GetRoles();
 
     // this.searchInputControl.valueChanges
@@ -86,7 +86,7 @@ export class RoleComponent implements OnInit, AfterViewInit {
     //     takeUntil(this._unsubscribeAll),
     //     debounceTime(300),
     //     switchMap((query) => {
-    //       debugger
+    //       //debugger
     //         this.closeDetails();
     //         this.isLoading = true;
     //         return this._authService.GetRoles(0, 10, 'roleName', 'asc', query);
@@ -120,12 +120,12 @@ export class RoleComponent implements OnInit, AfterViewInit {
 
   showEditModal(id) {
     var value = "edit";
-    debugger
+    //debugger
     this._router.navigate(['/userconfig/editrole/' + id + '/' + value])
   }
   showViewModal(id) {
     var value = "view";
-    debugger
+    //debugger
     this._router.navigate(['/userconfig/editrole/' + id + '/' + value])
   }
 
@@ -135,24 +135,24 @@ export class RoleComponent implements OnInit, AfterViewInit {
     this._unsubscribeAll.complete();
   }
   createProduct() {
-    debugger
+    //debugger
 
     // this._router.navigate(['/userconfig/role/addrole'])
     this._router.navigate(['/userconfig/addrole'])
   }
   applyFilter(filterValue: string) {
-    debugger
+    //debugger
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
   GetRoles() {
-    debugger
+    //debugger
     this._authService.GetRoles().subscribe((finalresult: any) => {
-      debugger
+      //debugger
       var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
-        debugger
+        //debugger
         //this.dataSource= finalresult.result;
         //this.roles= finalresult.result;
         this.dataSource = new MatTableDataSource(finalresult.result);
@@ -170,7 +170,7 @@ export class RoleComponent implements OnInit, AfterViewInit {
     * Delete the role
     */
   deleteRole(id: any): void {
-    debugger
+    //debugger
     // Open the confirmation dialog
     const confirmation = this._fuseConfirmationService.open({
       title: 'Delete Role',
@@ -192,7 +192,7 @@ export class RoleComponent implements OnInit, AfterViewInit {
 
         // Delete the contact
         this._authService.deleteRole(id).subscribe((data: any) => {
-          debugger
+          //debugger
           if (data.status == "200") {
             // Set the alert
             this.alert = {
