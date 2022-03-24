@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddrolesComponent } from './Addrole/addroles/addroles.component';
 import { EditroleComponent } from './EditRole/editrole/editrole.component';
+import { ProjectResolver } from './project.resolvers';
 import { RoleComponent } from './role/role.component';
 import { SetprivilegesComponent } from './setprivileges/setprivileges.component';
 import { AddUserComponent } from './user/Adduser/adduser.component';
@@ -14,7 +15,9 @@ import { UserConfigComponent } from './userconfig.component';
 
 const routes: Routes = [
   {
-    path: '', component: UserConfigComponent,
+    path: '', component: UserConfigComponent, resolve  : {
+      data: ProjectResolver
+  },
     children: [
       { path: '', redirectTo: 'default', pathMatch: 'full' },
       { path: 'default', component: UserConfigComponent },
