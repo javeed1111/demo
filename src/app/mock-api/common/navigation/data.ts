@@ -6,7 +6,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id      : 'userconfig',
                 title   : 'User Configuration',
                 type    : 'collapsable',
-                icon    : 'heroicons_outline:user-circle',
+                icon    : 'heroicons_solid:user-circle',
                 link : '/userconfig/default',
                 children: [
                     {
@@ -103,7 +103,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id      : 'courses',
                 title   : 'Courses',
                 type    : 'collapsable',
-                icon    : 'heroicons_outline:academic-cap',
+                icon    : 'heroicons_solid:academic-cap',
                 children: [
                     {
                         id   : 'courses.technology',
@@ -135,7 +135,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id      : 'selflrvds',
                 title   : 'Self Learning Videos',
                 type    : 'collapsable',
-                icon    : 'heroicons_outline:play',
+                icon    : 'heroicons_solid:play',
                 children: [
                     {
                         id   : 'selflrvds.selflearningvds',
@@ -230,7 +230,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id      : 'faculty',
                 title   : 'Faculty',
                 type    : 'collapsable',
-                icon    : 'iconsmind:administrator',
+                icon    : 'heroicons_solid:user',
                 children: [
                     {
                         id   : 'faculty.facultydetails',
@@ -250,7 +250,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id      : 'reports',
                 title   : 'Reports',
                 type    : 'collapsable',
-                icon    : 'heroicons_outline:clipboard-check',
+                icon    : 'heroicons_solid:clipboard-check',
                 children: [
                     {
                         id   : 'reports.referencelist',
