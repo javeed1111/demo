@@ -2,6 +2,13 @@
 import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
+    {
+        id      : 'dasboard',
+        title   : 'Dashboard',
+        type    : 'basic',
+        icon    : 'heroicons_solid:user-circle',
+        link : '/userconfig/dashboard'
+    },
             {
                 id      : 'userconfig',
                 title   : 'User Configuration',
