@@ -55,6 +55,7 @@ export class CourseplanComponent implements OnInit {
   ListOfCourses: any = [];
   Filter: any = [];
   titles: any;
+  ListOfcheckedtitles: any = [];
   constructor(
     private _authService: AuthService,
     private _formBuilder: FormBuilder,
@@ -116,38 +117,72 @@ export class CourseplanComponent implements OnInit {
     }
     if (event.isUserInput) {
       console.log(event.source.value, event.source.selected);
-      this._authService.GetCourses().subscribe((finalresult: any) => {
+      // this._authService.GetCourses().subscribe((finalresult: any) => {
         debugger
-        var finalresult = JSON.parse(finalresult);
-        if (finalresult.status == "200") {
-          debugger
+        // var finalresult = JSON.parse(finalresult);
+        // if (finalresult.status == "200") {
+          // debugger
 
-          let filteredData = finalresult.result.filter(x => x.courseId == event.source.value)
+          let filteredData = this.cours.filter(x => x.courseId == event.source.value)
           filteredData.forEach(x => this.Filter.push(x));
 
           this.dataSource = new MatTableDataSource(this.Filter);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
-          // for(let i =0; i<finalresult.result.length;i++){
-          //   if(finalresult.result[i].courseId==event.source.value){
-          //     this.dataSource = new MatTableDataSource(finalresult.result[i].title);
-          //     this.dataSource.paginator = this.paginator;
-          //     this.dataSource.sort = this.sort;
-
-          //   }
-
-          // }
-
-          this.cours = finalresult.result;
+          // this.cours = finalresult.result;
           this.selected = true
-          console.log('techs', this.cours)
-        }
-        else {
+          // console.log('techs', this.cours)
+        // }
+        // else {
 
-        }
-      });
+        // }
+      // });
     }
   }
+  onChangecheckbox(event: MatCheckboxChange) {
+    debugger
+    // const dataa = this.horizontalStepperForm.getRawValue();
+    // if (event.checked) {
+    //   this.ListOfcheckedtitles.push( event.source.value)
+    // } else {
+    //   let index = this.ListOfCourses.indexOf(event.source.value);
+    //   index != -1 ? this.ListOfCourses.splice(index, 1) : false;
+    //   let matchIndex = -1
+    //   if (this.Filter.length > 0) {
+    //     this.Filter.forEach((element, i) => {
+    //       if (element.courseId == event.source.value) {
+    //         matchIndex = i;
+    //       }
+    //     });
+    //   }
+    //   this.Filter.splice(matchIndex, 1);
+    //   // this.dataSource = new MatTableDataSource(this.Filter);
+    //   // this.dataSource.paginator = this.paginator;
+    //   // this.dataSource.sort = this.sort;
+    //   // this.selected = true
+    //   // console.log('techs', this.cours)
+    //   // return false;
+    // }
+    // if (event.checked) {
+    //   console.log(event.source.value, event.source.selected);
+    //   // this._authService.GetCourses().subscribe((finalresult: any) => {
+    //     debugger
+    //     // var finalresult = JSON.parse(finalresult);
+    //     // if (finalresult.status == "200") {
+    //       // debugger
+
+    //       let filteredData = this.cours.filter(x => x.courseId == event.source.value)
+    //       filteredData.forEach(x => this.Filter.push(x));
+
+    //       this.dataSource = new MatTableDataSource(this.Filter);
+    //       this.dataSource.paginator = this.paginator;
+    //       this.dataSource.sort = this.sort;
+    //       // this.cours = finalresult.result;
+    //       this.selected = true
+
+    console.log(event.checked + " => " + event.source.value);
+  // }
+}
   // onChange() {
   //   debugger
   //   if (this.horizontalStepperForm.invalid) {
@@ -239,9 +274,7 @@ export class CourseplanComponent implements OnInit {
       }
     });
   }
-  onChangeDemo(ob: MatCheckboxChange) {
-    console.log(ob.checked + " => " + ob.source.id);
-  }
+ 
   // getDateItem(date: Date): string {
   //   debugger
   //   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
