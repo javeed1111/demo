@@ -15,6 +15,13 @@ export interface TitleData {
   Actions: string;
   titleName: string;
 }
+export class list {
+  // sno: number;
+  CourseId: number;
+}
+export class titlelist {
+  title: string;
+}
 
 @Component({
   selector: 'app-courseplan',
@@ -25,7 +32,7 @@ export interface TitleData {
 })
 export class CourseplanComponent implements OnInit {
   selectedProduct: any | null = null;
-  displayedColumns = ['actions','titleName', ];
+  displayedColumns = ['actions', 'titleName',];
   dataSource: MatTableDataSource<TitleData>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -40,12 +47,14 @@ export class CourseplanComponent implements OnInit {
   EndDate = new Date();
   horizontalStepperForm: FormGroup;
   verticalStepperForm: FormGroup;
-  active: boolean;
+  isofferactive: boolean;
   selected: boolean = false;
   offerapply: boolean = true;
   OfferPrice: any;
   todayDate = new Date();
   ListOfCourses: any = [];
+  Filter: any = [];
+  titles: any;
   constructor(
     private _authService: AuthService,
     private _formBuilder: FormBuilder,
@@ -67,6 +76,7 @@ export class CourseplanComponent implements OnInit {
       }),
       step2: this._formBuilder.group({
         courseId: [''],
+        titlecheck: [''],
         //   title          : this._formBuilder.group({
         //     titleId     : ['']
         // })
@@ -77,65 +87,116 @@ export class CourseplanComponent implements OnInit {
     ctrl.disable();
 
   }
-  change(event) {
+  change(itemObj, event) {
     debugger
     if (this.horizontalStepperForm.invalid) {
       return;
     }
     const dataa = this.horizontalStepperForm.getRawValue();
-    this.ListOfCourses= dataa.step2.courseId;
+    if (event.source.selected) {
+      this.ListOfCourses.push(itemObj.courseId)
+    } else {
+      let index = this.ListOfCourses.indexOf(itemObj.courseId);
+      index != -1 ? this.ListOfCourses.splice(index, 1) : false;
+      let matchIndex = -1
+      if (this.Filter.length > 0) {
+        this.Filter.forEach((element, i) => {
+          if (element.courseId == itemObj.courseId) {
+            matchIndex = i;
+          }
+        });
+      }
+      this.Filter.splice(matchIndex, 1);
+      this.dataSource = new MatTableDataSource(this.Filter);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.selected = true
+      console.log('techs', this.cours)
+      return false;
+    }
     if (event.isUserInput) {
       console.log(event.source.value, event.source.selected);
-      // this._authService.GettitleById(this.ListOfCourses).subscribe((finalresult: any) => {
-      //   debugger
-      //   // var finalresult = JSON.parse(finalresult);
-      //   if (finalresult.status == "200") {
-      //     debugger
-      //     this.dataSource = new MatTableDataSource(finalresult.result);
-      //     this.dataSource.paginator = this.paginator;
-      //     this.dataSource.sort = this.sort;
-      //     this.cours = finalresult.result;
-      //     this.selected = true
-      //     console.log('techs', this.cours)
-      //   }
-      //   else {
-
-      //   }
-      // });
-    }
-  }
-  onChange() {
-    debugger
-    if (this.horizontalStepperForm.invalid) {
-      return;
-    }
-    const dataa = this.horizontalStepperForm.getRawValue();
-    this.ListOfCourses= dataa.step2.courseId;
-    var data = {
-      Id: this.ListOfCourses,
-    }
-      this._authService.GettitleById(data).subscribe((finalresult: any) => {
+      this._authService.GetCourses().subscribe((finalresult: any) => {
         debugger
-        // var finalresult = JSON.parse(finalresult);
+        var finalresult = JSON.parse(finalresult);
         if (finalresult.status == "200") {
           debugger
-          this.dataSource = new MatTableDataSource(finalresult.result);
+
+          let filteredData = finalresult.result.filter(x => x.courseId == event.source.value)
+          filteredData.forEach(x => this.Filter.push(x));
+
+          this.dataSource = new MatTableDataSource(this.Filter);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          // for(let i =0; i<finalresult.result.length;i++){
+          //   if(finalresult.result[i].courseId==event.source.value){
+          //     this.dataSource = new MatTableDataSource(finalresult.result[i].title);
+          //     this.dataSource.paginator = this.paginator;
+          //     this.dataSource.sort = this.sort;
+
+          //   }
+
+          // }
+
           this.cours = finalresult.result;
           this.selected = true
-          console.log('course', this.cours)
+          console.log('techs', this.cours)
         }
         else {
 
         }
       });
+    }
   }
+  // onChange() {
+  //   debugger
+  //   if (this.horizontalStepperForm.invalid) {
+  //     return;
+  //   }
+  //   const dataa = this.horizontalStepperForm.getRawValue();
+  //   this.ListOfCourses = dataa.step2.courseId;
+  //   var ListOfCourse = [];
+  //   for (var i = 0; i < this.ListOfCourses.length; i++) {
+  //     const courselist = new list();
+  //     if (this.ListOfCourses[i] != "") {
+  //       courselist.CourseId = this.ListOfCourses[i];
+  //       ListOfCourse.push(courselist);
+  //     }
+  //   }
+
+  //   var data = {
+  //     ListOfCourses: ListOfCourse,
+  //   }
+  //   this._authService.GettitleById(data).subscribe((finalresult: any) => {
+  //     debugger
+  //     // var finalresult = JSON.parse(finalresult);
+  //     if (finalresult.status == "200") {
+  //       debugger
+  //       var ListOfTitles = [];
+  //       for (var i = 0; i < finalresult.result.length; i++) {
+  //         const titles = new titlelist();
+  //         if (finalresult.result[i] != "") {
+  //           titles.title = finalresult.result[i].title;
+  //           ListOfTitles.push(titles);
+  //         }
+  //       }
+  //       this.dataSource = new MatTableDataSource(ListOfTitles);
+  //       this.dataSource.paginator = this.paginator;
+  //       this.dataSource.sort = this.sort;
+  //       this.titles = finalresult.result;
+  //       this.selected = true
+  //       console.log('course', this.titles)
+  //     }
+  //     else {
+
+  //     }
+  //   });
+  // }
   toggleCompleted($event: MatSlideToggleChange): void {
     debugger
     if ($event.checked != undefined) {
-      this.active = $event.checked;
-      if (this.active == true) {
+      this.isofferactive = $event.checked;
+      if (this.isofferactive == true) {
         const ctrl = this.horizontalStepperForm.controls.step1.get('offerPrice');
         ctrl.enable();
       }
@@ -143,12 +204,12 @@ export class CourseplanComponent implements OnInit {
         const ctrl = this.horizontalStepperForm.controls.step1.get('offerPrice');
         ctrl.disable();
         ctrl.setValue('0')
-        
+
       }
 
     }
     else {
-      this.active = false;
+      this.isofferactive = false;
       // this.horizontalStepperForm.controls.step1['offerPrice'].enable();
 
     }
@@ -186,15 +247,15 @@ export class CourseplanComponent implements OnInit {
   //   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
   // }
 
-  savefree(): void {
+  savecourseplan(): void {
     debugger
     // Return if the form is invalid
     if (this.horizontalStepperForm.invalid) {
       return;
     }
     const dataa = this.horizontalStepperForm.getRawValue();
-    if (this.active == undefined) {
-      this.active = false;
+    if (this.isofferactive == undefined) {
+      this.isofferactive = false;
       // this.horizontalStepperForm.controls['offerPrice'].disable();
       this.OfferPrice = '0'
     }
@@ -216,8 +277,17 @@ export class CourseplanComponent implements OnInit {
         this.showAlert = false;
         // this._router.navigate(['/courses/course']);
       }, 3500);
-     
+
       return;
+    }
+    this.ListOfCourses = dataa.step2.courseId;
+    var ListOfCourse = [];
+    for (var i = 0; i < this.ListOfCourses.length; i++) {
+      if (this.ListOfCourses[i] != "") {
+        const courselist = new list();
+        courselist.CourseId = this.ListOfCourses[i];
+        ListOfCourse.push(courselist);
+      }
     }
     // var days = parseInt(dataa.days);
     // this.EndDate.setDate(this.startdate.getDate() + days);
@@ -227,8 +297,9 @@ export class CourseplanComponent implements OnInit {
       OfferPrice: this.OfferPrice,
       EffectiveFrom: dataa.step1.effectiveDate,
       EffectiveTill: dataa.step1.effectiveTill,
-      ListOfCourses: dataa.step2.courseId,
-      IsOffer: this.active,
+      // ListOfCourses: dataa.step2.courseId,
+      ListOfCourses: ListOfCourse,
+      IsOffer: this.isofferactive,
       // Title:dataa.step2.titleId,
       CreatedBy: parseInt(localStorage.getItem("LoginId")),
     }

@@ -30,7 +30,7 @@
                         <mat-form-field class="flex-auto gt-xs:pr-3">
                             <mat-label>Content Type</mat-label>
                             <mat-select name="ContentType" placeholder="Content Type" [formControlName]="'contentType'"
-                                class="input-full-width">
+                                class="input-full-width" (selectionChange)="contentchange();">
                                 <mat-option value="">Select contentType</mat-option>
                                 <mat-option value="Video">Video</mat-option>
                                 <mat-option value="Document">Document</mat-option>
@@ -60,12 +60,18 @@
 
                                 </button>
                                 <span class="ml-1 mr-0">{{name}}</span>
+                                <span class="ml-1 mr-0">{{uploadedfilename}}</span>
+                                <span class="ml-1 mr-0">
+                                  <button class="ml-auto" mat-button [matTooltip]="'remove'" (click)="removeuploads()" *ngIf="uploadedfilename">
+                                    Remove
+                                </button>
+                                </span>
                                 <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
                                 <!-- <button style="display:block;width:120px; height:30px;"
                                     onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
-                                <input type='file' class="form-control" accept="video/*,.doc" id="txtfileupload"
+                                <input type='file' class="form-control"formControlName="uploader" accept= {{type}} id="txtfileupload"
                                     name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none"
                                     [multiple]="true">
                                 <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 

@@ -191,10 +191,12 @@ export class AuthService
       }
 
       // yet to implement
-      public GettitleById(ListId) {
+      public GettitleById(data) {
         debugger
-        return this._httpClient.get(this.baseUrl + "api/Admin/GetTitleById",ListId);
+        return this._httpClient.post(this.baseUrl + "api/Admin/GetTitleById",data);
       }
+      //end yet
+
       public gridcoursecontentbycourseid(id) {
         debugger
       return this._httpClient.get(this.baseUrl + "api/Admin/Getcoursecontentbycourseid",{params: {id}});

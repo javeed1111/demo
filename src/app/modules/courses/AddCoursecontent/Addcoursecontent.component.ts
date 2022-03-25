@@ -51,6 +51,10 @@ export class AddcoursecontentComponent implements OnInit {
   fileToUpload: File = null;
   name: string;
   contentId: any;
+  removeupload:boolean=false;
+  remove:boolean=false;
+  uploadedfilename: any;
+  type: string;
 
 
 
@@ -74,8 +78,9 @@ export class AddcoursecontentComponent implements OnInit {
       id: ['', []],
       chapter: ['', []],
       contentType: ['', []],
-      uploadedfilename         :['', []],
-      // Duration     :['', [Validators.required]],
+      uploadedfilename :['', []],
+      uploaded :['', []],
+      uploader     :['', [Validators.required]],
       
       // units        :['', []],
       // userchkactive: ['']
@@ -129,6 +134,7 @@ export class AddcoursecontentComponent implements OnInit {
         // console.log('techs',this.dataSource)
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        
       }
       else {
 
@@ -180,6 +186,7 @@ export class AddcoursecontentComponent implements OnInit {
 
         this.coursecontentForm.patchValue(finalresult.result);
         const course = this.coursecontentForm.getRawValue();
+      // this.remove=true;
         // if (course.duration == 0) {
         //   this.courseForm.controls['duration'].setValue("")
         // }
@@ -216,10 +223,34 @@ export class AddcoursecontentComponent implements OnInit {
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
+  contentchange(){
+    debugger
+    const coursecont = this.coursecontentForm.getRawValue();
+    if(coursecont.contentType=="Video"){
+       this.type='video/*';
+    }
+    else{
+      this.type='.doc';
+    }
+
+  }
   AddCoursecontent() {
     debugger
     this.showAlert = false;
     if (this.coursecontentForm.invalid) {
+      if(this.coursecontentForm.invalid){
+        this.alert = {
+          type: 'error',
+          message: "Selecting file is mandatory"
+        };
+
+        // Show the alert
+        this.showAlert = true;
+      }
+      setTimeout(() => {
+        this.showAlert = false;
+      }, 1500);
+      
       return;
     }
     // Get the contact object
@@ -280,6 +311,11 @@ export class AddcoursecontentComponent implements OnInit {
       }
     });
   }
+  removeuploads(){
+  this.removeupload=true;
+  this.uploadedfilename='';
+
+  }
   UpdateCoursecontent(){
     debugger
     this.showAlert = false;
@@ -313,6 +349,11 @@ export class AddcoursecontentComponent implements OnInit {
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
     }
+    else if (this.removeupload==false) {
+      formData.append("Uploadedfilename", coursecont.uploadedfilename)
+      formData.append("Uploaded", coursecont.uploaded)
+    }
+    
     this._authService.Updatecoursecontent(formData).subscribe((result: any) => {
       //debugger
       var result = JSON.parse(result);
@@ -365,6 +406,8 @@ export class AddcoursecontentComponent implements OnInit {
     // this.coursecontentForm.controls['courseName'].setValue('');
       this.coursecontentForm.controls['author'].setValue('');
       this.coursecontentForm.controls['chapter'].setValue('');
+      this.Save=true;
+      this.update=false;
 
   }
   EditFromGrid(id: any,value: any) {
@@ -407,6 +450,8 @@ export class AddcoursecontentComponent implements OnInit {
         const course = this.coursecontentForm.getRawValue();
         console.log('coursecontent',course)
         this.contentId=course.id;
+        this.uploadedfilename=course.uploadedfilename;
+        // this.remove=true
         // if (course.duration == 0) {
         //   this.courseForm.controls['duration'].setValue("")
         // }

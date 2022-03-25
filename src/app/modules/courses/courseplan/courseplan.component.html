@@ -175,7 +175,7 @@
                                         class="input-full-width" multiple>
                                         <!-- <mat-option value="">Select Course</mat-option> -->
                                         <mat-option *ngFor="let item of cours " [value]="item.courseId"
-                                            (onSelectionChange)="change($event)">{{ item.courseName }}</mat-option>
+                                            (onSelectionChange)="change(item,$event)">{{ item.courseName }}</mat-option>
                                     </mat-select>
                                     <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
                                     </mat-icon>
@@ -189,12 +189,31 @@
                                     </mat-select>
                                 </mat-form-field> -->
                             </div>
-                            <div class="flex justify-end mt-1">
+                            <!-- <div class="flex justify-end mt-1">
                             <button class="px-8" mat-flat-button [color]="'primary'" type="submit"
                                 (click)="onChange();">
                                 Select
                             </button>
-                            </div>
+                            </div> -->
+                            <!-- Alert -->
+                        <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+                        [type]="alert.type" [@shake]="alert.type === 'success'">
+                        {{alert.message}}
+                    </fuse-alert>
+                    <div class="flex justify-end mt-8">
+                        <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button"
+                            matStepperPrevious>
+                            Back
+                        </button>
+                        <button class="px-8 mr-2" mat-flat-button [color]="'primary'" type="reset"
+                            (click)="horizontalStepper.reset();">
+                            Reset
+                        </button>
+                        <button class="px-8" mat-flat-button [color]="'primary'" type="submit"
+                            (click)="savecourseplan();">
+                            Save
+                        </button>
+                    </div>
                             <!-- <div class="flex flex-col" *ngFor="let item of techs">
                                     <mat-checkbox class="mb-2" [formControlName]="'techcheck'" [color]="'primary'"[checked]="item.technologyId">
                                         {{item.technologyName}}
@@ -251,8 +270,8 @@
                                                     <mat-header-cell *matHeaderCellDef mat-sort-header> Action
                                                     </mat-header-cell>
                                                     <mat-cell *matCellDef="let row">
-                                                        <mat-checkbox class="mb-2" [formControlName]="'titlecheck'"
-                                                            [color]="'primary'" [checked]="row.titleId">
+                                                        <mat-checkbox [formControlName]="'titlecheck'"
+                                                            [color]="'primary'" [checked]="row.courseId">
                                                         </mat-checkbox>
                                                     </mat-cell>
                                                 </ng-container>
@@ -260,7 +279,7 @@
                                                 <ng-container matColumnDef="titleName">
                                                     <mat-header-cell *matHeaderCellDef mat-sort-header> Title Name
                                                     </mat-header-cell>
-                                                    <mat-cell *matCellDef="let row"> {{row.titleName}} </mat-cell>
+                                                    <mat-cell *matCellDef="let row"> {{row.title}} </mat-cell>
                                                 </ng-container>
 
                                                 <!-- Color Column -->
@@ -312,25 +331,7 @@
                                     [svgIcon]="'heroicons_solid:menu-alt-2'"></mat-icon>
                             </mat-form-field>
                         </div> -->
-                        <!-- Alert -->
-                        <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
-                            [type]="alert.type" [@shake]="alert.type === 'success'">
-                            {{alert.message}}
-                        </fuse-alert>
-                        <div class="flex justify-end mt-8">
-                            <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button"
-                                matStepperPrevious>
-                                Back
-                            </button>
-                            <button class="px-8 mr-2" mat-flat-button [color]="'primary'" type="reset"
-                                (click)="horizontalStepper.reset();">
-                                Reset
-                            </button>
-                            <button class="px-8" mat-flat-button [color]="'primary'" type="submit"
-                                (click)="savefree();">
-                                Save
-                            </button>
-                        </div>
+                        
                     </mat-step>
 
                     <!-- <mat-step
