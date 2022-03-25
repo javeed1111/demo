@@ -44,6 +44,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { DashboardComponent } from './Dashboard/dashboard/dashboard.component';
 
 
 //import {MatPaginator} from '@angular/material/paginator'
@@ -60,7 +61,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     AddUserComponent,
     AddrolesComponent,
     EditroleComponent,
-    AutofocusDirective
+    AutofocusDirective,
+    DashboardComponent
 
   ],
   imports: [

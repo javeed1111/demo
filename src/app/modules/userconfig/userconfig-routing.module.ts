@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddrolesComponent } from './Addrole/addroles/addroles.component';
+import { DashboardComponent } from './Dashboard/dashboard/dashboard.component';
 import { EditroleComponent } from './EditRole/editrole/editrole.component';
 import { ProjectResolver } from './project.resolvers';
 import { RoleComponent } from './role/role.component';
@@ -19,8 +20,9 @@ const routes: Routes = [
       data: ProjectResolver
   },
     children: [
-      { path: '', redirectTo: 'default', pathMatch: 'full' },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'default', component: UserConfigComponent },
+      { path: 'dashboard', component: DashboardComponent },
       //{ path: 'user', component: UserComponent },
       { path: 'Setprivileges', component: SetprivilegesComponent },
       { path: 'role', component: RoleComponent },
