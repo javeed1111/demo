@@ -384,7 +384,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
      */
     updateContact(): void
     {
-        //debugger
+        debugger
         // Get the contact object
         const contact = this.contactForm.getRawValue();
         // this.contact.isActive = this.contactForm.getRawValue().userchkactive;
@@ -396,8 +396,8 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
 
         // Update the contact on the server
         this._contactsService.UpdateUser(contact).subscribe((result: any) => {
-            //debugger
-              var result = JSON.parse(result);
+            debugger
+            //   var result = JSON.parse(result);
                if (result.status == "200") {
                    //debugger
                    
@@ -408,9 +408,12 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
                     message: result.message
                 };
                 this.showAlert = true;
-                   setTimeout(() => {
+                //    setTimeout(() => {
                  
                        this._router.navigate(['/userconfig/user']);
+                //    }, 1000);
+                   setTimeout(() => {
+                    window.location.reload();
                    }, 1000);
              //}
    

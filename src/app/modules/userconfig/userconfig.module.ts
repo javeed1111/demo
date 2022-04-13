@@ -36,11 +36,7 @@ import { EditroleComponent } from './EditRole/editrole/editrole.component';
 import { AutofocusDirective } from './Directive/autofocus.directive';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { FuseAlertModule } from '@fuse/components/alert';
-
-
-
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgApexchartsModule } from 'ng-apexcharts';

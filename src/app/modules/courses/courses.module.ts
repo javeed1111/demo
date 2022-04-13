@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -40,6 +40,8 @@ import { QuillModule } from 'ngx-quill';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { MatStepperModule } from '@angular/material/stepper';
 import { CourseContentComponent } from './Coursecontent/course-content/course-content.component';
+import { CourseplanlistComponent } from './courseplanlist/courseplanlist.component';
+import { CourseplaneditComponent } from './courseplanedit/courseplanedit.component';
 // import { CourseContentComponent } from './AddCoursecontent/course-content/course-content.component';
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { CourseContentComponent } from './Coursecontent/course-content/course-co
     AutofocusDirective,
     EditcourseComponent,
     CourseContentComponent,
+    CourseplanlistComponent,
+    CourseplaneditComponent,
     // CourseContentComponent
   ],
   imports: [
@@ -88,6 +92,10 @@ import { CourseContentComponent } from './Coursecontent/course-content/course-co
     FuseAlertModule,
     MatStepperModule
 
+  ],
+  providers:
+  [
+    DatePipe
   ]
 })
 export class CoursesModule { }

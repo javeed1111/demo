@@ -92,13 +92,15 @@ course: any;
   courseData :any= []
   GetCourses() {
     //debugger
-    this._authService.GetCourses().subscribe((finalresult: any) => {
+    this._authService.GetCoursechapters().subscribe((finalresult: any) => {
       //debugger
      var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
         //debugger
-        finalresult.result.noofchapters =0
+        console.log(finalresult.result);
+        // finalresult.result.noofchapters =0
         // for(let i=0;i<finalresult.result.length;i++){
+          // finalresult.result[i].noofchapters =finalresult.result[i].count;
           // if(finalresult.result[i].noOfChapters==0){
           //   finalresult.result[i].duration="";
           // }

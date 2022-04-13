@@ -48,20 +48,14 @@ showAlert:  boolean = false;
   }
   AddRole()
   {
-      //debugger
+      debugger
       if (this.roleForm.invalid) {
           return;
       }
-      this.showAlert = false;
+      //this.showAlert = false;
       
       // Get the contact object
       const contact = this.roleForm.getRawValue();
-
-      // Go through the contact object and clear empty values
-     //  contact.emails = contact.emails.filter(email => email.email);
-
-     //  contact.phoneNumbers = contact.phoneNumbers.filter(phoneNumber => phoneNumber.phoneNumber);
-
     //   if(this.active==undefined){
     //      this.active = true;
     //  }
@@ -72,33 +66,38 @@ showAlert:  boolean = false;
         //  IsActive: this.active,
      }
       this._authService.Addrole(data).subscribe((result: any) => {
-          //debugger
+          debugger
            var result = JSON.parse(result);
             if (result.status == "200") {
                 //debugger
-                
                  // Set the alert
                  this.alert = {
                   type   : 'success',
                   message: result.message
               };
-
               // Show the alert
               this.showAlert = true;
-             
                 setTimeout(() => {
+                  
+                  this.showAlert = false;
+                }, 2000); 
+                // setTimeout(() => {
+                  
                   this._router.navigate(['/userconfig/role']);
-                }, 1000);
+                // }, 2000); 
+                
             }
             else {
              // Set the alert
              this.alert = {
-              type   : 'success',
+              type   : 'error',
               message: result.message
           };
-
           // Show the alert
           this.showAlert = true;
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 2000);
             }
             (error) => {
    

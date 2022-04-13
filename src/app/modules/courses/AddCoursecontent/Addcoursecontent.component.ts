@@ -55,6 +55,30 @@ export class AddcoursecontentComponent implements OnInit {
   remove:boolean=false;
   uploadedfilename: any;
   type: string;
+  quillModules: any = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  ['blockquote', 'code-block'],
+  
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+  [{ 'direction': 'rtl' }],                         // text direction
+  
+  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  
+  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  [{ 'font': [] }],
+  [{ 'align': [] }],
+  
+  ['clean'] 
+        // ['bold', 'italic', 'underline'],
+        // [{align: []}, {list: 'ordered'}, {list: 'bullet'}],
+        // ['clean']
+    ]
+  };
 
 
 
@@ -81,6 +105,7 @@ export class AddcoursecontentComponent implements OnInit {
       uploadedfilename :['', []],
       uploaded :['', []],
       uploader     :['', [Validators.required]],
+      contentDescription: ['', []],
       
       // units        :['', []],
       // userchkactive: ['']
@@ -238,7 +263,7 @@ export class AddcoursecontentComponent implements OnInit {
     debugger
     this.showAlert = false;
     if (this.coursecontentForm.invalid) {
-      if(this.coursecontentForm.invalid){
+      if(this.coursecontentForm.controls['uploader'].invalid){
         this.alert = {
           type: 'error',
           message: "Selecting file is mandatory"
@@ -275,6 +300,7 @@ export class AddcoursecontentComponent implements OnInit {
     formData.append("Chapter", coursecont.chapter)
     formData.append("Author", coursecont.author)
     formData.append("ContentType", coursecont.contentType)
+    formData.append("ContentDescription", coursecont.contentDescription)
     formData.append("CreatedBy", (localStorage.getItem("LoginId")));
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
@@ -320,7 +346,13 @@ export class AddcoursecontentComponent implements OnInit {
     debugger
     this.showAlert = false;
     if (this.coursecontentForm.invalid) {
-      return;
+      if(this.coursecontentForm.controls['uploader'].invalid){
+
+      }
+      else{
+        return
+      }
+      // return;
     }
     // Get the contact object
     const coursecont = this.coursecontentForm.getRawValue();
@@ -345,6 +377,7 @@ export class AddcoursecontentComponent implements OnInit {
     formData.append("Chapter", coursecont.chapter)
     formData.append("Author", coursecont.author)
     formData.append("ContentType", coursecont.contentType)
+    formData.append("ContentDescription", coursecont.contentDescription)
     formData.append("UpdatedBy", (localStorage.getItem("LoginId")));
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
@@ -403,7 +436,7 @@ export class AddcoursecontentComponent implements OnInit {
   }
   clear(){
     this.coursecontentForm.controls['contentType'].setValue('');
-    // this.coursecontentForm.controls['courseName'].setValue('');
+    this.coursecontentForm.controls['contentDescription'].setValue('');
       this.coursecontentForm.controls['author'].setValue('');
       this.coursecontentForm.controls['chapter'].setValue('');
       this.Save=true;
@@ -424,6 +457,7 @@ export class AddcoursecontentComponent implements OnInit {
       this.coursecontentForm.controls['author'].disable();
       this.coursecontentForm.controls['chapter'].disable();
       this.coursecontentForm.controls['contentType'].disable();
+      this.coursecontentForm.controls['contentDescription'].disable();
       this.Save=true;
       this.update=false;
       this.Clear=false;
@@ -433,18 +467,20 @@ export class AddcoursecontentComponent implements OnInit {
       this.coursecontentForm.controls['author'].enable();
       this.coursecontentForm.controls['chapter'].enable();
       this.coursecontentForm.controls['contentType'].enable();
+      this.coursecontentForm.controls['contentDescription'].enable();
+
       this.Save=false;
       this.update=true;
       this.Clear=true;
     }
     this.Id = id;
     this._authService.GetcoursecontentById(this.Id).subscribe((finalresult: any) => {
-      //debugger
+      debugger
       console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
       if (finalresult.status == "200") {
-        //debugger
+        debugger
 
         this.coursecontentForm.patchValue(finalresult.result);
         const course = this.coursecontentForm.getRawValue();

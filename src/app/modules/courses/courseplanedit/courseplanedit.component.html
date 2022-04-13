@@ -81,7 +81,7 @@
                                     <!-- <div class="flex"> -->
                                     <div class="fuse-mat-no-subscript flex-auto">
                                         <mat-slide-toggle class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
-                                            id="offerApplicable" (change)="toggleCompleted($event)" [checked]="false">
+                                        [formControlName]="'isOffer'" id="isOffer" [disabled]='disabled'(change)="toggleCompleted($event)">
                                             Offer Applicable
                                         </mat-slide-toggle>
                                     </div>
@@ -103,8 +103,8 @@
                                 <mat-label>Effective From</mat-label>
                                 <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                     [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
-                                <input matInput [matDatepicker]="effectiveDateDatepicker" [min]="todayDate"
-                                    [formControlName]="'effectiveDate'" [placeholder]="'EffectiveDate'">
+                                <input matInput [matDatepicker]="effectiveDateDatepicker" 
+                                    [formControlName]="'effectiveFrom'" [placeholder]="'EffectiveDate'">
                                 <mat-datepicker-toggle matSuffix [for]="effectiveDateDatepicker">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #effectiveDateDatepicker></mat-datepicker>
@@ -115,7 +115,7 @@
                                 <mat-label>Effective Till</mat-label>
                                 <mat-icon matPrefix class="hidden sm:flex icon-size-5"
                                     [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
-                                <input matInput [matDatepicker]="effectiveTillDatepicker" [min]="todayDate"
+                                <input matInput [matDatepicker]="effectiveTillDatepicker"
                                     [formControlName]="'effectiveTill'" [placeholder]="'EffectiveTill'">
                                 <mat-datepicker-toggle matSuffix [for]="effectiveTillDatepicker">
                                 </mat-datepicker-toggle>
@@ -163,10 +163,10 @@
                             Cancel
                         </button>
                             <button class="px-8" mat-flat-button [color]="'primary'"
-                                [disabled]="horizontalStepperStep1.stepControl.pristine || horizontalStepperStep1.stepControl.invalid"
                                 type="button" matStepperNext>
                                 Next
                             </button>
+                            
                         </div>
                     </mat-step>
 
@@ -182,7 +182,7 @@
                                     <mat-label>Course</mat-label>
                                     <mat-select name="courseId" placeholder="Courses" [formControlName]="'courseId'"
                                         class="input-full-width" multiple>
-                                        <!-- <mat-option value="">Select Course</mat-option> -->
+                                        <mat-option value="">Select Course</mat-option>
                                         <mat-option *ngFor="let item of cours " [value]="item.courseId"
                                             (onSelectionChange)="change(item,$event)">{{ item.courseName }}</mat-option>
                                     </mat-select>
@@ -233,8 +233,8 @@
                                                         </mat-header-cell>
                                                         <mat-cell *matCellDef="let row">
                                                             <mat-checkbox [formControlName]="'titlecheck'"
-                                                                [color]="'primary'" [value]="row.chapterId"
-                                                                (change)="onChangecheckbox($event,row.chapterId,row.courseId)">
+                                                                [color]="'primary'" [value]="row.courseId"
+                                                                (change)="onChangecheckbox($event)">
                                                             </mat-checkbox>
                                                         </mat-cell>
                                                     </ng-container>
@@ -291,7 +291,7 @@
                             matStepperPrevious>
                             Back
                         </button>
-                        <button class="px-8 mr-2" mat-flat-button [color]="'primary'" type="reset"
+                        <button class="px-8 mr-2" mat-flat-button [color]="'primary'" type="reset" *ngIf="show"
                             (click)="horizontalStepper.reset();">
                             Reset
                         </button>

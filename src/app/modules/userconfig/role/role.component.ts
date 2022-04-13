@@ -22,7 +22,7 @@ export interface RoleData {
   templateUrl: './role.component.html',
   styleUrls: ['./role.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  animations: fuseAnimations
+    animations   : fuseAnimations
   //   styles         : [
   //     /* language=SCSS */
   //     `

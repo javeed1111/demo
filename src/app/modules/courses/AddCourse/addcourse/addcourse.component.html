@@ -45,28 +45,93 @@
                                     [svgIcon]="'heroicons_solid:office-building'"></mat-icon>
                             </mat-form-field> -->
                     </div>
-                    <!--Technologdrop-->
+                    <!--short Description-->
                     <div class="flex-auto">
-                        <mat-label>Description</mat-label>
-                        <!-- <div class="flex"> -->
-                        <!-- <mat-form-field class="flex-auto"> -->
+                        <mat-label>short Description</mat-label>
                         <quill-editor [formControlName]="'Description'" [modules]="quillModules">
                         </quill-editor>
-                        <!-- </mat-form-field> -->
-                        <!-- <mat-form-field class="flex-auto">
-                                <mat-label>Description</mat-label>
-                                <input matInput [formControlName]="'Description'" [placeholder]="'Description'">
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:menu-alt-1'"></mat-icon>
-                            </mat-form-field> -->
-                        <!-- </div> -->
                     </div>
-                    <!--Technologdrop-->
+                    <!--Description-->
+                    <div class="flex-auto mt-4">
+                        <mat-label>Description</mat-label>
+                        <quill-editor [formControlName]="'Fulldescription'" [modules]="quillModules">
+                        </quill-editor>
+                    </div>
+                    <!--What you'll learn-->
+                    <div class="flex-auto mt-4">
+                        <mat-label>What you'll learn</mat-label>
+                        <quill-editor [formControlName]="'Whatlearn'" [modules]="quillModules">
+                        </quill-editor>
+                    </div>
+                    <!--Requirements-->
+                    <div class="flex-auto mt-4">
+                        <mat-label>Requirements</mat-label>
+                        <quill-editor [formControlName]="'requirements'" [modules]="quillModules">
+                        </quill-editor>
+                    </div>
+                    <!--Title-->
                     <div class="flex mt-4">
                         <mat-form-field class="flex-auto">
                             <mat-label>Title</mat-label>
                             <input matInput [formControlName]="'Title'" [placeholder]="'Title'">
                             <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
                             </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Price</mat-label>
+                            <input type="number" matInput [formControlName]="'price'" [placeholder]="'Price'"
+                            (blur)='checkprice()' required>
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex">
+                        <div class="space-y-4">
+                            <ng-container>
+                                <!-- <div class="flex"> -->
+                                <div class="fuse-mat-no-subscript flex-auto">
+                                    <mat-slide-toggle class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
+                                        id="offerApplicable" (change)="toggleCompleted($event)" [checked]="false">
+                                        Offer Applicable
+                                    </mat-slide-toggle>
+                                </div>
+                                <!-- </div> -->
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Offer Price</mat-label>
+                            <input type="number" matInput [formControlName]="'offerPrice'"
+                                [placeholder]="'Offer Price'" (blur)='checkprice()'>
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex mb-4">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Effective From</mat-label>
+                            <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
+                            <input matInput [matDatepicker]="effectiveDateDatepicker" [min]="todayDate"
+                                [formControlName]="'effectiveFrom'" [placeholder]="'effectiveFrom'">
+                            <mat-datepicker-toggle matSuffix [for]="effectiveDateDatepicker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #effectiveDateDatepicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex mb-4">
+                        <mat-form-field class="fuse-mat-no-subscript w-full">
+                            <mat-label>Effective Till</mat-label>
+                            <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
+                            <input matInput [matDatepicker]="effectiveTillDatepicker" [min]="todayDate"
+                                [formControlName]="'effectiveTill'" [placeholder]="'EffectiveTill'">
+                            <mat-datepicker-toggle matSuffix [for]="effectiveTillDatepicker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #effectiveTillDatepicker></mat-datepicker>
                         </mat-form-field>
                     </div>
                     <!--Duration,units-->
@@ -116,6 +181,7 @@
 
                                 </button>
                                 <span class="ml-1 mr-0">{{name}}</span>
+                                <span class="ml-1 mr-0">Image size should be: 600*485</span>
                                 <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
                                 <!-- <button style="display:block;width:120px; height:30px;"
                                     onclick="document.getElementById('getFile').click()">Your text here</button> -->

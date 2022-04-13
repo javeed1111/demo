@@ -4,55 +4,59 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
-import {MatInputModule} from '@angular/material/input'
+import { MatInputModule } from '@angular/material/input'
 import { fuseAnimations } from '@fuse/animations';
+
 
 @Component({
   selector: 'app-addcourse',
   templateUrl: './addcourse.component.html',
   styleUrls: ['./addcourse.component.scss'],
   encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+  animations: fuseAnimations
 })
 export class AddcourseComponent implements OnInit {
   active: boolean;
   courseForm: FormGroup;
   alert: { type: FuseAlertType; message: string } = {
-    type   : 'success',
+    type: 'success',
     message: ''
-};
-showAlert:  boolean = false;
+  };
+  showAlert: boolean = false;
   Id: any;
   technology: any;
   technologyId
   files: Array<any> = new Array<any>();
-fileToUpload: File = null;
-name: string;
-quillModules: any = {
-  toolbar: [
-    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-['blockquote', 'code-block'],
+  fileToUpload: File = null;
+  todayDate = new Date();
+  name: string;
+  isofferactive: boolean;
+  quillModules: any = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+      ['blockquote', 'code-block'],
 
-[{ 'header': 1 }, { 'header': 2 }],               // custom button values
-[{ 'list': 'ordered'}, { 'list': 'bullet' }],
-[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-[{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-[{ 'direction': 'rtl' }],                         // text direction
+      [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+      [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+      [{ 'direction': 'rtl' }],                         // text direction
 
-[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
-[{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-[{ 'font': [] }],
-[{ 'align': [] }],
+      [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+      [{ 'font': [] }],
+      [{ 'align': [] }],
 
-['clean'] 
+      ['clean']
       // ['bold', 'italic', 'underline'],
       // [{align: []}, {list: 'ordered'}, {list: 'bullet'}],
       // ['clean']
-  ]
-};
-  
+    ]
+  };
+  OfferPrice: string;
+
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -63,72 +67,135 @@ quillModules: any = {
   ngOnInit(): void {
     this.GetTechnologys();
     this.courseForm = this._formBuilder.group({
-      courseName   : ['', [Validators.required]],
-      technologyId : ['', []],
-      Description  : ['', []],
-      Title        :['', []],
+      courseName: ['', [Validators.required]],
+      technologyId: ['', []],
+      Description: ['', []],
+      Title: ['', []],
+      Fulldescription: ['', []],
+      Whatlearn: ['', []],
+      requirements: ['', []],
+      price: ['0', [Validators.required]],
+      offerApplicable: [''],
+      offerPrice: ['0'],
+      effectiveFrom: ['', Validators.required],
+      effectiveTill: ['', Validators.required],
       // Duration     :['', [Validators.required]],
       // Fees         :['', []],
       // units        :['', []],
       // userchkactive: ['']
 
     });
+    const ctrl = this.courseForm.controls['offerPrice']
+    ctrl.disable();
   }
   onSelectFile(files: FileList) {
     //debugger
     if (files.length === 0)
-        return;
+      return;
     if (files.length > 0) {
-        this.files = [];
-        for (var i = 0; i < files.length; i++) {
-            this.fileToUpload = files.item(i);
-            const fileReader: FileReader = new FileReader();
-            fileReader.readAsDataURL(this.fileToUpload);
-            this.name=this.fileToUpload.name.split(' ').join('-').replace(/[()]/g,"")
-            this.files.push({ data: this.fileToUpload, fileName:this.name });
-        }
+      this.files = [];
+      for (var i = 0; i < files.length; i++) {
+        this.fileToUpload = files.item(i);
+        const fileReader: FileReader = new FileReader();
+        fileReader.readAsDataURL(this.fileToUpload);
+        this.name = this.fileToUpload.name.split(' ').join('-').replace(/[()]/g, "")
+        this.files.push({ data: this.fileToUpload, fileName: this.name });
+      }
     }
-}
+  }
+  checkprice() {
+    debugger
+    const dataa = this.courseForm.getRawValue();
+    var price = dataa.price;
+    var offerprice = dataa.offerPrice;
+    if (price <= offerprice) {
+      this.showAlert = true;
+
+      this.alert = {
+        type: 'success',
+        message: "Offer Price Should not be Greaterthan or equal to Price"
+      };
+      setTimeout(() => {
+        this.showAlert = false;
+        // this._router.navigate(['/courses/course']);
+      }, 3500);
+
+      return;
+
+    }
+
+  }
+  toggleCompleted($event: MatSlideToggleChange): void {
+    debugger
+    if ($event.checked != undefined) {
+      this.isofferactive = $event.checked;
+      if (this.isofferactive == true) {
+        const ctrl = this.courseForm.controls['offerPrice'];
+        ctrl.enable();
+      }
+      else {
+        const ctrl = this.courseForm.controls['offerPrice'];
+        ctrl.disable();
+        ctrl.setValue('0')
+
+      }
+
+    }
+    else {
+      this.isofferactive = false;
+      // this.horizontalStepperForm.controls.step1['offerPrice'].enable();
+
+    }
+    //this.active=this.filters.hideCompleted$.next(change.checked);
+  }
   GetTechnologys() {
     //debugger
     this._authService.GetTechnologies().subscribe((finalresult: any) => {
       //debugger
-     var finalresult = JSON.parse(finalresult);
+      var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
         //debugger
         //this.dataSource= finalresult.result;
-        this.technology= finalresult.result;
+        this.technology = finalresult.result;
         //this.roles = finalresult.result;
-        console.log('techs',this.technology)
+        console.log('techs', this.technology)
         //const dataSource = this.roles ;
       }
       else {
-        
+
       }
-  });
+    });
   }
-  cancel(){
+  cancel() {
     this._router.navigate(['/courses/course/']);
-        setTimeout(() => {
-            window.location.reload();
-           }, 10);
+    setTimeout(() => {
+      window.location.reload();
+    }, 10);
 
   }
-  AddCourse()
-  {
-      debugger
-      this.showAlert=false;
-      if (this.courseForm.invalid) {
-          return;
-      }
-      
-      // Get the contact object
-      const course = this.courseForm.getRawValue();
+  AddCourse() {
+    debugger
+    this.showAlert = false;
+    if (this.courseForm.invalid) {
+      return;
+    }
 
-      // Go through the contact object and clear empty values
-     //  contact.emails = contact.emails.filter(email => email.email);
+    // Get the contact object
+    const course = this.courseForm.getRawValue();
+    if (this.isofferactive == undefined) {
+      this.isofferactive = false;
+      // this.horizontalStepperForm.controls['offerPrice'].disable();
+      this.OfferPrice = '0'
+    }
+    else {
+      // this.horizontalStepperForm.controls['offerPrice'].enable();
+      this.OfferPrice = course.offerPrice;
+    }
 
-     //  contact.phoneNumbers = contact.phoneNumbers.filter(phoneNumber => phoneNumber.phoneNumber);
+    // Go through the contact object and clear empty values
+    //  contact.emails = contact.emails.filter(email => email.email);
+
+    //  contact.phoneNumbers = contact.phoneNumbers.filter(phoneNumber => phoneNumber.phoneNumber);
 
     //   if(this.active==undefined){
     //      this.active = true;
@@ -139,69 +206,88 @@ quillModules: any = {
     //     if(course.Fees==""){
     //       course.Fees=0
     //     }
-     const formData: FormData = new FormData();
-            formData.append("CourseName",course.courseName)
-            formData.append("CreatedBy",(localStorage.getItem("LoginId")));
-            formData.append("TechnologyId",course.technologyId)
-            formData.append("Description",course.Description)
-            formData.append("Title",course.Title)
-            // formData.append("Duration",course.Duration)
-            // formData.append("Units",course.units)
-            // formData.append("Fees",course.Fees)
-        if (this.files.length == 1) {
-            formData.append("fileupload",this.fileToUpload , this.name);
-        }
-        // console.log('formdata',formData)
-      // var data = {
-        // CourseName: course.courseName,
-        // TechnologyId:course.technologyId,
-        // Description: course.Description,
-        // Title: course.Title,
-        //  CreatedBy: parseInt(localStorage.getItem("LoginId")),
-        //  IsActive: this.active,
-    //  }
-      this._authService.Addcourse(formData).subscribe((result: any) => {
-          //debugger
-           var result = JSON.parse(result);
-            if (result.status == "200") {
-                //debugger
-                 // Set the alert
-                 this.alert = {
-                  type   : 'success',
-                  message: result.message
-              };
-
-              // Show the alert
-              this.showAlert = true;
-                setTimeout(() => {
-                  this._router.navigate(['/courses/course']);
-                }, 1000);
-            }
-            else {
-             // Set the alert
-             this.alert = {
-              type   : 'error',
-              message: result.message
-          };
-
-          // Show the alert
-          this.showAlert = true;
-            }
-            (error) => {
-   
-           }
-        });
-  }
-  toggleCompleted($event: MatSlideToggleChange): void
-    {
-        //debugger
-        if($event.checked!=undefined){
-            this.active = $event.checked;
-        }
-        else{
-            this.active = true;
-        }
-        //this.active=this.filters.hideCompleted$.next(change.checked);
+    const formData: FormData = new FormData();
+    formData.append("CourseName", course.courseName)
+    formData.append("CreatedBy", (localStorage.getItem("LoginId")));
+    formData.append("TechnologyId", course.technologyId)
+    formData.append("Description", course.Description)
+    formData.append("FullDescription", course.Fulldescription)
+    formData.append("WhatLearn", course.Whatlearn)
+    formData.append("Requirements", course.requirements)
+    formData.append("Title", course.Title)
+    formData.append("Price", course.price)
+    formData.append("IsOffer", (this.isofferactive).toString())
+    formData.append("OfferPrice", this.OfferPrice)
+    formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
+    formData.append("EffectiveTill", (course.effectiveTill.format("DD-MM-YYYY")))
+    
+    if (this.files.length == 1) {
+      formData.append("fileupload", this.fileToUpload, this.name);
     }
+    // console.log('formdata',formData)
+    // var data = {
+    // CourseName: course.courseName,
+    // TechnologyId:course.technologyId,
+    // Description: course.Description,
+    // Title: course.Title,
+    //  CreatedBy: parseInt(localStorage.getItem("LoginId")),
+    //  IsActive: this.active,
+    //  }
+    this._authService.Addcourse(formData).subscribe((result: any) => {
+      debugger
+      var result = JSON.parse(result);
+      if (result.status == "200") {
+        //debugger
+        // Set the alert
+        this.alert = {
+          type: 'success',
+          message: result.message
+        };
+
+        // Show the alert
+        this.showAlert = true;
+        setTimeout(() => {
+          this._router.navigate(['/courses/course']);
+        }, 1000);
+      }
+      else if (result.status == "-101") {
+        //debugger
+        // Set the alert
+        this.alert = {
+          type: 'error',
+          message: result.message
+        };
+
+        // Show the alert
+        this.showAlert = true;
+        setTimeout(() => {
+          this.showAlert = false;
+        }, 1000);
+      }
+      else {
+        // Set the alert
+        this.alert = {
+          type: 'error',
+          message: result.message
+        };
+
+        // Show the alert
+        this.showAlert = true;
+      }
+      (error) => {
+
+      }
+    });
+  }
+  // toggleCompleted($event: MatSlideToggleChange): void {
+  //   //debugger
+  //   if ($event.checked != undefined) {
+  //     this.active = $event.checked;
+  //   }
+  //   else {
+  //     this.active = true;
+  //   }
+  //   //this.active=this.filters.hideCompleted$.next(change.checked);
+  // }
 
 }

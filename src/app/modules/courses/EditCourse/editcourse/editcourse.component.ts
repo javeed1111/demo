@@ -1,10 +1,21 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+export interface coursefeeinactiveData {
+  sno: number;
+  price: string;
+  offerprice: string;
+  effectivefrom: string;
+  effectivetill: string;
+}
 @Component({
   selector: 'app-editcourse',
   templateUrl: './editcourse.component.html',
@@ -13,6 +24,11 @@ import { AuthService } from 'app/core/auth/auth.service';
   animations: fuseAnimations
 })
 export class EditcourseComponent implements OnInit {
+  selectedProduct: any | null = null;
+  displayedColumns = ['sno','price', 'offerprice','effectivefrom','effectivetill'];
+  dataSource: MatTableDataSource<coursefeeinactiveData>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   active: boolean;
   courseForm: FormGroup;
   alert: { type: FuseAlertType; message: string } = {
@@ -29,7 +45,9 @@ export class EditcourseComponent implements OnInit {
   name: string;
   profileImage: any;
   ImageURL: any;
-  butdisabled:boolean=false;
+  butdisabled: boolean = false;
+  todayDate = new Date();
+  isofferactive: boolean;
   quillModules: any = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -54,6 +72,12 @@ export class EditcourseComponent implements OnInit {
       // ['clean']
     ]
   };
+  offerpricenbind: any;
+  OfferPrice: string;
+  isoffer: any;
+  effectivefrm: any;
+  effectivetil: any;
+  feedetailsid: any;
 
   constructor(
 
@@ -61,6 +85,7 @@ export class EditcourseComponent implements OnInit {
     private _authService: AuthService,
     private _router: Router,
     private approute: ActivatedRoute,
+    public datepipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -68,7 +93,7 @@ export class EditcourseComponent implements OnInit {
     var loginId = localStorage.getItem("LoginId");
     var id = this.approute.snapshot.params['id'];
     var value = this.approute.snapshot.params['value'];
-    
+
     this.GetTechnologys();
 
 
@@ -77,14 +102,22 @@ export class EditcourseComponent implements OnInit {
       technologyId: ['', []],
       description: ['', []],
       title: ['', []],
-      // duration: ['', [Validators.required]],
-      // units: ['', []],
-      // fees: [''],
+      fullDescription: ['', []],
+      whatLearn: ['', []],
+      requirements: ['', []],
       imageURL: ['', []],
-      //isActive       : ['']
+      price: ['0', [Validators.required]],
+      isOffer: [''],
+      offerPrice: ['0'],
+      effectiveFrom: ['', Validators.required],
+      effectiveTill: ['', Validators.required],
+      id: [''],
 
     });
-    this.Edit(id,value);
+    const ctrl = this.courseForm.controls['offerPrice'];
+    ctrl.disable();
+    this.Edit(id, value);
+    this.GetFeeInactiveData(id);
   }
   cancel() {
     this._router.navigate(['/courses/course']);
@@ -107,6 +140,63 @@ export class EditcourseComponent implements OnInit {
       }
     }
   }
+  checkprice() {
+    debugger
+    const dataa = this.courseForm.getRawValue();
+    var price = dataa.price;
+    var offerprice = dataa.offerPrice;
+    if (price <= offerprice) {
+      this.showAlert = true;
+
+      this.alert = {
+        type: 'success',
+        message: "Offer Price Should not be Greaterthan or equal to Price"
+      };
+      setTimeout(() => {
+        this.showAlert = false;
+        // this._router.navigate(['/courses/course']);
+      }, 3500);
+
+      return;
+
+    }
+
+  }
+  toggleCompleted($event: MatSlideToggleChange): void {
+    debugger
+    if ($event.checked != undefined) {
+      this.isofferactive = $event.checked;
+      if (this.isofferactive == true) {
+        const ctrl = this.courseForm.controls['offerPrice'];
+        ctrl.enable();
+        if(this.offerpricenbind!=0){
+          ctrl.setValue(this.offerpricenbind)
+        }
+        else{
+          ctrl.setValue('0')
+        }
+      }
+      else {
+        const ctrl = this.courseForm.controls['offerPrice'];
+        ctrl.disable();
+        ctrl.setValue('0')
+        // if(this.offerpricenbind!=0){
+        //   ctrl.setValue(this.offerpricenbind)
+        // }
+        // else{
+        //   ctrl.setValue('0')
+        // }
+
+      }
+
+    }
+    else {
+      this.isofferactive = false;
+      // this.horizontalStepperForm.controls.step1['offerPrice'].enable();
+
+    }
+    //this.active=this.filters.hideCompleted$.next(change.checked);
+  }
   GetTechnologys() {
     //debugger
     this._authService.GetTechnologies().subscribe((finalresult: any) => {
@@ -116,6 +206,10 @@ export class EditcourseComponent implements OnInit {
         //debugger
         //this.dataSource= finalresult.result;
         this.technology = finalresult.result;
+        if(this.courseForm.controls['isOffer'].value==true)
+        {
+       this.courseForm.controls['offerPrice'].enable();
+        }
         //this.roles = finalresult.result;
         console.log('techs', this.technology)
         //const dataSource = this.roles ;
@@ -125,7 +219,7 @@ export class EditcourseComponent implements OnInit {
       }
     });
   }
-  Edit(id:any,value:any) {
+  Edit(id: any, value: any) {
     //debugger
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
@@ -136,38 +230,47 @@ export class EditcourseComponent implements OnInit {
     }
     if (value == "view") {
       // this.editsite=false;
-      this.butdisabled=true;
+      this.butdisabled = true;
       this.courseForm.controls['courseName'].disable();
       this.courseForm.controls['technologyId'].disable();
       this.courseForm.controls['description'].disable();
       this.courseForm.controls['title'].disable();
-      // this.courseForm.controls['duration'].disable();
-      // this.courseForm.controls['units'].disable();
-      // this.courseForm.controls['fees'].disable();
+      this.courseForm.controls['fullDescription'].disable();
+      this.courseForm.controls['whatLearn'].disable();
+      this.courseForm.controls['requirements'].disable();
+      this.courseForm.controls['price'].disable();
+      this.courseForm.controls['isOffer'].disable();
+      // this.courseForm.controls['offerPrice'].disable();
+      this.courseForm.controls['effectiveFrom'].disable();
+      this.courseForm.controls['effectiveTill'].disable();
 
 
 
-  }
-  else
-  {
-    this.butdisabled=false;
-    this.courseForm.controls['courseName'].enable();
-    this.courseForm.controls['technologyId'].enable();
-    this.courseForm.controls['description'].enable();
-    this.courseForm.controls['title'].enable();
-    // this.courseForm.controls['duration'].enable();
-    // this.courseForm.controls['units'].enable();
-    // this.courseForm.controls['fees'].enable();
+    }
+    else {
+      this.butdisabled = false;
+      this.courseForm.controls['courseName'].enable();
+      this.courseForm.controls['technologyId'].enable();
+      this.courseForm.controls['description'].enable();
+      this.courseForm.controls['title'].enable();
+      this.courseForm.controls['fullDescription'].enable();
+      this.courseForm.controls['whatLearn'].enable();
+      this.courseForm.controls['requirements'].enable();
+      this.courseForm.controls['price'].enable();
+      this.courseForm.controls['isOffer'].enable();
+      // this.courseForm.controls['offerPrice'].enable();
+      this.courseForm.controls['effectiveFrom'].enable();
+      this.courseForm.controls['effectiveTill'].enable();
 
-  }
+    }
     this.Id = id;
     this._authService.GetcourseById(this.Id).subscribe((finalresult: any) => {
-      //debugger
+      debugger
       console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
       if (finalresult.status == "200") {
-        //debugger
+        debugger
 
         this.courseForm.patchValue(finalresult.result);
         const course = this.courseForm.getRawValue();
@@ -176,7 +279,22 @@ export class EditcourseComponent implements OnInit {
         // }
         // if (course.fees == 0) {
         //   this.courseForm.controls['fees'].setValue("")
+        // }"0001-01-01T00:00:00"
+        this.feedetailsid= course.id;
+        this.isoffer  = course.isOffer;
+        this.effectivefrm  = course.effectiveFrom;
+        this.effectivetil  = course.effectiveTill;
+        // if(course.effectiveFrom=="0001-01-01T00:00:00"){
+        //   course.effectiveFrom="effectiveFrom"
         // }
+        // if(course.effectiveTill=="0001-01-01T00:00:00"){
+        //   course.effectiveTill="effectiveTill"
+        // }
+        this.offerpricenbind =this.courseForm.controls['offerPrice'].value;
+        if(this.courseForm.controls['isOffer'].value==true && value == "edit")
+        {
+       this.courseForm.controls['offerPrice'].enable();
+        }
         if (finalresult.result.imageURL != null) {
           this.ImageURL = baseurl + finalresult.result.imageURL;
           // this.noimage=true;;
@@ -202,8 +320,34 @@ export class EditcourseComponent implements OnInit {
       }
     });
   }
+  GetFeeInactiveData(id:any){
+    this.Id = id;
+    this._authService.GetallcoursefeeById(this.Id).subscribe((finalresult: any) => {
+      debugger
+      console.log(finalresult);
+      //  var finalresult = JSON.parse(result);
+      // rolebyid=finalresult;
+      if (finalresult.status == "200") {
+        debugger
+        for(let i=0;i<finalresult.result.length;i++){
+          finalresult.result[i].effectiveFrom=this.datepipe.transform(finalresult.result[i].effectiveFrom, 'dd-MM-yyyy');
+          finalresult.result[i].effectiveTill=this.datepipe.transform(finalresult.result[i].effectiveTill, 'dd-MM-yyyy');
+            
+          }
+        this.dataSource = new MatTableDataSource(finalresult.result);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        
+      }
+      else {
+
+      }
+    });
+    
+   
+  }
   Updatecourse() {
-    //debugger
+    debugger
     this.showAlert = false;
     if (this.courseForm.invalid) {
       return;
@@ -211,6 +355,33 @@ export class EditcourseComponent implements OnInit {
 
     // Get the contact object
     const course = this.courseForm.getRawValue();
+    if (this.isofferactive == undefined) {
+      if(this.isoffer==false && this.isofferactive == undefined){
+        this.OfferPrice = '0';
+        this.isofferactive = false;
+      }
+      else if(this.isoffer==false){
+        this.OfferPrice = '0';
+      }
+      else{
+        this.isofferactive = this.isoffer;
+      // this.horizontalStepperForm.controls['offerPrice'].disable();
+      
+      this.OfferPrice = course.offerPrice;
+      } 
+    }
+    else {
+      // this.horizontalStepperForm.controls['offerPrice'].enable();
+      this.OfferPrice = course.offerPrice;
+    }
+    if(this.effectivefrm!=course.effectiveFrom)
+    {
+      course.effectiveFrom=(course.effectiveFrom).format("DD-MM-YYYY")
+    }
+    if(this.effectivetil!=course.effectiveTill)
+    {
+      course.effectiveTill=(course.effectiveTill).format("DD-MM-YYYY")
+    }
 
     // Go through the contact object and clear empty values
     //  contact.emails = contact.emails.filter(email => email.email);
@@ -234,8 +405,17 @@ export class EditcourseComponent implements OnInit {
     formData.append("TechnologyId", course.technologyId)
     formData.append("UpdatedBy", (localStorage.getItem("LoginId")));
     formData.append("Description", course.description)
+    formData.append("FullDescription", course.fullDescription)
+    formData.append("WhatLearn", course.whatLearn)
+    formData.append("Requirements", course.requirements)
     formData.append("Title", course.title)
     formData.append("CourseId", this.approute.snapshot.params['id'])
+    formData.append("Id", this.feedetailsid)
+    formData.append("Price", course.price)
+    formData.append("IsOffer", (this.isofferactive).toString())
+    formData.append("OfferPrice", this.OfferPrice)
+    formData.append("EffectiveFrom", (course.effectiveFrom))
+    formData.append("EffectiveTill", (course.effectiveTill))
     // formData.append("Duration", course.duration)
     // formData.append("Units",course.units)
     // formData.append("Fees", course.fees)
@@ -274,29 +454,29 @@ export class EditcourseComponent implements OnInit {
         }, 1000);
       }
       else {
-         // Set the alert
-         this.alert = {
-          type   : 'error',
+        // Set the alert
+        this.alert = {
+          type: 'error',
           message: result.message
-      };
+        };
 
-      // Show the alert
-      this.showAlert = true;
+        // Show the alert
+        this.showAlert = true;
       }
       (error) => {
 
       }
     });
   }
-  toggleCompleted($event: MatSlideToggleChange): void {
-    //debugger
-    if ($event.checked != undefined) {
-      this.isActive = $event.checked;
-    }
-    else {
-      this.isActive = true;
-    }
-    //this.active=this.filters.hideCompleted$.next(change.checked);
-  }
+//   toggleCompleted($event: MatSlideToggleChange): void {
+//     //debugger
+//     if ($event.checked != undefined) {
+//       this.isActive = $event.checked;
+//     }
+//     else {
+//       this.isActive = true;
+//     }
+//     //this.active=this.filters.hideCompleted$.next(change.checked);
+//   }
 
 }

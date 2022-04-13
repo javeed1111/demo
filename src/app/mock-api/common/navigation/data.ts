@@ -131,10 +131,10 @@ export const defaultNavigation: FuseNavigationItem[] = [
                         link : '/courses/coursecontent'
                     },
                     {
-                        id   : 'courses.courseplan',
+                        id   : 'courses.courseplanlist',
                         title: 'Course Plan',
                         type : 'basic',
-                        link : '/courses/courseplan'
+                        link : '/courses/courseplanlist'
                     }
                 ]
             },
@@ -213,26 +213,26 @@ export const defaultNavigation: FuseNavigationItem[] = [
                     }   
                 ]
             },
-            {
-                id      : 'feedetails',
-                title   : 'Fee Details',
-                type    : 'collapsable',
-                icon    : 'heroicons_solid:cash',
-                children: [
-                    {
-                        id   : 'feedetails.addpaymenttype',
-                        title: 'Add Payment Type',
-                        type : 'basic',
-                        link : '/feedetails/addpaymenttype'
-                    },
-                    {
-                        id   : 'feedetails.feepayment',
-                        title: 'Fee Payment',
-                        type : 'basic',
-                        link : '/feedetails/feepayment'
-                    }   
-                ]
-            },
+            // {
+            //     id      : 'feedetails',
+            //     title   : 'Fee Details',
+            //     type    : 'collapsable',
+            //     icon    : 'heroicons_solid:cash',
+            //     children: [
+            //         {
+            //             id   : 'feedetails.addpaymenttype',
+            //             title: 'Add Payment Type',
+            //             type : 'basic',
+            //             link : '/feedetails/addpaymenttype'
+            //         },
+            //         {
+            //             id   : 'feedetails.feepayment',
+            //             title: 'Fee Payment',
+            //             type : 'basic',
+            //             link : '/feedetails/feepayment'
+            //         }   
+            //     ]
+            // },
             {
                 id      : 'faculty',
                 title   : 'Faculty',
@@ -357,14 +357,14 @@ export const compactNavigation: FuseNavigationItem[] = [
         type    : 'aside',
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
-    {
-        id      : 'feedetails',
-        title   : 'Fee Details',
-        icon    : 'heroicons_solid:cash',
-        tooltip : 'feedetails',
-        type    : 'aside',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
+    // {
+    //     id      : 'feedetails',
+    //     title   : 'Fee Details',
+    //     icon    : 'heroicons_solid:cash',
+    //     tooltip : 'feedetails',
+    //     type    : 'aside',
+    //     children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    // },
     {
         id      : 'faculty',
         title   : 'Faculty',
@@ -439,13 +439,13 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         type    : 'group',
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
-    {
-        id      : 'feedetails',
-        title   : 'Fee Details',
-        icon    : 'heroicons_solid:cash',
-        type    : 'group',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
+    // {
+    //     id      : 'feedetails',
+    //     title   : 'Fee Details',
+    //     icon    : 'heroicons_solid:cash',
+    //     type    : 'group',
+    //     children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    // },
     {
         id      : 'faculty',
         title   : 'Faculty',
@@ -518,13 +518,13 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         type    : 'group',
         children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
     },
-    {
-        id      : 'feedetails',
-        title   : 'Fee Details',
-        icon    : 'heroicons_solid:cash',
-        type    : 'group',
-        children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
-    },
+    // {
+    //     id      : 'feedetails',
+    //     title   : 'Fee Details',
+    //     icon    : 'heroicons_solid:cash',
+    //     type    : 'group',
+    //     children: [] // This will be filled from defaultNavigation so we don't have to manage multiple sets of the same navigation
+    // },
     {
         id      : 'faculty',
         title   : 'Faculty',

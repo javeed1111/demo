@@ -13,47 +13,28 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-// import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-export interface CourseData {
+import { DatePipe } from '@angular/common';
+export interface CourseplanData {
   sno: string;
-  courseName: string;
-  technologyName: string;
-  title: string;
-  Actions: string;
+  planName: string;
+  price: string;
+  effectivefrom: string;
+  effectivetill: string;
+  actions:string;
 }
 
 @Component({
-  selector: 'app-course',
-  templateUrl: './course.component.html',
- styleUrls: ['./course.component.scss'],
- encapsulation: ViewEncapsulation.None,
+  selector: 'app-courseplanlist',
+  templateUrl: './courseplanlist.component.html',
+  styleUrls: ['./courseplanlist.component.scss'],
+  encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
-//   styles         : [
-//     /* language=SCSS */
-//     `
-//         .inventory-grid {
-//             grid-template-columns: 48px auto 40px;
-
-//             @screen sm {
-//                 grid-template-columns: 48px auto 112px 72px;
-//             }
-
-//             @screen md {
-//                 grid-template-columns: 48px 112px auto 112px 72px;
-//             }
-
-//             @screen lg {
-//                 grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
-//             }
-//         }
-//     `
-// ],
 })
-export class CourseComponent implements OnInit {
+export class CourseplanlistComponent implements OnInit {
   isLoading: boolean = false;
   selectedProduct: any | null = null;
-  displayedColumns = ['sno',  'title', 'courseName', 'technologyName','actions'];
-  dataSource: MatTableDataSource<CourseData>;
+  displayedColumns = ['sno',  'planName', 'price', 'effectivefrom','effectivetill','actions'];
+  dataSource: MatTableDataSource<CourseplanData>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   // pagination: VenturePagination;
@@ -70,7 +51,6 @@ showAlert:  boolean = false;
 course: any;
 
   constructor(
-    
     private _activatedRoute: ActivatedRoute,
     private _changeDetectorRef: ChangeDetectorRef,
     private _formBuilder: FormBuilder,
@@ -80,47 +60,11 @@ course: any;
     private _overlay: Overlay,
     private _viewContainerRef: ViewContainerRef,
     private _authService: AuthService,
-  ) { 
-
-    // const users: CourseData[] = [];
-    // this.dataSource = new MatTableDataSource(users);
-    this.GetCourses();
-  }
+    public datepipe: DatePipe
+  ) { }
 
   ngOnInit(): void {
-    //debugger
-   
-    
-       // this.searchInputControl.valueChanges
-       // .pipe(
-       //     takeUntil(this._unsubscribeAll),
-       //     debounceTime(300),
-       //     switchMap((query) => {
-       //       //debugger
-       //         this.closeDetails();
-       //         this.isLoading = true;
-       //         return this._authService.GetRoles(0, 10, 'roleName', 'asc', query);
-       //     }),
-       //     map(() => {
-       //         this.isLoading = false;
-       //     })
-       // )
-       // .subscribe();
-
-       //    // Get the pagination
-       //    this._venturesService.pagination$
-       //    .pipe(takeUntil(this._unsubscribeAll))
-       //    .subscribe((pagination: VenturePagination) => {
-
-       //        // Update the pagination
-       //        this.pagination = pagination;
-
-       //        // Mark for check
-       //        this._changeDetectorRef.markForCheck();
-       //    });
-  }
-  ngAfterViewInit() {
-
+    this.GetCourseplans();
   }
   applyFilter(filterValue: string) {
     //debugger
@@ -129,21 +73,19 @@ course: any;
     this.dataSource.filter = filterValue;
   }
   closeDetails(): void
-    {
-        this.selectedProduct = null;
-    }
-
-  showEditModal(id) {
+  {
+      this.selectedProduct = null;
+  }
+  showEditModal(pcid,planid) {
     //debugger
     var value="edit"
-    this._router.navigate(['/courses/editcourse/'+id+'/'+value])
+    this._router.navigate(['/courses/editcourseplan/'+pcid+'/'+planid+'/'+value])
   }
-  showViewModal(id) {
+  showViewModal(pcid,planid) {
     //debugger
     var value="view"
-    this._router.navigate(['/courses/editcourse/'+id+'/'+value])
+    this._router.navigate(['/courses/editcourseplan/'+pcid+'/'+planid+'/'+value])
   }
-
   ngOnDestroy(): void
   {
       // Unsubscribe from all subscriptions
@@ -151,32 +93,35 @@ course: any;
       this._unsubscribeAll.complete();
   }
   createProduct(){
-    //debugger
-
-    // this._router.navigate(['/userconfig/role/addrole'])
-    this._router.navigate(['/courses/addcourse'])
+    this._router.navigate(['/courses/courseplan/'])
   }
-
   courseData :any= []
-  GetCourses() {
+  GetCourseplans() {
     //debugger
-    this._authService.GetCourses().subscribe((finalresult: any) => {
+    this._authService.GetCourseplans().subscribe((finalresult: any) => {
       //debugger
      var finalresult = JSON.parse(finalresult);
+     
       if (finalresult.status == "200") {
-        //debugger
-        // for(let i=0;i<finalresult.result.length;i++){
-        //   if(finalresult.result[i].duration==0){
-        //     finalresult.result[i].duration="";
-        //   }
-        //   else{
-        //     finalresult.result[i].duration=finalresult.result[i].duration+""+finalresult.result[i].units;
-        //   }
-        //   if(finalresult.result[i].fees==0){
-        //     finalresult.result[i].fees="Free";
-        //   }
-
-        // }
+        debugger
+        console.log('coursepalns',finalresult.result)
+        // finalresult.result.noofchapters =0
+        for(let i=0;i<finalresult.result.length;i++){
+        finalresult.result[i].effectiveFrom=this.datepipe.transform(finalresult.result[i].effectiveFrom, 'dd-MM-yyyy');
+        finalresult.result[i].effectiveTill=this.datepipe.transform(finalresult.result[i].effectiveTill, 'dd-MM-yyyy');
+          // if(finalresult.result[i].noOfChapters==0){
+          //   finalresult.result[i].duration="";
+          // }
+          // else{
+          //   finalresult.result[i].duration=finalresult.result[i].duration+""+finalresult.result[i].units;
+          // }
+          // if(finalresult.result[i].fees==0){
+          //   finalresult.result[i].fees="Free";
+          // }
+        }
+        
+        console.log(finalresult.result)
+        
         this.dataSource = new MatTableDataSource(finalresult.result);
         // this.course= finalresult.result;
         
@@ -191,7 +136,7 @@ course: any;
       }
   });
   }
-  deleteCourse(id:any): void
+  deleteCourse(pcid,planid): void
     {
       //debugger
       this.showAlert=false
@@ -215,53 +160,32 @@ course: any;
            var CreatedBy= parseInt(localStorage.getItem("LoginId"))
 
                 // Delete the contact
-                this._authService.deletecourse(id).subscribe((data:any) => {
+                this._authService.deletecourseplan(pcid,planid).subscribe((data:any) => {
                     //debugger
                     if (data.status == "200") {
-                      // Set the alert
-                      this.alert = {
-                        type: 'success',
-                        message: data.message
-                      };
-          
-                      // Show the alert
-                      this.showAlert = true;
-                      setTimeout(() => {
-                        this.showAlert = false
-                      }, 2000);
+                        
+                          
+                        this.alert = {
+                            type   : 'success',
+                            message: data.message
+                        
+                        };
+                        this.showAlert=true
                       //  this._router.navigate(['/userconfig/role/']);
-                      setTimeout(() => {
-                        window.location.reload();
-                      }, 2000);
-          
-                    }
-          
-                    else if (data.status == "202") {
-                      this.alert = {
-                        type: 'error',
-                        message: data.message
-          
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 0);
+                        
+                      }
+                      else {
+                        this.alert = {
+                          type   : 'error',
+                          message: data.message
+                      
                       };
-                      this.showAlert = true
-                      setTimeout(() => {
-                        this.showAlert = false
-                      }, 2500);
-          
-          
-                    }
-                    else {
-                      // this.spinner.hide();
-                      this.alert = {
-                        type: 'success',
-                        message: "Invalid Id."
-          
-                      };
-                      this.showAlert = true
-                      setTimeout(() => {
-                        this.showAlert = false
-                      }, 2000);
-                      // this.notifications.alert('Alert', result.message, NotificationType.Alert, { theClass: 'outline primary', timeOut: 2000, showProgressBar: false });
-                    }
+                      this.showAlert=true
+                        // this.notifications.alert('Alert', result.message, NotificationType.Alert, { theClass: 'outline primary', timeOut: 2000, showProgressBar: false });
+                      }
 
                         // Return if the contact wasn't deleted...
                         // if ( !isDeleted )

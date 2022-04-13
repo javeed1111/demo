@@ -15,7 +15,7 @@ export class AuthService
      * Constructor
      */
     constructor(private _httpClient: HttpClient,private _userService: UserService){
-      this.baseUrl = 'https://localhost:44358/';
+    this.baseUrl = 'https://localhost:44358/';
     //this.baseUrl = 'http://testugetitapi.fadelsoft.com/';
     }
 
@@ -182,6 +182,14 @@ export class AuthService
         //debugger
         return this._httpClient.post(this.baseUrl + "api/Admin/AddPlanCourse", data, {responseType: 'text'});
       }
+      public deletecourseplan(pcid,planid) {
+        debugger
+        return this._httpClient.delete(this.baseUrl + "api/Admin/DeletePlanCourse?pcid=" + pcid+ "&planid=" + planid);
+      }
+      UpdateCoursePlan(data) {
+        //debugger
+        return this._httpClient.post(this.baseUrl + "api/Admin/UpdatePlanCourse", data, {responseType: 'text'});
+      }
       public GetPlanmasters() {
         return this._httpClient.get(this.baseUrl + "api/Admin/GetAllPlanMaster",{responseType: 'text'});
       }
@@ -189,7 +197,6 @@ export class AuthService
         debugger
         return this._httpClient.get(this.baseUrl + "api/Admin/GetPlanMasterById", {params: {id}});
       }
-
       // yet to implement
       public GettitleById(data) {
         debugger
@@ -200,24 +207,43 @@ export class AuthService
       public gridcoursecontentbycourseid(id) {
         debugger
       return this._httpClient.get(this.baseUrl + "api/Admin/Getcoursecontentbycourseid",{params: {id}});
+      }
+      public GetCoursechapters() {
+        debugger
+      return this._httpClient.get(this.baseUrl + "api/Admin/GetAllCoursechapters",{responseType: 'text'});
     }
-    public GetcoursecontentById(id) {
+      public GetcoursecontentById(id) {
       debugger
       return this._httpClient.get(this.baseUrl + "api/Admin/Getcoursecontentbyid", {params: {id}});
-    }
-    Addcoursecontent(data) {
+      }
+      Addcoursecontent(data) {
       //debugger
       return this._httpClient.post(this.baseUrl + "api/Admin/Addcoursecontent", data, {responseType: 'text'});
-    }
-    Updatecoursecontent(data) {
+      }
+      Updatecoursecontent(data) {
       //debugger
       return this._httpClient.post(this.baseUrl + "api/Admin/Updatecoursecontent", data, {responseType: 'text'});
-    }
-    public deletecoursecontent(id) {
+      }
+      public deletecoursecontent(id) {
       debugger
       return this._httpClient.delete(this.baseUrl + "api/Admin/Deletecoursecontent", {params: {id}});
-    }
-    
+      }
+      public GetCourseContent() {
+      debugger
+      return this._httpClient.get(this.baseUrl + "api/Admin/GetCourseContent",{responseType: 'text'});
+      }
+      public GetCourseplans() {
+      debugger
+      return this._httpClient.get(this.baseUrl + "api/Admin/GetAllPlanCourse",{responseType: 'text'});
+      }
+      public GetcourseplanById(pcid,planid) {
+        //debugger
+        return this._httpClient.get(this.baseUrl + "api/Admin/GetPlanCourseById?pcid=" + pcid +"&planid="+planid);
+      }
+      public GetallcoursefeeById(id) {
+        //debugger
+        return this._httpClient.get(this.baseUrl + "api/Admin/GetAllCourseFeeById", {params: {id}});
+      }
       
     
       
@@ -295,7 +321,7 @@ export class AuthService
      */
     check(): Observable<boolean>
     {
-        debugger
+        //debugger
         // Check if the user is logged in
         if ( this._authenticated )
         {
