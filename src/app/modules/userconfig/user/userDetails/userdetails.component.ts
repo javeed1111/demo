@@ -563,9 +563,11 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
                 const currentContactIndex = this.contacts.findIndex(item => item.id === id);
                 const nextContactIndex = currentContactIndex + ((currentContactIndex === (this.contacts.length - 1)) ? -1 : 1);
                 const nextContactId = (this.contacts.length === 1 && this.contacts[0].id === id) ? null : this.contacts[nextContactIndex].id;
-
+                 var data={
+                    Id:this.contact.id
+                 }
                 // Delete the contact
-                this._contactsService.deleteUser(id).subscribe((data:any) => {
+                this._contactsService.deleteUser(data).subscribe((data:any) => {
                     //debugger
                     if (data.status == "200") {
                       // Set the alert

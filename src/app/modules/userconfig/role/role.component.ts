@@ -189,9 +189,12 @@ export class RoleComponent implements OnInit, AfterViewInit {
       // If the confirm button pressed...
       if (result === 'confirmed') {
         var CreatedBy = parseInt(localStorage.getItem("LoginId"))
+        var data={
+          Id:id
+        }
 
         // Delete the contact
-        this._authService.deleteRole(id).subscribe((data: any) => {
+        this._authService.deleteRole(data).subscribe((data: any) => {
           //debugger
           if (data.status == "200") {
             // Set the alert

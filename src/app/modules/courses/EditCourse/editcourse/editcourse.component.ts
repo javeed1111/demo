@@ -39,6 +39,7 @@ export class EditcourseComponent implements OnInit {
   Id: any;
   userId: any;
   isActive: boolean;
+  showonwebsite: boolean; 
   technology: any;
   files: Array<any> = new Array<any>();
   fileToUpload: File = null;
@@ -112,6 +113,7 @@ export class EditcourseComponent implements OnInit {
       effectiveFrom: ['', Validators.required],
       effectiveTill: ['', Validators.required],
       id: [''],
+      showOnWebsite: ['']
 
     });
     const ctrl = this.courseForm.controls['offerPrice'];
@@ -197,6 +199,17 @@ export class EditcourseComponent implements OnInit {
     }
     //this.active=this.filters.hideCompleted$.next(change.checked);
   }
+  onwebsite($event: MatSlideToggleChange): void {
+    debugger
+    if ($event.checked == undefined || $event.checked == true) {
+      this.showonwebsite = $event.checked;
+    }
+    else {
+      this.showonwebsite = false;
+      // this.isofferactive = false;
+    }
+
+  }
   GetTechnologys() {
     //debugger
     this._authService.GetTechnologies().subscribe((finalresult: any) => {
@@ -243,6 +256,7 @@ export class EditcourseComponent implements OnInit {
       // this.courseForm.controls['offerPrice'].disable();
       this.courseForm.controls['effectiveFrom'].disable();
       this.courseForm.controls['effectiveTill'].disable();
+      this.courseForm.controls['showOnWebsite'].disable();
 
 
 
@@ -261,6 +275,8 @@ export class EditcourseComponent implements OnInit {
       // this.courseForm.controls['offerPrice'].enable();
       this.courseForm.controls['effectiveFrom'].enable();
       this.courseForm.controls['effectiveTill'].enable();
+      this.courseForm.controls['showOnWebsite'].enable();
+      
 
     }
     this.Id = id;
@@ -316,6 +332,19 @@ export class EditcourseComponent implements OnInit {
         //  this.spinner.hide();
       }
       else {
+        this.alert = {
+          type: 'error',
+          message: finalresult.message
+        };
+
+        // Show the alert
+        this.showAlert = true;
+        setTimeout(() => {
+          // window.location.reload();
+        this.showAlert = false;
+
+          // this._router.navigate(['/courses/course']);
+        }, 1000);
 
       }
     });
@@ -340,6 +369,7 @@ export class EditcourseComponent implements OnInit {
         
       }
       else {
+        
 
       }
     });
@@ -382,6 +412,11 @@ export class EditcourseComponent implements OnInit {
     {
       course.effectiveTill=(course.effectiveTill).format("DD-MM-YYYY")
     }
+    if(course.showOnWebsite!=undefined){
+      this.showonwebsite =course.showOnWebsite;
+    }
+    
+    
 
     // Go through the contact object and clear empty values
     //  contact.emails = contact.emails.filter(email => email.email);
@@ -416,9 +451,8 @@ export class EditcourseComponent implements OnInit {
     formData.append("OfferPrice", this.OfferPrice)
     formData.append("EffectiveFrom", (course.effectiveFrom))
     formData.append("EffectiveTill", (course.effectiveTill))
-    // formData.append("Duration", course.duration)
-    // formData.append("Units",course.units)
-    // formData.append("Fees", course.fees)
+    formData.append("showOnWebsite", (this.showonwebsite).toString())
+
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
     }

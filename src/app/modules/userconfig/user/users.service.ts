@@ -235,9 +235,9 @@ export class UsersService
     //         ))
     //     );
     // }
-    public deleteUser(id) {
+    public deleteUser(data) {
         //debugger
-        return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteUser", {params: {id}});
+        return this._httpClient.post(this.baseUrl + "api/Admin/DeleteUser", data);
       }
 
       

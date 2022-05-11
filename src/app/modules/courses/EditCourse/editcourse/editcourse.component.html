@@ -126,6 +126,20 @@
                             <mat-datepicker #effectiveTillDatepicker></mat-datepicker>
                         </mat-form-field>
                     </div>
+                    <div class="flex">
+                        <div class="space-y-4">
+                            <ng-container>
+                                <!-- <div class="flex"> -->
+                                <div class="fuse-mat-no-subscript flex-auto">
+                                    <mat-slide-toggle class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
+                                        id="showOnWebsite" [formControlName]="'showOnWebsite'" (change)="onwebsite($event)" [checked]="false">
+                                        showOnWebsite
+                                    </mat-slide-toggle>
+                                </div>
+                                <!-- </div> -->
+                            </ng-container>
+                        </div>
+                    </div>
                     <!--Duration,units-->
                     <!-- <div class="flex">
                             <mat-form-field class="flex-auto">

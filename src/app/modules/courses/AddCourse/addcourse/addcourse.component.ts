@@ -31,6 +31,7 @@ export class AddcourseComponent implements OnInit {
   todayDate = new Date();
   name: string;
   isofferactive: boolean;
+  showonwebsite: boolean;
   quillModules: any = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -76,6 +77,7 @@ export class AddcourseComponent implements OnInit {
       requirements: ['', []],
       price: ['0', [Validators.required]],
       offerApplicable: [''],
+      onwebsite: [''],
       offerPrice: ['0'],
       effectiveFrom: ['', Validators.required],
       effectiveTill: ['', Validators.required],
@@ -148,6 +150,17 @@ export class AddcourseComponent implements OnInit {
     }
     //this.active=this.filters.hideCompleted$.next(change.checked);
   }
+  onwebsite($event: MatSlideToggleChange): void {
+    debugger
+    if ($event.checked == undefined || $event.checked == true) {
+      this.showonwebsite = $event.checked;
+    }
+    else {
+      this.showonwebsite = false;
+      // this.isofferactive = false;
+    }
+
+  }
   GetTechnologys() {
     //debugger
     this._authService.GetTechnologies().subscribe((finalresult: any) => {
@@ -179,8 +192,6 @@ export class AddcourseComponent implements OnInit {
     if (this.courseForm.invalid) {
       return;
     }
-
-    // Get the contact object
     const course = this.courseForm.getRawValue();
     if (this.isofferactive == undefined) {
       this.isofferactive = false;
@@ -191,21 +202,10 @@ export class AddcourseComponent implements OnInit {
       // this.horizontalStepperForm.controls['offerPrice'].enable();
       this.OfferPrice = course.offerPrice;
     }
-
-    // Go through the contact object and clear empty values
-    //  contact.emails = contact.emails.filter(email => email.email);
-
-    //  contact.phoneNumbers = contact.phoneNumbers.filter(phoneNumber => phoneNumber.phoneNumber);
-
-    //   if(this.active==undefined){
-    //      this.active = true;
-    //  }
-    //  if(course.Duration==""){
-    //    course.Duration=0
-    //     }
-    //     if(course.Fees==""){
-    //       course.Fees=0
-    //     }
+    if(this.showonwebsite==undefined){
+      this.showonwebsite=true
+    }
+    
     const formData: FormData = new FormData();
     formData.append("CourseName", course.courseName)
     formData.append("CreatedBy", (localStorage.getItem("LoginId")));
@@ -218,8 +218,10 @@ export class AddcourseComponent implements OnInit {
     formData.append("Price", course.price)
     formData.append("IsOffer", (this.isofferactive).toString())
     formData.append("OfferPrice", this.OfferPrice)
+    // formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
     formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
     formData.append("EffectiveTill", (course.effectiveTill.format("DD-MM-YYYY")))
+    formData.append("showOnWebsite", (this.showonwebsite).toString())
     
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
@@ -235,7 +237,7 @@ export class AddcourseComponent implements OnInit {
     //  }
     this._authService.Addcourse(formData).subscribe((result: any) => {
       debugger
-      var result = JSON.parse(result);
+      //var result = JSON.parse(result);
       if (result.status == "200") {
         //debugger
         // Set the alert

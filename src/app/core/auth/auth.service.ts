@@ -116,15 +116,15 @@ export class AuthService
       }
       public Addrole(data) {
         debugger
-        return this._httpClient.post(this.baseUrl + "api/Admin/AddRole  ", data, {responseType: 'text'});
+        return this._httpClient.post(this.baseUrl + "api/Admin/AddRole", data, {responseType: 'text'});
       }
-      public deleteRole(id) {
+      public deleteRole(data) {
         debugger
-        return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteRole", {params: {id}});
+        return this._httpClient.post(this.baseUrl + "api/Admin/DeleteRole",data);
       }
       public Updaterole(data) {
         debugger
-        return this._httpClient.post(this.baseUrl + "api/Admin/UpdateRole  ", data, {responseType: 'text'});
+        return this._httpClient.post(this.baseUrl + "api/Admin/UpdateRole", data, {responseType: 'text'});
       }
       public GetRoleById(id) {
         debugger
@@ -148,11 +148,11 @@ export class AuthService
       }
       public Updatetechnology(formdata) {
         debugger
-        return this._httpClient.post(this.baseUrl + "api/Admin/UpdateTechnology  ", formdata, {responseType: 'text'});
+        return this._httpClient.post(this.baseUrl + "api/Admin/UpdateTechnology", formdata, {responseType: 'text'});
       }
-      public deletetechnology(id) {
+      public deletetechnology(data) {
         debugger
-        return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteTechnology", {params: {id}});
+        return this._httpClient.post(this.baseUrl + "api/Admin/Removetechnology",data);
       }
       public GetCourses() {
         debugger
@@ -160,7 +160,7 @@ export class AuthService
     }
     public Addcourse(formData) {
         debugger
-        return this._httpClient.post(this.baseUrl + "api/Admin/AddCourses", formData, {responseType: 'text'});
+        return this._httpClient.post(this.baseUrl + "api/Admin/AddCourses", formData);
       }
     public uploadAvatar(id, file) {
         debugger
@@ -174,17 +174,17 @@ export class AuthService
         debugger
         return this._httpClient.post(this.baseUrl + "api/Admin/UpdateCourse", formData, {responseType: 'text'});
       }
-      public deletecourse(id) {
+      public deletecourse(data) {
         debugger
-        return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteCourse", {params: {id}});
+        return this._httpClient.post(this.baseUrl + "api/Admin/DeleteCourse", data);
       }
       AddCoursePlan(data) {
         //debugger
         return this._httpClient.post(this.baseUrl + "api/Admin/AddPlanCourse", data, {responseType: 'text'});
       }
-      public deletecourseplan(pcid,planid) {
+      public deletecourseplan(data) {
         debugger
-        return this._httpClient.delete(this.baseUrl + "api/Admin/DeletePlanCourse?pcid=" + pcid+ "&planid=" + planid);
+        return this._httpClient.post(this.baseUrl + "api/Admin/DeletePlanCourse",data);
       }
       UpdateCoursePlan(data) {
         //debugger
@@ -224,9 +224,9 @@ export class AuthService
       //debugger
       return this._httpClient.post(this.baseUrl + "api/Admin/Updatecoursecontent", data, {responseType: 'text'});
       }
-      public deletecoursecontent(id) {
+      public deletecoursecontent(data) {
       debugger
-      return this._httpClient.delete(this.baseUrl + "api/Admin/Deletecoursecontent", {params: {id}});
+      return this._httpClient.post(this.baseUrl + "api/Admin/Deletecoursecontent",data);
       }
       public GetCourseContent() {
       debugger

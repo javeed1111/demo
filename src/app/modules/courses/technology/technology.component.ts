@@ -160,7 +160,7 @@ export class TechnologyComponent implements OnInit {
       }
     });
   }
-  deletetechnology(id: any): void {
+  deletetechnology(TechnologyId: any): void {
     //debugger
     this.showAlert = false
     // Open the confirmation dialog
@@ -180,10 +180,13 @@ export class TechnologyComponent implements OnInit {
       // If the confirm button pressed...
       if (result === 'confirmed') {
         var CreatedBy = parseInt(localStorage.getItem("LoginId"))
+        var data= {
+          TechnologyId:TechnologyId
+        }
 
         // Delete the contact
-        this._authService.deletetechnology(id).subscribe((data: any) => {
-          //debugger
+        this._authService.deletetechnology(data).subscribe((data: any) => {
+          debugger
           if (data.status == "200") {
             // Set the alert
             this.alert = {
@@ -219,7 +222,7 @@ export class TechnologyComponent implements OnInit {
           else {
             // this.spinner.hide();
             this.alert = {
-              type: 'success',
+              type: 'error',
               message: "Invalid Id."
 
             };
@@ -252,7 +255,7 @@ export class TechnologyComponent implements OnInit {
         });
 
         // Mark for check
-        this._changeDetectorRef.markForCheck();
+        //this._changeDetectorRef.markForCheck();
       }
     });
 

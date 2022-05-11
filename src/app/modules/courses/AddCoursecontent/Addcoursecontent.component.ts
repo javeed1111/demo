@@ -519,7 +519,7 @@ export class AddcoursecontentComponent implements OnInit {
   }
   deleteFromGrid(id:any): void
     {
-      //debugger
+      debugger
       this.showAlert=false
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
@@ -539,9 +539,11 @@ export class AddcoursecontentComponent implements OnInit {
             if ( result === 'confirmed' )
             {
            var CreatedBy= parseInt(localStorage.getItem("LoginId"))
-
+           var data={
+            Id:id
+           }
                 // Delete the contact
-                this._authService.deletecoursecontent(id).subscribe((data:any) => {
+                this._authService.deletecoursecontent(data).subscribe((data:any) => {
                     //debugger
                     if (data.status == "200") {
                         

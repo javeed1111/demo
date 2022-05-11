@@ -183,7 +183,7 @@
                                     <mat-select name="courseId" placeholder="Courses" [formControlName]="'courseId'"
                                         class="input-full-width" multiple>
                                         <!-- <mat-option value="">Select Course</mat-option> -->
-                                        <mat-option *ngFor="let item of cours " [value]="item.courseId"
+                                        <mat-option *ngFor="let item of cours" [value]="item.courseId"
                                             (onSelectionChange)="change(item,$event)">{{ item.courseName }}</mat-option>
                                     </mat-select>
                                     <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">

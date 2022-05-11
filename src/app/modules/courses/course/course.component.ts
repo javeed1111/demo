@@ -213,9 +213,12 @@ course: any;
             if ( result === 'confirmed' )
             {
            var CreatedBy= parseInt(localStorage.getItem("LoginId"))
+           var data={
+            id:id,
+           }
 
                 // Delete the contact
-                this._authService.deletecourse(id).subscribe((data:any) => {
+                this._authService.deletecourse(data).subscribe((data:any) => {
                     //debugger
                     if (data.status == "200") {
                       // Set the alert

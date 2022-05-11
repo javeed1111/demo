@@ -138,7 +138,7 @@ course: any;
   }
   deleteCourse(pcid,planid): void
     {
-      //debugger
+      debugger
       this.showAlert=false
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
@@ -158,9 +158,12 @@ course: any;
             if ( result === 'confirmed' )
             {
            var CreatedBy= parseInt(localStorage.getItem("LoginId"))
-
-                // Delete the contact
-                this._authService.deletecourseplan(pcid,planid).subscribe((data:any) => {
+           var data={
+            pcid:pcid,
+            planid:planid
+           }
+                // Delete the courseplan
+                this._authService.deletecourseplan(data).subscribe((data:any) => {
                     //debugger
                     if (data.status == "200") {
                         
