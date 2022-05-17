@@ -126,6 +126,67 @@
                             <mat-datepicker #effectiveTillDatepicker></mat-datepicker>
                         </mat-form-field>
                     </div>
+                    <div class="flex mt-4">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Course Header</mat-label>
+                            <input matInput [formControlName]="'courseHeader'" [placeholder]="'Course Header'">
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex mt-4">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Course Url</mat-label>
+                            <input matInput [formControlName]="'courseUrl'" [placeholder]="'Course Url'">
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex-auto mt-4">
+                        <mat-label>Meta Discription</mat-label>
+                        <quill-editor [formControlName]="'metaDiscription'" [modules]="quillModules">
+                        </quill-editor>
+                    </div>
+                    <div class="flex mt-4">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Meta Keywords</mat-label>
+                            <input matInput [formControlName]="'metaKeywords'" [placeholder]="'Keywords'">
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="flex-auto mt-4">
+                    <mat-form-field class="chip-list" appearance="fill">
+                        <mat-label>Meta Keywords</mat-label>
+                        <mat-chip-list #chipList aria-label="Keywords selection">
+                          <mat-chip *ngFor="let words of keywords" (removed)="remove(words)">
+                            {{words.name}}
+                            <button matChipRemove>
+                              <mat-icon>cancel</mat-icon>
+                            </button>
+                          </mat-chip>
+                          <input placeholder="New Keyword..."
+                                 [matChipInputFor]="chipList"
+                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                 [matChipInputAddOnBlur]="addOnBlur"
+                                 (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                      </mat-form-field>
+                    </div> -->
+                      <!--Status-->
+                      <div class="flex">
+                        <div class="space-y-4">
+                            <ng-container>
+                                <div class="fuse-mat-no-subscript flex-auto">
+                                    <mat-slide-toggle labelPosition="before"  class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
+                                        id="status" (change)="Status($event)"   [checked]="false">
+                                        Status
+                                    </mat-slide-toggle>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                    
                     <div class="flex">
                         <div class="space-y-4">
                             <ng-container>

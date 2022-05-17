@@ -42,6 +42,10 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { CourseContentComponent } from './Coursecontent/course-content/course-content.component';
 import { CourseplanlistComponent } from './courseplanlist/courseplanlist.component';
 import { CourseplaneditComponent } from './courseplanedit/courseplanedit.component';
+import { MAT_CHIPS_DEFAULT_OPTIONS } from '@angular/material/chips';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { MatChipsModule } from '@angular/material/chips';
+
 // import { CourseContentComponent } from './AddCoursecontent/course-content/course-content.component';
 @NgModule({
   declarations: [
@@ -68,6 +72,7 @@ import { CourseplaneditComponent } from './courseplanedit/courseplanedit.compone
     RouterModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatChipsModule,
     MatDatepickerModule,
     MatDividerModule,
     MatFormFieldModule,
@@ -95,7 +100,14 @@ import { CourseplaneditComponent } from './courseplanedit/courseplanedit.compone
   ],
   providers:
   [
+    {
+      provide: MAT_CHIPS_DEFAULT_OPTIONS,
+      useValue: {
+        separatorKeyCodes: [ENTER, COMMA]
+      }
+    },
     DatePipe
+
   ]
 })
 export class CoursesModule { }

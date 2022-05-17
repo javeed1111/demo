@@ -79,6 +79,7 @@ export class EditcourseComponent implements OnInit {
   effectivefrm: any;
   effectivetil: any;
   feedetailsid: any;
+  status: boolean;
 
   constructor(
 
@@ -113,7 +114,11 @@ export class EditcourseComponent implements OnInit {
       effectiveFrom: ['', Validators.required],
       effectiveTill: ['', Validators.required],
       id: [''],
-      showOnWebsite: ['']
+      showOnWebsite: [''],
+      courseHeader: ['', []],
+      courseUrl:['', []],
+      metaDiscription: ['', []],
+      metaKeywords:['', []]
 
     });
     const ctrl = this.courseForm.controls['offerPrice'];
@@ -141,6 +146,16 @@ export class EditcourseComponent implements OnInit {
         this.files.push({ data: this.fileToUpload, fileName: this.name });
       }
     }
+  }
+  Status($event: MatSlideToggleChange): void{
+    debugger
+    if ($event.checked != undefined) {
+      this.status = $event.checked;
+    }
+      else {
+        this.status = $event.checked;
+
+      }
   }
   checkprice() {
     debugger

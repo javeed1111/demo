@@ -6,7 +6,12 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { MatInputModule } from '@angular/material/input'
 import { fuseAnimations } from '@fuse/animations';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {COMMA, ENTER,SPACE} from '@angular/cdk/keycodes';
 
+export interface Keywords {
+  name: string;
+}
 
 @Component({
   selector: 'app-addcourse',
@@ -16,6 +21,11 @@ import { fuseAnimations } from '@fuse/animations';
   animations: fuseAnimations
 })
 export class AddcourseComponent implements OnInit {
+
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA,SPACE] as const;
+  keywords: Keywords[]=[];
+
   active: boolean;
   courseForm: FormGroup;
   alert: { type: FuseAlertType; message: string } = {
@@ -58,6 +68,7 @@ export class AddcourseComponent implements OnInit {
   };
   OfferPrice: string;
   istax: boolean;
+  status: boolean=false;
 
 
   constructor(
@@ -83,6 +94,10 @@ export class AddcourseComponent implements OnInit {
       taxpercent:['0'],
       effectiveFrom: ['', Validators.required],
       effectiveTill: ['', Validators.required],
+      courseheader: ['', []],
+      courseurl:['', []],
+      metadiscription: ['', []],
+      metakeywords:['', []]
       // Duration     :['', [Validators.required]],
       // Fees         :['', []],
       // units        :['', []],
@@ -94,6 +109,39 @@ export class AddcourseComponent implements OnInit {
     const ctrl1 = this.courseForm.controls['taxpercent']
     ctrl1.disable();
   }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our fruit
+    if (value) {
+      this.keywords.push({name: value});
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+
+  remove(fruit: Keywords): void {
+    debugger
+    const index = this.keywords.indexOf(fruit);
+
+    if (index >= 0) {
+      this.keywords.splice(index, 1);
+    }
+  }
+
+  Status($event: MatSlideToggleChange): void{
+    debugger
+    if ($event.checked != undefined) {
+      this.status = $event.checked;
+    }
+      else {
+        this.status = $event.checked;
+
+      }
+  }
+
   onSelectFile(files: FileList) {
     //debugger
     if (files.length === 0)
@@ -154,6 +202,7 @@ export class AddcourseComponent implements OnInit {
     }
     //this.active=this.filters.hideCompleted$.next(change.checked);
   }
+
   check($event: MatSlideToggleChange): void {
     debugger
     if ($event.checked != undefined) {
@@ -246,6 +295,13 @@ export class AddcourseComponent implements OnInit {
     formData.append("IsOffer", (this.isofferactive).toString())
     formData.append("OfferPrice", this.OfferPrice)
     formData.append("TaxPercent", course.taxpercent)
+    formData.append("CourseHeader", course.courseheader)
+    formData.append("CourseUrl", course.courseurl)
+    formData.append("MetaDescription", course.metadiscription)
+
+    // formData.append("keywords",JSON.stringify(this.keywords))
+    formData.append("metakeywords", course.metakeywords)
+    formData.append("Status", this.status.toString())
     // formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
     formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
     formData.append("EffectiveTill", (course.effectiveTill.format("DD-MM-YYYY")))
