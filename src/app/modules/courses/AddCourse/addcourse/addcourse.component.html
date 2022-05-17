@@ -110,6 +110,29 @@
                             </mat-icon>
                         </mat-form-field>
                     </div>
+                    <div class="flex">
+                        <div class="space-y-4">
+                            <ng-container>
+                                <!-- <div class="flex"> -->
+                                <div class="fuse-mat-no-subscript flex-auto">
+                                    <mat-slide-toggle class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
+                                        id="taxApplicable" (change)="check($event)" [checked]="false">
+                                        Tax
+                                    </mat-slide-toggle>
+                                </div>
+                                <!-- </div> -->
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Tax Percent(%)</mat-label>
+                            <input type="number" matInput [formControlName]="'taxpercent'"
+                                [placeholder]="'Tax Percent'">
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'feather:percent'">
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
                     <div class="flex mb-4">
                         <mat-form-field class="fuse-mat-no-subscript w-full">
                             <mat-label>Effective From</mat-label>

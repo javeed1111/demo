@@ -57,6 +57,7 @@ export class AddcourseComponent implements OnInit {
     ]
   };
   OfferPrice: string;
+  istax: boolean;
 
 
   constructor(
@@ -79,6 +80,7 @@ export class AddcourseComponent implements OnInit {
       offerApplicable: [''],
       onwebsite: [''],
       offerPrice: ['0'],
+      taxpercent:['0'],
       effectiveFrom: ['', Validators.required],
       effectiveTill: ['', Validators.required],
       // Duration     :['', [Validators.required]],
@@ -89,6 +91,8 @@ export class AddcourseComponent implements OnInit {
     });
     const ctrl = this.courseForm.controls['offerPrice']
     ctrl.disable();
+    const ctrl1 = this.courseForm.controls['taxpercent']
+    ctrl1.disable();
   }
   onSelectFile(files: FileList) {
     //debugger
@@ -145,6 +149,29 @@ export class AddcourseComponent implements OnInit {
     }
     else {
       this.isofferactive = false;
+      // this.horizontalStepperForm.controls.step1['offerPrice'].enable();
+
+    }
+    //this.active=this.filters.hideCompleted$.next(change.checked);
+  }
+  check($event: MatSlideToggleChange): void {
+    debugger
+    if ($event.checked != undefined) {
+      this.istax = $event.checked;
+      if (this.istax == true) {
+        const ctrl = this.courseForm.controls['taxpercent'];
+        ctrl.enable();
+      }
+      else {
+        const ctrl = this.courseForm.controls['taxpercent'];
+        ctrl.disable();
+        ctrl.setValue('0')
+
+      }
+
+    }
+    else {
+      this.istax = false;
       // this.horizontalStepperForm.controls.step1['offerPrice'].enable();
 
     }
@@ -218,6 +245,7 @@ export class AddcourseComponent implements OnInit {
     formData.append("Price", course.price)
     formData.append("IsOffer", (this.isofferactive).toString())
     formData.append("OfferPrice", this.OfferPrice)
+    formData.append("TaxPercent", course.taxpercent)
     // formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
     formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
     formData.append("EffectiveTill", (course.effectiveTill.format("DD-MM-YYYY")))
