@@ -117,9 +117,9 @@ export class EditcourseComponent implements OnInit {
       showOnWebsite: [''],
       courseHeader: ['', []],
       courseUrl:['', []],
-      metaDiscription: ['', []],
-      metaKeywords:['', []]
-
+      metaDescription: ['', []],
+      metaKeywords:['', []],
+      stauts:['',[]]
     });
     const ctrl = this.courseForm.controls['offerPrice'];
     ctrl.disable();
@@ -267,13 +267,16 @@ export class EditcourseComponent implements OnInit {
       this.courseForm.controls['whatLearn'].disable();
       this.courseForm.controls['requirements'].disable();
       this.courseForm.controls['price'].disable();
-      this.courseForm.controls['isOffer'].disable();
+      this.courseForm.controls['courseHeader'].disable();
+      this.courseForm.controls['courseUrl'].disable();
+      this.courseForm.controls['metaDescription'].disable();
+      this.courseForm.controls['metaKeywords'].disable();
+      this.courseForm.controls['status'].disable();
+
       // this.courseForm.controls['offerPrice'].disable();
       this.courseForm.controls['effectiveFrom'].disable();
       this.courseForm.controls['effectiveTill'].disable();
       this.courseForm.controls['showOnWebsite'].disable();
-
-
 
     }
     else {
@@ -304,6 +307,7 @@ export class EditcourseComponent implements OnInit {
         debugger
 
         this.courseForm.patchValue(finalresult.result);
+        this.status=finalresult.result.status
         const course = this.courseForm.getRawValue();
         // if (course.duration == 0) {
         //   this.courseForm.controls['duration'].setValue("")
@@ -464,6 +468,12 @@ export class EditcourseComponent implements OnInit {
     formData.append("Price", course.price)
     formData.append("IsOffer", (this.isofferactive).toString())
     formData.append("OfferPrice", this.OfferPrice)
+    formData.append("CourseHeader", course.courseHeader)
+    formData.append("CourseUrl", course.courseUrl)
+    formData.append("Status", this.status.toString())
+    formData.append("MetaDescription", course.metaDescription)
+    formData.append("metaKeywords", course.metaKeywords)
+
     formData.append("EffectiveFrom", (course.effectiveFrom))
     formData.append("EffectiveTill", (course.effectiveTill))
     formData.append("showOnWebsite", (this.showonwebsite).toString())

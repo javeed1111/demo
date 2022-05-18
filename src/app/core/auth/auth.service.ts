@@ -245,8 +245,27 @@ export class AuthService
         return this._httpClient.get(this.baseUrl + "api/Admin/GetAllCourseFeeById", {params: {id}});
       }
       
-    
-      
+      public GetCourseModules(Id:any) {
+        debugger
+      return this._httpClient.get(this.baseUrl + "api/Admin/GetCourseModulesByCourseId?Id="+Id,{responseType: 'text'});
+     }
+
+     AddCourseModules(data:any){
+      return this._httpClient.post(this.baseUrl + "api/Admin/AddCourseModules",data,{responseType: 'text'});
+
+     }
+     GetCourseModulesById(id:any){
+      return this._httpClient.get(this.baseUrl + "api/Admin/GetCourseModulesById", {params: {id}});
+
+     }
+
+     UpdateCourseModules(data:any){
+      return this._httpClient.post(this.baseUrl + "api/Admin/UpdateCourseModules", data, {responseType: 'text'});
+
+     }
+     DeleteCourseModule(id:any){
+      return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteCourseModules?id="+id);
+     }
 
     /**
      * Sign in using the access token

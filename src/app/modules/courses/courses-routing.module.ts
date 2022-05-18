@@ -12,6 +12,9 @@ import { AddcoursecontentComponent } from './AddCoursecontent/Addcoursecontent.c
 import { CourseContentComponent } from './Coursecontent/course-content/course-content.component';
 import { CourseplanlistComponent } from './courseplanlist/courseplanlist.component';
 import { CourseplaneditComponent } from './courseplanedit/courseplanedit.component';
+import { CourseModuleComponent } from './course-module/course-module.component';
+import { AddCourseModuleComponent } from './add-course-module/add-course-module.component';
+import { EditCourseModuleComponent } from './edit-course-module/edit-course-module.component';
 
 const routes: Routes = [
   {
@@ -29,7 +32,9 @@ const routes: Routes = [
             { path: 'edittechnology/:id/:value', component: EdittechnologyComponent },
             { path: 'addcourse', component: AddcourseComponent },
             { path: 'editcourse/:id/:value', component: EditcourseComponent },
-
+            { path: 'coursemodule/:id', component: CourseModuleComponent },
+            { path: 'addcoursemodule/:id', component: AddCourseModuleComponent },
+            { path: 'editcoursemodule/:id/:courseid/:value', component: EditCourseModuleComponent },
 
         ]
   }

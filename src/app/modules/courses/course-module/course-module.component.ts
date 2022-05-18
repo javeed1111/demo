@@ -21,38 +21,15 @@ export interface CourseData {
   title: string;
   Actions: string;
 }
-
 @Component({
-  selector: 'app-course',
-  templateUrl: './course.component.html',
- styleUrls: ['./course.component.scss'],
- encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
-//   styles         : [
-//     /* language=SCSS */
-//     `
-//         .inventory-grid {
-//             grid-template-columns: 48px auto 40px;
-
-//             @screen sm {
-//                 grid-template-columns: 48px auto 112px 72px;
-//             }
-
-//             @screen md {
-//                 grid-template-columns: 48px 112px auto 112px 72px;
-//             }
-
-//             @screen lg {
-//                 grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
-//             }
-//         }
-//     `
-// ],
+  selector: 'app-course-module',
+  templateUrl: './course-module.component.html',
+  styleUrls: ['./course-module.component.scss']
 })
-export class CourseComponent implements OnInit {
+export class CourseModuleComponent implements OnInit {
   isLoading: boolean = false;
   selectedProduct: any | null = null;
-  displayedColumns = ['sno',  'title', 'courseName', 'technologyName','actions'];
+  displayedColumns = ['sno',  'title','actions'];
   dataSource: MatTableDataSource<CourseData>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -68,6 +45,7 @@ export class CourseComponent implements OnInit {
 };
 showAlert:  boolean = false;
 course: any;
+  courseid: any;
 
   constructor(
     
@@ -80,48 +58,21 @@ course: any;
     private _overlay: Overlay,
     private _viewContainerRef: ViewContainerRef,
     private _authService: AuthService,
+    private approute: ActivatedRoute,
+
   ) { 
 
     // const users: CourseData[] = [];
     // this.dataSource = new MatTableDataSource(users);
-    this.GetCourses();
   }
+
 
   ngOnInit(): void {
-    //debugger
-   
-    
-       // this.searchInputControl.valueChanges
-       // .pipe(
-       //     takeUntil(this._unsubscribeAll),
-       //     debounceTime(300),
-       //     switchMap((query) => {
-       //       //debugger
-       //         this.closeDetails();
-       //         this.isLoading = true;
-       //         return this._authService.GetRoles(0, 10, 'roleName', 'asc', query);
-       //     }),
-       //     map(() => {
-       //         this.isLoading = false;
-       //     })
-       // )
-       // .subscribe();
+     this.courseid = this.approute.snapshot.params['id'];
 
-       //    // Get the pagination
-       //    this._venturesService.pagination$
-       //    .pipe(takeUntil(this._unsubscribeAll))
-       //    .subscribe((pagination: VenturePagination) => {
-
-       //        // Update the pagination
-       //        this.pagination = pagination;
-
-       //        // Mark for check
-       //        this._changeDetectorRef.markForCheck();
-       //    });
+    this.GetCourseModules(this.courseid);
   }
-  ngAfterViewInit() {
 
-  }
   applyFilter(filterValue: string) {
     //debugger
     filterValue = filterValue.trim(); // Remove whitespace
@@ -133,15 +84,15 @@ course: any;
         this.selectedProduct = null;
     }
 
-  showEditModal(id) {
+  showEditModal(id,courseid) {
     //debugger
     var value="edit"
-    this._router.navigate(['/courses/editcourse/'+id+'/'+value])
+    this._router.navigate(['/courses/editcoursemodule/'+id+'/'+courseid+'/'+value])
   }
   showViewModal(id) {
     //debugger
     var value="view"
-    this._router.navigate(['/courses/editcourse/'+id+'/'+value])
+    this._router.navigate(['/courses/editcoursemodule/'+id+'/'+value])
   }
 
   ngOnDestroy(): void
@@ -150,17 +101,17 @@ course: any;
       this._unsubscribeAll.next(null);
       this._unsubscribeAll.complete();
   }
-  createProduct(){
-    //debugger
+  createProduct(id:any){
+    debugger
 
     // this._router.navigate(['/userconfig/role/addrole'])
-    this._router.navigate(['/courses/addcourse'])
+    this._router.navigate(['/courses/addcoursemodule/'+id])
   }
 
   courseData :any= []
-  GetCourses() {
+  GetCourseModules(Id:any) {
     //debugger
-    this._authService.GetCourses().subscribe((finalresult: any) => {
+    this._authService.GetCourseModules(Id).subscribe((finalresult: any) => {
       //debugger
      var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
@@ -193,7 +144,7 @@ course: any;
   }
   deleteCourse(id:any): void
     {
-      //debugger
+      debugger
       this.showAlert=false
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
@@ -213,12 +164,12 @@ course: any;
             if ( result === 'confirmed' )
             {
            var CreatedBy= parseInt(localStorage.getItem("LoginId"))
-           var data={
-            id:id,
-           }
-
+          //  var data={
+          //   id:id,
+          //  }
+              debugger
                 // Delete the contact
-                this._authService.deletecourse(data).subscribe((data:any) => {
+                this._authService.DeleteCourseModule(id).subscribe((data:any) => {
                     //debugger
                     if (data.status == "200") {
                       // Set the alert
@@ -294,9 +245,5 @@ course: any;
 
     }
 
-    GoToModules(id:any){
-      this._router.navigate(['/courses/coursemodule/'+id])
-
-    }
 
 }

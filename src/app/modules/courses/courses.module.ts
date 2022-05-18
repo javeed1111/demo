@@ -45,6 +45,9 @@ import { CourseplaneditComponent } from './courseplanedit/courseplanedit.compone
 import { MAT_CHIPS_DEFAULT_OPTIONS } from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MatChipsModule } from '@angular/material/chips';
+import { CourseModuleComponent } from './course-module/course-module.component';
+import { AddCourseModuleComponent } from './add-course-module/add-course-module.component';
+import { EditCourseModuleComponent } from './edit-course-module/edit-course-module.component';
 
 // import { CourseContentComponent } from './AddCoursecontent/course-content/course-content.component';
 @NgModule({
@@ -62,6 +65,9 @@ import { MatChipsModule } from '@angular/material/chips';
     CourseContentComponent,
     CourseplanlistComponent,
     CourseplaneditComponent,
+    CourseModuleComponent,
+    AddCourseModuleComponent,
+    EditCourseModuleComponent,
     // CourseContentComponent
   ],
   imports: [
