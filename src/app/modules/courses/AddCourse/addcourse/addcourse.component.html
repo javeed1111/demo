@@ -2,362 +2,303 @@
     <ng-container>
         <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
             <div class="w-full max-w-5xl">
-                <form [formGroup]="courseForm"
-                    class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
-                    <div class="flex">
-                        <mat-form-field class="flex-auto">
-                            <mat-label>Course Name</mat-label>
-                            <input matInput appAutofocus [formControlName]="'courseName'" [placeholder]="'Course Name'">
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <!--Technologdrop-->
-                    <div class="flex">
-                        <mat-form-field class="flex-auto gt-xs:pr-3">
-                            <mat-label>Technology</mat-label>
-                            <mat-select name="technologyId" placeholder="Technology" [formControlName]="'technologyId'"
-                                class="input-full-width">
-                                <mat-option value="">Select Technology</mat-option>
-                                <mat-option *ngFor="let tech of technology " [value]="tech.technologyId">{{
-                                    tech.technologyName }}</mat-option>
-                            </mat-select>
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
-                            </mat-icon>
-                        </mat-form-field>
-                        <!-- <mat-form-field class="flex-auto gt-xs:pr-3">
+                <mat-stepper linear #stepper>
+                    <mat-step [stepControl]="courseForm" >
+                        <form [formGroup]="courseForm"
+                        class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
+                        <ng-template matStepLabel>Course</ng-template>
+                        <div class="flex">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Course Name</mat-label>
+                                <input matInput appAutofocus [formControlName]="'courseName'" [placeholder]="'Course Name'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <!--Technologdrop-->
+                        <div class="flex">
+                            <mat-form-field class="flex-auto gt-xs:pr-3">
                                 <mat-label>Technology</mat-label>
-                                <mat-select *ngFor="let tech of technology" [placeholder]="'Technology'" [formControlName]="'technologyId'">
-                                    <mat-option value="">Select Role Type</mat-option>
-                                    <mat-option [value]="tech.technologyId">{{tech.technologyName}}</mat-option>
+                                <mat-select name="technologyId" placeholder="Technology" [formControlName]="'technologyId'"
+                                    class="input-full-width">
+                                    <mat-option value="">Select Technology</mat-option>
+                                    <mat-option *ngFor="let tech of technology " [value]="tech.technologyId">{{
+                                        tech.technologyName }}</mat-option>
                                 </mat-select>
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
                                 </mat-icon>
-                            </mat-form-field> -->
-                        <!-- <mat-form-field class="flex-auto">
-                                <mat-label>Technology</mat-label>
-                                <input
-                                    matInput appAutofocus
-                                    [formControlName]="'Technology'"
-                                    [placeholder]="'Enter Technology'" >
-                                <mat-icon
-                                    class="icon-size-5"
-                                    matPrefix
-                                    [svgIcon]="'heroicons_solid:office-building'"></mat-icon>
-                            </mat-form-field> -->
-                    </div>
-                    <!--short Description-->
-                    <div class="flex-auto">
-                        <mat-label>short Description</mat-label>
-                        <quill-editor [formControlName]="'Description'" [modules]="quillModules">
-                        </quill-editor>
-                    </div>
-                    <!--Description-->
-                    <div class="flex-auto mt-4">
-                        <mat-label>Description</mat-label>
-                        <quill-editor [formControlName]="'Fulldescription'" [modules]="quillModules">
-                        </quill-editor>
-                    </div>
-                    <!--What you'll learn-->
-                    <div class="flex-auto mt-4">
-                        <mat-label>What you'll learn</mat-label>
-                        <quill-editor [formControlName]="'Whatlearn'" [modules]="quillModules">
-                        </quill-editor>
-                    </div>
-                    <!--Requirements-->
-                    <div class="flex-auto mt-4">
-                        <mat-label>Requirements</mat-label>
-                        <quill-editor [formControlName]="'requirements'" [modules]="quillModules">
-                        </quill-editor>
-                    </div>
-                    <!--Title-->
-                    <div class="flex mt-4">
-                        <mat-form-field class="flex-auto">
-                            <mat-label>Title</mat-label>
-                            <input matInput [formControlName]="'Title'" [placeholder]="'Title'">
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
-                            </mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="flex">
-                        <mat-form-field class="flex-auto">
-                            <mat-label>Price</mat-label>
-                            <input type="number" matInput [formControlName]="'price'" [placeholder]="'Price'"
-                            (blur)='checkprice()' required>
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
-                            </mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="flex">
-                        <div class="space-y-4">
-                            <ng-container>
-                                <!-- <div class="flex"> -->
-                                <div class="fuse-mat-no-subscript flex-auto">
-                                    <mat-slide-toggle labelPosition="before"  class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
-                                        id="offerApplicable" (change)="toggleCompleted($event)" [checked]="false">
-                                        Offer Applicable
-                                    </mat-slide-toggle>
-                                </div>
-                                <!-- </div> -->
-                            </ng-container>
+                            </mat-form-field>
+                        
                         </div>
-                    </div>
-                    <div class="flex">
-                        <mat-form-field class="flex-auto">
-                            <mat-label>Offer Price</mat-label>
-                            <input type="number" matInput [formControlName]="'offerPrice'"
-                                [placeholder]="'Offer Price'" (blur)='checkprice()'>
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
-                            </mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="flex">
-                        <div class="space-y-4">
-                            <ng-container>
-                                <!-- <div class="flex"> -->
-                                <div class="fuse-mat-no-subscript flex-auto">
-                                    <mat-slide-toggle labelPosition="before"  class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
-                                        id="taxApplicable" (change)="check($event)" [checked]="false">
-                                        Is Tax
-                                    </mat-slide-toggle>
-                                </div>
-                                <!-- </div> -->
-                            </ng-container>
+                        <!--short Description-->
+                        <div class="flex-auto">
+                            <mat-label>Short Description</mat-label>
+                            <quill-editor [formControlName]="'Description'" [modules]="quillModules">
+                            </quill-editor>
                         </div>
-                    </div>
-                    <div class="flex">
-                        <mat-form-field class="flex-auto">
-                            <mat-label>Tax Percent(%)</mat-label>
-                            <input type="number" matInput [formControlName]="'taxpercent'"
-                                [placeholder]="'Tax Percent'">
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'feather:percent'">
-                            </mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="flex mb-4">
-                        <mat-form-field class="fuse-mat-no-subscript w-full">
-                            <mat-label>Effective From</mat-label>
-                            <mat-icon matPrefix class="hidden sm:flex icon-size-5"
-                                [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
-                            <input matInput [matDatepicker]="effectiveDateDatepicker" [min]="todayDate"
-                                [formControlName]="'effectiveFrom'" [placeholder]="'effectiveFrom'">
-                            <mat-datepicker-toggle matSuffix [for]="effectiveDateDatepicker">
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #effectiveDateDatepicker></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <div class="flex mb-4">
-                        <mat-form-field class="fuse-mat-no-subscript w-full">
-                            <mat-label>Effective Till</mat-label>
-                            <mat-icon matPrefix class="hidden sm:flex icon-size-5"
-                                [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
-                            <input matInput [matDatepicker]="effectiveTillDatepicker" [min]="todayDate"
-                                [formControlName]="'effectiveTill'" [placeholder]="'EffectiveTill'">
-                            <mat-datepicker-toggle matSuffix [for]="effectiveTillDatepicker">
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #effectiveTillDatepicker></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <div class="flex mt-4">
-                        <mat-form-field class="flex-auto">
-                            <mat-label>Course Header</mat-label>
-                            <input matInput [formControlName]="'courseheader'" [placeholder]="'Course Header'">
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
-                            </mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="flex mt-4">
-                        <mat-form-field class="flex-auto">
-                            <mat-label>Course Url</mat-label>
-                            <input matInput [formControlName]="'courseurl'" [placeholder]="'Course Url'">
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
-                            </mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="flex-auto mt-4">
-                        <mat-label>Meta Description</mat-label>
-                        <quill-editor [formControlName]="'metadiscription'" [modules]="quillModules">
-                        </quill-editor>
-                    </div>
-                    <div class="flex mt-4">
-                        <mat-form-field class="flex-auto">
-                            <mat-label>Meta Keywords</mat-label>
-                            <input matInput [formControlName]="'metakeywords'" [placeholder]="'Keywords'">
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
-                            </mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <!-- <div class="flex-auto mt-4">
-                    <mat-form-field class="chip-list" appearance="fill">
-                        <mat-label>Meta Keywords</mat-label>
-                        <mat-chip-list #chipList aria-label="Keywords selection">
-                          <mat-chip *ngFor="let words of keywords" (removed)="remove(words)">
-                            {{words.name}}
-                            <button matChipRemove>
-                              <mat-icon>cancel</mat-icon>
-                            </button>
-                          </mat-chip>
-                          <input placeholder="New Keyword..."
-                                 [matChipInputFor]="chipList"
-                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                 [matChipInputAddOnBlur]="addOnBlur"
-                                 (matChipInputTokenEnd)="add($event)">
-                        </mat-chip-list>
-                      </mat-form-field>
-                    </div> -->
-                      <!--Status-->
-                      <div class="grid grid-cols-12 gap-x-1 mt-2">
-                        <div class="mt-4 col-span-6">
-                        <div >
-                            <ng-container>
-                                <div class="fuse-mat-no-subscript flex-auto">
-                                    <mat-slide-toggle labelPosition="before"  class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
-                                        id="status" (change)="Status($event)"   [checked]="false">
-                                        Status
-                                    </mat-slide-toggle>
-                                </div>
-                            </ng-container>
+                        <!--Description-->
+                        <div class="flex-auto mt-4">
+                            <mat-label>Description</mat-label>
+                            <quill-editor [formControlName]="'Fulldescription'" [modules]="quillModules">
+                            </quill-editor>
                         </div>
-                    </div>
-                    <div class="mt-4 col-span-6">
-                        <div >
-                            <ng-container>
-                                <!-- <div class="flex"> -->
-                                <div class="fuse-mat-no-subscript flex-auto">
-                                    <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
-                                        id="onwebsite" (change)="onwebsite($event)" [checked]="true">
-                                        show on website
-                                    </mat-slide-toggle>
-                                </div>
-                                <!-- </div> -->
-                            </ng-container>
+                        <!--What you'll learn-->
+                        <div class="flex-auto mt-4">
+                            <mat-label>What you'll learn</mat-label>
+                            <quill-editor [formControlName]="'Whatlearn'" [modules]="quillModules">
+                            </quill-editor>
                         </div>
-                    </div>
-                      </div>
-                    <!--Duration,units-->
-                    <!-- <div class="flex">
-                        <mat-form-field class="flex-auto">
-                            <mat-label>Duration (in Days)</mat-label>
-                            <input matInput [formControlName]="'Duration'" [placeholder]="'Duration (in Days)'">
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
-                        </mat-form-field>
-                        <mat-form-field class="flex-auto gt-xs:pr-3">
-                            <mat-label>Units</mat-label>
-                            <mat-select  [formControlName]="'units'">
-                                <mat-option value="Days">Days</mat-option>
-                                <mat-option value="Hours">Hours</mat-option>
-                                <mat-option value="Minutes">Minutes</mat-option>
-
-                            </mat-select>
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:cog'">
-                            </mat-icon>
-                        </mat-form-field>
-                    </div> -->
-                    
-                    <!--Fees-->
-                    <!-- <div class="flex">
-                        <mat-form-field class="flex-auto">
-                            <mat-label>Fees</mat-label>
-                            <input matInput [formControlName]="'Fees'" [placeholder]="'Fees'">
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:cash'"></mat-icon>
-                        </mat-form-field>
-                    </div> -->
-                    <!-- Image Add remove -->
-                    <div class="flex">
-                        <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>  -->
-                        <!-- <div class="absolute inset-0 flex items-center justify-center z-20"> -->
-                        <div>
-                            <!-- Actions -->
-                            <div class="mt-4 sm:mt-0">
-                                <!-- Upload button -->
-                                <button mat-flat-button [color]="'primary'"
-                                    onclick="document.getElementById('txtfileupload').click()">
-                                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                    <span class="ml-1 mr-0">Upload file</span>
-
-                                    <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
-                                        id="txtfileupload" name="fileupload"
-                                        (change)="onSelectFile($event.target.files)"> -->
-
-                                </button>
-                                <span class="ml-1 mr-0">{{name}}</span>
-                                <span class="ml-1 mr-0">Image size should be: 600*485</span>
-                                <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
-                                <!-- <button style="display:block;width:120px; height:30px;"
-                                    onclick="document.getElementById('getFile').click()">Your text here</button> -->
-
-
-                                <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload"
-                                    name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none">
-                                <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
-                                    id="txtfileupload"  name="fileupload" 
-                                    (change)="onSelectFile($event.target.files)"> -->
-                            </div>
-
-                            <!-- <div class="col-sm-4"> -->
-
-                            <!-- </div> -->
-                            <!-- <input
-                                    id="avatar-file-input"
-                                    class="absolute h-0 w-0 opacity-0 invisible pointer-events-none"
-                                    type="file"
-                                    [multiple]="false"
-                                    [accept]="'image/jpeg, image/png'"
-                                    (change)="onSelectFile($event.target.files)"
-                                    #avatarFileInput> -->
-                            <!-- <label
-                                    class="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-hover"
-                                    for="avatar-file-input"
-                                    matRipple>
-                                    <mat-icon
-                                        class="text-white"
-                                        [svgIcon]="'heroicons_outline:camera'"></mat-icon>
-                                </label> -->
+                        <!--Requirements-->
+                        <div class="flex-auto mt-4">
+                            <mat-label>Requirements</mat-label>
+                            <quill-editor [formControlName]="'requirements'" [modules]="quillModules">
+                            </quill-editor>
                         </div>
-                        <!-- <div>
-                                <button
-                                    mat-icon-button
-                                    (click)="removeAvatar()">
-                                    <mat-icon
-                                        class="text-white"
-                                        [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                                </button>
-                            </div> -->
-                        <!-- </div> -->
-                    </div>
-                    <!-- Active Toggle -->
-                    <!-- <div class="flex">
-                        <div class="space-y-4">
-                            <ng-container>
-                                <div class="flex">
+                        <!--Title-->
+                        <div class="flex mt-4">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Title</mat-label>
+                                <input matInput [formControlName]="'Title'" [placeholder]="'Title'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Price</mat-label>
+                                <input type="number" matInput [formControlName]="'price'" [placeholder]="'Price'"
+                                (blur)='checkprice()' required>
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex">
+                            <div class="space-y-4">
+                                <ng-container>
+                                    <!-- <div class="flex"> -->
                                     <div class="fuse-mat-no-subscript flex-auto">
-                                        <mat-slide-toggle class="mt-8 sm:mt-0 sm:ml-auto" [color]="'primary'"
-                                        id="userchkactive" (change)="toggleCompleted($event)" [checked]="true">
-                                            IsActive
+                                        <mat-slide-toggle labelPosition="before"  class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
+                                            id="offerApplicable" (change)="toggleCompleted($event)" [checked]="false">
+                                            Offer Applicable
                                         </mat-slide-toggle>
                                     </div>
-                                </div>
-                            </ng-container>
+                                    <!-- </div> -->
+                                </ng-container>
+                            </div>
                         </div>
-                    </div> -->
-
-                    <!-- Alert -->
-                    <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
-                        [type]="alert.type" [@shake]="alert.type === 'success'">
-                        {{alert.message}}
-                    </fuse-alert>
-
-                    <div
-                        class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
-                        <!-- Cancel -->
-                        <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="cancel()">
-                            Cancel
-                        </button>
-                        <!--Save-->
-                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="AddCourse()">
-                            Save
-                        </button>
-                    </div>
-                </form>
+                        <div class="flex">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Offer Price</mat-label>
+                                <input type="number" matInput [formControlName]="'offerPrice'"
+                                    [placeholder]="'Offer Price'" (blur)='checkprice()'>
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex">
+                            <div class="space-y-4">
+                                <ng-container>
+                                    <!-- <div class="flex"> -->
+                                    <div class="fuse-mat-no-subscript flex-auto">
+                                        <mat-slide-toggle labelPosition="before"  class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
+                                            id="taxApplicable" (change)="check($event)" [checked]="false">
+                                            Is Tax
+                                        </mat-slide-toggle>
+                                    </div>
+                                    <!-- </div> -->
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Tax Percent(%)</mat-label>
+                                <input type="number" matInput [formControlName]="'taxpercent'"
+                                    [placeholder]="'Tax Percent'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'feather:percent'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex mb-4">
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-label>Effective From</mat-label>
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                    [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
+                                <input matInput [matDatepicker]="effectiveDateDatepicker" [min]="todayDate"
+                                    [formControlName]="'effectiveFrom'" [placeholder]="'effectiveFrom'">
+                                <mat-datepicker-toggle matSuffix [for]="effectiveDateDatepicker">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #effectiveDateDatepicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex mb-4">
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-label>Effective Till</mat-label>
+                                <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                    [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
+                                <input matInput [matDatepicker]="effectiveTillDatepicker" [min]="todayDate"
+                                    [formControlName]="'effectiveTill'" [placeholder]="'EffectiveTill'">
+                                <mat-datepicker-toggle matSuffix [for]="effectiveTillDatepicker">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #effectiveTillDatepicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex mt-4">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Course Header</mat-label>
+                                <input matInput [formControlName]="'courseheader'" [placeholder]="'Course Header'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex mt-4">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Course Url</mat-label>
+                                <input matInput [formControlName]="'courseurl'" [placeholder]="'Course Url'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex-auto mt-4">
+                            <mat-label>Meta Description</mat-label>
+                            <quill-editor [formControlName]="'metadiscription'" [modules]="quillModules">
+                            </quill-editor>
+                        </div>
+                        <div class="flex mt-4">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Meta Keywords</mat-label>
+                                <input matInput [formControlName]="'metakeywords'" [placeholder]="'Keywords'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <!-- <div class="flex-auto mt-4">
+                        <mat-form-field class="chip-list" appearance="fill">
+                            <mat-label>Meta Keywords</mat-label>
+                            <mat-chip-list #chipList aria-label="Keywords selection">
+                              <mat-chip *ngFor="let words of keywords" (removed)="remove(words)">
+                                {{words.name}}
+                                <button matChipRemove>
+                                  <mat-icon>cancel</mat-icon>
+                                </button>
+                              </mat-chip>
+                              <input placeholder="New Keyword..."
+                                     [matChipInputFor]="chipList"
+                                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                     [matChipInputAddOnBlur]="addOnBlur"
+                                     (matChipInputTokenEnd)="add($event)">
+                            </mat-chip-list>
+                          </mat-form-field>
+                        </div> -->
+                          <!--Status-->
+                          <div class="grid grid-cols-12 gap-x-1 mt-2">
+                            <div class="mt-4 col-span-6">
+                            <div >
+                                <ng-container>
+                                    <div class="fuse-mat-no-subscript flex-auto">
+                                        <mat-slide-toggle labelPosition="before"  class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
+                                            id="status" (change)="Status($event)"   [checked]="true">
+                                            Status
+                                        </mat-slide-toggle>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="mt-4 col-span-6">
+                            <div >
+                                <ng-container>
+                                    <!-- <div class="flex"> -->
+                                    <div class="fuse-mat-no-subscript flex-auto">
+                                        <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
+                                            id="onwebsite" (change)="onwebsite($event)" [checked]="true">
+                                            show on website
+                                        </mat-slide-toggle>
+                                    </div>
+                                    <!-- </div> -->
+                                </ng-container>
+                            </div>
+                        </div>
+                          </div>
+ 
+                        <!-- Image Add remove -->
+                        <div class="flex">
+                            <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>  -->
+                            <!-- <div class="absolute inset-0 flex items-center justify-center z-20"> -->
+                            <div>
+                                <!-- Actions -->
+                                <div class="mt-4 sm:mt-0">
+                                    <!-- Upload button -->
+                                    <button mat-flat-button [color]="'primary'"
+                                        onclick="document.getElementById('txtfileupload').click()">
+                                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                        <span class="ml-1 mr-0">Upload file</span>
+    
+                                        <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
+                                            id="txtfileupload" name="fileupload"
+                                            (change)="onSelectFile($event.target.files)"> -->
+    
+                                    </button>
+                                    <span class="ml-1 mr-0">{{name}}</span>
+                                    <span class="ml-1 mr-0">Image size should be: 600*485</span>
+                                    <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
+                                    <!-- <button style="display:block;width:120px; height:30px;"
+                                        onclick="document.getElementById('getFile').click()">Your text here</button> -->
+    
+    
+                                    <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload"
+                                        name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none">
+                                    <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
+                                        id="txtfileupload"  name="fileupload" 
+                                        (change)="onSelectFile($event.target.files)"> -->
+                                </div>
+    
+                                <!-- <div class="col-sm-4"> -->
+    
+                                <!-- </div> -->
+                          
+                            </div>
+                     
+                        </div>
+             
+                        <!-- Alert -->
+                        <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+                            [type]="alert.type" [@shake]="alert.type === 'success'">
+                            {{alert.message}}
+                        </fuse-alert>
+    
+                        <div
+                            class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
+                            <!-- Cancel -->
+                            <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="cancel()">
+                                Cancel
+                            </button>
+                            <!--Save-->
+                            <button class="px-6 ml-3" mat-flat-button  [color]="'primary'" (click)="AddCourse()">
+                                Save
+                            </button>
+                            <button class="px-6 ml-3" mat-flat-button  [color]="'primary'" (click)="SaveNext()">
+                                Save Next
+                            </button>
+                        </div>
+                    </form>
+                    </mat-step>
+                    <mat-step [stepControl]="secondFormGroup" >
+                      <form [formGroup]="secondFormGroup">
+                        <ng-template matStepLabel>Module</ng-template>
+                        <!-- <div>
+                          <button mat-button matStepperPrevious>Back</button>
+                          <button mat-button matStepperNext>Next</button>
+                        </div> -->
+                      </form>
+                    </mat-step>
+                    <mat-step>
+                      <ng-template matStepLabel>Chapter</ng-template>
+                      <!-- <p>You are now done.</p> -->
+                      <!-- <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button (click)="stepper.reset()">Reset</button>
+                      </div> -->
+                    </mat-step>
+                  </mat-stepper>
+              
             </div>
         </div>
 

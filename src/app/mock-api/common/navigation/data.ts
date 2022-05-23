@@ -3,12 +3,19 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
     {
-        id      : 'dasboard',
-        title   : 'Dashboard',
-        type    : 'basic',
-        icon    : 'heroicons_solid:user-circle',
-        link : '/userconfig/dashboard'
-    },
+    id      : 'apps',
+    title   : '',
+    subtitle: '',
+    type    : 'group',
+    icon    : 'heroicons_outline:home',
+    children: [
+            {
+                id      : 'dasboard',
+                title   : 'Dashboard',
+                type    : 'basic',
+                icon    : 'heroicons_solid:user-circle',
+                link : '/userconfig/dashboard'
+            },
             {
                 id      : 'userconfig',
                 title   : 'User Configuration',
@@ -62,50 +69,6 @@ export const defaultNavigation: FuseNavigationItem[] = [
                     }
                 ]
             },
-            // {
-            //     id      : 'emailconfig',
-            //     title   : 'Email',
-            //     type    : 'collapsable',
-            //     icon    : 'heroicons_outline:mail',
-            //     children: [
-            //         {
-            //             id   : 'emailconfig.emaillist',
-            //             title: 'Email List',
-            //             type : 'basic',
-            //             link : '/emailconfig/emaillist'
-            //         },
-            //         {
-            //             id   : 'emailconfig.emailschedular',
-            //             title: 'Email Schedular',
-            //             type : 'basic',
-            //             link : '/emailconfig/emailschedular'
-            //         },
-            //         {
-            //             id   : 'emailconfig.emailservers',
-            //             title: 'Email Servers',
-            //             type : 'basic',
-            //             link : '/emailconfig/emailservers'
-            //         },
-            //         {
-            //             id   : 'emailconfig.unsubscribeemail',
-            //             title: 'UnSubscribe Email',
-            //             type : 'basic',
-            //             link : '/emailconfig/unsubscribeemail'
-            //         },
-            //         {
-            //             id   : 'emailconfig.emailsending',
-            //             title: 'Email Sending',
-            //             type : 'basic',
-            //             link : '/emailconfig/emailsending'
-            //         },
-            //         {
-            //             id   : 'emailconfig.emailsmstemp',
-            //             title: 'Email Sms Template',
-            //             type : 'basic',
-            //             link : '/emailconfig/emailsmstemplate'
-            //         }
-            //     ]
-            // },
             {
                 id      : 'courses',
                 title   : 'Courses',
@@ -152,47 +115,6 @@ export const defaultNavigation: FuseNavigationItem[] = [
                     }
                 ]
             },
-            // {
-            //     id      : 'enqrmgmt',
-            //     title   : 'Enquiry Managment',
-            //     type    : 'collapsable',
-            //     icon    : 'heroicons_outline:chat-alt',
-            //     children: [
-            //         {
-            //             id   : 'enqrmgmt.enquirymanagement',
-            //             title: 'Enquiry Managment',
-            //             type : 'basic',
-            //             link : '/enqrmgmt/enquirymanagement'
-            //         },
-            //         {
-            //             id   : 'enqrmgmt.enquirefollowup',
-            //             title: 'Enquiry FollowUp',
-            //             type : 'basic',
-            //             link : '/enqrmgmt/enquirefollowup'
-            //         }
-            //     ]
-            // },
-            
-            // {
-            //     id      : 'batches',
-            //     title   : 'Batches',
-            //     type    : 'collapsable',
-            //     icon    : 'heroicons_outline:view-list',
-            //     children: [
-            //         {
-            //             id   : 'batches.batchdetails',
-            //             title: 'Batch Details',
-            //             type : 'basic',
-            //             link : '/batches/batchdetails'
-            //         },
-            //         {
-            //             id   : 'batches.batchstatus',
-            //             title: 'Batch Status',
-            //             type : 'basic',
-            //             link : '/batches/batchstatus'
-            //         }
-            //     ]
-            // },
             {
                 id      : 'students',
                 title   : 'Students',
@@ -213,26 +135,6 @@ export const defaultNavigation: FuseNavigationItem[] = [
                     }   
                 ]
             },
-            // {
-            //     id      : 'feedetails',
-            //     title   : 'Fee Details',
-            //     type    : 'collapsable',
-            //     icon    : 'heroicons_solid:cash',
-            //     children: [
-            //         {
-            //             id   : 'feedetails.addpaymenttype',
-            //             title: 'Add Payment Type',
-            //             type : 'basic',
-            //             link : '/feedetails/addpaymenttype'
-            //         },
-            //         {
-            //             id   : 'feedetails.feepayment',
-            //             title: 'Fee Payment',
-            //             type : 'basic',
-            //             link : '/feedetails/feepayment'
-            //         }   
-            //     ]
-            // },
             {
                 id      : 'faculty',
                 title   : 'Faculty',
@@ -291,7 +193,118 @@ export const defaultNavigation: FuseNavigationItem[] = [
                     }
                 ]
             },
+            // {
+            //     id      : 'emailconfig',
+            //     title   : 'Email',
+            //     type    : 'collapsable',
+            //     icon    : 'heroicons_outline:mail',
+            //     children: [
+            //         {
+            //             id   : 'emailconfig.emaillist',
+            //             title: 'Email List',
+            //             type : 'basic',
+            //             link : '/emailconfig/emaillist'
+            //         },
+            //         {
+            //             id   : 'emailconfig.emailschedular',
+            //             title: 'Email Schedular',
+            //             type : 'basic',
+            //             link : '/emailconfig/emailschedular'
+            //         },
+            //         {
+            //             id   : 'emailconfig.emailservers',
+            //             title: 'Email Servers',
+            //             type : 'basic',
+            //             link : '/emailconfig/emailservers'
+            //         },
+            //         {
+            //             id   : 'emailconfig.unsubscribeemail',
+            //             title: 'UnSubscribe Email',
+            //             type : 'basic',
+            //             link : '/emailconfig/unsubscribeemail'
+            //         },
+            //         {
+            //             id   : 'emailconfig.emailsending',
+            //             title: 'Email Sending',
+            //             type : 'basic',
+            //             link : '/emailconfig/emailsending'
+            //         },
+            //         {
+            //             id   : 'emailconfig.emailsmstemp',
+            //             title: 'Email Sms Template',
+            //             type : 'basic',
+            //             link : '/emailconfig/emailsmstemplate'
+            //         }
+            //     ]
+            // },
+           
+            // {
+            //     id      : 'enqrmgmt',
+            //     title   : 'Enquiry Managment',
+            //     type    : 'collapsable',
+            //     icon    : 'heroicons_outline:chat-alt',
+            //     children: [
+            //         {
+            //             id   : 'enqrmgmt.enquirymanagement',
+            //             title: 'Enquiry Managment',
+            //             type : 'basic',
+            //             link : '/enqrmgmt/enquirymanagement'
+            //         },
+            //         {
+            //             id   : 'enqrmgmt.enquirefollowup',
+            //             title: 'Enquiry FollowUp',
+            //             type : 'basic',
+            //             link : '/enqrmgmt/enquirefollowup'
+            //         }
+            //     ]
+            // },
+            
+            // {
+            //     id      : 'batches',
+            //     title   : 'Batches',
+            //     type    : 'collapsable',
+            //     icon    : 'heroicons_outline:view-list',
+            //     children: [
+            //         {
+            //             id   : 'batches.batchdetails',
+            //             title: 'Batch Details',
+            //             type : 'basic',
+            //             link : '/batches/batchdetails'
+            //         },
+            //         {
+            //             id   : 'batches.batchstatus',
+            //             title: 'Batch Status',
+            //             type : 'basic',
+            //             link : '/batches/batchstatus'
+            //         }
+            //     ]
+            // },
+            
+            // {
+            //     id      : 'feedetails',
+            //     title   : 'Fee Details',
+            //     type    : 'collapsable',
+            //     icon    : 'heroicons_solid:cash',
+            //     children: [
+            //         {
+            //             id   : 'feedetails.addpaymenttype',
+            //             title: 'Add Payment Type',
+            //             type : 'basic',
+            //             link : '/feedetails/addpaymenttype'
+            //         },
+            //         {
+            //             id   : 'feedetails.feepayment',
+            //             title: 'Fee Payment',
+            //             type : 'basic',
+            //             link : '/feedetails/feepayment'
+            //         }   
+            //     ]
+            // },
+            
+        ]
+},
 ];
+
 export const compactNavigation: FuseNavigationItem[] = [
     {
         id      : 'userconfig',

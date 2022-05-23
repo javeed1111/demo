@@ -30,7 +30,10 @@ export class EditcourseComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   active: boolean;
+
   courseForm: FormGroup;
+  secondFormGroup: FormGroup;
+
   alert: { type: FuseAlertType; message: string } = {
     type: 'success',
     message: ''
@@ -80,6 +83,8 @@ export class EditcourseComponent implements OnInit {
   effectivetil: any;
   feedetailsid: any;
   status: boolean;
+  courseid: any;
+  istax: boolean;
 
   constructor(
 
@@ -91,7 +96,7 @@ export class EditcourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //debugger;
+    debugger;
     var loginId = localStorage.getItem("LoginId");
     var id = this.approute.snapshot.params['id'];
     var value = this.approute.snapshot.params['value'];
@@ -111,6 +116,7 @@ export class EditcourseComponent implements OnInit {
       price: ['0', [Validators.required]],
       isOffer: [''],
       offerPrice: ['0'],
+      taxPercent:['0'],
       effectiveFrom: ['', Validators.required],
       effectiveTill: ['', Validators.required],
       id: [''],
@@ -123,6 +129,8 @@ export class EditcourseComponent implements OnInit {
     });
     const ctrl = this.courseForm.controls['offerPrice'];
     ctrl.disable();
+    const ctrl1 = this.courseForm.controls['taxPercent']
+    ctrl1.disable();
     this.Edit(id, value);
     this.GetFeeInactiveData(id);
   }
@@ -247,6 +255,11 @@ export class EditcourseComponent implements OnInit {
       }
     });
   }
+
+  GoToPage(){
+    this._router.navigate(['/courses/addcoursemodule/'+this.courseid]);
+
+  }
   Edit(id: any, value: any) {
     //debugger
     var baseurl = this._authService.baseUrl;
@@ -309,6 +322,7 @@ export class EditcourseComponent implements OnInit {
         this.courseForm.patchValue(finalresult.result);
         this.status=finalresult.result.status
         const course = this.courseForm.getRawValue();
+        this.courseid=finalresult.result.courseId
         // if (course.duration == 0) {
         //   this.courseForm.controls['duration'].setValue("")
         // }
@@ -368,6 +382,31 @@ export class EditcourseComponent implements OnInit {
       }
     });
   }
+
+  check($event: MatSlideToggleChange): void {
+    debugger
+    if ($event.checked != undefined) {
+      this.istax = $event.checked;
+      if (this.istax == true) {
+        const ctrl = this.courseForm.controls['taxPercent'];
+        ctrl.enable();
+      }
+      else {
+        const ctrl = this.courseForm.controls['taxPercent'];
+        ctrl.disable();
+        ctrl.setValue('0')
+
+      }
+
+    }
+    else {
+      this.istax = false;
+      // this.horizontalStepperForm.controls.step1['offerPrice'].enable();
+
+    }
+    //this.active=this.filters.hideCompleted$.next(change.checked);
+  }
+  
   GetFeeInactiveData(id:any){
     this.Id = id;
     this._authService.GetallcoursefeeById(this.Id).subscribe((finalresult: any) => {
@@ -468,6 +507,7 @@ export class EditcourseComponent implements OnInit {
     formData.append("Price", course.price)
     formData.append("IsOffer", (this.isofferactive).toString())
     formData.append("OfferPrice", this.OfferPrice)
+    formData.append("TaxPercent", course.taxPercent)
     formData.append("CourseHeader", course.courseHeader)
     formData.append("CourseUrl", course.courseUrl)
     formData.append("Status", this.status.toString())
@@ -527,15 +567,139 @@ export class EditcourseComponent implements OnInit {
       }
     });
   }
-//   toggleCompleted($event: MatSlideToggleChange): void {
-//     //debugger
-//     if ($event.checked != undefined) {
-//       this.isActive = $event.checked;
-//     }
-//     else {
-//       this.isActive = true;
-//     }
-//     //this.active=this.filters.hideCompleted$.next(change.checked);
-//   }
+
+  UpdateNext() {
+    debugger
+    this.showAlert = false;
+    if (this.courseForm.invalid) {
+      return;
+    }
+
+    // Get the contact object
+    const course = this.courseForm.getRawValue();
+    if (this.isofferactive == undefined) {
+      if(this.isoffer==false && this.isofferactive == undefined){
+        this.OfferPrice = '0';
+        this.isofferactive = false;
+      }
+      else if(this.isoffer==false){
+        this.OfferPrice = '0';
+      }
+      else{
+        this.isofferactive = this.isoffer;
+      // this.horizontalStepperForm.controls['offerPrice'].disable();
+      
+      this.OfferPrice = course.offerPrice;
+      } 
+    }
+    else {
+      // this.horizontalStepperForm.controls['offerPrice'].enable();
+      this.OfferPrice = course.offerPrice;
+    }
+    if(this.effectivefrm!=course.effectiveFrom)
+    {
+      course.effectiveFrom=(course.effectiveFrom).format("DD-MM-YYYY")
+    }
+    if(this.effectivetil!=course.effectiveTill)
+    {
+      course.effectiveTill=(course.effectiveTill).format("DD-MM-YYYY")
+    }
+    if(course.showOnWebsite!=undefined){
+      this.showonwebsite =course.showOnWebsite;
+    }
+    
+    
+
+    // Go through the contact object and clear empty values
+    //  contact.emails = contact.emails.filter(email => email.email);
+
+    //  contact.phoneNumbers = contact.phoneNumbers.filter(phoneNumber => phoneNumber.phoneNumber);
+
+    // if (course.isActive == undefined) {
+    //   course.isActive = true;
+    // }
+    // if (course.duration == "") {
+    //   course.duration = 0
+    //   // this.courseForm.controls['Duration'].setValue(0)
+    // }
+    // if (course.fees == "") {
+    //   course.fees = 0
+    //   // this.courseForm.controls['Fees'].setValue(0)
+    //   // course.fees="";
+    // }
+    const formData: FormData = new FormData();
+    formData.append("CourseName", course.courseName)
+    formData.append("TechnologyId", course.technologyId)
+    formData.append("UpdatedBy", (localStorage.getItem("LoginId")));
+    formData.append("Description", course.description)
+    formData.append("FullDescription", course.fullDescription)
+    formData.append("WhatLearn", course.whatLearn)
+    formData.append("Requirements", course.requirements)
+    formData.append("Title", course.title)
+    formData.append("CourseId", this.approute.snapshot.params['id'])
+    formData.append("Id", this.feedetailsid)
+    formData.append("Price", course.price)
+    formData.append("IsOffer", (this.isofferactive).toString())
+    formData.append("OfferPrice", this.OfferPrice)
+    formData.append("TaxPercent", course.taxPercent)
+    formData.append("CourseHeader", course.courseHeader)
+    formData.append("CourseUrl", course.courseUrl)
+    formData.append("Status", this.status.toString())
+    formData.append("MetaDescription", course.metaDescription)
+    formData.append("metaKeywords", course.metaKeywords)
+
+    formData.append("EffectiveFrom", (course.effectiveFrom))
+    formData.append("EffectiveTill", (course.effectiveTill))
+    formData.append("showOnWebsite", (this.showonwebsite).toString())
+
+    if (this.files.length == 1) {
+      formData.append("fileupload", this.fileToUpload, this.name);
+    }
+    else {
+      formData.append("imageURL", course.imageURL);
+
+    }
+    // var data = {
+    //   CourseName: course.courseName,
+    //   Description: course.description,
+    //   Title: course.title,
+    //   UpdatedBy: parseInt(localStorage.getItem("LoginId")),
+    //   //  IsActive: tech.isActive,
+    //   CourseId: this.approute.snapshot.params['id'],
+    // }
+    this._authService.UpdateCourse(formData).subscribe((result: any) => {
+
+      //debugger
+      var result = JSON.parse(result);
+      if (result.status == "200") {
+        //debugger
+        // Set the alert
+        // this.alert = {
+        //   type: 'success',
+        //   message: result.message
+        // };
+        this._router.navigate(['/courses/addcoursemodule/'+this.courseid]);
+        // Show the alert
+        // this.showAlert = true;
+        // setTimeout(() => {
+        //   window.location.reload();
+        //   // this._router.navigate(['/courses/course']);
+        // }, 1000);
+      }
+      else {
+        // Set the alert
+        this.alert = {
+          type: 'error',
+          message: result.message
+        };
+
+        // Show the alert
+        this.showAlert = true;
+      }
+      (error) => {
+
+      }
+    });
+  }
 
 }

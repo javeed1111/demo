@@ -48,6 +48,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { CourseModuleComponent } from './course-module/course-module.component';
 import { AddCourseModuleComponent } from './add-course-module/add-course-module.component';
 import { EditCourseModuleComponent } from './edit-course-module/edit-course-module.component';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 // import { CourseContentComponent } from './AddCoursecontent/course-content/course-content.component';
 @NgModule({
@@ -107,11 +108,16 @@ import { EditCourseModuleComponent } from './edit-course-module/edit-course-modu
   providers:
   [
     {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { displayDefaultIndicatorType: false }
+    },
+    {
       provide: MAT_CHIPS_DEFAULT_OPTIONS,
       useValue: {
         separatorKeyCodes: [ENTER, COMMA]
       }
     },
+    
     DatePipe
 
   ]

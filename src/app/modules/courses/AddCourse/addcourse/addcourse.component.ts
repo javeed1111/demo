@@ -28,6 +28,7 @@ export class AddcourseComponent implements OnInit {
 
   active: boolean;
   courseForm: FormGroup;
+  secondFormGroup: FormGroup;
   alert: { type: FuseAlertType; message: string } = {
     type: 'success',
     message: ''
@@ -68,7 +69,7 @@ export class AddcourseComponent implements OnInit {
   };
   OfferPrice: string;
   istax: boolean;
-  status: boolean=false;
+  status: boolean=true;
 
 
   constructor(
@@ -79,6 +80,9 @@ export class AddcourseComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetTechnologys();
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: ['', Validators.required],
+    });
     this.courseForm = this._formBuilder.group({
       courseName: ['', [Validators.required]],
       technologyId: ['', []],
@@ -140,6 +144,111 @@ export class AddcourseComponent implements OnInit {
         this.status = $event.checked;
 
       }
+  }
+
+  SaveNext(){
+      debugger
+      this.showAlert = false;
+      if (this.courseForm.invalid) {
+        return;
+      }
+      const course = this.courseForm.getRawValue();
+      if (this.isofferactive == undefined) {
+        this.isofferactive = false;
+        // this.horizontalStepperForm.controls['offerPrice'].disable();
+        this.OfferPrice = '0'
+      }
+      else {
+        // this.horizontalStepperForm.controls['offerPrice'].enable();
+        this.OfferPrice = course.offerPrice;
+      }
+      if(this.showonwebsite==undefined){
+        this.showonwebsite=true
+      }
+      
+      const formData: FormData = new FormData();
+      formData.append("CourseName", course.courseName)
+      formData.append("CreatedBy", (localStorage.getItem("LoginId")));
+      formData.append("TechnologyId", course.technologyId)
+      formData.append("Description", course.Description)
+      formData.append("FullDescription", course.Fulldescription)
+      formData.append("WhatLearn", course.Whatlearn)
+      formData.append("Requirements", course.requirements)
+      formData.append("Title", course.Title)
+      formData.append("Price", course.price)
+      formData.append("IsOffer", (this.isofferactive).toString())
+      formData.append("OfferPrice", this.OfferPrice)
+      formData.append("TaxPercent", course.taxpercent)
+      formData.append("CourseHeader", course.courseheader)
+      formData.append("CourseUrl", course.courseurl)
+      formData.append("MetaDescription", course.metadiscription)
+  
+      // formData.append("keywords",JSON.stringify(this.keywords))
+      formData.append("metakeywords", course.metakeywords)
+      formData.append("Status", this.status.toString())
+      // formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
+      formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
+      formData.append("EffectiveTill", (course.effectiveTill.format("DD-MM-YYYY")))
+      formData.append("showOnWebsite", (this.showonwebsite).toString())
+      
+      if (this.files.length == 1) {
+        formData.append("fileupload", this.fileToUpload, this.name);
+      }
+      // console.log('formdata',formData)
+      // var data = {
+      // CourseName: course.courseName,
+      // TechnologyId:course.technologyId,
+      // Description: course.Description,
+      // Title: course.Title,
+      //  CreatedBy: parseInt(localStorage.getItem("LoginId")),
+      //  IsActive: this.active,
+      //  }
+      this._authService.Addcourse(formData).subscribe((result: any) => {
+        debugger
+        //var result = JSON.parse(result);
+        if (result.status == "200") {
+          //debugger
+          // Set the alert
+          // this.alert = {
+          //   type: 'success',
+          //   message: result.message
+          // };
+  
+          // Show the alert
+          // this.showAlert = true;
+
+          this._router.navigate(['/courses/addcoursemodule/'+result.result]);
+        }
+        else if (result.status == "-101") {
+          //debugger
+          // Set the alert
+          this.alert = {
+            type: 'error',
+            message: result.message
+          };
+  
+          // Show the alert
+          this.showAlert = true;
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 1000);
+        }
+        else {
+          // Set the alert
+          this.alert = {
+            type: 'error',
+            message: result.message
+          };
+  
+          // Show the alert
+          this.showAlert = true;
+        }
+        (error) => {
+  
+        }
+      });
+    
+
   }
 
   onSelectFile(files: FileList) {

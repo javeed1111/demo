@@ -23,7 +23,7 @@ const routes: Routes = [
             { path: '', redirectTo: 'technology', pathMatch: 'full' },
             { path: 'technology', component: TechnologyComponent },
             { path: 'course', component: CourseComponent },
-            { path: 'addcoursecontent/:id/:value', component: AddcoursecontentComponent },
+            { path: 'addcoursecontent/:courseid/:moduleid/:value', component: AddcoursecontentComponent },
             { path: 'coursecontent', component: CourseContentComponent },
             { path: 'courseplanlist', component: CourseplanlistComponent},
             { path: 'editcourseplan/:pcid/:planid/:value', component: CourseplaneditComponent},
@@ -34,7 +34,7 @@ const routes: Routes = [
             { path: 'editcourse/:id/:value', component: EditcourseComponent },
             { path: 'coursemodule/:id', component: CourseModuleComponent },
             { path: 'addcoursemodule/:id', component: AddCourseModuleComponent },
-            { path: 'editcoursemodule/:id/:courseid/:value', component: EditCourseModuleComponent },
+            { path: 'editcoursemodule/:courseid/:id/:value', component: EditCourseModuleComponent },
 
         ]
   }

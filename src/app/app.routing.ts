@@ -75,7 +75,9 @@ export const appRoutes: Route[] = [
         resolve    : {
             initialData: InitialDataResolver,
         },
+
         children   : [
+            
             {path: 'example', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
             {path: 'userconfig', loadChildren: () => import('app/modules/userconfig/userconfig.module').then(m => m.UserconfigModule)},
             {path: 'emailconfig', loadChildren: () => import('app/modules/emailconfig/emailconfig.module').then(m => m.EmailModule)},
@@ -88,9 +90,6 @@ export const appRoutes: Route[] = [
             {path: 'students', loadChildren: () => import('app/modules/students/students.module').then(m => m.StudentsModule)},
             {path: 'feedetails', loadChildren: () => import('app/modules/feedetails/feedetails.module').then(m => m.FeedetailsModule)},
             {path: 'faculty', loadChildren: () => import('app/modules/faculty/faculty.module').then(m => m.FacultyModule)},
-
-
-
 
 
         ]

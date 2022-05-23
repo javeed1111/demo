@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { MatStepper } from '@angular/material/stepper';
 export interface coursecontentData {
   sno: number;
   chapter: string;
@@ -28,13 +29,20 @@ export interface coursecontentData {
   animations: fuseAnimations
 })
 export class AddcoursecontentComponent implements OnInit {
+  @ViewChild('stepper') stepper: MatStepper;
+
   selectedProduct: any | null = null;
   displayedColumns = ['sno','chapter','author','contentType', 'preview', 'actions'];
   dataSource: MatTableDataSource<coursecontentData>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   active: boolean;
+
   coursecontentForm: FormGroup;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  isLinear:boolean=false
+
   alert: { type: FuseAlertType; message: string } = {
     type: 'success',
     message: ''
@@ -54,6 +62,7 @@ export class AddcoursecontentComponent implements OnInit {
   removeupload:boolean=false;
   remove:boolean=false;
   uploadedfilename: any;
+  uploadedvideofile:any;
   type: string;
   quillModules: any = {
     toolbar: [
@@ -79,6 +88,12 @@ export class AddcoursecontentComponent implements OnInit {
         // ['clean']
     ]
   };
+  Moduleid: any;
+  courseid: any;
+  value: any;
+  name1: string;
+  files1: Array<any> = new Array<any>();
+  fileToUpload1:  File = null;
 
 
 
@@ -92,30 +107,39 @@ export class AddcoursecontentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    debugger
     var loginId = localStorage.getItem("LoginId");
-    var id = this.approute.snapshot.params['id'];
+    var Moduleid = this.approute.snapshot.params['moduleid'];
+    var courseid= this.approute.snapshot.params['courseid'];
     var value = this.approute.snapshot.params['value'];
     // this.GetTechnologys();
+    this.Moduleid = this.approute.snapshot.params['moduleid'];
+    this.courseid= this.approute.snapshot.params['courseid'];
+    this. value = this.approute.snapshot.params['value'];
     this.coursecontentForm = this._formBuilder.group({
       courseName: ['', [Validators.required]],
+      moduleName  :['', [Validators.required]], 
       author: ['', []],
       id: ['', []],
       chapter: ['', []],
       contentType: ['', []],
       uploadedfilename :['', []],
+      uploadedvideofile :['', []],
       uploaded :['', []],
-      uploader     :['', [Validators.required]],
+      uploader     :['', []],
+      uploader1     :['', []],
       contentDescription: ['', []],
       
-      // units        :['', []],
-      // userchkactive: ['']
 
     });
-    this.Edit(id, value);
-    this.Getgridcoursecontent(id);
+    this.Edit(courseid,Moduleid, value);
+    this.Getgridcoursecontent(courseid);
+  }
+  ngAfterViewInit() {
+    this.stepper.selectedIndex = 2; 
   }
   onSelectFile(files: FileList) {
-    //debugger
+    debugger
     if (files.length === 0)
       return;
     if (files.length > 0) {
@@ -129,6 +153,23 @@ export class AddcoursecontentComponent implements OnInit {
       }
     }
   }
+
+  onSelectVideo(files: FileList) {
+    debugger
+    if (files.length === 0)
+      return;
+    if (files.length > 0) {
+      this.files1 = [];
+      for (var i = 0; i < files.length; i++) {
+        this.fileToUpload = files.item(i);
+        const fileReader: FileReader = new FileReader();
+        fileReader.readAsDataURL(this.fileToUpload);
+        this.name1 = this.fileToUpload.name.split(' ').join('-').replace(/[()]/g, "")
+        this.files1.push({ data: this.fileToUpload, fileName: this.name1 });
+      }
+    }
+  }
+
   // GetTechnologys() {
   //   //debugger
   //   this._authService.GetTechnologies().subscribe((finalresult: any) => {
@@ -167,14 +208,26 @@ export class AddcoursecontentComponent implements OnInit {
     });
   }
 
-  cancel() {
-    this._router.navigate(['/courses/coursecontent/']);
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
+  GoToPage(){
+    debugger
+    this._router.navigate(['/courses/editcourse/'+this.courseid+'/'+'edit']);
 
   }
-  Edit(id: any, value: any) {
+  GoToPage1(){
+    debugger
+    this._router.navigate(['/courses/addcoursemodule/'+this.courseid]);
+
+  }
+  cancel() {
+    
+    // this._router.navigate(['/courses/coursecontent/']);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 10);
+
+  }
+
+  Edit(id: any,moduleid:any, value: any) {
     //debugger
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
@@ -185,6 +238,8 @@ export class AddcoursecontentComponent implements OnInit {
     }
     if (value == "add") {
       this.coursecontentForm.controls['courseName'].disable();
+      this.coursecontentForm.controls['moduleName'].disable();
+
       // this.coursecontentForm.controls['technologyId'].disable();
       // this.coursecontentForm.controls['description'].disable();
       // this.coursecontentForm.controls['title'].disable();
@@ -194,7 +249,8 @@ export class AddcoursecontentComponent implements OnInit {
     }
     else {
       this.coursecontentForm.controls['courseName'].enable();
-      
+      this.coursecontentForm.controls['moduleName'].enable();
+
       // this.coursecontentForm.controls['technologyId'].enable();
       // this.coursecontentForm.controls['description'].enable();
       // this.coursecontentForm.controls['title'].enable();
@@ -240,6 +296,21 @@ export class AddcoursecontentComponent implements OnInit {
 
       }
     });
+
+    this._authService.GetCourseModulesById(moduleid).subscribe((finalresult: any) => {
+      debugger
+      console.log(finalresult);
+      //  var finalresult = JSON.parse(finalresult);
+      // rolebyid=finalresult;
+      if (finalresult.status == "200") {
+        //debugger
+        this.coursecontentForm.controls['moduleName'].setValue(finalresult.result.moduleName)
+        this.coursecontentForm.patchValue(finalresult.result);
+        const course = this.coursecontentForm.getRawValue();
+ 
+      }
+     
+    });
   }
   
   applyFilter(filterValue: string) {
@@ -248,6 +319,7 @@ export class AddcoursecontentComponent implements OnInit {
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
+
   contentchange(){
     debugger
     const coursecont = this.coursecontentForm.getRawValue();
@@ -259,25 +331,26 @@ export class AddcoursecontentComponent implements OnInit {
     }
 
   }
+
   AddCoursecontent() {
     debugger
     this.showAlert = false;
-    if (this.coursecontentForm.invalid) {
-      if(this.coursecontentForm.controls['uploader'].invalid){
-        this.alert = {
-          type: 'error',
-          message: "Selecting file is mandatory"
-        };
+    // if (this.coursecontentForm.invalid) {
+    //   if(this.coursecontentForm.controls['uploader'].invalid){
+    //     this.alert = {
+    //       type: 'error',
+    //       message: "Selecting file is mandatory"
+    //     };
 
-        // Show the alert
-        this.showAlert = true;
-      }
-      setTimeout(() => {
-        this.showAlert = false;
-      }, 1500);
+    //     // Show the alert
+    //     this.showAlert = true;
+    //   }
+    //   setTimeout(() => {
+    //     this.showAlert = false;
+    //   }, 1500);
       
-      return;
-    }
+    //   return;
+    // }
     // Get the contact object
     const coursecont = this.coursecontentForm.getRawValue();
 
@@ -296,7 +369,8 @@ export class AddcoursecontentComponent implements OnInit {
     //       course.Fees=0
     //     }
     const formData: FormData = new FormData();
-    formData.append("CourseId",  this.approute.snapshot.params['id'])
+    formData.append("CourseId",  this.approute.snapshot.params['courseid'])
+    formData.append("ModuleId",  this.approute.snapshot.params['moduleid'])
     formData.append("Chapter", coursecont.chapter)
     formData.append("Author", coursecont.author)
     formData.append("ContentType", coursecont.contentType)
@@ -305,6 +379,9 @@ export class AddcoursecontentComponent implements OnInit {
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
     }
+    // if (this.files1.length == 1) {
+    //   formData.append("videoupload", this.fileToUpload1, this.name1);
+    // }
     this._authService.Addcoursecontent(formData).subscribe((result: any) => {
       //debugger
       var result = JSON.parse(result);
@@ -319,7 +396,7 @@ export class AddcoursecontentComponent implements OnInit {
         // Show the alert
         this.showAlert = true;
         setTimeout(() => {
-          this._router.navigate(['/courses/coursecontent']);
+          this._router.navigate(['/courses/course']);
         }, 1000);
       }
       else {
@@ -373,7 +450,8 @@ export class AddcoursecontentComponent implements OnInit {
     //     }
     const formData: FormData = new FormData();
     formData.append("Id",  coursecont.id)
-    formData.append("CourseId",  this.approute.snapshot.params['id'])
+    formData.append("CourseId",  this.approute.snapshot.params['courseid'])
+    formData.append("ModuleId",  this.approute.snapshot.params['moduleid'])
     formData.append("Chapter", coursecont.chapter)
     formData.append("Author", coursecont.author)
     formData.append("ContentType", coursecont.contentType)
@@ -401,7 +479,8 @@ export class AddcoursecontentComponent implements OnInit {
         // Show the alert
         this.showAlert = true;
         setTimeout(() => {
-          this._router.navigate(['/courses/coursecontent']);
+          // this._router.navigate(['/courses/coursecontent']);
+          window.location.reload();
         }, 1000);
       }
       else {

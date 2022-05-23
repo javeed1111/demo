@@ -73,15 +73,17 @@ course: any;
   {
       this.selectedProduct = null;
   }
-  showEditModal(id) {
+  showEditModal(courseid) {
     //debugger
     var value="edit"
-    this._router.navigate(['/courses/addcoursecontent/'+id+'/'+value])
+    var moduleid=4
+    this._router.navigate(['/courses/addcoursecontent/'+courseid+'/'+moduleid+'/'+value])
   }
-  showViewModal(id) {
+  showViewModal(courseid) {
     //debugger
     var value="add"
-    this._router.navigate(['/courses/addcoursecontent/'+id+'/'+value])
+    var moduleid=4
+    this._router.navigate(['/courses/addcoursecontent/'+courseid+'/'+moduleid+'/'+value])
   }
   ngOnDestroy(): void
   {

@@ -21,6 +21,7 @@
                     [placeholder]="'Search Courses'">
             </mat-form-field> -->
       <!-- Add product button -->
+      
       <button class="ml-4" mat-flat-button [color]="'primary'" (click)="createProduct()">
         <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
         <span class="ml-2 mr-1">Add</span>
@@ -54,14 +55,17 @@
               <!-- Color Column -->
               <ng-container matColumnDef="title">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.title}} </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.title}}
+                  <!-- <a (click)="GoToModules(row.courseId)"> {{row.title}}</a>  </mat-cell> -->
+                </mat-cell>
+
               </ng-container>
 
               <!-- Progress Column -->
               <ng-container matColumnDef="courseName">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Course Name </mat-header-cell>
                 <mat-cell *matCellDef="let row">
-                  <a (click)="GoToModules(row.courseId)"> {{row.courseName}}</a> </mat-cell>
+                   {{row.courseName}} </mat-cell>
               </ng-container>
 
               <!-- Name Column -->
