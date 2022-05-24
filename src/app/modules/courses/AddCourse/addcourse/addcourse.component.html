@@ -229,7 +229,7 @@
                                     <button mat-flat-button [color]="'primary'"
                                         onclick="document.getElementById('txtfileupload').click()">
                                         <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                        <span class="ml-1 mr-0">Upload file</span>
+                                        <span class="ml-1 mr-0">Course Image</span>
     
                                         <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
                                             id="txtfileupload" name="fileupload"
@@ -258,6 +258,45 @@
                      
                         </div>
              
+                        <div class="flex">
+                            <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>  -->
+                            <!-- <div class="absolute inset-0 flex items-center justify-center z-20"> -->
+                            <div>
+                                <!-- Actions -->
+                                <div class="mt-4 sm:mt-0">
+                                    <!-- Upload button -->
+                                    <button mat-flat-button [color]="'primary'"
+                                        onclick="document.getElementById('txtfileupload1').click()">
+                                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                        <span class="ml-1 mr-0">Course Icon</span>
+    
+                                        <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
+                                            id="txtfileupload" name="fileupload"
+                                            (change)="onSelectFile($event.target.files)"> -->
+    
+                                    </button>
+                                    <span class="ml-1 mr-0">{{name1}}</span>
+                                    <span class="ml-1 mr-0">Image size should be: 600*485</span>
+                                    <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
+                                    <!-- <button style="display:block;width:120px; height:30px;"
+                                        onclick="document.getElementById('getFile').click()">Your text here</button> -->
+    
+    
+                                    <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload1"
+                                        name="fileupload1" (change)="onSelectFile1($event.target.files)" style="display:none">
+                                    <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
+                                        id="txtfileupload"  name="fileupload" 
+                                        (change)="onSelectFile($event.target.files)"> -->
+                                </div>
+    
+                                <!-- <div class="col-sm-4"> -->
+    
+                                <!-- </div> -->
+                          
+                            </div>
+                     
+                        </div>
+
                         <!-- Alert -->
                         <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
                             [type]="alert.type" [@shake]="alert.type === 'success'">

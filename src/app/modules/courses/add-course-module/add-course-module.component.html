@@ -6,20 +6,79 @@
                     <mat-step [stepControl]="firstFormGroup" >
                       <form  [formGroup]="firstFormGroup">
                         <ng-template matStepLabel><p (click)="GoToPage1()">Course</p></ng-template>
-                        <!-- <mat-form-field appearance="fill">
-                          <mat-label>Name</mat-label>
-                          <input matInput formControlName="firstCtrl" placeholder="Last name, First name" required>
-                        </mat-form-field>
-                        <div>
-                          <button mat-button matStepperNext>Next</button>
-                        </div> -->
+                      
                       </form>
                     </mat-step>
                     <mat-step  [stepControl]="coursemoduleForm" >
                         <form [formGroup]="coursemoduleForm"
                         class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
                         <ng-template matStepLabel>Module</ng-template>
-                        
+                      <!-- Header -->
+                        <!-- <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-auto">
+          
+                          <button class="ml-4" mat-flat-button [color]="'primary'" (click)="NextButton()">
+                              <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                              <span class="ml-2 mr-1">Next</span>
+                          </button>
+                      </div> -->
+                      <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto ">
+    
+                        <div class="example-container mat-elevation-z8">
+    
+                            <mat-table [dataSource]="dataSource" matSort>
+                
+                              <!-- ID Column -->
+                              <ng-container matColumnDef="sno">
+                                <mat-header-cell *matHeaderCellDef> SNO. </mat-header-cell>
+                                <mat-cell *matCellDef="let row; let i=index">
+                                  {{ (i+1)  }}</mat-cell>
+                              </ng-container>
+                         
+                              <!-- Name Column -->
+                              <ng-container matColumnDef="ModuleName">
+                                <mat-header-cell *matHeaderCellDef > Module Name </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.moduleName}} </mat-cell>
+                              </ng-container>          
+                              <!-- <ng-container matColumnDef="duration">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Duration </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.duration}} </mat-cell>
+                              </ng-container> -->
+                              <!-- <ng-container matColumnDef="fees">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Fees </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.fees}} </mat-cell>
+                              </ng-container> -->
+                              <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                  <div>
+                                    <!-- <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                                      (click)="showViewModal(row.courseId)">
+                                      <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:eye'">
+                                      </mat-icon>
+                                    </a> -->
+                                    <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                                      (click)="EditFromGrid(row.moduleId,'editcontent')">
+                                      <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil'">
+                                      </mat-icon>
+                                    </a>
+                                    <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                                      (click)="deleteFromGrid(row.moduleId)">
+                                      <mat-icon class="icon-size-5 " [svgIcon]="'heroicons_solid:trash'">
+                                      </mat-icon>
+                                    </a>
+                                  </div>
+                                </mat-cell>
+                              </ng-container>
+                
+                              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                              <mat-row *matRowDef="let row; columns: displayedColumns;">
+                              </mat-row>
+                            </mat-table>
+                
+                            <!-- <mat-paginator #myPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
+                              aria-label="Select page of users"></mat-paginator> -->
+                          </div>
+                        </div>
                         <div class="flex">
                             <mat-form-field class="flex-auto">
                                 <mat-label>Course Name</mat-label>
@@ -75,64 +134,7 @@
                             </quill-editor>
                         </div>
     
-                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto mt-8">
-    
-                            <div class="example-container mat-elevation-z8">
-        
-                                <mat-table [dataSource]="dataSource" matSort>
-                    
-                                  <!-- ID Column -->
-                                  <ng-container matColumnDef="sno">
-                                    <mat-header-cell *matHeaderCellDef> SNO. </mat-header-cell>
-                                    <mat-cell *matCellDef="let row; let i=index">
-                                      {{ (i+1)  }}</mat-cell>
-                                  </ng-container>
-                             
-                                  <!-- Name Column -->
-                                  <ng-container matColumnDef="ModuleName">
-                                    <mat-header-cell *matHeaderCellDef > Module Name </mat-header-cell>
-                                    <mat-cell *matCellDef="let row"> {{row.moduleName}} </mat-cell>
-                                  </ng-container>          
-                                  <!-- <ng-container matColumnDef="duration">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Duration </mat-header-cell>
-                                    <mat-cell *matCellDef="let row"> {{row.duration}} </mat-cell>
-                                  </ng-container> -->
-                                  <!-- <ng-container matColumnDef="fees">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Fees </mat-header-cell>
-                                    <mat-cell *matCellDef="let row"> {{row.fees}} </mat-cell>
-                                  </ng-container> -->
-                                  <ng-container matColumnDef="actions">
-                                    <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-                                    <mat-cell *matCellDef="let row">
-                                      <div>
-                                        <!-- <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
-                                          (click)="showViewModal(row.courseId)">
-                                          <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:eye'">
-                                          </mat-icon>
-                                        </a> -->
-                                        <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
-                                          (click)="EditFromGrid(row.moduleId,'editcontent')">
-                                          <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil'">
-                                          </mat-icon>
-                                        </a>
-                                        <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
-                                          (click)="deleteFromGrid(row.moduleId)">
-                                          <mat-icon class="icon-size-5 " [svgIcon]="'heroicons_solid:trash'">
-                                          </mat-icon>
-                                        </a>
-                                      </div>
-                                    </mat-cell>
-                                  </ng-container>
-                    
-                                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                                  <mat-row *matRowDef="let row; columns: displayedColumns;">
-                                  </mat-row>
-                                </mat-table>
-                    
-                                <!-- <mat-paginator #myPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
-                                  aria-label="Select page of users"></mat-paginator> -->
-                              </div>
-                              </div>
+                      
                         <!-- Alert -->
                         <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
                             [type]="alert.type" [@shake]="alert.type === 'success'">

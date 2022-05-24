@@ -87,12 +87,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
                         type : 'basic',
                         link : '/courses/course'
                     },
-                    {
-                        id   : 'courses.coursecontent',
-                        title: 'Course Content',
-                        type : 'basic',
-                        link : '/courses/coursecontent'
-                    },
+                    // {
+                    //     id   : 'courses.coursecontent',
+                    //     title: 'Course Content',
+                    //     type : 'basic',
+                    //     link : '/courses/coursecontent'
+                    // },
                     {
                         id   : 'courses.courseplanlist',
                         title: 'Course Plan',

@@ -216,9 +216,9 @@ export class AuthService
       debugger
       return this._httpClient.get(this.baseUrl + "api/Admin/Getcoursecontentbyid", {params: {id}});
       }
-      Addcoursecontent(data) {
+      Addcoursecontent(formdata) {
       //debugger
-      return this._httpClient.post(this.baseUrl + "api/Admin/Addcoursecontent", data, {responseType: 'text'});
+      return this._httpClient.post(this.baseUrl + "api/Admin/Addcoursecontent", formdata);
       }
       Updatecoursecontent(data) {
       //debugger

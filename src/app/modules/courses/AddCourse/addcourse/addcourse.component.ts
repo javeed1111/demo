@@ -70,6 +70,8 @@ export class AddcourseComponent implements OnInit {
   OfferPrice: string;
   istax: boolean;
   status: boolean=true;
+  fileToUpload1: File;
+  name1: string;
 
 
   constructor(
@@ -79,6 +81,7 @@ export class AddcourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    debugger
     this.GetTechnologys();
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required],
@@ -97,7 +100,7 @@ export class AddcourseComponent implements OnInit {
       offerPrice: ['0'],
       taxpercent:['0'],
       effectiveFrom: ['', Validators.required],
-      effectiveTill: ['', Validators.required],
+      effectiveTill: [''],
       courseheader: ['', []],
       courseurl:['', []],
       metadiscription: ['', []],
@@ -108,6 +111,7 @@ export class AddcourseComponent implements OnInit {
       // userchkactive: ['']
 
     });
+    // this.courseForm.controls['effectiveFrom'].setValue(new Date());
     const ctrl = this.courseForm.controls['offerPrice']
     ctrl.disable();
     const ctrl1 = this.courseForm.controls['taxpercent']
@@ -187,7 +191,7 @@ export class AddcourseComponent implements OnInit {
       formData.append("metakeywords", course.metakeywords)
       formData.append("Status", this.status.toString())
       // formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
-      formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
+      formData.append("EffectiveFrom", (course.effectiveFrom.formatD("DD-MM-YYYY")))
       formData.append("EffectiveTill", (course.effectiveTill.format("DD-MM-YYYY")))
       formData.append("showOnWebsite", (this.showonwebsite).toString())
       
@@ -266,6 +270,23 @@ export class AddcourseComponent implements OnInit {
       }
     }
   }
+
+  onSelectFile1(files: FileList) {
+    //debugger
+    if (files.length === 0)
+      return;
+    if (files.length > 0) {
+      this.files = [];
+      for (var i = 0; i < files.length; i++) {
+        this.fileToUpload1 = files.item(i);
+        const fileReader: FileReader = new FileReader();
+        fileReader.readAsDataURL(this.fileToUpload1);
+        this.name1 = this.fileToUpload1.name.split(' ').join('-').replace(/[()]/g, "")
+        this.files.push({ data: this.fileToUpload1, fileName: this.name1 });
+      }
+    }
+  }
+
   checkprice() {
     debugger
     const dataa = this.courseForm.getRawValue();
@@ -418,6 +439,9 @@ export class AddcourseComponent implements OnInit {
     
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
+    }
+    if (this.files.length == 1) {
+      formData.append("fileupload1", this.fileToUpload1, this.name1);
     }
     // console.log('formdata',formData)
     // var data = {

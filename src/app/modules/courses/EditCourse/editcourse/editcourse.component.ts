@@ -49,6 +49,8 @@ export class EditcourseComponent implements OnInit {
   name: string;
   profileImage: any;
   ImageURL: any;
+  IconUrl: any;
+
   butdisabled: boolean = false;
   todayDate = new Date();
   isofferactive: boolean;
@@ -85,6 +87,8 @@ export class EditcourseComponent implements OnInit {
   status: boolean;
   courseid: any;
   istax: boolean;
+  fileToUpload1: File;
+  name1: any;
 
   constructor(
 
@@ -113,6 +117,7 @@ export class EditcourseComponent implements OnInit {
       whatLearn: ['', []],
       requirements: ['', []],
       imageURL: ['', []],
+      iconUrl: ['', []],
       price: ['0', [Validators.required]],
       isOffer: [''],
       offerPrice: ['0'],
@@ -152,6 +157,21 @@ export class EditcourseComponent implements OnInit {
         fileReader.readAsDataURL(this.fileToUpload);
         this.name = this.fileToUpload.name.split(' ').join('-').replace(/[()]/g, "")
         this.files.push({ data: this.fileToUpload, fileName: this.name });
+      }
+    }
+  }
+  onSelectFile1(files: FileList) {
+    //debugger
+    if (files.length === 0)
+      return;
+    if (files.length > 0) {
+      this.files = [];
+      for (var i = 0; i < files.length; i++) {
+        this.fileToUpload1 = files.item(i);
+        const fileReader: FileReader = new FileReader();
+        fileReader.readAsDataURL(this.fileToUpload1);
+        this.name1 = this.fileToUpload1.name.split(' ').join('-').replace(/[()]/g, "")
+        this.files.push({ data: this.fileToUpload1, fileName: this.name1 });
       }
     }
   }
@@ -353,7 +373,11 @@ export class EditcourseComponent implements OnInit {
           // this.ImageURL = baseurl + "/courseFiles/dummy identityproof.png";
 
         }
+        if (finalresult.result.iconUrl != null) {
+          this.IconUrl = baseurl + finalresult.result.iconUrl;
+          // this.noimage=true;;
 
+        }
         // if (finalresult.result.isActive == true) {
         //     var check = document.getElementById("userchkactive") as HTMLInputElement;
         //     check.checked = true;
@@ -523,6 +547,13 @@ export class EditcourseComponent implements OnInit {
     }
     else {
       formData.append("imageURL", course.imageURL);
+
+    }
+    if (this.files.length == 1) {
+      formData.append("fileupload1", this.fileToUpload1, this.name1);
+    }
+    else {
+      formData.append("iconUrl", course.iconUrl);
 
     }
     // var data = {

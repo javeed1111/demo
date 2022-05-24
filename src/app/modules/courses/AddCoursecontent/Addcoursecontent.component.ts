@@ -121,7 +121,7 @@ export class AddcoursecontentComponent implements OnInit {
       moduleName  :['', [Validators.required]], 
       author: ['', []],
       id: ['', []],
-      chapter: ['', []],
+      chapter: ['', [Validators.required]],
       contentType: ['', []],
       uploadedfilename :['', []],
       uploadedvideofile :['', []],
@@ -139,36 +139,72 @@ export class AddcoursecontentComponent implements OnInit {
     this.stepper.selectedIndex = 2; 
   }
   onSelectFile(files: FileList) {
-    debugger
     if (files.length === 0)
-      return;
+        return;
     if (files.length > 0) {
-      this.files = [];
-      for (var i = 0; i < files.length; i++) {
-        this.fileToUpload = files.item(i);
-        const fileReader: FileReader = new FileReader();
-        fileReader.readAsDataURL(this.fileToUpload);
-        this.name = this.fileToUpload.name.split(' ').join('-').replace(/[()]/g, "")
-        this.files.push({ data: this.fileToUpload, fileName: this.name });
-      }
-    }
-  }
+        this.files = [];
+        for (var i = 0; i < files.length; i++) {
+            this.fileToUpload = files.item(i);
+            const fileReader: FileReader = new FileReader();
+            fileReader.readAsDataURL(this.fileToUpload);
+            this.name = this.fileToUpload.name.split(' ').join('-').replace(/[()]/g, "")
+            this.files.push({ data: this.fileToUpload, fileName: this.fileToUpload.name });
+        }
 
-  onSelectVideo(files: FileList) {
-    debugger
-    if (files.length === 0)
-      return;
-    if (files.length > 0) {
-      this.files1 = [];
-      for (var i = 0; i < files.length; i++) {
-        this.fileToUpload = files.item(i);
-        const fileReader: FileReader = new FileReader();
-        fileReader.readAsDataURL(this.fileToUpload);
-        this.name1 = this.fileToUpload.name.split(' ').join('-').replace(/[()]/g, "")
-        this.files1.push({ data: this.fileToUpload, fileName: this.name1 });
-      }
     }
+
+}
+
+  BackButton(){
+
   }
+  // onSelectFile(files: FileList) {
+  //   debugger
+  //   if (files.length === 0)
+  //     return;
+  //   if (files.length > 0) {
+  //     this.files = [];
+  //     for (var i = 0; i < files.length; i++) {
+  //       this.fileToUpload = files.item(i);
+  //       const fileReader: FileReader = new FileReader();
+  //       fileReader.readAsDataURL(this.fileToUpload);
+  //       this.name = this.fileToUpload.name.split(' ').join('-').replace(/[()]/g, "")
+  //       this.files.push({ data: this.fileToUpload, fileName: this.name });
+  //     }
+  //   }
+  // }
+
+  // onSelectVideo(files: FileList) {
+  //   debugger
+  //   if (files.length === 0)
+  //     return;
+  //   if (files.length > 0) {
+  //     this.files = [];
+  //     for (var i = 0; i < files.length; i++) {
+  //       this.fileToUpload1 = files.item(i);
+  //       const fileReader: FileReader = new FileReader();
+  //       fileReader.readAsDataURL(this.fileToUpload1);
+  //       this.name1 = this.fileToUpload1.name.split(' ').join('-').replace(/[()]/g, "")
+  //       this.files.push({ data: this.fileToUpload1, fileName: this.name1 });
+  //     }
+  //   }
+  // }
+  onSelectVideo(files: FileList) {
+    if (files.length === 0)
+        return;
+    if (files.length > 0) {
+        this.files = [];
+        for (var i = 0; i < files.length; i++) {
+            this.fileToUpload1 = files.item(i);
+            const fileReader: FileReader = new FileReader();
+            fileReader.readAsDataURL(this.fileToUpload1);
+            this.name1 = this.fileToUpload1.name.split(' ').join('-').replace(/[()]/g, "")
+            this.files.push({ data: this.fileToUpload1, fileName: this.fileToUpload1.name });
+        }
+
+    }
+
+}
 
   // GetTechnologys() {
   //   //debugger
@@ -220,10 +256,10 @@ export class AddcoursecontentComponent implements OnInit {
   }
   cancel() {
     
-    // this._router.navigate(['/courses/coursecontent/']);
-    // setTimeout(() => {
-    //   window.location.reload();
-    // }, 10);
+    this._router.navigate(['/courses/course']);
+    setTimeout(() => {
+      window.location.reload();
+    }, 10);
 
   }
 
@@ -368,6 +404,100 @@ export class AddcoursecontentComponent implements OnInit {
     //     if(course.Fees==""){
     //       course.Fees=0
     //     }
+    // const formData: FormData = new FormData();
+    
+    var LoginId = localStorage.getItem("LoginId");
+    var Loginid = JSON.parse(LoginId);
+    const formData: FormData = new FormData();
+    if (this.fileToUpload!=null) {
+        formData.append("fileupload", this.fileToUpload, this.fileToUpload.name);
+    }
+    //   if (this.fileToUpload1!=null) {
+    //     formData.append("fileupload1", this.fileToUpload1, this.fileToUpload1.name);
+    // }
+    formData.append("CourseId",  this.approute.snapshot.params['courseid'])
+    formData.append("ModuleId",  this.approute.snapshot.params['moduleid'])
+    formData.append("Chapter", coursecont.chapter)
+    formData.append("Author", coursecont.author)
+    formData.append("ContentType", coursecont.contentType)
+    formData.append("ContentDescription", coursecont.contentDescription)
+    formData.append("CreatedBy",Loginid);
+    // if (this.files.length!= null) {
+    //   formData.append("fileupload", this.fileToUpload, this.fileToUpload.name);
+    // }
+    // if (this.files.length != null) {
+    //   formData.append("fileupload1", this.fileToUpload1, this.fileToUpload1.name);
+    // }
+    this._authService.Addcoursecontent(formData).subscribe((result: any) => {
+      debugger
+      // var result = JSON.parse(result);
+      if (result.status == "200") {
+        //debugger
+        // Set the alert
+        this.alert = {
+          type: 'success',
+          message: result.message
+        };
+
+        // Show the alert
+        this.showAlert = true;
+        setTimeout(() => {
+          // this._router.navigate(['/courses/course']);
+          window.location.reload();
+        }, 1000);
+      }
+      else {
+        // Set the alert
+        this.alert = {
+          type: 'error',
+          message: result.message
+        };
+
+        // Show the alert
+        this.showAlert = true;
+      }
+      (error) => {
+
+      }
+    });
+  }
+
+  SaveBack() {
+    debugger
+    this.showAlert = false;
+    // if (this.coursecontentForm.invalid) {
+    //   if(this.coursecontentForm.controls['uploader'].invalid){
+    //     this.alert = {
+    //       type: 'error',
+    //       message: "Selecting file is mandatory"
+    //     };
+
+    //     // Show the alert
+    //     this.showAlert = true;
+    //   }
+    //   setTimeout(() => {
+    //     this.showAlert = false;
+    //   }, 1500);
+      
+    //   return;
+    // }
+    // Get the contact object
+    const coursecont = this.coursecontentForm.getRawValue();
+
+    // Go through the contact object and clear empty values
+    //  contact.emails = contact.emails.filter(email => email.email);
+
+    //  contact.phoneNumbers = contact.phoneNumbers.filter(phoneNumber => phoneNumber.phoneNumber);
+
+    //   if(this.active==undefined){
+    //      this.active = true;
+    //  }
+    //  if(course.Duration==""){
+    //    course.Duration=0
+    //     }
+    //     if(course.Fees==""){
+    //       course.Fees=0
+    //     }
     const formData: FormData = new FormData();
     formData.append("CourseId",  this.approute.snapshot.params['courseid'])
     formData.append("ModuleId",  this.approute.snapshot.params['moduleid'])
@@ -379,8 +509,8 @@ export class AddcoursecontentComponent implements OnInit {
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
     }
-    // if (this.files1.length == 1) {
-    //   formData.append("videoupload", this.fileToUpload1, this.name1);
+    // if (this.files.length == 1) {
+    //   formData.append("fileupload1", this.fileToUpload1, this.name1);
     // }
     this._authService.Addcoursecontent(formData).subscribe((result: any) => {
       //debugger
@@ -397,6 +527,7 @@ export class AddcoursecontentComponent implements OnInit {
         this.showAlert = true;
         setTimeout(() => {
           this._router.navigate(['/courses/course']);
+          // window.location.reload();
         }, 1000);
       }
       else {

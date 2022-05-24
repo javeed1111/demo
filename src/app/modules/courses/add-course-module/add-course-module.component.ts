@@ -85,11 +85,15 @@ dataSource: MatTableDataSource<any>;
     this.Edit(this.courseid, "editcontent")
     this.GetModulesByCourseId();
   }
+
   ngAfterViewInit() {
     this.stepper.selectedIndex = 1; 
-}
+  }
   
+  NextButton(){
+    this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+this.coursemoduleForm.value.moduleId+'/'+"add"]);
 
+  }
   cancel(){
     // this._router.navigate(['/courses/coursemodule/'+this.courseid]);
         // setTimeout(() => {
@@ -136,8 +140,8 @@ dataSource: MatTableDataSource<any>;
                   this.showAlert = false;
                 }, 2000); 
                 // setTimeout(() => {
-                  
-                  this._router.navigate(['/courses/coursemodule/'+this.courseid]);
+                  window.location.reload();
+                  // this._router.navigate(['/courses/coursemodule/'+this.courseid]);
                 // }, 2000); 
                 
             }
