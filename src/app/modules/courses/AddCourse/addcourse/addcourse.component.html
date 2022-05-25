@@ -117,7 +117,7 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-                        <div class="flex mb-4">
+                        <!-- <div class="flex mb-4">
                             <mat-form-field class="fuse-mat-no-subscript w-full">
                                 <mat-label>Effective From</mat-label>
                                 <mat-icon matPrefix class="hidden sm:flex icon-size-5"
@@ -140,7 +140,7 @@
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #effectiveTillDatepicker></mat-datepicker>
                             </mat-form-field>
-                        </div>
+                        </div> -->
                         <div class="flex mt-4">
                             <mat-form-field class="flex-auto">
                                 <mat-label>Course Header</mat-label>
@@ -166,6 +166,14 @@
                             <mat-form-field class="flex-auto">
                                 <mat-label>Meta Keywords</mat-label>
                                 <input matInput [formControlName]="'metakeywords'" [placeholder]="'Keywords'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex mt-4">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Course Certifications</mat-label>
+                                <input matInput [formControlName]="'certifications'" [placeholder]="'Course Certifications'">
                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
                                 </mat-icon>
                             </mat-form-field>
@@ -218,13 +226,10 @@
                         </div>
                           </div>
  
-                        <!-- Image Add remove -->
-                        <div class="flex">
-                            <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>  -->
-                            <!-- <div class="absolute inset-0 flex items-center justify-center z-20"> -->
-                            <div>
+                          <div class="grid grid-cols-12 gap-x-1 mt-4">
+           
                                 <!-- Actions -->
-                                <div class="mt-4 sm:mt-0">
+                                <div class=" mt-4 sm:mt-0 col-span-6">
                                     <!-- Upload button -->
                                     <button mat-flat-button [color]="'primary'"
                                         onclick="document.getElementById('txtfileupload').click()">
@@ -250,20 +255,9 @@
                                         (change)="onSelectFile($event.target.files)"> -->
                                 </div>
     
-                                <!-- <div class="col-sm-4"> -->
-    
-                                <!-- </div> -->
                           
-                            </div>
-                     
-                        </div>
-             
-                        <div class="flex">
-                            <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>  -->
-                            <!-- <div class="absolute inset-0 flex items-center justify-center z-20"> -->
-                            <div>
                                 <!-- Actions -->
-                                <div class="mt-4 sm:mt-0">
+                                <div class=" mt-4 sm:mt-0 col-span-6">
                                     <!-- Upload button -->
                                     <button mat-flat-button [color]="'primary'"
                                         onclick="document.getElementById('txtfileupload1').click()">
@@ -288,15 +282,7 @@
                                         id="txtfileupload"  name="fileupload" 
                                         (change)="onSelectFile($event.target.files)"> -->
                                 </div>
-    
-                                <!-- <div class="col-sm-4"> -->
-    
-                                <!-- </div> -->
-                          
-                            </div>
-                     
-                        </div>
-
+                          </div>    
                         <!-- Alert -->
                         <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
                             [type]="alert.type" [@shake]="alert.type === 'success'">

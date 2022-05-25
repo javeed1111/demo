@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input'
 import { fuseAnimations } from '@fuse/animations';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER,SPACE} from '@angular/cdk/keycodes';
+import moment from 'moment';
 
 export interface Keywords {
   name: string;
@@ -104,14 +105,13 @@ export class AddcourseComponent implements OnInit {
       courseheader: ['', []],
       courseurl:['', []],
       metadiscription: ['', []],
-      metakeywords:['', []]
-      // Duration     :['', [Validators.required]],
-      // Fees         :['', []],
-      // units        :['', []],
-      // userchkactive: ['']
+      metakeywords:['', []],
+      certifications:['']
 
     });
-    // this.courseForm.controls['effectiveFrom'].setValue(new Date());
+    // var currentdate=new Date()
+     
+    this.courseForm.controls['effectiveFrom'].setValue(new Date());
     const ctrl = this.courseForm.controls['offerPrice']
     ctrl.disable();
     const ctrl1 = this.courseForm.controls['taxpercent']
@@ -157,6 +157,8 @@ export class AddcourseComponent implements OnInit {
         return;
       }
       const course = this.courseForm.getRawValue();
+      var efeectivetill=course.effectiveTill==""?null:course.effectiveTill.format("DD-MM-YYYY")
+
       if (this.isofferactive == undefined) {
         this.isofferactive = false;
         // this.horizontalStepperForm.controls['offerPrice'].disable();
@@ -189,10 +191,11 @@ export class AddcourseComponent implements OnInit {
   
       // formData.append("keywords",JSON.stringify(this.keywords))
       formData.append("metakeywords", course.metakeywords)
+      formData.append("Certifications", course.certifications)
       formData.append("Status", this.status.toString())
       // formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
       formData.append("EffectiveFrom", (course.effectiveFrom.formatD("DD-MM-YYYY")))
-      formData.append("EffectiveTill", (course.effectiveTill.format("DD-MM-YYYY")))
+      formData.append("EffectiveTill", (efeectivetill))
       formData.append("showOnWebsite", (this.showonwebsite).toString())
       
       if (this.files.length == 1) {
@@ -399,6 +402,8 @@ export class AddcourseComponent implements OnInit {
       return;
     }
     const course = this.courseForm.getRawValue();
+    var efeectivetill=course.effectiveTill==""?null:course.effectiveTill.format("DD-MM-YYYY")
+
     if (this.isofferactive == undefined) {
       this.isofferactive = false;
       // this.horizontalStepperForm.controls['offerPrice'].disable();
@@ -428,13 +433,13 @@ export class AddcourseComponent implements OnInit {
     formData.append("CourseHeader", course.courseheader)
     formData.append("CourseUrl", course.courseurl)
     formData.append("MetaDescription", course.metadiscription)
-
     // formData.append("keywords",JSON.stringify(this.keywords))
     formData.append("metakeywords", course.metakeywords)
+    formData.append("Certifications", course.certifications)
     formData.append("Status", this.status.toString())
     // formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
-    formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
-    formData.append("EffectiveTill", (course.effectiveTill.format("DD-MM-YYYY")))
+    formData.append("EffectiveFrom", (moment(course.effectiveFrom).format("DD-MM-YYYY")))
+    formData.append("EffectiveTill", efeectivetill)
     formData.append("showOnWebsite", (this.showonwebsite).toString())
     
     if (this.files.length == 1) {

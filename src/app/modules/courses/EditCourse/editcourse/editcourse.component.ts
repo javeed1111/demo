@@ -1,3 +1,4 @@
+import { I } from '@angular/cdk/keycodes';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import moment from 'moment';
 export interface coursefeeinactiveData {
   sno: number;
   price: string;
@@ -89,6 +91,7 @@ export class EditcourseComponent implements OnInit {
   istax: boolean;
   fileToUpload1: File;
   name1: any;
+  oldprice: any;
 
   constructor(
 
@@ -123,14 +126,15 @@ export class EditcourseComponent implements OnInit {
       offerPrice: ['0'],
       taxPercent:['0'],
       effectiveFrom: ['', Validators.required],
-      effectiveTill: ['', Validators.required],
+      effectiveTill: ['',],
       id: [''],
       showOnWebsite: [''],
       courseHeader: ['', []],
       courseUrl:['', []],
       metaDescription: ['', []],
       metaKeywords:['', []],
-      stauts:['',[]]
+      stauts:['',[]],
+      certifications:['']
     });
     const ctrl = this.courseForm.controls['offerPrice'];
     ctrl.disable();
@@ -275,7 +279,14 @@ export class EditcourseComponent implements OnInit {
       }
     });
   }
+  GoToReviews(){
+    this._router.navigate(['/courses/reviews/'+this.courseid]);
 
+  }
+  GoToSubscriptions(){
+    this._router.navigate(['/courses/subscriptions/'+this.courseid]);
+
+  }
   GoToPage(){
     this._router.navigate(['/courses/addcoursemodule/'+this.courseid]);
 
@@ -353,6 +364,7 @@ export class EditcourseComponent implements OnInit {
         this.isoffer  = course.isOffer;
         this.effectivefrm  = course.effectiveFrom;
         this.effectivetil  = course.effectiveTill;
+        this.oldprice=course.price
         // if(course.effectiveFrom=="0001-01-01T00:00:00"){
         //   course.effectiveFrom="effectiveFrom"
         // }
@@ -460,6 +472,7 @@ export class EditcourseComponent implements OnInit {
   }
   Updatecourse() {
     debugger
+
     this.showAlert = false;
     if (this.courseForm.invalid) {
       return;
@@ -467,6 +480,9 @@ export class EditcourseComponent implements OnInit {
 
     // Get the contact object
     const course = this.courseForm.getRawValue();
+    if(this.oldprice!=course.price){
+    course.effectiveTill=(moment(new Date()).format("DD-MM-YYYY"));
+    }
     if (this.isofferactive == undefined) {
       if(this.isoffer==false && this.isofferactive == undefined){
         this.OfferPrice = '0';
@@ -486,14 +502,14 @@ export class EditcourseComponent implements OnInit {
       // this.horizontalStepperForm.controls['offerPrice'].enable();
       this.OfferPrice = course.offerPrice;
     }
-    if(this.effectivefrm!=course.effectiveFrom)
-    {
-      course.effectiveFrom=(course.effectiveFrom).format("DD-MM-YYYY")
-    }
-    if(this.effectivetil!=course.effectiveTill)
-    {
-      course.effectiveTill=(course.effectiveTill).format("DD-MM-YYYY")
-    }
+    // if(this.effectivefrm!=course.effectiveFrom)
+    // {
+    //   course.effectiveFrom=(course.effectiveFrom).format("DD-MM-YYYY")
+    // }
+    // if(this.effectivetil!=course.effectiveTill)
+    // {
+    //   course.effectiveTill=(course.effectiveTill).format("DD-MM-YYYY")
+    // }
     if(course.showOnWebsite!=undefined){
       this.showonwebsite =course.showOnWebsite;
     }
@@ -537,7 +553,7 @@ export class EditcourseComponent implements OnInit {
     formData.append("Status", this.status.toString())
     formData.append("MetaDescription", course.metaDescription)
     formData.append("metaKeywords", course.metaKeywords)
-
+    formData.append("Certifications", course.certifications)
     formData.append("EffectiveFrom", (course.effectiveFrom))
     formData.append("EffectiveTill", (course.effectiveTill))
     formData.append("showOnWebsite", (this.showonwebsite).toString())
@@ -608,6 +624,9 @@ export class EditcourseComponent implements OnInit {
 
     // Get the contact object
     const course = this.courseForm.getRawValue();
+    if(this.oldprice!=course.price){
+      course.effectiveTill=(moment(new Date()).format("DD-MM-YYYY"));
+      }
     if (this.isofferactive == undefined) {
       if(this.isoffer==false && this.isofferactive == undefined){
         this.OfferPrice = '0';
@@ -627,14 +646,14 @@ export class EditcourseComponent implements OnInit {
       // this.horizontalStepperForm.controls['offerPrice'].enable();
       this.OfferPrice = course.offerPrice;
     }
-    if(this.effectivefrm!=course.effectiveFrom)
-    {
-      course.effectiveFrom=(course.effectiveFrom).format("DD-MM-YYYY")
-    }
-    if(this.effectivetil!=course.effectiveTill)
-    {
-      course.effectiveTill=(course.effectiveTill).format("DD-MM-YYYY")
-    }
+    // if(this.effectivefrm!=course.effectiveFrom)
+    // {
+    //   course.effectiveFrom=(course.effectiveFrom).format("DD-MM-YYYY")
+    // }
+    // if(this.effectivetil!=course.effectiveTill)
+    // {
+    //   course.effectiveTill=(course.effectiveTill).format("DD-MM-YYYY")
+    // }
     if(course.showOnWebsite!=undefined){
       this.showonwebsite =course.showOnWebsite;
     }
@@ -678,7 +697,7 @@ export class EditcourseComponent implements OnInit {
     formData.append("Status", this.status.toString())
     formData.append("MetaDescription", course.metaDescription)
     formData.append("metaKeywords", course.metaKeywords)
-
+    formData.append("Certifications", (course.certifications))
     formData.append("EffectiveFrom", (course.effectiveFrom))
     formData.append("EffectiveTill", (course.effectiveTill))
     formData.append("showOnWebsite", (this.showonwebsite).toString())

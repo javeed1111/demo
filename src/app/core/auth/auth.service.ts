@@ -224,6 +224,10 @@ export class AuthService
       //debugger
       return this._httpClient.post(this.baseUrl + "api/Admin/Updatecoursecontent", data, {responseType: 'text'});
       }
+      Updatecoursecontentvideo(data) {
+        //debugger
+        return this._httpClient.post(this.baseUrl + "api/Admin/Updatecoursecontentvideo", data, {responseType: 'text'});
+        }
       public deletecoursecontent(data) {
       debugger
       return this._httpClient.post(this.baseUrl + "api/Admin/Deletecoursecontent",data);

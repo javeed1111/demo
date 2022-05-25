@@ -32,7 +32,7 @@ export class AddcoursecontentComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   selectedProduct: any | null = null;
-  displayedColumns = ['sno','chapter','author','contentType', 'preview', 'actions'];
+  displayedColumns = ['sno','chapter','author', 'preview', 'actions'];
   dataSource: MatTableDataSource<coursecontentData>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -133,7 +133,7 @@ export class AddcoursecontentComponent implements OnInit {
 
     });
     this.Edit(courseid,Moduleid, value);
-    this.Getgridcoursecontent(courseid);
+    this.Getgridcoursecontent(Moduleid);
   }
   ngAfterViewInit() {
     this.stepper.selectedIndex = 2; 
@@ -193,13 +193,13 @@ export class AddcoursecontentComponent implements OnInit {
     if (files.length === 0)
         return;
     if (files.length > 0) {
-        this.files = [];
+        this.files1 = [];
         for (var i = 0; i < files.length; i++) {
             this.fileToUpload1 = files.item(i);
             const fileReader: FileReader = new FileReader();
             fileReader.readAsDataURL(this.fileToUpload1);
             this.name1 = this.fileToUpload1.name.split(' ').join('-').replace(/[()]/g, "")
-            this.files.push({ data: this.fileToUpload1, fileName: this.fileToUpload1.name });
+            this.files1.push({ data: this.fileToUpload1, fileName: this.fileToUpload1.name });
         }
 
     }
@@ -371,6 +371,9 @@ export class AddcoursecontentComponent implements OnInit {
   AddCoursecontent() {
     debugger
     this.showAlert = false;
+    if (this.coursecontentForm.invalid) {
+      return;
+    }
     // if (this.coursecontentForm.invalid) {
     //   if(this.coursecontentForm.controls['uploader'].invalid){
     //     this.alert = {
@@ -464,6 +467,9 @@ export class AddcoursecontentComponent implements OnInit {
 
   SaveBack() {
     debugger
+    if (this.coursecontentForm.invalid) {
+      return;
+    }
     this.showAlert = false;
     // if (this.coursecontentForm.invalid) {
     //   if(this.coursecontentForm.controls['uploader'].invalid){
@@ -552,6 +558,9 @@ export class AddcoursecontentComponent implements OnInit {
   }
   UpdateCoursecontent(){
     debugger
+    if (this.coursecontentForm.invalid) {
+      return;
+    }
     this.showAlert = false;
     if (this.coursecontentForm.invalid) {
       if(this.coursecontentForm.controls['uploader'].invalid){
@@ -596,10 +605,12 @@ export class AddcoursecontentComponent implements OnInit {
       formData.append("Uploaded", coursecont.uploaded)
     }
     
+
     this._authService.Updatecoursecontent(formData).subscribe((result: any) => {
-      //debugger
+      debugger
       var result = JSON.parse(result);
       if (result.status == "200") {
+         this.videoUpload();
         //debugger
         // Set the alert
         this.alert = {
@@ -629,6 +640,19 @@ export class AddcoursecontentComponent implements OnInit {
       }
     });
   }
+
+  videoUpload(){
+    debugger
+    const data: FormData = new FormData();
+
+    if (this.files1.length == 1) {
+      data.append("fileupload", this.fileToUpload1, this.name1);
+  }
+  this._authService.Updatecoursecontentvideo(data).subscribe((result: any) => {
+    debugger
+  });
+  }
+
   toggleCompleted($event: MatSlideToggleChange): void {
     //debugger
     if ($event.checked != undefined) {

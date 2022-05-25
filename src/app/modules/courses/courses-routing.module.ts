@@ -15,6 +15,8 @@ import { CourseplaneditComponent } from './courseplanedit/courseplanedit.compone
 import { CourseModuleComponent } from './course-module/course-module.component';
 import { AddCourseModuleComponent } from './add-course-module/add-course-module.component';
 import { EditCourseModuleComponent } from './edit-course-module/edit-course-module.component';
+import { ReviewsComponent } from './reviews/reviews.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 
 const routes: Routes = [
   {
@@ -23,6 +25,8 @@ const routes: Routes = [
             { path: '', redirectTo: 'technology', pathMatch: 'full' },
             { path: 'technology', component: TechnologyComponent },
             { path: 'course', component: CourseComponent },
+            { path: 'reviews/:id', component: ReviewsComponent },
+            { path: 'subscriptions/:id', component: SubscriptionsComponent },
             { path: 'addcoursecontent/:courseid/:moduleid/:value', component: AddcoursecontentComponent },
             { path: 'coursecontent', component: CourseContentComponent },
             { path: 'courseplanlist', component: CourseplanlistComponent},

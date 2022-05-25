@@ -68,6 +68,11 @@
                                     {{(i+1)}}</mat-cell>
                                     <!-- {{ (i+1) + (myPaginator.pageIndex * myPaginator.pageSize) }}</mat-cell> -->
                                 </ng-container>
+                                 <!-- Name Column -->
+                                 <!-- <ng-container matColumnDef="contentType">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header> Content Type </mat-header-cell>
+                                  <mat-cell *matCellDef="let row"> {{row.contentType}} </mat-cell>
+                                </ng-container> -->
                                 <!-- Color Column -->
                                 <ng-container matColumnDef="chapter">
                                   <mat-header-cell *matHeaderCellDef mat-sort-header> Chapter </mat-header-cell>
@@ -80,11 +85,7 @@
                                   <mat-cell *matCellDef="let row"> {{row.author}} </mat-cell>
                                 </ng-container>
 
-                                <!-- Name Column -->
-                                <ng-container matColumnDef="contentType">
-                                  <mat-header-cell *matHeaderCellDef mat-sort-header> Content Type </mat-header-cell>
-                                  <mat-cell *matCellDef="let row"> {{row.contentType}} </mat-cell>
-                                </ng-container>
+                               
 
                                 <ng-container matColumnDef="preview">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header> FileName </mat-header-cell>
@@ -252,7 +253,7 @@
                         <span class="ml-1 mr-0">{{name1}}</span>
                         <span class="ml-1 mr-0">{{uploadedvideofile}}</span>
                         <span class="ml-1 mr-0">
-                          <button class="ml-auto" mat-button [matTooltip]="'remove'" (click)="removeuploads()" *ngIf="uploadedfilename">
+                          <button class="ml-auto" mat-button [matTooltip]="'remove'" (click)="removeuploads()" *ngIf="uploadedvideofile">
                             Remove
                           </button>
                         </span>
@@ -261,7 +262,7 @@
                             onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
-                        <input type='file' class="form-control" formControlName="uploader1" accept=".doc"  id="txtfileupload1"
+                        <input type='file' class="form-control" formControlName="uploader1" accept="Video/*"  id="txtfileupload1"
                             name="fileupload1" (change)="onSelectVideo($event.target.files)" style="display:none"
                             [multiple]="true">
                         <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
