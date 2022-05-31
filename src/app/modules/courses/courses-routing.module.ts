@@ -17,6 +17,7 @@ import { AddCourseModuleComponent } from './add-course-module/add-course-module.
 import { EditCourseModuleComponent } from './edit-course-module/edit-course-module.component';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
+import { QuestionsComponent } from './questions/questions.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
             { path: 'technology', component: TechnologyComponent },
             { path: 'course', component: CourseComponent },
             { path: 'reviews/:id', component: ReviewsComponent },
+            { path: 'questions/:id', component: QuestionsComponent },
             { path: 'subscriptions/:id', component: SubscriptionsComponent },
             { path: 'addcoursecontent/:courseid/:moduleid/:value', component: AddcoursecontentComponent },
             { path: 'coursecontent', component: CourseContentComponent },

@@ -51,6 +51,7 @@ import { EditCourseModuleComponent } from './edit-course-module/edit-course-modu
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
+import { QuestionsComponent } from './questions/questions.component';
 
 // import { CourseContentComponent } from './AddCoursecontent/course-content/course-content.component';
 @NgModule({
@@ -73,6 +74,7 @@ import { SubscriptionsComponent } from './subscriptions/subscriptions.component'
     EditCourseModuleComponent,
     ReviewsComponent,
     SubscriptionsComponent,
+    QuestionsComponent,
     // CourseContentComponent
   ],
   imports: [

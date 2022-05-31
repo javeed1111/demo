@@ -65,7 +65,7 @@ export class CourseComponent implements OnInit {
   alert: { type: FuseAlertType; message: string } = {
     type   : 'success',
     message: ''
-};
+  };
 showAlert:  boolean = false;
 course: any;
 

@@ -170,33 +170,44 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
+                        <div class="flex-auto mt-4">
+                            <mat-label>Course Certifications</mat-label>
+                            <quill-editor [formControlName]="'certifications'" [modules]="quillModules">
+                            </quill-editor>
+                        </div>
+                       
                         <div class="flex mt-4">
                             <mat-form-field class="flex-auto">
-                                <mat-label>Course Certifications</mat-label>
-                                <input matInput [formControlName]="'certifications'" [placeholder]="'Course Certifications'">
+                                <mat-label>Image Title</mat-label>
+                                <input matInput [formControlName]="'imagetitle'" [placeholder]="'Image Title'">
                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-                        <!-- <div class="flex-auto mt-4">
-                        <mat-form-field class="chip-list" appearance="fill">
-                            <mat-label>Meta Keywords</mat-label>
-                            <mat-chip-list #chipList aria-label="Keywords selection">
-                              <mat-chip *ngFor="let words of keywords" (removed)="remove(words)">
-                                {{words.name}}
-                                <button matChipRemove>
-                                  <mat-icon>cancel</mat-icon>
-                                </button>
-                              </mat-chip>
-                              <input placeholder="New Keyword..."
-                                     [matChipInputFor]="chipList"
-                                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                     [matChipInputAddOnBlur]="addOnBlur"
-                                     (matChipInputTokenEnd)="add($event)">
-                            </mat-chip-list>
-                          </mat-form-field>
-                        </div> -->
-                          <!--Status-->
+                        <div class="flex mt-4">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Image Caption</mat-label>
+                                <input matInput [formControlName]="'imagecaption'" [placeholder]="'Image Caption'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex mt-4">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Image Short Discription</mat-label>
+                                <input matInput [formControlName]="'imageshortdescription'" [placeholder]="'Image Short Description'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex mt-4">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Video Caption </mat-label>
+                                <input matInput [formControlName]="'videocaption'" [placeholder]="'Video Caption'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
                           <div class="grid grid-cols-12 gap-x-1 mt-2">
                             <div class="mt-4 col-span-6">
                             <div >
@@ -322,6 +333,14 @@
                         <button mat-button (click)="stepper.reset()">Reset</button>
                       </div> -->
                     </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>FAQ</ng-template>
+                        <!-- <p>You are now done.</p> -->
+                        <!-- <div>
+                          <button mat-button matStepperPrevious>Back</button>
+                          <button mat-button (click)="stepper.reset()">Reset</button>
+                        </div> -->
+                      </mat-step>
                   </mat-stepper>
               
             </div>

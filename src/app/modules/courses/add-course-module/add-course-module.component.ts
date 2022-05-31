@@ -102,6 +102,15 @@ dataSource: MatTableDataSource<any>;
 
   }
 
+  GoToReviews(){
+    this._router.navigate(['/courses/reviews/'+this.courseid]);
+
+  }
+  GoToSubscriptions(){
+    this._router.navigate(['/courses/subscriptions/'+this.courseid]);
+
+  }
+
   AddCourseModule()
   {
       debugger

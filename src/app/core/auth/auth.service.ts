@@ -226,7 +226,7 @@ export class AuthService
       }
       Updatecoursecontentvideo(data) {
         //debugger
-        return this._httpClient.post(this.baseUrl + "api/Admin/Updatecoursecontentvideo", data, {responseType: 'text'});
+        return this._httpClient.post(this.baseUrl + "api/Admin/Updatecoursecontentvideo", data);
         }
       public deletecoursecontent(data) {
       debugger
@@ -271,12 +271,34 @@ export class AuthService
       return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteCourseModules?id="+id);
      }
 
+     public GetReviews(id) {
+      debugger
+      return this._httpClient.get(this.baseUrl + "api/UIMain/GetAllReviews", {params: {id}});
+    }
+    AddQuestions(data) {
+      //debugger
+      return this._httpClient.post(this.baseUrl + "api/Admin/AddFaqs", data, {responseType: 'text'});
+    }
+    GetQuestions(Id:any){
+      return this._httpClient.get(this.baseUrl + "api/Admin/GetFaqsByCourseId", {params: {Id}});
+
+    }
+    GetQuestionsById(Id:any){
+      return this._httpClient.get(this.baseUrl + "api/Admin/GetFaqsById", {params: {Id}});
+
+    }
+    UpdateQuestion(data:any){
+      return this._httpClient.post(this.baseUrl + "api/Admin/UpdateFaqs", data, {responseType: 'text'});
+
+     }
+     DeleteQuestion(id:any){
+      return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteFaqs?id="+id);
+     }
     /**
      * Sign in using the access token
      */
     signInUsingToken(): Observable<any>
     {
-        debugger
         // Renew token
         return this._httpClient.post('api/auth/refresh-access-token', {
             accessToken: this.accessToken

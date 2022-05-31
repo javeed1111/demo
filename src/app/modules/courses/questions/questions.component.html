@@ -2,25 +2,27 @@
     <ng-container>
         <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
             <div class="w-full max-w-5xl">
-                <mat-stepper linear #stepper>
+                <mat-stepper [linear]="isLinear" #stepper>
                     <mat-step [stepControl]="firstFormGroup" >
                       <form  [formGroup]="firstFormGroup">
-                        <ng-template matStepLabel><p (click)="GoToPage1()">Course</p></ng-template>
+                        <ng-template matStepLabel><p (click)="GoToCoursePage()">Course</p></ng-template>
                       
                       </form>
                     </mat-step>
-                    <mat-step  [stepControl]="coursemoduleForm" >
-                        <form [formGroup]="coursemoduleForm"
-                        class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
-                        <ng-template matStepLabel>Module</ng-template>
-                      <!-- Header -->
-                        <!-- <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-auto">
-          
-                          <button class="ml-4" mat-flat-button [color]="'primary'" (click)="NextButton()">
-                              <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                              <span class="ml-2 mr-1">Next</span>
-                          </button>
-                      </div> -->
+                    <mat-step [stepControl]="secondFormGroup">
+                        <form [formGroup]="secondFormGroup">
+                            <ng-template matStepLabel ><p (click)="GoToModulesPage()">Module</p></ng-template>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="thirdFormGroup">
+                        <form [formGroup]="thirdFormGroup" >
+                            <ng-template matStepLabel ><p (click)="GoToPage()">Chapter</p></ng-template>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="QuestionsForm">
+                    <form [formGroup]="QuestionsForm">                        
+                        <ng-template matStepLabel>FAQ</ng-template>
+                        
                       <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto ">
     
                         <div class="example-container mat-elevation-z8">
@@ -35,9 +37,9 @@
                               </ng-container>
                          
                               <!-- Name Column -->
-                              <ng-container matColumnDef="ModuleName">
-                                <mat-header-cell *matHeaderCellDef > Module Name </mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.moduleName}} </mat-cell>
+                              <ng-container matColumnDef="question">
+                                <mat-header-cell *matHeaderCellDef > Question </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.question}} </mat-cell>
                               </ng-container>          
                               <!-- <ng-container matColumnDef="duration">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header> Duration </mat-header-cell>
@@ -57,12 +59,12 @@
                                       </mat-icon>
                                     </a> -->
                                     <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
-                                      (click)="EditFromGrid(row.moduleId,'editcontent')">
+                                      (click)="EditFromGrid(row.faqId,'editcontent')">
                                       <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil'">
                                       </mat-icon>
                                     </a>
                                     <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
-                                      (click)="deleteFromGrid(row.moduleId)">
+                                      (click)="deleteFromGrid(row.faqId)">
                                       <mat-icon class="icon-size-5 " [svgIcon]="'heroicons_solid:trash'">
                                       </mat-icon>
                                     </a>
@@ -87,55 +89,22 @@
                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
                             </mat-form-field>
                         </div>
-    
                         <div class="flex">
                             <mat-form-field class="flex-auto">
-                                <mat-label>Module Name</mat-label>
-                                <input matInput appAutofocus [formControlName]="'moduleName'"
-                                    [placeholder]="'Enter Module Name'">
+                                <mat-label>Question</mat-label>
+                                <input matInput appAutofocus [formControlName]="'question'"
+                                    [placeholder]="'Enter Question'" >
                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
                             </mat-form-field>
                         </div>
-                        <!-- <div class="flex">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Description</mat-label>
-                                <input matInput [formControlName]="'description'" [placeholder]="'Description'">
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:menu-alt-1'"></mat-icon>
-                            </mat-form-field>
-                        </div> -->
-                        <!-- Active Toggle -->
-                        <!-- <div class="flex">
-                            <div class="space-y-4">
-                                <ng-container>
-                                    <div class="flex">
-                                        <div class="fuse-mat-no-subscript flex-auto">
-                                            <mat-slide-toggle class="mt-8 sm:mt-0 sm:ml-auto" [color]="'primary'"
-                                            id="userchkactive" (change)="toggleCompleted($event)" [checked]="true">
-                                                IsActive
-                                            </mat-slide-toggle>
-                                        </div>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div> -->
-    
-    
                          <!--Description-->
                          <div class="flex-auto mt-4">
-                            <mat-label>Description</mat-label>
-                            <quill-editor [formControlName]="'description'" [modules]="quillModules">
+                            <mat-label>Answer</mat-label>
+                            <quill-editor [formControlName]="'answer'" [modules]="quillModules">
                             </quill-editor>
                         </div>
-    
-                         <!--Short Description-->
-                         <div class="flex-auto mt-4">
-                            <mat-label>Short Description</mat-label>
-                            <quill-editor [formControlName]="'shortDescription'" [modules]="quillModules">
-                            </quill-editor>
-                        </div>
-    
-                      
-                        <!-- Alert -->
+      
+                         <!-- Alert -->
                         <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
                             [type]="alert.type" [@shake]="alert.type === 'success'">
                             {{alert.message}}
@@ -151,35 +120,28 @@
                                 Clear
                             </button>
                               <!--Save-->
-                              <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="AddCourseModule()" *ngIf="Save">
+                              <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="SaveQuestions()" *ngIf="Save">
                                   Save
                               </button>
                             <!--update-->
-                            <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UpdateCourseModule()" *ngIf="update">
+                            <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Update()" *ngIf="update">
                                 Update
                             </button>
-                            <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UpdateNext()" *ngIf="update">
+                            <!-- <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UpdateNext()" *ngIf="update">
                                 Update Next
-                            </button>
-                            <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="SaveNext()" *ngIf="Save">
+                            </button> -->
+                            <!-- <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="SaveNext()" *ngIf="Save">
                                 Save Next
-                            </button>
+                            </button> -->
                         </div>
-    
                     
                     </form>
-                      
-                    </mat-step>
-                    <mat-step>
-                    <ng-template matStepLabel ><p (click)="GoToPage()">Chapter</p></ng-template>
-                    </mat-step>
-                    <mat-step>
-                      <ng-template matStepLabel><p (click)="GoToReviews()">Reviews</p></ng-template>
-                      <!-- <p>You are now done.</p> -->
-                      <!-- <div>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button (click)="stepper.reset()">Reset</button>
-                      </div> -->
+                    </mat-step >
+                    <mat-step [stepControl]="fourthFormGroup">
+                        <form [formGroup]="fourthFormGroup">
+                            <ng-template matStepLabel><p (click)="GoToReviews()">Reviews</p></ng-template>
+                        </form>
+                 
                     </mat-step>
                     <mat-step>
                       <ng-template matStepLabel><p (click)="GoToSubscriptions()">Subscriptions</p></ng-template>

@@ -73,6 +73,7 @@ export class AddcourseComponent implements OnInit {
   status: boolean=true;
   fileToUpload1: File;
   name1: string;
+  files1: any[];
 
 
   constructor(
@@ -106,7 +107,11 @@ export class AddcourseComponent implements OnInit {
       courseurl:['', []],
       metadiscription: ['', []],
       metakeywords:['', []],
-      certifications:['']
+      certifications:[''],
+      imagetitle:[''],
+      imagecaption:[''],
+      imageshortdescription:[''],
+      videocaption:['']
 
     });
     // var currentdate=new Date()
@@ -188,10 +193,13 @@ export class AddcourseComponent implements OnInit {
       formData.append("CourseHeader", course.courseheader)
       formData.append("CourseUrl", course.courseurl)
       formData.append("MetaDescription", course.metadiscription)
-  
       // formData.append("keywords",JSON.stringify(this.keywords))
       formData.append("metakeywords", course.metakeywords)
       formData.append("Certifications", course.certifications)
+      formData.append("ImageTitle", course.metadiscription)
+      formData.append("ImageCaption", course.metadiscription)
+      formData.append("ImageShortDescription", course.metadiscription)
+      formData.append("VideoCaption", course.metadiscription)
       formData.append("Status", this.status.toString())
       // formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
       formData.append("EffectiveFrom", (course.effectiveFrom.formatD("DD-MM-YYYY")))
@@ -279,13 +287,13 @@ export class AddcourseComponent implements OnInit {
     if (files.length === 0)
       return;
     if (files.length > 0) {
-      this.files = [];
+      this.files1 = [];
       for (var i = 0; i < files.length; i++) {
         this.fileToUpload1 = files.item(i);
         const fileReader: FileReader = new FileReader();
         fileReader.readAsDataURL(this.fileToUpload1);
         this.name1 = this.fileToUpload1.name.split(' ').join('-').replace(/[()]/g, "")
-        this.files.push({ data: this.fileToUpload1, fileName: this.name1 });
+        this.files1.push({ data: this.fileToUpload1, fileName: this.name1 });
       }
     }
   }
@@ -436,6 +444,10 @@ export class AddcourseComponent implements OnInit {
     // formData.append("keywords",JSON.stringify(this.keywords))
     formData.append("metakeywords", course.metakeywords)
     formData.append("Certifications", course.certifications)
+    formData.append("ImageTitle", course.imagetitle)
+    formData.append("ImageCaption", course.imagecaption)
+    formData.append("ImageShortDescription", course.imageshortdescription)
+    formData.append("VideoCaption", course.videocaption)
     formData.append("Status", this.status.toString())
     // formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
     formData.append("EffectiveFrom", (moment(course.effectiveFrom).format("DD-MM-YYYY")))

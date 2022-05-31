@@ -262,8 +262,8 @@
                             onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
-                        <input type='file' class="form-control" formControlName="uploader1" accept="Video/*"  id="txtfileupload1"
-                            name="fileupload1" (change)="onSelectVideo($event.target.files)" style="display:none"
+                        <input type='file' class="form-control" formControlName="uploader1" accept="video/*"  id="txtfileupload1"
+                            name="fileupload1" (change)="uploadFile($event.target.files)" style="display:none"
                             [multiple]="true">
                         <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                             id="txtfileupload"  name="fileupload" 
@@ -301,7 +301,22 @@
                 </div>
             </form>
                 </mat-step>
-           
+                <mat-step>
+                  <ng-template matStepLabel><p (click)="GoToReviews()">Reviews</p></ng-template>
+                  <!-- <p>You are now done.</p> -->
+                  <!-- <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                  </div> -->
+                </mat-step>
+                <mat-step>
+                  <ng-template matStepLabel><p (click)="GoToSubscriptions()">Subscriptions</p></ng-template>
+                  <!-- <p>You are now done.</p> -->
+                  <!-- <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                  </div> -->
+                </mat-step>
               </mat-stepper>
              
 

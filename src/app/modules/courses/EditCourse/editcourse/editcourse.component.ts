@@ -92,6 +92,7 @@ export class EditcourseComponent implements OnInit {
   fileToUpload1: File;
   name1: any;
   oldprice: any;
+  files1: Array<any> = new Array<any>();
 
   constructor(
 
@@ -134,7 +135,11 @@ export class EditcourseComponent implements OnInit {
       metaDescription: ['', []],
       metaKeywords:['', []],
       stauts:['',[]],
-      certifications:['']
+      certifications:[''],
+      imageTitle:[''],
+      imageCaption:[''],
+      imageShortDescription:[''],
+      videoCaption:['']
     });
     const ctrl = this.courseForm.controls['offerPrice'];
     ctrl.disable();
@@ -169,13 +174,13 @@ export class EditcourseComponent implements OnInit {
     if (files.length === 0)
       return;
     if (files.length > 0) {
-      this.files = [];
+      this.files1 = [];
       for (var i = 0; i < files.length; i++) {
         this.fileToUpload1 = files.item(i);
         const fileReader: FileReader = new FileReader();
         fileReader.readAsDataURL(this.fileToUpload1);
         this.name1 = this.fileToUpload1.name.split(' ').join('-').replace(/[()]/g, "")
-        this.files.push({ data: this.fileToUpload1, fileName: this.name1 });
+        this.files1.push({ data: this.fileToUpload1, fileName: this.name1 });
       }
     }
   }
@@ -278,6 +283,9 @@ export class EditcourseComponent implements OnInit {
 
       }
     });
+  }
+  GoToFaq(){
+    this._router.navigate(['/courses/questions/'+this.courseid]);
   }
   GoToReviews(){
     this._router.navigate(['/courses/reviews/'+this.courseid]);
@@ -554,6 +562,10 @@ export class EditcourseComponent implements OnInit {
     formData.append("MetaDescription", course.metaDescription)
     formData.append("metaKeywords", course.metaKeywords)
     formData.append("Certifications", course.certifications)
+    formData.append("ImageTitle", course.imageTitle)
+    formData.append("ImageCaption", course.imageCaption)
+    formData.append("ImageShortDescription", course.imageShortDescription)
+    formData.append("VideoCaption", course.videoCaption)
     formData.append("EffectiveFrom", (course.effectiveFrom))
     formData.append("EffectiveTill", (course.effectiveTill))
     formData.append("showOnWebsite", (this.showonwebsite).toString())
@@ -565,7 +577,7 @@ export class EditcourseComponent implements OnInit {
       formData.append("imageURL", course.imageURL);
 
     }
-    if (this.files.length == 1) {
+    if (this.files1.length == 1) {
       formData.append("fileupload1", this.fileToUpload1, this.name1);
     }
     else {
@@ -698,6 +710,10 @@ export class EditcourseComponent implements OnInit {
     formData.append("MetaDescription", course.metaDescription)
     formData.append("metaKeywords", course.metaKeywords)
     formData.append("Certifications", (course.certifications))
+    formData.append("ImageTitle", course.imageTitle)
+    formData.append("ImageCaption", course.imageCaption)
+    formData.append("ImageShortDescription", course.imageShortDescription)
+    formData.append("VideoCaption", course.videoCaption)
     formData.append("EffectiveFrom", (course.effectiveFrom))
     formData.append("EffectiveTill", (course.effectiveTill))
     formData.append("showOnWebsite", (this.showonwebsite).toString())
@@ -707,6 +723,13 @@ export class EditcourseComponent implements OnInit {
     }
     else {
       formData.append("imageURL", course.imageURL);
+
+    }
+    if (this.files1.length == 1) {
+      formData.append("fileupload1", this.fileToUpload1, this.name1);
+    }
+    else {
+      formData.append("iconUrl", course.iconUrl);
 
     }
     // var data = {

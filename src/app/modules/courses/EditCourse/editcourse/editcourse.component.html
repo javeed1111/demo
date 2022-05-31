@@ -264,10 +264,40 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
+                        <div class="flex-auto mt-4">
+                            <mat-label>Course Certifications</mat-label>
+                            <quill-editor [formControlName]="'certifications'" [modules]="quillModules">
+                            </quill-editor>
+                        </div>
+   
                         <div class="flex mt-4">
                             <mat-form-field class="flex-auto">
-                                <mat-label>Course Certifications</mat-label>
-                                <input matInput [formControlName]="'certifications'" [placeholder]="'Course Certifications'">
+                                <mat-label>Image Title</mat-label>
+                                <input matInput [formControlName]="'imageTitle'" [placeholder]="'Image Title'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex mt-4">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Image Caption</mat-label>
+                                <input matInput [formControlName]="'imageCaption'" [placeholder]="'Image Caption'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex mt-4">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Image Short Discription</mat-label>
+                                <input matInput [formControlName]="'imageShortDescription'" [placeholder]="'Image Short Description'">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex mt-4">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>Video Caption </mat-label>
+                                <input matInput [formControlName]="'videoCaption'" [placeholder]="'Video Caption'">
                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
                                 </mat-icon>
                             </mat-form-field>
@@ -529,6 +559,14 @@
                         <button mat-button (click)="stepper.reset()">Reset</button>
                       </div> -->
                     </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel><p (click)="GoToFaq()">FAQ</p></ng-template>
+                        <!-- <p>You are now done.</p> -->
+                        <!-- <div>
+                          <button mat-button matStepperPrevious>Back</button>
+                          <button mat-button (click)="stepper.reset()">Reset</button>
+                        </div> -->
+                      </mat-step>
                     <mat-step>
                         <ng-template matStepLabel><p (click)="GoToReviews()">Reviews</p></ng-template>
                         <!-- <p>You are now done.</p> -->

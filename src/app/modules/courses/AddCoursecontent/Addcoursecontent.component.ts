@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation,Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { MatStepper } from '@angular/material/stepper';
+import { HttpClient,HttpEventType,HttpErrorResponse } from '@angular/common/http';
 export interface coursecontentData {
   sno: number;
   chapter: string;
@@ -29,6 +30,11 @@ export interface coursecontentData {
   animations: fuseAnimations
 })
 export class AddcoursecontentComponent implements OnInit {
+
+  progress: number;
+  message: string;
+  @Output() public onUploadFinished = new EventEmitter();
+  
   @ViewChild('stepper') stepper: MatStepper;
 
   selectedProduct: any | null = null;
@@ -94,6 +100,7 @@ export class AddcoursecontentComponent implements OnInit {
   name1: string;
   files1: Array<any> = new Array<any>();
   fileToUpload1:  File = null;
+  format: string;
 
 
 
@@ -104,6 +111,7 @@ export class AddcoursecontentComponent implements OnInit {
     private approute: ActivatedRoute,
     private _fuseConfirmationService: FuseConfirmationService,
     private _changeDetectorRef: ChangeDetectorRef,
+    private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
@@ -242,6 +250,15 @@ export class AddcoursecontentComponent implements OnInit {
 
       }
     });
+  }
+
+  GoToReviews(){
+    this._router.navigate(['/courses/reviews/'+this.courseid]);
+
+  }
+  GoToSubscriptions(){
+    this._router.navigate(['/courses/subscriptions/'+this.courseid]);
+
   }
 
   GoToPage(){
@@ -638,6 +655,29 @@ export class AddcoursecontentComponent implements OnInit {
       (error) => {
 
       }
+    });
+  }
+ 
+  uploadFile = (files) => {
+    debugger
+    if (files.length === 0) {
+      return;
+    }
+    let fileToUpload = <File>files[0];
+    const formData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+    
+    this.http.post('https://localhost:44358/api/Admin/Updatecoursecontentvideo', formData, {reportProgress: true, observe: 'events'})
+      .subscribe({
+        next: (event) => {
+        if (event.type === HttpEventType.UploadProgress)
+          this.progress = Math.round(100 * event.loaded / event.total);
+        else if (event.type === HttpEventType.Response) {
+          this.message = 'Upload success.';
+          this.onUploadFinished.emit(event.body);
+        }
+      },
+      error: (err: HttpErrorResponse) => console.log(err)
     });
   }
 
