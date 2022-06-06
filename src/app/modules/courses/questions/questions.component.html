@@ -36,6 +36,18 @@
                                   {{ (i+1)  }}</mat-cell>
                               </ng-container>
                          
+                              <ng-container matColumnDef="sorting">
+                                <mat-header-cell *matHeaderCellDef >Sort </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                  <a (click)="OnClickUp(row.orderId)"><mat-icon class="icon-size-4 " [svgIcon]="'heroicons_solid:arrow-narrow-up'">
+                                  </mat-icon>
+                                  </a>
+                                  <a (click)="OnClickDown(row.orderId)"><mat-icon class="icon-size-4 " [svgIcon]="'heroicons_solid:arrow-narrow-down'">
+                                  </mat-icon>
+                                  </a>
+                                  </mat-cell>
+                              </ng-container>  
+
                               <!-- Name Column -->
                               <ng-container matColumnDef="question">
                                 <mat-header-cell *matHeaderCellDef > Question </mat-header-cell>

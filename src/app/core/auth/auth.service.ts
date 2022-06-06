@@ -294,6 +294,18 @@ export class AuthService
      DeleteQuestion(id:any){
       return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteFaqs?id="+id);
      }
+     UpdateOrderId(data:any){
+      return this._httpClient.post(this.baseUrl + "api/Admin/UpdateOrderId",data,{responseType: 'text'});
+
+     }
+     UpdateCourseContentOrderId(data:any){
+      return this._httpClient.post(this.baseUrl + "api/Admin/UpdateCourseContentOrderId",data,{responseType: 'text'});
+
+     }
+     UpdateFaqsOrderId(data:any){
+      return this._httpClient.post(this.baseUrl + "api/Admin/UpdateFaqsOrderId",data,{responseType: 'text'});
+
+     }
     /**
      * Sign in using the access token
      */

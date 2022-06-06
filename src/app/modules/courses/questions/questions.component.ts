@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FuseAlertType } from '@fuse/components/alert';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { AuthService } from 'app/core/auth/auth.service';
+import { OrderByPipe } from '../order-by.pipe';
 
 @Component({
   selector: 'app-questions',
@@ -15,6 +16,7 @@ import { AuthService } from 'app/core/auth/auth.service';
 export class QuestionsComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
   isLinear:boolean=false
+  sortedarray: any=[];
 
   QuestionsForm: FormGroup;
   firstFormGroup: FormGroup;
@@ -26,7 +28,7 @@ export class QuestionsComponent implements OnInit {
   update: boolean = false;
   Clear: boolean= false;
   show: boolean;
-  displayedColumns = ['sno',  'question','actions'];
+  displayedColumns = ['sno','sorting','question','actions'];
   dataSource: MatTableDataSource<any>;
   alert: { type: FuseAlertType; message: string } = {
     type   : 'success',
@@ -67,6 +69,8 @@ showAlert:  boolean = false;
     private approute: ActivatedRoute,
     private _fuseConfirmationService: FuseConfirmationService,
     private _changeDetectorRef: ChangeDetectorRef,
+    private _orderpipi:OrderByPipe
+
     ) { }
 
   ngOnInit(): void {
@@ -85,6 +89,47 @@ showAlert:  boolean = false;
     this.GetQuestionsByCourseId(this.courseid);
   }
 
+  
+OnClickUp(id:any){
+  debugger
+  let item1 = this.questions.find(i => i.orderId === id);
+  let item2=this.questions.find(i => i.orderId === (id-1));
+  if(item1.orderId>1){
+    item1.orderId=item1.orderId-1
+    item2.orderId=item2.orderId+1
+      this.sortedarray.push(item1);
+      this.sortedarray.push(item2);
+
+      this._authService.UpdateFaqsOrderId(this.sortedarray).subscribe((result: any) => {
+        debugger
+        window.location.reload();
+      });
+  }
+  else{
+    return;
+  }
+}
+
+OnClickDown(id:any){
+  debugger
+  let item1 = this.questions.find(i => i.orderId === id);
+  let item2=this.questions.find(i => i.orderId === (id+1));
+  if(item1.orderId<this.questions.length && item1.orderId>0){
+    item1.orderId=item1.orderId+1
+    item2.orderId=item2.orderId-1
+      this.sortedarray.push(item1);
+      this.sortedarray.push(item2);
+
+      this._authService.UpdateFaqsOrderId(this.sortedarray).subscribe((result: any) => {
+        debugger
+        window.location.reload();
+      });
+  }
+  else{
+    return;
+  }
+}
+
   ngAfterViewInit() {
     this.stepper.selectedIndex = 3; 
   }
@@ -96,7 +141,13 @@ showAlert:  boolean = false;
       this.QuestionsForm.controls['courseName'].setValue(item.courseName);
     });
   }
+  clear(){
+    this.QuestionsForm.controls['question'].setValue('');
+    this.QuestionsForm.controls['answer'].setValue('');
+      this.Save=true;
+      this.update=false;
 
+  }
   EditFromGrid(id: any,value: any) {
     debugger
     var baseurl = this._authService.baseUrl;
@@ -316,8 +367,12 @@ showAlert:  boolean = false;
     debugger
     this._authService.GetQuestions(Id).subscribe((result: any) => {
       debugger
-      this.questions=result.result
-      this.dataSource = new MatTableDataSource(result.result);
+      var values=this._orderpipi.transform(result.result,"asc","orderId","number") ;
+      this.questions=values[0]
+
+      // this.questions=result.result
+
+      this.dataSource = new MatTableDataSource(values[0]);
 
     })
 

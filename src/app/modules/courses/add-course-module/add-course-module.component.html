@@ -33,7 +33,17 @@
                                 <mat-cell *matCellDef="let row; let i=index">
                                   {{ (i+1)  }}</mat-cell>
                               </ng-container>
-                         
+                              <ng-container matColumnDef="sorting">
+                                <mat-header-cell *matHeaderCellDef > Sort </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                  <a (click)="OnClickUp(row.orderId)"><mat-icon class="icon-size-4 " [svgIcon]="'heroicons_solid:arrow-narrow-up'">
+                                  </mat-icon>
+                                  </a>
+                                  <a (click)="OnClickDown(row.orderId)"><mat-icon class="icon-size-4 " [svgIcon]="'heroicons_solid:arrow-narrow-down'">
+                                  </mat-icon>
+                                  </a>
+                                  </mat-cell>
+                              </ng-container>          
                               <!-- Name Column -->
                               <ng-container matColumnDef="ModuleName">
                                 <mat-header-cell *matHeaderCellDef > Module Name </mat-header-cell>
@@ -172,6 +182,14 @@
                     </mat-step>
                     <mat-step>
                     <ng-template matStepLabel ><p (click)="GoToPage()">Chapter</p></ng-template>
+                    </mat-step>
+                    <mat-step>
+                      <ng-template matStepLabel><p (click)="GoToFaq()">FAQ</p></ng-template>
+                      <!-- <p>You are now done.</p> -->
+                      <!-- <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button (click)="stepper.reset()">Reset</button>
+                      </div> -->
                     </mat-step>
                     <mat-step>
                       <ng-template matStepLabel><p (click)="GoToReviews()">Reviews</p></ng-template>

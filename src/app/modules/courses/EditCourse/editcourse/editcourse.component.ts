@@ -93,6 +93,11 @@ export class EditcourseComponent implements OnInit {
   name1: any;
   oldprice: any;
   files1: Array<any> = new Array<any>();
+  files2: Array<any> = new Array<any>();
+  fileToUpload2: File;
+  name2: string;
+  VideoUrl: any;
+  videoSource: any=[];
 
   constructor(
 
@@ -122,6 +127,7 @@ export class EditcourseComponent implements OnInit {
       requirements: ['', []],
       imageURL: ['', []],
       iconUrl: ['', []],
+      videoUrl: ['', []],
       price: ['0', [Validators.required]],
       isOffer: [''],
       offerPrice: ['0'],
@@ -181,6 +187,24 @@ export class EditcourseComponent implements OnInit {
         fileReader.readAsDataURL(this.fileToUpload1);
         this.name1 = this.fileToUpload1.name.split(' ').join('-').replace(/[()]/g, "")
         this.files1.push({ data: this.fileToUpload1, fileName: this.name1 });
+      }
+    }
+  }
+
+
+
+  onSelectVideo(files: FileList) {
+    //debugger
+    if (files.length === 0)
+      return;
+    if (files.length > 0) {
+      this.files2 = [];
+      for (var i = 0; i < files.length; i++) {
+        this.fileToUpload2 = files.item(i);
+        const fileReader: FileReader = new FileReader();
+        fileReader.readAsDataURL(this.fileToUpload2);
+        this.name2 = this.fileToUpload2.name.split(' ').join('-').replace(/[()]/g, "")
+        this.files2.push({ data: this.fileToUpload2, fileName: this.name2 });
       }
     }
   }
@@ -398,6 +422,11 @@ export class EditcourseComponent implements OnInit {
           // this.noimage=true;;
 
         }
+        if (finalresult.result.videoUrl != null) {
+          this.videoSource.push(baseurl + finalresult.result.videoUrl);
+          // this.noimage=true;;
+
+        }
         // if (finalresult.result.isActive == true) {
         //     var check = document.getElementById("userchkactive") as HTMLInputElement;
         //     check.checked = true;
@@ -584,6 +613,13 @@ export class EditcourseComponent implements OnInit {
       formData.append("iconUrl", course.iconUrl);
 
     }
+    if (this.files2.length == 1) {
+      formData.append("fileupload2", this.fileToUpload2, this.name2);
+    }
+    else {
+      formData.append("VideoUrl", course.videoUrl);
+
+    }
     // var data = {
     //   CourseName: course.courseName,
     //   Description: course.description,
@@ -730,6 +766,13 @@ export class EditcourseComponent implements OnInit {
     }
     else {
       formData.append("iconUrl", course.iconUrl);
+
+    }
+    if (this.files2.length == 1) {
+      formData.append("fileupload2", this.fileToUpload2, this.name2);
+    }
+    else {
+      formData.append("VideoUrl", course.videoUrl);
 
     }
     // var data = {

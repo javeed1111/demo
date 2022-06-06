@@ -74,7 +74,12 @@ export class AddcourseComponent implements OnInit {
   fileToUpload1: File;
   name1: string;
   files1: any[];
-
+  uploadedvideofile:any;
+  removeupload:boolean=false;
+  uploadedfilename: string;
+  files2: any[];
+  fileToUpload2: File;
+  name2: string;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -111,7 +116,8 @@ export class AddcourseComponent implements OnInit {
       imagetitle:[''],
       imagecaption:[''],
       imageshortdescription:[''],
-      videocaption:['']
+      videocaption:[''],
+      uploader1     :['', []]
 
     });
     // var currentdate=new Date()
@@ -133,6 +139,12 @@ export class AddcourseComponent implements OnInit {
 
     // Clear the input value
     event.chipInput!.clear();
+  }
+
+  removeuploads(){
+    this.removeupload=true;
+    this.uploadedvideofile='';
+    this.uploadedfilename='';
   }
 
   remove(fruit: Keywords): void {
@@ -208,6 +220,12 @@ export class AddcourseComponent implements OnInit {
       
       if (this.files.length == 1) {
         formData.append("fileupload", this.fileToUpload, this.name);
+      }
+      if (this.files1.length == 1) {
+        formData.append("fileupload1", this.fileToUpload1, this.name1);
+      }
+      if (this.files2.length == 1) {
+        formData.append("fileupload2", this.fileToUpload2, this.name2);
       }
       // console.log('formdata',formData)
       // var data = {
@@ -294,6 +312,22 @@ export class AddcourseComponent implements OnInit {
         fileReader.readAsDataURL(this.fileToUpload1);
         this.name1 = this.fileToUpload1.name.split(' ').join('-').replace(/[()]/g, "")
         this.files1.push({ data: this.fileToUpload1, fileName: this.name1 });
+      }
+    }
+  }
+
+  onSelectVideo(files: FileList) {
+    //debugger
+    if (files.length === 0)
+      return;
+    if (files.length > 0) {
+      this.files2 = [];
+      for (var i = 0; i < files.length; i++) {
+        this.fileToUpload2 = files.item(i);
+        const fileReader: FileReader = new FileReader();
+        fileReader.readAsDataURL(this.fileToUpload2);
+        this.name2 = this.fileToUpload2.name.split(' ').join('-').replace(/[()]/g, "")
+        this.files2.push({ data: this.fileToUpload2, fileName: this.name2 });
       }
     }
   }
@@ -457,8 +491,11 @@ export class AddcourseComponent implements OnInit {
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
     }
-    if (this.files.length == 1) {
+    if (this.files1.length == 1) {
       formData.append("fileupload1", this.fileToUpload1, this.name1);
+    }
+    if (this.files2.length == 1) {
+      formData.append("fileupload2", this.fileToUpload2, this.name2);
     }
     // console.log('formdata',formData)
     // var data = {

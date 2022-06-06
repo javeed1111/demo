@@ -328,47 +328,48 @@
                             </div>
                         </div>
             
-                        <!--Duration,units-->
-                        <!-- <div class="flex">
-                                <mat-form-field class="flex-auto">
-                                    <mat-label>Duration (in Days)</mat-label>
-                                    <input
-                                        matInput 
-                                        [formControlName]="'duration'"
-                                        [placeholder]="'Duration (in Days)'" >
-                                    <mat-icon
-                                        class="icon-size-5"
-                                        matPrefix
-                                        [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
-                                </mat-form-field>
-                                <mat-form-field class="flex-auto gt-xs:pr-3">
-                                    <mat-label>Units</mat-label>
-                                    <mat-select  [formControlName]="'units'">
-                                        <mat-option value="Days">Days</mat-option>
-                                        <mat-option value="Hours">Hours</mat-option>
-                                        <mat-option value="Minutes">Minutes</mat-option>
-        
-                                    </mat-select>
-                                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:cog'">
-                                    </mat-icon>
-                                </mat-form-field>
-                            </div> -->
-                        <!--Fees-->
-                        <!-- <div class="flex">
-                                <mat-form-field class="flex-auto">
-                                    <mat-label>Fees</mat-label>
-                                    <input 
-                                        matInput 
-                                        [formControlName]="'fees'"
-                                        [placeholder]="'Fees'" >
-                                    <mat-icon
-                                        class="icon-size-5"
-                                        matPrefix
-                                        [svgIcon]="'heroicons_solid:cash'"></mat-icon>
-                                </mat-form-field>
-                            </div> -->
-                        <!-- Image Add remove -->
-                        <div class="flex">
+                     
+                        <div class="mt-4 sm:mt-0 col-span-6">
+                            <!-- Upload button -->
+                            <button mat-flat-button [color]="'primary'"
+                                onclick="document.getElementById('txtfileupload2').click()">
+                                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                <span class="ml-1 mr-0">Upload Video</span>
+    
+                                <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
+                                    id="txtfileupload" name="fileupload"
+                                    (change)="onSelectFile($event.target.files)"> -->
+    
+                            </button>
+                            <span class="ml-1 mr-0">{{name2}}</span>
+                            <!-- <span class="ml-1 mr-0">{{uploadedvideofile}}</span> -->
+                            <span class="ml-1 mr-0">
+                              <!-- <button class="ml-auto" mat-button [matTooltip]="'remove'" (click)="removeuploads()" >
+                                Remove
+                              </button> -->
+                            </span>
+                            <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
+                            <!-- <button style="display:block;width:120px; height:30px;"
+                                onclick="document.getElementById('getFile').click()">Your text here</button> -->
+    
+    
+                            <input type='file' class="form-control" formControlName="uploader1" accept="video/*"  id="txtfileupload2"
+                                name="fileupload2" (change)="onSelectVideo($event.target.files)" style="display:none"
+                                [multiple]="true">
+                            <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
+                                id="txtfileupload"  name="fileupload" 
+                                (change)="onSelectFile($event.target.files)"> -->
+                        </div>
+                        <div class="flex" style="margin-top: 10%;" >
+                            <!-- <img style="width: 30%;  border: 1px solid #555" src="{{ImageURL}}"> -->
+                            <div class="video" *ngFor="let video of videoSource">
+                                <video controls width="300" height="300" (click)="toggleVideo()" #videoPlayer>
+                                    <source src="{{video}}" type="video/mp4" />
+                                    Browser not supported
+                                </video>
+                            </div>
+                        </div>
+                        <div class="flex mt-4">
                             <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>  -->
                             <!-- <div class="absolute inset-0 flex items-center justify-center z-20"> -->
                             <div>
@@ -500,6 +501,8 @@
                         <div class="flex" style="margin-top: 10%;" *ngIf="IconUrl">
                             <img style="width: 30%;  border: 1px solid #555" src="{{IconUrl}}">
                         </div>
+
+
                         <!-- Active Toggle -->
                         <!-- <div class="flex">
                             <div class="space-y-4">

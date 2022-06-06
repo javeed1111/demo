@@ -12,6 +12,7 @@ import { MatSort } from '@angular/material/sort';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { MatStepper } from '@angular/material/stepper';
 import { HttpClient,HttpEventType,HttpErrorResponse } from '@angular/common/http';
+import { OrderByPipe } from '../order-by.pipe';
 export interface coursecontentData {
   sno: number;
   chapter: string;
@@ -30,7 +31,7 @@ export interface coursecontentData {
   animations: fuseAnimations
 })
 export class AddcoursecontentComponent implements OnInit {
-
+  sortedarray: any=[];
   progress: number;
   message: string;
   @Output() public onUploadFinished = new EventEmitter();
@@ -38,7 +39,7 @@ export class AddcoursecontentComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   selectedProduct: any | null = null;
-  displayedColumns = ['sno','chapter','author', 'preview', 'actions'];
+  displayedColumns = ['sno','sorting','chapter','author', 'preview', 'actions'];
   dataSource: MatTableDataSource<coursecontentData>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -101,6 +102,10 @@ export class AddcoursecontentComponent implements OnInit {
   files1: Array<any> = new Array<any>();
   fileToUpload1:  File = null;
   format: string;
+  uploadedNewFileName: string;
+  newName: any;
+  TotalParts: any;
+  contents: any=[];
 
 
 
@@ -112,6 +117,8 @@ export class AddcoursecontentComponent implements OnInit {
     private _fuseConfirmationService: FuseConfirmationService,
     private _changeDetectorRef: ChangeDetectorRef,
     private http: HttpClient,
+    private _orderpipi:OrderByPipe
+
   ) { }
 
   ngOnInit(): void {
@@ -161,6 +168,47 @@ export class AddcoursecontentComponent implements OnInit {
 
     }
 
+}
+
+
+OnClickUp(id:any){
+  debugger
+  let item1 = this.contents.find(i => i.sortOrderId === id);
+  let item2=this.contents.find(i => i.sortOrderId === (id-1));
+  if(item1.sortOrderId>1){
+    item1.sortOrderId=item1.sortOrderId-1
+    item2.sortOrderId=item2.sortOrderId+1
+      this.sortedarray.push(item1);
+      this.sortedarray.push(item2);
+
+      this._authService.UpdateCourseContentOrderId(this.sortedarray).subscribe((result: any) => {
+        debugger
+        window.location.reload();
+      });
+  }
+  else{
+    return;
+  }
+}
+
+OnClickDown(id:any){
+  debugger
+  let item1 = this.contents.find(i => i.sortOrderId === id);
+  let item2=this.contents.find(i => i.sortOrderId === (id+1));
+  if(item1.sortOrderId<this.contents.length && item1.sortOrderId>0){
+    item1.sortOrderId=item1.sortOrderId+1
+    item2.sortOrderId=item2.sortOrderId-1
+      this.sortedarray.push(item1);
+      this.sortedarray.push(item2);
+
+      this._authService.UpdateCourseContentOrderId(this.sortedarray).subscribe((result: any) => {
+        debugger
+        window.location.reload();
+      });
+  }
+  else{
+    return;
+  }
 }
 
   BackButton(){
@@ -240,7 +288,9 @@ export class AddcoursecontentComponent implements OnInit {
       // var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
         console.log(finalresult.result)
-        this.dataSource = new MatTableDataSource(finalresult.result);
+        var values=this._orderpipi.transform(finalresult.result,"asc","sortOrderId","number") ;
+        this.contents=values[0]
+        this.dataSource = new MatTableDataSource(values[0]);
         // console.log('techs',this.dataSource)
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -250,6 +300,10 @@ export class AddcoursecontentComponent implements OnInit {
 
       }
     });
+  }
+  
+  GoToFaq(){
+    this._router.navigate(['/courses/questions/'+this.courseid]);
   }
 
   GoToReviews(){
@@ -432,9 +486,9 @@ export class AddcoursecontentComponent implements OnInit {
     if (this.fileToUpload!=null) {
         formData.append("fileupload", this.fileToUpload, this.fileToUpload.name);
     }
-    //   if (this.fileToUpload1!=null) {
-    //     formData.append("fileupload1", this.fileToUpload1, this.fileToUpload1.name);
-    // }
+      if (this.fileToUpload1!=null) {
+        formData.append("fileupload1", this.fileToUpload1, this.fileToUpload1.name);
+    }
     formData.append("CourseId",  this.approute.snapshot.params['courseid'])
     formData.append("ModuleId",  this.approute.snapshot.params['moduleid'])
     formData.append("Chapter", coursecont.chapter)
@@ -532,9 +586,10 @@ export class AddcoursecontentComponent implements OnInit {
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
     }
-    // if (this.files.length == 1) {
-    //   formData.append("fileupload1", this.fileToUpload1, this.name1);
-    // }
+    if (this.fileToUpload1!=null) {
+      formData.append("fileupload1", this.fileToUpload1, this.fileToUpload1.name);
+  }
+   
     this._authService.Addcoursecontent(formData).subscribe((result: any) => {
       //debugger
       var result = JSON.parse(result);
@@ -621,13 +676,19 @@ export class AddcoursecontentComponent implements OnInit {
       formData.append("Uploadedfilename", coursecont.uploadedfilename)
       formData.append("Uploaded", coursecont.uploaded)
     }
-    
+    if (this.files1.length == 1) {
+      formData.append("fileupload1", this.fileToUpload1, this.name1);
+    }
+    // else if (this.removeupload==false) {
+    //   formData.append("Uploadedfilename", coursecont.uploadedfilename)
+    //   formData.append("Uploaded", coursecont.uploaded)
+    // }
 
     this._authService.Updatecoursecontent(formData).subscribe((result: any) => {
       debugger
       var result = JSON.parse(result);
       if (result.status == "200") {
-         this.videoUpload();
+        //  this.videoUpload();
         //debugger
         // Set the alert
         this.alert = {
@@ -657,29 +718,112 @@ export class AddcoursecontentComponent implements OnInit {
       }
     });
   }
- 
-  uploadFile = (files) => {
-    debugger
-    if (files.length === 0) {
-      return;
-    }
-    let fileToUpload = <File>files[0];
-    const formData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
-    
-    this.http.post('https://localhost:44358/api/Admin/Updatecoursecontentvideo', formData, {reportProgress: true, observe: 'events'})
-      .subscribe({
-        next: (event) => {
-        if (event.type === HttpEventType.UploadProgress)
-          this.progress = Math.round(100 * event.loaded / event.total);
-        else if (event.type === HttpEventType.Response) {
-          this.message = 'Upload success.';
-          this.onUploadFinished.emit(event.body);
-        }
-      },
-      error: (err: HttpErrorResponse) => console.log(err)
-    });
+
+  uploadFile1(value){
+    this.newName = this.generateUUID();
+    this.uploadedNewFileName = '';
+    this.UploadFile(value);
+
   }
+   generateUUID() { // Public Domain/MIT
+    var d = new Date().getTime();//Timestamp
+    var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now() * 1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16;//random number between 0 and 16
+        if (d > 0) {//Use timestamp until depleted
+            r = (d + r) % 16 | 0;
+            d = Math.floor(d / 16);
+        } else {//Use microseconds since page-load if supported
+            r = (d2 + r) % 16 | 0;
+            d2 = Math.floor(d2 / 16);
+        }
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}
+
+     UploadFile(TargetFile) {
+         this.TotalParts;
+        var file = TargetFile[0];
+        debugger; 
+        // document.getElementById('videoupload').innerHTML = file.name
+        var newFileName = this.newName + file.name;
+        this.uploadedNewFileName = newFileName
+        console.log('TargetFile', TargetFile)
+        // create array to store the buffer chunks
+        var FileChunk = [];
+        // the file object itself that we will work with
+        var file = TargetFile[0];
+        // set up other initial vars
+        var MaxFileSizeMB = 1;
+        var BufferChunkSize = MaxFileSizeMB * (1024 * 1024);
+        var ReadBuffer_Size = 1024;
+        var FileStreamPos = 0;
+        // set the initial chunk length
+        var EndPos = BufferChunkSize;
+        var Size = file.size;
+
+        // add to the FileChunk array until we get to the end of the file
+        while (FileStreamPos < Size) {
+            // "slice" the file from the starting position/offset, to  the required length
+            FileChunk.push(file.slice(FileStreamPos, EndPos));
+            FileStreamPos = EndPos; // jump by the amount read
+            EndPos = FileStreamPos + BufferChunkSize; // set next chunk length
+        }
+        // get total number of "files" we will be sending
+        this.TotalParts = FileChunk.length;
+        console.log(this.TotalParts)
+        var PartCount = 0;
+        // loop through, pulling the first item from the array each time and sending it
+        // while (chunk = FileChunk.shift()) {
+            // PartCount++;
+            // file name convention
+            // var FilePartName = newFileName + ".part_" + PartCount + "." + this.TotalParts;
+            // send the file
+            // this.UploadFileChunk(chunk, FilePartName);
+        // }
+    }
+    
+     UploadFileChunk(Chunk, FileName) {
+      var count = 0
+
+        // construct the form data and apply new file name
+        var FD = new FormData();
+        FD.append('file', Chunk, FileName);
+        this._authService.Updatecoursecontentvideo(FD).subscribe((result: any) => {
+          debugger
+          count++;
+                console.log('TotalParts', this.TotalParts)
+                console.log('count', count)
+                if (this.TotalParts == count) {
+                    alert('Video uploaded!!');
+                    count = 0;  
+                }
+        });
+      
+    }
+
+    public uploadFile = (files) => {
+        debugger
+        if (files.length === 0) {
+          return;
+        }
+        let fileToUpload = <File>files[0];
+        const formData = new FormData();
+        formData.append('file', fileToUpload, fileToUpload.name);
+        
+        this.http.post('https://localhost:44358/api/Admin/Updatecoursecontentvideo', formData, {reportProgress: true, observe: 'events'})
+          .subscribe(
+            (event) => {
+            if (event.type === HttpEventType.UploadProgress)
+              this.progress = Math.round(100 * event.loaded / event.total);
+            else if (event.type === HttpEventType.Response) {
+              this.message = 'Upload success.';
+              this.onUploadFinished.emit(event.body);
+            }
+          },
+          // error: (err: HttpErrorResponse) => console.log(err)
+        );
+      }
 
   videoUpload(){
     debugger

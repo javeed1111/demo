@@ -68,12 +68,17 @@
                                     {{(i+1)}}</mat-cell>
                                     <!-- {{ (i+1) + (myPaginator.pageIndex * myPaginator.pageSize) }}</mat-cell> -->
                                 </ng-container>
-                                 <!-- Name Column -->
-                                 <!-- <ng-container matColumnDef="contentType">
-                                  <mat-header-cell *matHeaderCellDef mat-sort-header> Content Type </mat-header-cell>
-                                  <mat-cell *matCellDef="let row"> {{row.contentType}} </mat-cell>
-                                </ng-container> -->
-                                <!-- Color Column -->
+                                <ng-container matColumnDef="sorting">
+                                  <mat-header-cell *matHeaderCellDef >Sort </mat-header-cell>
+                                  <mat-cell *matCellDef="let row">
+                                    <a (click)="OnClickUp(row.sortOrderId)"><mat-icon class="icon-size-4 " [svgIcon]="'heroicons_solid:arrow-narrow-up'">
+                                    </mat-icon>
+                                    </a>
+                                    <a (click)="OnClickDown(row.sortOrderId)"><mat-icon class="icon-size-4 " [svgIcon]="'heroicons_solid:arrow-narrow-down'">
+                                    </mat-icon>
+                                    </a>
+                                    </mat-cell>
+                                </ng-container>  
                                 <ng-container matColumnDef="chapter">
                                   <mat-header-cell *matHeaderCellDef mat-sort-header> Chapter </mat-header-cell>
                                   <mat-cell *matCellDef="let row"> {{row.chapter}} </mat-cell>
@@ -263,7 +268,7 @@
 
 
                         <input type='file' class="form-control" formControlName="uploader1" accept="video/*"  id="txtfileupload1"
-                            name="fileupload1" (change)="uploadFile($event.target.files)" style="display:none"
+                            name="fileupload1" (change)="onSelectVideo($event.target.files)" style="display:none"
                             [multiple]="true">
                         <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                             id="txtfileupload"  name="fileupload" 
@@ -300,6 +305,14 @@
                   </button>
                 </div>
             </form>
+                </mat-step>
+                <mat-step>
+                  <ng-template matStepLabel><p (click)="GoToFaq()">FAQ</p></ng-template>
+                  <!-- <p>You are now done.</p> -->
+                  <!-- <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                  </div> -->
                 </mat-step>
                 <mat-step>
                   <ng-template matStepLabel><p (click)="GoToReviews()">Reviews</p></ng-template>

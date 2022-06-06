@@ -1,3 +1,4 @@
+import { I } from '@angular/cdk/keycodes';
 import { ChangeDetectorRef, Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -8,6 +9,8 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { AuthService } from 'app/core/auth/auth.service';
+import { OrderByPipe } from '../order-by.pipe';
+
 @Component({
   selector: 'app-add-course-module',
   templateUrl: './add-course-module.component.html',
@@ -27,7 +30,7 @@ export class AddCourseModuleComponent implements OnInit {
     type   : 'success',
     message: ''
 };
-displayedColumns = ['sno',  'ModuleName','actions'];
+displayedColumns = ['sno','sorting','ModuleName','actions'];
 dataSource: MatTableDataSource<any>;
   showAlert:  boolean = false;
   courseid: any;
@@ -59,6 +62,8 @@ dataSource: MatTableDataSource<any>;
   update: boolean = false;
   Clear: boolean= false;
   show: boolean;
+  modules: any;
+  sortedarray: any=[];
   
   constructor(private _formBuilder: FormBuilder,
     private _authService: AuthService,
@@ -66,7 +71,7 @@ dataSource: MatTableDataSource<any>;
     private approute: ActivatedRoute,
     private _fuseConfirmationService: FuseConfirmationService,
     private _changeDetectorRef: ChangeDetectorRef,
-
+    private _orderpipi:OrderByPipe
     ) { }
 
   ngOnInit(): void {
@@ -100,6 +105,46 @@ dataSource: MatTableDataSource<any>;
         //     window.location.reload();
         //    }, 10);
 
+  }
+
+  OnClickUp(id:any){
+    debugger
+    let item1 = this.modules.find(i => i.orderId === id);
+    let item2=this.modules.find(i => i.orderId === (id-1));
+    if(item1.orderId>1){
+      item1.orderId=item1.orderId-1
+      item2.orderId=item2.orderId+1
+        this.sortedarray.push(item1);
+        this.sortedarray.push(item2);
+
+        this._authService.UpdateOrderId(this.sortedarray).subscribe((result: any) => {
+          debugger
+          window.location.reload();
+        });
+    }
+    else{
+      return;
+    }
+  }
+
+  OnClickDown(id:any){
+    debugger
+    let item1 = this.modules.find(i => i.orderId === id);
+    let item2=this.modules.find(i => i.orderId === (id+1));
+    if(item1.orderId<this.modules.length && item1.orderId>0){
+      item1.orderId=item1.orderId+1
+      item2.orderId=item2.orderId-1
+        this.sortedarray.push(item1);
+        this.sortedarray.push(item2);
+
+        this._authService.UpdateOrderId(this.sortedarray).subscribe((result: any) => {
+          debugger
+          window.location.reload();
+        });
+    }
+    else{
+      return;
+    }
   }
 
   GoToReviews(){
@@ -190,10 +235,11 @@ dataSource: MatTableDataSource<any>;
 
     this._authService.GetCourseModules(this.courseid).subscribe((finalresult: any) => {
       debugger
-
       var finalresult = JSON.parse(finalresult);
+      var values=this._orderpipi.transform(finalresult.result,"asc","orderId","number") ;
+      this.modules=values[0]
       if (finalresult.status == "200") {
-        this.dataSource = new MatTableDataSource(finalresult.result);
+        this.dataSource = new MatTableDataSource(values[0]);
       }
     })
   }
@@ -298,7 +344,9 @@ dataSource: MatTableDataSource<any>;
         });
   
   }
-
+  GoToFaq(){
+    this._router.navigate(['/courses/questions/'+this.courseid]);
+  }
   UpdateCourseModule(){
     debugger
     this.showAlert = false;

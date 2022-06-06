@@ -91,6 +91,7 @@ export class CourseplanComponent implements OnInit {
     });
     const ctrl = this.horizontalStepperForm.controls.step1.get('offerPrice');
     ctrl.disable();
+    this.horizontalStepperForm.controls.step1['effectiveDate'].setValue(new Date());
 
   }
   Back() {
@@ -368,14 +369,16 @@ export class CourseplanComponent implements OnInit {
     // var days = parseInt(dataa.days);
     // this.EndDate.setDate(this.startdate.getDate() + days);
     var code = Math.floor(100000 + Math.random() * 900000) + 1;
-  let effectiveDate =  moment(dataa.step1.effectiveDate).format("DD-MM-YYYY")
-  let effectiveTill =  moment(dataa.step1.effectiveTill).format("DD-MM-YYYY")
+  // let effectiveDate =  moment(dataa.step1.effectiveDate).format("DD-MM-YYYY")
+  let effectiveDate=dataa.step1.effectiveFrom.formatD("DD-MM-YYYY")
+
+  // let effectiveTill =  moment(dataa.step1.effectiveTill).format("DD-MM-YYYY")
     var data = {
       PlanName: dataa.step1.planName,
       Price: dataa.step1.price,
       OfferPrice: this.OfferPrice,
       EffectiveFrom: dataa.step1.effectiveDate,
-      EffectiveTill: dataa.step1.effectiveTill,
+      // EffectiveTill: dataa.step1.effectiveTill,
       ListOfChapters: this.checkeddata,
       ListOfCourses: ListOfCourse,
       IsOffer: this.isofferactive,

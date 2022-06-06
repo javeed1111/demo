@@ -52,6 +52,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { QuestionsComponent } from './questions/questions.component';
+import { OrderByPipe } from './order-by.pipe';
 
 // import { CourseContentComponent } from './AddCoursecontent/course-content/course-content.component';
 @NgModule({
@@ -75,6 +76,7 @@ import { QuestionsComponent } from './questions/questions.component';
     ReviewsComponent,
     SubscriptionsComponent,
     QuestionsComponent,
+    OrderByPipe,
     // CourseContentComponent
   ],
   imports: [
@@ -124,7 +126,8 @@ import { QuestionsComponent } from './questions/questions.component';
       }
     },
     
-    DatePipe
+    DatePipe,
+    OrderByPipe
 
   ]
 })
