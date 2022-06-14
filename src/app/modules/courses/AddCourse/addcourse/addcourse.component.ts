@@ -214,7 +214,7 @@ export class AddcourseComponent implements OnInit {
       formData.append("VideoCaption", course.metadiscription)
       formData.append("Status", this.status.toString())
       // formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
-      formData.append("EffectiveFrom", (course.effectiveFrom.formatD("DD-MM-YYYY")))
+      formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
       formData.append("EffectiveTill", (efeectivetill))
       formData.append("showOnWebsite", (this.showonwebsite).toString())
       

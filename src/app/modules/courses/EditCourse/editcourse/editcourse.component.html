@@ -363,7 +363,7 @@
                         <div class="flex" style="margin-top: 10%;" >
                             <!-- <img style="width: 30%;  border: 1px solid #555" src="{{ImageURL}}"> -->
                             <div class="video" *ngFor="let video of videoSource">
-                                <video controls width="300" height="300" (click)="toggleVideo()" #videoPlayer>
+                                <video controls width="300" height="300" controlsList="nodownload" (click)="toggleVideo()" #videoPlayer>
                                     <source src="{{video}}" type="video/mp4" />
                                     Browser not supported
                                 </video>
@@ -379,7 +379,7 @@
                                     <button mat-flat-button [color]="'primary'"
                                         onclick="document.getElementById('txtfileupload').click()" [disabled]="butdisabled">
                                         <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                        <span class="ml-1 mr-0">Upload file</span>
+                                        <span class="ml-1 mr-0">Upload Course Image</span>
     
                                         <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
                                             id="txtfileupload" name="fileupload"
@@ -446,7 +446,7 @@
                                     <button mat-flat-button [color]="'primary'"
                                         onclick="document.getElementById('txtfileupload1').click()" [disabled]="butdisabled">
                                         <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                        <span class="ml-1 mr-0">Upload file</span>
+                                        <span class="ml-1 mr-0">Upload Course Icon</span>
     
                                         <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
                                             id="txtfileupload" name="fileupload"

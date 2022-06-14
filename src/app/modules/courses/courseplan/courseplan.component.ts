@@ -77,8 +77,8 @@ export class CourseplanComponent implements OnInit {
         price: ['0', [Validators.required]],
         offerApplicable: [''],
         offerPrice: ['0'],
-        effectiveDate: ['', Validators.required],
-        effectiveTill: ['', Validators.required],
+        effectiveDate: [new Date(), ],
+        effectiveTill: ['', ],
       }),
       step2: this._formBuilder.group({
         courseId: [''],
@@ -91,7 +91,7 @@ export class CourseplanComponent implements OnInit {
     });
     const ctrl = this.horizontalStepperForm.controls.step1.get('offerPrice');
     ctrl.disable();
-    this.horizontalStepperForm.controls.step1['effectiveDate'].setValue(new Date());
+    //this.horizontalStepperForm.controls.step1['effectiveDate'].setValue(new Date());
 
   }
   Back() {
@@ -370,7 +370,7 @@ export class CourseplanComponent implements OnInit {
     // this.EndDate.setDate(this.startdate.getDate() + days);
     var code = Math.floor(100000 + Math.random() * 900000) + 1;
   // let effectiveDate =  moment(dataa.step1.effectiveDate).format("DD-MM-YYYY")
-  let effectiveDate=dataa.step1.effectiveFrom.formatD("DD-MM-YYYY")
+  // let effectiveDate=dataa.step1.effectiveFrom.format("DD-MM-YYYY")
 
   // let effectiveTill =  moment(dataa.step1.effectiveTill).format("DD-MM-YYYY")
     var data = {
@@ -378,7 +378,7 @@ export class CourseplanComponent implements OnInit {
       Price: dataa.step1.price,
       OfferPrice: this.OfferPrice,
       EffectiveFrom: dataa.step1.effectiveDate,
-      // EffectiveTill: dataa.step1.effectiveTill,
+      // EffectiveTill: dataa.step1.effectiveTill.format("DD-MM-YYYY"),
       ListOfChapters: this.checkeddata,
       ListOfCourses: ListOfCourse,
       IsOffer: this.isofferactive,

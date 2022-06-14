@@ -409,7 +409,7 @@ export class EditcourseComponent implements OnInit {
        this.courseForm.controls['offerPrice'].enable();
         }
         if (finalresult.result.imageURL != null) {
-          this.ImageURL = baseurl + finalresult.result.imageURL;
+          this.ImageURL =  finalresult.result.imageURL;
           // this.noimage=true;;
 
         }
@@ -418,12 +418,12 @@ export class EditcourseComponent implements OnInit {
 
         }
         if (finalresult.result.iconUrl != null) {
-          this.IconUrl = baseurl + finalresult.result.iconUrl;
+          this.IconUrl =  finalresult.result.iconUrl;
           // this.noimage=true;;
 
         }
         if (finalresult.result.videoUrl != null) {
-          this.videoSource.push(baseurl + finalresult.result.videoUrl);
+          this.videoSource.push( finalresult.result.videoUrl);
           // this.noimage=true;;
 
         }

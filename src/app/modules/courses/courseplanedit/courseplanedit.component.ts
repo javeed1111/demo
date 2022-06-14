@@ -83,8 +83,8 @@ export class CourseplaneditComponent implements OnInit {
         price: ['0', [Validators.required]],
         isOffer: [''],
         offerPrice: ['0'],
-        effectiveFrom: ['', Validators.required],
-        effectiveTill: ['', Validators.required],
+        effectiveFrom: ['', ],
+        effectiveTill: ['', ],
       }),
       step2: this._formBuilder.group({
         courseId: [''],
