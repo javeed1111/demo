@@ -98,6 +98,18 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
+                        <div class="mt-4 col-span-6">
+                            <div >
+                                <ng-container>
+                                    <div class="fuse-mat-no-subscript flex-auto">
+                                        <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
+                                            id="onwebsite" (change)="onwebsite($event)" [checked]="true">
+                                            show on website
+                                        </mat-slide-toggle>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
                         <!-- <div class="flex mb-4">
                             <mat-form-field class="fuse-mat-no-subscript w-full">
                                 <mat-label>Effective From</mat-label>
@@ -198,6 +210,7 @@
                                     </mat-select>
                                 </mat-form-field> -->
                             </div>
+                            
                             <!-- <div class="flex justify-end mt-1">
                             <button class="px-8" mat-flat-button [color]="'primary'" type="submit"
                                 (click)="onChange();">

@@ -222,11 +222,11 @@
                         </button>
                         <span class="ml-1 mr-0">{{name}}</span>
                         <span class="ml-1 mr-0">{{uploadedfilename}}</span>
-                        <span class="ml-1 mr-0">
+                        <!-- <span class="ml-1 mr-0">
                           <button class="ml-auto" mat-button [matTooltip]="'remove'" (click)="removeuploads()" *ngIf="uploadedfilename">
                             Remove
                           </button>
-                        </span>
+                        </span> -->
                         <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
                         <!-- <button style="display:block;width:120px; height:30px;"
                             onclick="document.getElementById('getFile').click()">Your text here</button> -->
@@ -257,18 +257,18 @@
                         </button>
                         <span class="ml-1 mr-0">{{name1}}</span>
                         <span class="ml-1 mr-0">{{uploadedvideofile}}</span>
-                        <span class="ml-1 mr-0">
+                        <!-- <span class="ml-1 mr-0">
                           <button class="ml-auto" mat-button [matTooltip]="'remove'" (click)="removeuploads()" *ngIf="uploadedvideofile">
                             Remove
                           </button>
-                        </span>
+                        </span> -->
                         <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
                         <!-- <button style="display:block;width:120px; height:30px;"
                             onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
                         <input type='file' class="form-control" formControlName="uploader1" accept="video/*"  id="txtfileupload1"
-                            name="fileupload1" (change)="onSelectVideo($event.target.files)" style="display:none"
+                            name="fileupload1" (change)="onSelectVideo($event)" style="display:none"
                             [multiple]="true">
                         <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                             id="txtfileupload"  name="fileupload" 
@@ -304,7 +304,8 @@
                       Update
                   </button>
                 </div>
-            </form>
+                </form>
+                <audio id="audio"></audio>
                 </mat-step>
                 <mat-step>
                   <ng-template matStepLabel><p (click)="GoToFaq()">FAQ</p></ng-template>

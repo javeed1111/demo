@@ -60,6 +60,7 @@ export class CourseplanComponent implements OnInit {
   titles: any;
   ListOfcheckedtitles: any = [];
   checkeddata: any = [];
+  showonwebsite: boolean=true;
 
   constructor(
     private _authService: AuthService,
@@ -194,6 +195,19 @@ export class CourseplanComponent implements OnInit {
       });
     }
   }
+
+  onwebsite($event: MatSlideToggleChange): void {
+    debugger
+    if ($event.checked == undefined || $event.checked == true) {
+      this.showonwebsite = $event.checked;
+    }
+    else {
+      this.showonwebsite = false;
+      // this.isofferactive = false;
+    }
+
+  }
+
   onChangecheckbox(event: MatCheckboxChange, chapterid, courseid) {
     debugger
     console.log(event.checked + " => " + event.source.value);
@@ -323,6 +337,10 @@ export class CourseplanComponent implements OnInit {
       // this.horizontalStepperForm.controls['offerPrice'].enable();
       this.OfferPrice = dataa.step1.offerPrice;
     }
+    if(this.showonwebsite==undefined){
+      this.showonwebsite=true
+    }
+
     var mindate = new Date(dataa.step1.effectiveDate);
     var maxdate = new Date(dataa.step1.effectiveTill);
 
@@ -378,6 +396,7 @@ export class CourseplanComponent implements OnInit {
       Price: dataa.step1.price,
       OfferPrice: this.OfferPrice,
       EffectiveFrom: dataa.step1.effectiveDate,
+      ShowOnWebsite:this.showonwebsite,
       // EffectiveTill: dataa.step1.effectiveTill.format("DD-MM-YYYY"),
       ListOfChapters: this.checkeddata,
       ListOfCourses: ListOfCourse,

@@ -13,6 +13,8 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { MatStepper } from '@angular/material/stepper';
 import { HttpClient,HttpEventType,HttpErrorResponse } from '@angular/common/http';
 import { OrderByPipe } from '../order-by.pipe';
+import { duration } from 'moment';
+import moment from 'moment';
 export interface coursecontentData {
   sno: number;
   chapter: string;
@@ -31,6 +33,8 @@ export interface coursecontentData {
   animations: fuseAnimations
 })
 export class AddcoursecontentComponent implements OnInit {
+  myVideos = [];
+  videoduration:any;
   sortedarray: any=[];
   progress: number;
   message: string;
@@ -108,7 +112,6 @@ export class AddcoursecontentComponent implements OnInit {
   contents: any=[];
 
 
-
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
@@ -153,6 +156,8 @@ export class AddcoursecontentComponent implements OnInit {
   ngAfterViewInit() {
     this.stepper.selectedIndex = 2; 
   }
+
+  
   onSelectFile(files: FileList) {
     if (files.length === 0)
         return;
@@ -214,44 +219,51 @@ OnClickDown(id:any){
   BackButton(){
 
   }
-  // onSelectFile(files: FileList) {
-  //   debugger
-  //   if (files.length === 0)
-  //     return;
-  //   if (files.length > 0) {
-  //     this.files = [];
-  //     for (var i = 0; i < files.length; i++) {
-  //       this.fileToUpload = files.item(i);
-  //       const fileReader: FileReader = new FileReader();
-  //       fileReader.readAsDataURL(this.fileToUpload);
-  //       this.name = this.fileToUpload.name.split(' ').join('-').replace(/[()]/g, "")
-  //       this.files.push({ data: this.fileToUpload, fileName: this.name });
-  //     }
-  //   }
-  // }
+ 
+  
+   updateInfos() {
+    var infos = document.getElementById('infos');
+    infos.textContent = "";
+    for (var i = 0; i < this.myVideos.length; i++) {
+      infos.textContent += this.myVideos[i].name + " duration: " + this.myVideos[i].duration + '\n';
+    }
+  }
 
-  // onSelectVideo(files: FileList) {
-  //   debugger
-  //   if (files.length === 0)
-  //     return;
-  //   if (files.length > 0) {
-  //     this.files = [];
-  //     for (var i = 0; i < files.length; i++) {
-  //       this.fileToUpload1 = files.item(i);
-  //       const fileReader: FileReader = new FileReader();
-  //       fileReader.readAsDataURL(this.fileToUpload1);
-  //       this.name1 = this.fileToUpload1.name.split(' ').join('-').replace(/[()]/g, "")
-  //       this.files.push({ data: this.fileToUpload1, fileName: this.name1 });
-  //     }
-  //   }
-  // }
-  onSelectVideo(files: FileList) {
-    if (files.length === 0)
+  GetVideoDuration(files){
+    
+    var resultstring;
+    window.URL = window.URL || window.webkitURL;
+    
+    this.myVideos.push(files.target.files[0]);
+    var video = document.createElement('video');
+    video.preload = 'metadata';
+  
+    video.onloadedmetadata = function() {
+      window.URL.revokeObjectURL(video.src);
+      var SECONDS_COUNT=video.duration
+      const duration = moment.duration(SECONDS_COUNT, 'seconds');
+       resultstring = moment.utc(duration.asMilliseconds()).format('HH:mm:ss');
+       localStorage.setItem('videoduration',resultstring);
+      // duration=duration1;
+      //  this.videoduration = video.duration;
+      // this.myVideos[this.myVideos.length - 1].duration = duration;
+      // this.updateInfos();
+    }
+      video.src = URL.createObjectURL(files.target.files[0]);
+  }
+  
+
+  onSelectVideo(files) {
+    debugger
+    this.GetVideoDuration(files);
+    // var val=localStorage.getItem('videoduration');
+
+    if (files.target.files.length === 0)
         return;
-    if (files.length > 0) {
+    if (files.target.files.length > 0) {
         this.files1 = [];
-        for (var i = 0; i < files.length; i++) {
-            this.fileToUpload1 = files.item(i);
+        for (var i = 0; i < files.target.files.length; i++) {
+            this.fileToUpload1 = files.target.files.item(i);
             const fileReader: FileReader = new FileReader();
             fileReader.readAsDataURL(this.fileToUpload1);
             this.name1 = this.fileToUpload1.name.split(' ').join('-').replace(/[()]/g, "")
@@ -494,6 +506,7 @@ OnClickDown(id:any){
     formData.append("Chapter", coursecont.chapter)
     formData.append("Author", coursecont.author)
     formData.append("ContentType", coursecont.contentType)
+    formData.append("VideoDuration", localStorage.getItem('videoduration'))
     formData.append("ContentDescription", coursecont.contentDescription)
     formData.append("CreatedBy",Loginid);
     // if (this.files.length!= null) {
@@ -581,7 +594,8 @@ OnClickDown(id:any){
     formData.append("Chapter", coursecont.chapter)
     formData.append("Author", coursecont.author)
     formData.append("ContentType", coursecont.contentType)
-    formData.append("ContentDescription", coursecont.contentDescription)
+    formData.append("VideoDuration", localStorage.getItem('videoduration'))
+    formData.append("ContentDescription", coursecont.contentDescription)  
     formData.append("CreatedBy", (localStorage.getItem("LoginId")));
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
@@ -667,6 +681,7 @@ OnClickDown(id:any){
     formData.append("Chapter", coursecont.chapter)
     formData.append("Author", coursecont.author)
     formData.append("ContentType", coursecont.contentType)
+    formData.append("VideoDuration", localStorage.getItem('videoduration'))
     formData.append("ContentDescription", coursecont.contentDescription)
     formData.append("UpdatedBy", (localStorage.getItem("LoginId")));
     if (this.files.length == 1) {
@@ -905,6 +920,8 @@ OnClickDown(id:any){
         console.log('coursecontent',course)
         this.contentId=course.id;
         this.uploadedfilename=course.uploadedfilename;
+        this.uploadedvideofile=course.videoFileName;
+
         // this.remove=true
         // if (course.duration == 0) {
         //   this.courseForm.controls['duration'].setValue("")

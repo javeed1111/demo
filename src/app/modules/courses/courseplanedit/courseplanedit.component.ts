@@ -129,6 +129,9 @@ export class CourseplaneditComponent implements OnInit {
       debugger
       console.log(finalresult);
       //  var finalresult = JSON.parse(finalresult);
+      // $scope.selectedBrands = [$scope.brands[0],$scope.brands[1]];
+     this.horizontalStepperForm.controls.step1['courseId'].setValue(17);
+
       if (finalresult.status == "200") {
         debugger
         for(let i=0;i<finalresult.result.length;i++){
