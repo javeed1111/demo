@@ -178,16 +178,18 @@ export class AuthService
         debugger
         return this._httpClient.post(this.baseUrl + "api/Admin/DeleteCourse", data);
       }
-      AddCoursePlan(data) {
+      AddCoursePlan(data):Observable<any> {
         //debugger
+        //return;
         return this._httpClient.post(this.baseUrl + "api/Admin/AddPlanCourse", data, {responseType: 'text'});
       }
       public deletecourseplan(data) {
         debugger
         return this._httpClient.post(this.baseUrl + "api/Admin/DeletePlanCourse",data);
       }
-      UpdateCoursePlan(data) {
+      UpdateCoursePlan(data):Observable<any> {
         //debugger
+        // return;
         return this._httpClient.post(this.baseUrl + "api/Admin/UpdatePlanCourse", data, {responseType: 'text'});
       }
       public GetPlanmasters() {
@@ -267,8 +269,8 @@ export class AuthService
       return this._httpClient.post(this.baseUrl + "api/Admin/UpdateCourseModules", data, {responseType: 'text'});
 
      }
-     DeleteCourseModule(id:any){
-      return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteCourseModules?id="+id);
+     DeleteCourseModule(data:any){
+      return this._httpClient.post(this.baseUrl + "api/Admin/DeleteCourseModules",data);
      }
 
      public GetReviews(id) {

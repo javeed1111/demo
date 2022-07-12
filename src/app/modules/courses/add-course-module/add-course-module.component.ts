@@ -565,6 +565,9 @@ dataSource: MatTableDataSource<any>;
     {
       debugger
       this.showAlert=false
+      var data={
+        ModuleId:id
+      }
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
             title  : 'Delete course',
@@ -583,11 +586,11 @@ dataSource: MatTableDataSource<any>;
             if ( result === 'confirmed' )
             {
            var CreatedBy= parseInt(localStorage.getItem("LoginId"))
-           var data={
-            Id:id
-           }
+          //  var data={
+          //   Id:id
+          //  }
                 // Delete the contact
-                this._authService.DeleteCourseModule(id).subscribe((data:any) => {
+                this._authService.DeleteCourseModule(data).subscribe((data:any) => {
                     //debugger
                     if (data.status == "200") {
                         
@@ -601,7 +604,7 @@ dataSource: MatTableDataSource<any>;
                       //  this._router.navigate(['/userconfig/role/']);
                         setTimeout(() => {
                             window.location.reload();
-                        }, 0);
+                        }, 2000);
                         
                       }
                       else {
@@ -611,6 +614,9 @@ dataSource: MatTableDataSource<any>;
                       
                       };
                       this.showAlert=true
+                      setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
                         // this.notifications.alert('Alert', result.message, NotificationType.Alert, { theClass: 'outline primary', timeOut: 2000, showProgressBar: false });
                       }
 

@@ -146,6 +146,9 @@ course: any;
     {
       debugger
       this.showAlert=false
+      var data={
+        ModuleId:id
+      }
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
             title  : 'Delete course',
@@ -169,7 +172,7 @@ course: any;
           //  }
               debugger
                 // Delete the contact
-                this._authService.DeleteCourseModule(id).subscribe((data:any) => {
+                this._authService.DeleteCourseModule(data).subscribe((data:any) => {
                     //debugger
                     if (data.status == "200") {
                       // Set the alert

@@ -60,6 +60,10 @@ export class CourseplaneditComponent implements OnInit {
   disabled: boolean=false;
   show: boolean=true;
   offerpricenbind: any;
+  bind:any
+  oldofferprice: any;
+  oldprice: any;
+  pcid: any;
 
   constructor(
     private _authService: AuthService,
@@ -75,6 +79,8 @@ export class CourseplaneditComponent implements OnInit {
     var pcid = this.approute.snapshot.params['pcid'];
     var planid = this.approute.snapshot.params['planid'];
     var value = this.approute.snapshot.params['value'];
+    this.planId=(planid)
+    this.pcid=pcid
     this.GetCourse();
     // Horizontal stepper form
     this.horizontalStepperForm = this._formBuilder.group({
@@ -130,7 +136,7 @@ export class CourseplaneditComponent implements OnInit {
       console.log(finalresult);
       //  var finalresult = JSON.parse(finalresult);
       // $scope.selectedBrands = [$scope.brands[0],$scope.brands[1]];
-     this.horizontalStepperForm.controls.step1['courseId'].setValue(17);
+    //  this.horizontalStepperForm.controls.step1['courseId'].setValue(17);
 
       if (finalresult.status == "200") {
         debugger
@@ -153,6 +159,9 @@ export class CourseplaneditComponent implements OnInit {
         }
         this.courseIds=this.horizontalStepperForm.controls.step2.get('courseId')
         this.courseIds=this.Filter;
+        this.bind=this.courseIds
+        this.oldprice=this.horizontalStepperForm.controls.step1.get('price').value
+        this.oldofferprice=this.horizontalStepperForm.controls.step1.get('offerPrice').value
         // let courseids = {}
         // this.courseidarray.forEach(x => {
         //   courseids = JSON.parse(JSON.stringify(x));
@@ -347,6 +356,17 @@ export class CourseplaneditComponent implements OnInit {
     if (this.horizontalStepperForm.invalid) {
       return;
     }
+    var finalids=[] 
+    if(this.courseIds.length==this.bind.length){
+      for(let i=0;i<this.bind.length;i++){
+        if(this.courseIds[i]!=this.bind[i]){
+        finalids.push(this.bind[i])
+        }
+      }
+    }
+    else{
+      finalids.push(1);
+    }
     const dataa = this.horizontalStepperForm.getRawValue();
     if (this.isofferactive == undefined) {
       this.isofferactive = false;
@@ -358,22 +378,23 @@ export class CourseplaneditComponent implements OnInit {
       this.OfferPrice = dataa.step1.offerPrice;
     }
     var mindate = new Date(dataa.step1.effectiveFrom);
-    var maxdate = new Date(dataa.step1.effectiveTill);
+    // var maxdate = new Date(dataa.step1.effectiveTill);
+    var maxdate = new Date();
 
-    if (mindate >= maxdate) {
-      this.showAlert = true;
+    // if (mindate >= maxdate) {
+    //   this.showAlert = true;
 
-      this.alert = {
-        type: 'success',
-        message: "EffectiveFromdate Should not be Greaterthan or equal to EffectiveTillDate"
-      };
-      setTimeout(() => {
-        this.showAlert = false;
-        // this._router.navigate(['/courses/course']);
-      }, 3500);
+    //   this.alert = {
+    //     type: 'success',
+    //     message: "EffectiveFromdate Should not be Greaterthan or equal to EffectiveTillDate"
+    //   };
+    //   setTimeout(() => {
+    //     this.showAlert = false;
+    //     // this._router.navigate(['/courses/course']);
+    //   }, 3500);
 
-      return;
-    }
+    //   return;
+    // }
     var price = dataa.step1.price;
     var offerprice = dataa.step1.offerPrice;
     if(price<=offerprice){
@@ -391,12 +412,12 @@ export class CourseplaneditComponent implements OnInit {
       return;
 
     }
-    this.ListOfCourses = dataa.step2.courseId;
+    // this.ListOfCourses = dataa.step2.courseId;
     var ListOfCourse = [];
-    for (var i = 0; i < this.ListOfCourses.length; i++) {
-      if (this.ListOfCourses[i] != "") {
+    for (var i = 0; i < this.bind.length; i++) {
+      if (this.bind[i] != "") {
         const courselist = new list();
-        courselist.CourseId = this.ListOfCourses[i];
+        courselist.CourseId = this.bind[i];
         ListOfCourse.push(courselist);
       }
     }
@@ -406,14 +427,20 @@ export class CourseplaneditComponent implements OnInit {
       PlanName: dataa.step1.planName,
       Price: dataa.step1.price,
       OfferPrice: this.OfferPrice,
-      EffectiveFrom: dataa.step1.effectiveFrom,
-      EffectiveTill: dataa.step1.effectiveTill,
+      EffectiveFrom: maxdate,
+      EffectiveTill: mindate,
+      OldOfferPrice:this.oldofferprice,
+      OldPrice:this.oldprice,
       // ListOfCourses: dataa.step2.courseId,
-      ListOfCourses: ListOfCourse,
+      // ListOfCourses: ListOfCourse,
+      ListOfCourses:ListOfCourse,
+      FinalIds:finalids,
       IsOffer: this.isofferactive,
       PlanId: this.planId,
+      PCID:this.pcid,
       // Title:dataa.step2.titleId,
-      CreatedBy: parseInt(localStorage.getItem("LoginId")),
+      CreatedBy:parseInt(localStorage.getItem("LoginId")),
+      UpdatedBy: parseInt(localStorage.getItem("LoginId")),
     }
     this._authService.UpdateCoursePlan(data).subscribe((result: any) => {
       //   var data = {
@@ -424,7 +451,6 @@ export class CourseplaneditComponent implements OnInit {
       //  }
       //   this._authService.Addtechnology(data).subscribe((result: any) => {
       //debugger
-      var result = JSON.parse(result);
       if (result.status == "200") {
         //debugger
 
@@ -437,16 +463,19 @@ export class CourseplaneditComponent implements OnInit {
         };
 
         setTimeout(() => {
-          this._router.navigate(['/courses/technology']);
-        }, 1000);
+          this._router.navigate(['/courses/courseplan']);
+        }, 2000);
       }
       else {
         this.alert = {
           type: 'error',
-          message: result.error
+          message: result.message
 
         };
         this.showAlert = true;
+        setTimeout(() => {
+          this.showAlert=false
+        }, 3000);
       }
       (error) => {
 

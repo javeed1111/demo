@@ -2,8 +2,8 @@
     <div class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
         <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
             <!-- Logo -->
-            <div class="w-12">
-                <img src="assets/images/logo/logo.png">
+            <div class="w-60">
+                <img src="assets/images/logo/logo1.png">
             </div>
 
             <!-- Title -->
@@ -35,13 +35,13 @@
 
                 <!-- Email field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Mobile Number</mat-label>
+                    <mat-label>UserName</mat-label>
                     <input
                         id="mobileno"
                         matInput
                         [formControlName]="'mobileno'">
                     <mat-error *ngIf="signInForm.get('mobileno').hasError('required')">
-                        MobileNo is required
+                        UserName is required
                     </mat-error>
                     <!-- <mat-error *ngIf="signInForm.get('email').hasError('email')">
                         Please enter a valid email address

@@ -308,7 +308,7 @@
                                 <ng-container>
                                     <div class="fuse-mat-no-subscript flex-auto">
                                         <mat-slide-toggle labelPosition="before"  class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
-                                            id="status" (change)="Status($event)" [(ngModel)]="status" [ngModelOptions]="{standalone: true}"   [checked]="false">
+                                            id="status" (change)="Status($event)" [(ngModel)]="status" [ngModelOptions]="{standalone: true}"   [checked]="false"  [disabled]="butdisabled">
                                             Status
                                         </mat-slide-toggle>
                                     </div>
@@ -332,7 +332,7 @@
                         <div class="mt-4 sm:mt-0 col-span-6">
                             <!-- Upload button -->
                             <button mat-flat-button [color]="'primary'"
-                                onclick="document.getElementById('txtfileupload2').click()">
+                                onclick="document.getElementById('txtfileupload2').click()"  [disabled]="butdisabled">
                                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                                 <span class="ml-1 mr-0">Upload Video</span>
     

@@ -99,6 +99,7 @@ export class EditcourseComponent implements OnInit {
   VideoUrl: any;
   videoSource: any=[];
 
+  
   constructor(
 
     private _formBuilder: FormBuilder,
@@ -140,7 +141,7 @@ export class EditcourseComponent implements OnInit {
       courseUrl:['', []],
       metaDescription: ['', []],
       metaKeywords:['', []],
-      stauts:['',[]],
+      stauts:[''],
       certifications:[''],
       imageTitle:[''],
       imageCaption:[''],
@@ -333,6 +334,7 @@ export class EditcourseComponent implements OnInit {
       baseurl = "http://testugetitapi.fadelsoft.com"
     }
     if (value == "view") {
+      debugger
       // this.editsite=false;
       this.butdisabled = true;
       this.courseForm.controls['courseName'].disable();
@@ -342,14 +344,20 @@ export class EditcourseComponent implements OnInit {
       this.courseForm.controls['fullDescription'].disable();
       this.courseForm.controls['whatLearn'].disable();
       this.courseForm.controls['requirements'].disable();
+      this.courseForm.controls['isOffer'].disable();
+      this.courseForm.controls['offerPrice'].disable();
       this.courseForm.controls['price'].disable();
+      this.courseForm.controls['taxPercent'].disable();
       this.courseForm.controls['courseHeader'].disable();
       this.courseForm.controls['courseUrl'].disable();
       this.courseForm.controls['metaDescription'].disable();
       this.courseForm.controls['metaKeywords'].disable();
-      this.courseForm.controls['status'].disable();
-
-      // this.courseForm.controls['offerPrice'].disable();
+      this.courseForm.controls['showOnWebsite'].disable();
+      this.courseForm.controls['imageTitle'].disable();
+      this.courseForm.controls['imageCaption'].disable();
+      this.courseForm.controls['imageShortDescription'].disable();
+      this.courseForm.controls['videoCaption'].disable();
+       this.courseForm.controls['certifications'].disable();
       this.courseForm.controls['effectiveFrom'].disable();
       this.courseForm.controls['effectiveTill'].disable();
       this.courseForm.controls['showOnWebsite'].disable();
