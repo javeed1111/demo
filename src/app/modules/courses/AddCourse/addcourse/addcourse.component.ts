@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { FuseAlertType } from '@fuse/components/alert';
@@ -9,9 +9,17 @@ import { fuseAnimations } from '@fuse/animations';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER,SPACE} from '@angular/cdk/keycodes';
 import moment from 'moment';
+import { ReplaySubject, Subject,takeUntil } from 'rxjs';
+import { MatSelect } from '@angular/material/select';
+import { take } from 'rxjs/operators';
 
 export interface Keywords {
   name: string;
+}
+
+interface facultysearch {
+  id: string;
+  firstName: string;
 }
 
 @Component({
@@ -80,6 +88,16 @@ export class AddcourseComponent implements OnInit {
   files2: any[];
   fileToUpload2: File;
   name2: string;
+  courses: any;
+  public instructor: FormControl = new FormControl();
+  public instructorfilterctrl: FormControl = new FormControl();
+  public filteredfaculties: ReplaySubject<any> = new ReplaySubject(1);
+  @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
+    protected _onDestroy = new Subject();
+    protected FacultySearch: facultysearch[] = [
+    
+    ];
+  faculties: any;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -90,6 +108,8 @@ export class AddcourseComponent implements OnInit {
   ngOnInit(): void {
     debugger
     this.GetTechnologys();
+    this.GetCourses();
+    this.GetFaculty();
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required],
     });
@@ -117,8 +137,9 @@ export class AddcourseComponent implements OnInit {
       imagecaption:[''],
       imageshortdescription:[''],
       videocaption:[''],
-      uploader1     :['', []]
-
+      uploader1     :['', []],
+      relatedcourses:[''],
+      instructor:['',[Validators.required]]
     });
     // var currentdate=new Date()
      
@@ -127,6 +148,68 @@ export class AddcourseComponent implements OnInit {
     ctrl.disable();
     const ctrl1 = this.courseForm.controls['taxpercent']
     ctrl1.disable();
+
+    this.instructorfilterctrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
+      this.filterBanks1();
+      
+    });
+  }
+
+  ngOnDestroy() {
+    this._onDestroy.next(10);
+    this._onDestroy.complete();
+  }
+
+  protected filterBanks1() {
+    if (!this.FacultySearch) {
+      return;
+    }
+  
+    let search = this.instructorfilterctrl.value;
+    if (!search) {
+     this.filteredfaculties.next(this.FacultySearch.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+  
+    this.filteredfaculties.next(
+      this.FacultySearch.filter(bank => bank.firstName.toLowerCase().indexOf(search) > -1 )
+    );
+  }
+
+  protected setInitialValue1() {
+      
+    this.filteredfaculties
+      .pipe(take(1), takeUntil(this._onDestroy))
+      .subscribe(() => {
+          this.singleSelect.compareWith = (a: facultysearch, b: facultysearch) => a && b && a.id === b.id;
+      });
+  }
+
+  GetFaculty(){
+
+    this._authService.GetFaculties().subscribe((finalresult: any) => {
+      this.FacultySearch=finalresult.result;
+      this.filteredfaculties.next(this.FacultySearch.slice());
+
+        this.faculties = finalresult.result;
+        // this.courseForm.patchValue(this.faculties);
+        if (finalresult.status == "200") {
+
+        }
+    })
+}
+
+  ngAfterViewIntit(){
+    this.filteredfaculties.next(this.FacultySearch.slice());
+    
+    this.instructorfilterctrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterBanks1();
+      });
+    this.setInitialValue1();
   }
 
   add(event: MatChipInputEvent): void {
@@ -139,6 +222,15 @@ export class AddcourseComponent implements OnInit {
 
     // Clear the input value
     event.chipInput!.clear();
+  }
+
+  GetCourses(){
+    debugger
+    this._authService.GetCourses().subscribe((finalresult: any) => {
+      debugger
+     this.courses = JSON.parse(finalresult);
+     this.courses=this.courses.result
+    })
   }
 
   removeuploads(){
@@ -488,7 +580,16 @@ export class AddcourseComponent implements OnInit {
     formData.append("EffectiveFrom", (moment(course.effectiveFrom).format("DD-MM-YYYY")))
     formData.append("EffectiveTill", efeectivetill)
     formData.append("showOnWebsite", (this.showonwebsite).toString())
-    
+    formData.append("FacultyId", course.instructor.toString())
+    if(course.relatedcourses==""){
+      course.relatedcourses=[]
+      formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
+
+    }
+    else{
+      formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
+    }
+
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
     }

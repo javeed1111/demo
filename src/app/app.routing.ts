@@ -85,12 +85,12 @@ export const appRoutes: Route[] = [
             {path: 'selflrvds', loadChildren: () => import('app/modules/selflearningvideos/selflearningvideos.module').then(m => m.SelflearningvideosModule)},
             {path: 'reports', loadChildren: () => import('app/modules/reports/reports.module').then(m => m.ReportsModule)},
             {path: 'enqrmgmt', loadChildren: () => import('app/modules/enquirymanagement/enquirymanagement.module').then(m => m.EnquirymanagementModule)},
-            {path: 'masters', loadChildren: () => import('app/modules/masters/masters.module').then(m => m.MastersModule)},
+            {path: 'sales', loadChildren: () => import('app/modules/masters/masters.module').then(m => m.MastersModule)},
             {path: 'batches', loadChildren: () => import('app/modules/batches/batches.module').then(m => m.BatchesModule)},
             {path: 'students', loadChildren: () => import('app/modules/students/students.module').then(m => m.StudentsModule)},
             {path: 'feedetails', loadChildren: () => import('app/modules/feedetails/feedetails.module').then(m => m.FeedetailsModule)},
             {path: 'faculty', loadChildren: () => import('app/modules/faculty/faculty.module').then(m => m.FacultyModule)},
-
+            {path: 'masters', loadChildren: () => import('app/modules/sales/sales.module').then(m => m.SalesModule)},
 
         ]
     }

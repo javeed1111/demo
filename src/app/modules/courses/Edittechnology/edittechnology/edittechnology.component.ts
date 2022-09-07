@@ -116,7 +116,7 @@ export class EdittechnologyComponent implements OnInit {
 
         this.techForm.patchValue(finalresult.result);
         if (finalresult.result.imageURL != null) {
-          this.ImageURL = baseurl + finalresult.result.imageURL;
+          this.ImageURL = finalresult.result.imageUrl;
           // this.noimage=true;;
 
         }

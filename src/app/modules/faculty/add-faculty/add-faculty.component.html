@@ -1,0 +1,96 @@
+<div class="flex flex-col w-full">
+    <ng-container>
+        <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
+            <div class="w-full max-w-5xl">
+                <!-- Alert -->
+                <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+                    [type]="alert.type" [@shake]="alert.type === 'success'">
+                    {{alert.message}}
+                </fuse-alert>
+                <form [formGroup]="FacultyForm"
+                    class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
+
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>First Name</mat-label>
+                            <input matInput appAutofocus [formControlName]="'firstName'"
+                                [placeholder]="'Enter First Name'">
+                            <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user-circle'">
+                            </mat-icon> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Last Name</mat-label>
+                            <input matInput appAutofocus [formControlName]="'lastName'"
+                                [placeholder]="'Enter Last Name'">
+                            <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user-circle'">
+                            </mat-icon> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Display Name</mat-label>
+                            <input matInput appAutofocus [formControlName]="'displayName'"
+                                [placeholder]="'Enter Display Name'">
+                            <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user-circle'">
+                            </mat-icon> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Experience</mat-label>
+                            <input matInput appAutofocus [formControlName]="'experience'"
+                                [placeholder]="'Enter Experience'">
+                        </mat-form-field>
+                    </div>
+                    <div class="flex-auto mt-4">
+                        <mat-label>Short Description</mat-label>
+                        <quill-editor [formControlName]="'shortDescription'" [modules]="quillModules">
+                        </quill-editor>
+                    </div>
+                    <div class="flex-auto mt-4">
+                        <mat-label>Long Description</mat-label>
+                        <quill-editor [formControlName]="'longDescription'" [modules]="quillModules">
+                        </quill-editor>
+                    </div>
+                    <!-- Image Add remove -->
+                    <div class="flex mt-8">  
+                            <!-- Actions -->
+                            <div class="mt-4 sm:mt-0">
+                                <!-- Upload button -->
+                                <button mat-flat-button [color]="'primary'"
+                                    onclick="document.getElementById('txtfileupload').click()">
+                                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                    <span class="ml-1 mr-0 px-5">Upload Photo</span>
+                                </button>
+                                <span class="ml-1 mr-0">{{name}}</span>
+                                <div class="flex" style="margin-top: 10%;" *ngIf="imageSrc">
+                                    <img style="width: 30%;  border: 1px solid #555"
+                                        [src]="imageSrc || 'http://placehold.it/180'" alt="your image">
+                                </div>
+
+                                <input type='file' class="form-control" accept=".jpg, .png, .jpeg" id="txtfileupload"
+                                    name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none">
+                             
+                            </div>
+                      
+                    </div>
+
+                    <div
+                        class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
+                        <!-- Cancel -->
+                        <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="cancel()">
+                            Cancel
+                        </button>
+                        <!--Save-->
+                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="AddFaculty()">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </ng-container>
+</div>

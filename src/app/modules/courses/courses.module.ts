@@ -22,7 +22,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatSortModule } from '@angular/material/sort';
-
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { CoursesRoutingModule } from './courses-routing.module';
 import { TechnologyComponent } from './technology/technology.component';
 import { CourseComponent } from './course/course.component';
@@ -110,8 +110,8 @@ import { OrderByPipe } from './order-by.pipe';
     SharedModule,
     QuillModule,
     FuseAlertModule,
-    MatStepperModule
-
+    MatStepperModule,
+    NgxMatSelectSearchModule
   ],
   providers:
   [

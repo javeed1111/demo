@@ -44,8 +44,8 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 ]
             },
             {
-                id      : 'masters',
-                title   : 'Masters',
+                id      : 'sales',
+                title   : 'Sales',
                 type    : 'collapsable',
                 icon    : 'heroicons_solid:collection',
                 children: [
@@ -53,20 +53,46 @@ export const defaultNavigation: FuseNavigationItem[] = [
                         id   : 'masters.enquirystatus',
                         title: 'Enquiry Status',
                         type : 'basic',
-                        link : '/masters/enquirystatus'
+                        link : '/sales/enquirystatus'
                     },
                     {
                         id   : 'masters.enquirytype',
                         title: 'Enquiry Type',
                         type : 'basic',
-                        link : '/masters/enquirytype'
+                        link : '/sales/enquirytype'
                     },
                     {
                         id   : 'masters.learningmode',
                         title: 'Learning Mode',
                         type : 'basic',
-                        link : '/masters/learningmode'
+                        link : '/sales/learningmode'
                     }
+                ]
+            },
+            {
+                id      : 'masters',
+                title   : 'Masters',
+                type    : 'collapsable',
+                icon    : 'heroicons_solid:collection',
+                children: [
+                    {
+                        id   : 'masters.configurations',
+                        title: 'Configurations',
+                        type : 'basic',
+                        link : '/masters/configurations'
+                    },
+                    {
+                        id   : 'masters.DashboardContent',
+                        title: 'DashBoard Banner',
+                        type : 'basic',
+                        link : '/masters/dashboardbanner'
+                    },
+                    // {
+                    //     id   : 'masters.learningmode',
+                    //     title: 'Learning Mode',
+                    //     type : 'basic',
+                    //     link : '/masters/learningmode'
+                    // }
                 ]
             },
             {
@@ -147,12 +173,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
                         type : 'basic',
                         link : '/faculty/facultydetails'
                     },
-                    {
-                        id   : 'faculty.facultypayment',
-                        title: 'Faculty Payment',
-                        type : 'basic',
-                        link : '/faculty/facultypayment'
-                    }   
+                    // {
+                    //     id   : 'faculty.facultypayment',
+                    //     title: 'Faculty Payment',
+                    //     type : 'basic',
+                    //     link : '/faculty/facultypayment'
+                    // }   
                 ]
             },
             {

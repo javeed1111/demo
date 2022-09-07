@@ -3,7 +3,7 @@
         <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
             <div class="w-full max-w-5xl">
 
-              <mat-stepper [linear]="isLinear" #stepper>
+              <mat-stepper #stepper>
                 <mat-step [stepControl]="firstFormGroup" >
                   <form [formGroup]="firstFormGroup">
                     <ng-template matStepLabel ><p (click)="GoToPage()">Course</p></ng-template>
@@ -40,15 +40,36 @@
                 </mat-step>
                 <mat-step [stepControl]="coursecontentForm">
                   <ng-template matStepLabel>Chapter</ng-template>
+                  <!-- Dialog template -->
+                  <ng-template #myDialog>
+                    <h2 matDialogTitle>Please</h2>
+                    <mat-dialog-content>
+                      <p>Wait Video Is Uploading.....</p>
+                    </mat-dialog-content>
+                    <!-- <mat-dialog-actions align="end">
+                      <button mat-button matDialogClose color="primary">Dismiss</button>
+                    </mat-dialog-actions> -->
+                  </ng-template>
                 <form [formGroup]="coursecontentForm"
                 class="flex flex-col  px-8 pt-10 bg-card shadow rounded overflow-hidden">
                 
-
+                <div class="flex">
+                  <mat-form-field class="flex-auto">
+                      <mat-label>Select Module</mat-label>
+                      <mat-select [placeholder]="'Select Module'" [formControlName]="'selectedmodule'"  (selectionChange)="selectedmodule()">
+                        <mat-option *ngFor="let item of modules" [value]="item.moduleId">{{item.moduleName}}</mat-option>
+                      </mat-select>
+                    <mat-icon
+                        class="icon-size-5"
+                        matPrefix
+                        [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
+                </mat-form-field> 
+                </div>
                     <!-- Main Grid -->
                     <div class="flex flex-auto overflow-hidden">
 
                       <!-- Products list -->
-                      <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                      <div class="flex flex-col flex-auto sm:mb-15 overflow-hidden sm:overflow-y-auto">
                         <ng-container>
                           <ng-container>
                             <!-- <div class="example-header">
@@ -144,6 +165,16 @@
                       </div>
 
                     </div>
+                    <div class="grid grid-cols-12 gap-x-1 mb-4">
+                      <div class=" col-span-3">
+                      
+                          <strong style="color: red;">Selected Module</strong> 
+                      
+                      </div>
+                      <div class=" col-span-3" style="color: red;">
+                          : {{Modulename}}
+                      </div>
+                      </div>
                 <div class="flex">
                     <mat-form-field class="flex-auto">
                         <mat-label>Course Name</mat-label>
@@ -151,13 +182,13 @@
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
                     </mat-form-field>
                 </div>
-                <div class="flex">
+                <!-- <div class="flex">
                   <mat-form-field class="flex-auto">
                       <mat-label>Module Name</mat-label>
                       <input matInput readonly [formControlName]="'moduleName'" [placeholder]="'Module Name'">
                       <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
                   </mat-form-field>
-              </div>
+              </div> -->
                 <div class="flex">
                     <mat-form-field class="flex-auto">
                         <mat-label>Chapter Name</mat-label>
@@ -256,7 +287,7 @@
 
                         </button>
                         <span class="ml-1 mr-0">{{name1}}</span>
-                        <span class="ml-1 mr-0">{{uploadedvideofile}}</span>
+                        <span class="ml-1 mr-0">{{uploadedvideo}}</span>
                         <!-- <span class="ml-1 mr-0">
                           <button class="ml-auto" mat-button [matTooltip]="'remove'" (click)="removeuploads()" *ngIf="uploadedvideofile">
                             Remove

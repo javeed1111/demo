@@ -98,6 +98,10 @@ export class EditcourseComponent implements OnInit {
   name2: string;
   VideoUrl: any;
   videoSource: any=[];
+  RelatedcourseIds: any;
+  bind: any;
+  courses: any;
+  faculties: any;
 
   
   constructor(
@@ -116,7 +120,8 @@ export class EditcourseComponent implements OnInit {
     var value = this.approute.snapshot.params['value'];
 
     this.GetTechnologys();
-
+    this.GetCourses();
+    this.GetFaculty();
 
     this.courseForm = this._formBuilder.group({
       courseName: ['', [Validators.required]],
@@ -146,7 +151,8 @@ export class EditcourseComponent implements OnInit {
       imageTitle:[''],
       imageCaption:[''],
       imageShortDescription:[''],
-      videoCaption:['']
+      videoCaption:[''],
+      facultyId:['',[Validators.required]]
     });
     const ctrl = this.courseForm.controls['offerPrice'];
     ctrl.disable();
@@ -309,6 +315,30 @@ export class EditcourseComponent implements OnInit {
       }
     });
   }
+
+  GetCourses(){
+    debugger
+    this._authService.GetCourses().subscribe((finalresult: any) => {
+      debugger
+     this.courses = JSON.parse(finalresult);
+     this.courses=this.courses.result
+    })
+  }
+
+  GetFaculty(){
+
+    this._authService.GetFaculties().subscribe((finalresult: any) => {
+      // this.FacultySearch=finalresult.result;
+      // this.filteredfaculties.next(this.FacultySearch.slice());
+
+       
+        // this.courseForm.patchValue(this.faculties);
+        if (finalresult.status == "200") {
+          this.faculties = finalresult.result;
+        }
+    })
+}
+
   GoToFaq(){
     this._router.navigate(['/courses/questions/'+this.courseid]);
   }
@@ -323,6 +353,10 @@ export class EditcourseComponent implements OnInit {
   GoToPage(){
     this._router.navigate(['/courses/addcoursemodule/'+this.courseid]);
 
+  }
+  GoToChapters(){
+    var value="edit"
+    this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+value]);
   }
   Edit(id: any, value: any) {
     //debugger
@@ -361,6 +395,7 @@ export class EditcourseComponent implements OnInit {
       this.courseForm.controls['effectiveFrom'].disable();
       this.courseForm.controls['effectiveTill'].disable();
       this.courseForm.controls['showOnWebsite'].disable();
+      this.courseForm.controls['facultyId'].disable();
 
     }
     else {
@@ -405,6 +440,9 @@ export class EditcourseComponent implements OnInit {
         this.effectivefrm  = course.effectiveFrom;
         this.effectivetil  = course.effectiveTill;
         this.oldprice=course.price
+        this.RelatedcourseIds=finalresult.result.relCourses;
+        this.bind=this.RelatedcourseIds.map(item => item.relatedCourseId)
+        .filter((value, index, self) => self.indexOf(value) === index);
         // if(course.effectiveFrom=="0001-01-01T00:00:00"){
         //   course.effectiveFrom="effectiveFrom"
         // }
@@ -523,6 +561,18 @@ export class EditcourseComponent implements OnInit {
       return;
     }
 
+    var finalids=[] 
+    if(this.RelatedcourseIds.length==this.bind.length){
+      for(let i=0;i<this.bind.length;i++){
+        if(this.RelatedcourseIds[i].relatedCourseId!=this.bind[i]){
+        finalids.push(this.bind[i])
+        }
+      }
+    }
+    else{
+      finalids.push(1);
+    }
+
     // Get the contact object
     const course = this.courseForm.getRawValue();
     if(this.oldprice!=course.price){
@@ -559,25 +609,16 @@ export class EditcourseComponent implements OnInit {
       this.showonwebsite =course.showOnWebsite;
     }
     
-    
+    var ListOfCourse = [];
+    for (var i = 0; i < this.bind.length; i++) {
+      if (this.bind[i] != "") {
+        // const courselist = new list();
+        // courselist.CourseId = this.bind[i];
+        ListOfCourse.push(this.bind[i]);
+      }
+    }
 
-    // Go through the contact object and clear empty values
-    //  contact.emails = contact.emails.filter(email => email.email);
 
-    //  contact.phoneNumbers = contact.phoneNumbers.filter(phoneNumber => phoneNumber.phoneNumber);
-
-    // if (course.isActive == undefined) {
-    //   course.isActive = true;
-    // }
-    // if (course.duration == "") {
-    //   course.duration = 0
-    //   // this.courseForm.controls['Duration'].setValue(0)
-    // }
-    // if (course.fees == "") {
-    //   course.fees = 0
-    //   // this.courseForm.controls['Fees'].setValue(0)
-    //   // course.fees="";
-    // }
     const formData: FormData = new FormData();
     formData.append("CourseName", course.courseName)
     formData.append("TechnologyId", course.technologyId)
@@ -606,6 +647,10 @@ export class EditcourseComponent implements OnInit {
     formData.append("EffectiveFrom", (course.effectiveFrom))
     formData.append("EffectiveTill", (course.effectiveTill))
     formData.append("showOnWebsite", (this.showonwebsite).toString())
+    formData.append("RelatedCourses", JSON.stringify(ListOfCourse))
+    formData.append("FinalIds", JSON.stringify(finalids))
+    formData.append("FacultyId", course.facultyId)
+
 
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);

@@ -3,7 +3,7 @@
     <ng-container>
         <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
             <div class="w-full max-w-5xl">
-                <mat-stepper linear #stepper>
+                <mat-stepper  #stepper>
                     <mat-step [stepControl]="courseForm" >
                         <form [formGroup]="courseForm"
                         class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
@@ -211,6 +211,21 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
+                        <!--Instructor-->
+                        <div class="flex">
+                            <mat-form-field class="flex-auto gt-xs:pr-3">
+                                <mat-label>Instructor</mat-label>
+                                <mat-select name="instructor" placeholder="Instructor" [formControlName]="'facultyId'"
+                                    class="input-full-width">
+                                    <mat-option value="">Select Instructor</mat-option>
+                                    <mat-option *ngFor="let tech of faculties " [value]="tech.facultyId">{{
+                                        tech.firstName }}</mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
+                                </mat-icon>
+                            </mat-form-field>
+                        
+                        </div>
                         <!-- <div class="flex mb-4">
                             <mat-form-field class="fuse-mat-no-subscript w-full">
                                 <mat-label>Effective From</mat-label>
@@ -302,7 +317,18 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-    
+                        <div class="flex mt-4">
+                            <mat-form-field class="flex-auto ">
+                                <mat-label>Related Courses</mat-label>
+                                <mat-select name="technologyId" placeholder="Related Courses" [(ngModel)]="bind" [ngModelOptions]="{standalone: true}" [disabled]="butdisabled"
+                                    class="input-full-width" multiple>
+                                    <mat-option *ngFor="let value of courses " [value]="value.courseId">{{
+                                        value.courseName }}</mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
                         <div class="grid grid-cols-12 gap-x-1 mt-2">
                             <div class="mt-4 col-span-6">
                                 <ng-container>
@@ -555,7 +581,7 @@
                       </form>
                     </mat-step>
                     <mat-step>
-                      <ng-template matStepLabel><p>Chapter</p></ng-template>
+                      <ng-template matStepLabel ><p (click)="GoToChapters()">Chapter</p></ng-template>
                       <!-- <p>You are now done.</p> -->
                       <!-- <div>
                         <button mat-button matStepperPrevious>Back</button>

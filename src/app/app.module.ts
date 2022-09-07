@@ -13,6 +13,7 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { MatInputModule } from '@angular/material/input';
+import { SalesComponent } from './modules/sales/sales.component';
 // import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 const routerConfig: ExtraOptions = {
@@ -23,6 +24,7 @@ const routerConfig: ExtraOptions = {
 @NgModule({
     declarations: [
         AppComponent,
+        SalesComponent,
     ],
     imports     : [
         BrowserModule,

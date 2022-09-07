@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Overlay } from '@angular/cdk/overlay';
 import { FuseAlertType } from '@fuse/components/alert';
+
 export interface TechnologyData {
   sno: string;
   technologyName: string;

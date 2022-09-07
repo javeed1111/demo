@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation,Output, EventEmitter } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit,TemplateRef, ViewChild, ViewEncapsulation,Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,6 +15,8 @@ import { HttpClient,HttpEventType,HttpErrorResponse } from '@angular/common/http
 import { OrderByPipe } from '../order-by.pipe';
 import { duration } from 'moment';
 import moment from 'moment';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
 export interface coursecontentData {
   sno: number;
   chapter: string;
@@ -73,7 +75,7 @@ export class AddcoursecontentComponent implements OnInit {
   removeupload:boolean=false;
   remove:boolean=false;
   uploadedfilename: any;
-  uploadedvideofile:any;
+  uploadedvideo:any;
   type: string;
   quillModules: any = {
     toolbar: [
@@ -110,7 +112,10 @@ export class AddcoursecontentComponent implements OnInit {
   newName: any;
   TotalParts: any;
   contents: any=[];
-
+  modules: any;
+  Modulename: any;
+  Description:string='Hello';
+  @ViewChild('myDialog', { read: TemplateRef }) myDialog:TemplateRef<any>;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -120,38 +125,42 @@ export class AddcoursecontentComponent implements OnInit {
     private _fuseConfirmationService: FuseConfirmationService,
     private _changeDetectorRef: ChangeDetectorRef,
     private http: HttpClient,
-    private _orderpipi:OrderByPipe
-
+    private _orderpipi:OrderByPipe,
+    public dialog: MatDialog
+    // public dialogRef: MatDialogRef<Description>
   ) { }
 
   ngOnInit(): void {
     debugger
     var loginId = localStorage.getItem("LoginId");
-    var Moduleid = this.approute.snapshot.params['moduleid'];
+    // var Moduleid = this.approute.snapshot.params['moduleid'];
     var courseid= this.approute.snapshot.params['courseid'];
     var value = this.approute.snapshot.params['value'];
     // this.GetTechnologys();
-    this.Moduleid = this.approute.snapshot.params['moduleid'];
+    // this.Moduleid = this.approute.snapshot.params['moduleid'];
     this.courseid= this.approute.snapshot.params['courseid'];
     this. value = this.approute.snapshot.params['value'];
     this.coursecontentForm = this._formBuilder.group({
       courseName: ['', [Validators.required]],
-      moduleName  :['', [Validators.required]], 
+      moduleName  :['', []], 
       author: ['', []],
       id: ['', []],
       chapter: ['', [Validators.required]],
       contentType: ['', []],
       uploadedfilename :['', []],
-      uploadedvideofile :['', []],
       uploaded :['', []],
+      videoFileName :['', []],
+      videoUrl:['',[]],
       uploader     :['', []],
       uploader1     :['', []],
       contentDescription: ['', []],
-      
+      selectedmodule:['',[Validators.required]]
 
     });
-    this.Edit(courseid,Moduleid, value);
-    this.Getgridcoursecontent(Moduleid);
+    this.GetModulesByCourseId();
+    this.Edit(courseid, value);
+    // this.Getgridcoursecontent(Moduleid);
+
   }
   ngAfterViewInit() {
     this.stepper.selectedIndex = 2; 
@@ -168,6 +177,7 @@ export class AddcoursecontentComponent implements OnInit {
             const fileReader: FileReader = new FileReader();
             fileReader.readAsDataURL(this.fileToUpload);
             this.name = this.fileToUpload.name.split(' ').join('-').replace(/[()]/g, "")
+            this.uploadedfilename=""
             this.files.push({ data: this.fileToUpload, fileName: this.fileToUpload.name });
         }
 
@@ -267,6 +277,7 @@ OnClickDown(id:any){
             const fileReader: FileReader = new FileReader();
             fileReader.readAsDataURL(this.fileToUpload1);
             this.name1 = this.fileToUpload1.name.split(' ').join('-').replace(/[()]/g, "")
+            this.uploadedvideo=""
             this.files1.push({ data: this.fileToUpload1, fileName: this.fileToUpload1.name });
         }
 
@@ -346,7 +357,7 @@ OnClickDown(id:any){
 
   }
 
-  Edit(id: any,moduleid:any, value: any) {
+  Edit(id: any, value: any) {
     //debugger
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
@@ -416,20 +427,20 @@ OnClickDown(id:any){
       }
     });
 
-    this._authService.GetCourseModulesById(moduleid).subscribe((finalresult: any) => {
-      debugger
-      console.log(finalresult);
-      //  var finalresult = JSON.parse(finalresult);
-      // rolebyid=finalresult;
-      if (finalresult.status == "200") {
-        //debugger
-        this.coursecontentForm.controls['moduleName'].setValue(finalresult.result.moduleName)
-        this.coursecontentForm.patchValue(finalresult.result);
-        const course = this.coursecontentForm.getRawValue();
+    // this._authService.GetCourseModulesById(moduleid).subscribe((finalresult: any) => {
+    //   debugger
+    //   console.log(finalresult);
+    //   //  var finalresult = JSON.parse(finalresult);
+    //   // rolebyid=finalresult;
+    //   if (finalresult.status == "200") {
+    //     //debugger
+    //     this.coursecontentForm.controls['moduleName'].setValue(finalresult.result.moduleName)
+    //     this.coursecontentForm.patchValue(finalresult.result);
+    //     const course = this.coursecontentForm.getRawValue();
  
-      }
+    //   }
      
-    });
+    // });
   }
   
   applyFilter(filterValue: string) {
@@ -439,6 +450,31 @@ OnClickDown(id:any){
     this.dataSource.filter = filterValue;
   }
 
+  selectedmodule(){
+    debugger
+    this.clear();
+    var id=this.coursecontentForm.controls['selectedmodule'].value;
+    var item=this.modules.find(x=>x.moduleId==id);
+    this.Modulename=item.moduleName
+    this.Getgridcoursecontent(id);
+  }
+
+  GetModulesByCourseId(){
+
+    this._authService.GetCourseModules(this.courseid).subscribe((finalresult: any) => {
+      debugger
+      var finalresult = JSON.parse(finalresult);
+      var values=this._orderpipi.transform(finalresult.result,"asc","orderId","number") ;
+      this.modules=values[0];
+      this.coursecontentForm.controls['selectedmodule'].setValue(this.modules[0].moduleId)
+      this.Getgridcoursecontent(this.coursecontentForm.controls['selectedmodule'].value);
+      this.Modulename=this.modules[0].moduleName
+      // if (finalresult.status == "200") {
+      //   this.dataSource = new MatTableDataSource(values[0]);
+      // }
+    })
+  }
+  
   contentchange(){
     debugger
     const coursecont = this.coursecontentForm.getRawValue();
@@ -451,28 +487,47 @@ OnClickDown(id:any){
 
   }
 
+  openDialogWithTemplateRef(templateRef: TemplateRef<any>) {
+    this.dialog.open(templateRef);
+  }
+
   AddCoursecontent() {
     debugger
     this.showAlert = false;
-    if (this.coursecontentForm.invalid) {
+    this.openDialogWithTemplateRef(this.myDialog);
+    if(this.files1.length<1 ||this.files.length<1){
+      this.alert = {
+        type: 'error',
+        message: "Selecting file is mandatory"
+      };
+
+      // Show the alert
+      this.showAlert = true;
+      setTimeout(() => {
+        this.showAlert = false;
+      }, 1500);
       return;
     }
-    // if (this.coursecontentForm.invalid) {
-    //   if(this.coursecontentForm.controls['uploader'].invalid){
-    //     this.alert = {
-    //       type: 'error',
-    //       message: "Selecting file is mandatory"
-    //     };
+   
 
-    //     // Show the alert
-    //     this.showAlert = true;
-    //   }
-    //   setTimeout(() => {
-    //     this.showAlert = false;
-    //   }, 1500);
+    if (this.coursecontentForm.invalid) {
+
+        this.alert = {
+          type: 'error',
+          message: "Enter mandatory Fields"
+        };
+  
+        // Show the alert
+        this.showAlert = true;
+
       
-    //   return;
-    // }
+      setTimeout(() => {
+        this.showAlert = false;
+      }, 1500);
+      return;
+     
+    }
+  
     // Get the contact object
     const coursecont = this.coursecontentForm.getRawValue();
 
@@ -502,24 +557,23 @@ OnClickDown(id:any){
         formData.append("fileupload1", this.fileToUpload1, this.fileToUpload1.name);
     }
     formData.append("CourseId",  this.approute.snapshot.params['courseid'])
-    formData.append("ModuleId",  this.approute.snapshot.params['moduleid'])
+    formData.append("ModuleId",  this.coursecontentForm.controls['selectedmodule'].value)
     formData.append("Chapter", coursecont.chapter)
     formData.append("Author", coursecont.author)
     formData.append("ContentType", coursecont.contentType)
     formData.append("VideoDuration", localStorage.getItem('videoduration'))
     formData.append("ContentDescription", coursecont.contentDescription)
     formData.append("CreatedBy",Loginid);
-    // if (this.files.length!= null) {
-    //   formData.append("fileupload", this.fileToUpload, this.fileToUpload.name);
-    // }
-    // if (this.files.length != null) {
-    //   formData.append("fileupload1", this.fileToUpload1, this.fileToUpload1.name);
-    // }
+  
+  
+  
     this._authService.Addcoursecontent(formData).subscribe((result: any) => {
       debugger
       // var result = JSON.parse(result);
       if (result.status == "200") {
         //debugger
+        this.dialog.closeAll();
+
         // Set the alert
         this.alert = {
           type: 'success',
@@ -531,7 +585,7 @@ OnClickDown(id:any){
         setTimeout(() => {
           // this._router.navigate(['/courses/course']);
           window.location.reload();
-        }, 1000);
+        }, 3000);
       }
       else {
         // Set the alert
@@ -544,7 +598,18 @@ OnClickDown(id:any){
         this.showAlert = true;
       }
       (error) => {
+        debugger
+        this.alert = {
+          type: 'warn',
+          message: "Error While Saving Data"
+        };
 
+        // Show the alert
+        this.showAlert = true;
+        setTimeout(() => {
+          this.showAlert = false;
+
+        }, 3000);
       }
     });
   }
@@ -644,18 +709,23 @@ OnClickDown(id:any){
   }
   UpdateCoursecontent(){
     debugger
-    if (this.coursecontentForm.invalid) {
-      return;
-    }
     this.showAlert = false;
+    
     if (this.coursecontentForm.invalid) {
-      if(this.coursecontentForm.controls['uploader'].invalid){
-
-      }
-      else{
-        return
-      }
-      // return;
+      
+        this.alert = {
+          type: 'error',
+          message: "Enter mandatory Fields"
+        };
+  
+        // Show the alert
+        this.showAlert = true;
+      
+      setTimeout(() => {
+        this.showAlert = false;
+      }, 1500);
+      return;
+     
     }
     // Get the contact object
     const coursecont = this.coursecontentForm.getRawValue();
@@ -677,7 +747,7 @@ OnClickDown(id:any){
     const formData: FormData = new FormData();
     formData.append("Id",  coursecont.id)
     formData.append("CourseId",  this.approute.snapshot.params['courseid'])
-    formData.append("ModuleId",  this.approute.snapshot.params['moduleid'])
+    formData.append("ModuleId",  this.coursecontentForm.controls['selectedmodule'].value)
     formData.append("Chapter", coursecont.chapter)
     formData.append("Author", coursecont.author)
     formData.append("ContentType", coursecont.contentType)
@@ -693,6 +763,10 @@ OnClickDown(id:any){
     }
     if (this.files1.length == 1) {
       formData.append("fileupload1", this.fileToUpload1, this.name1);
+    }
+    else if (this.removeupload==false) {
+      formData.append("VideoFileName", coursecont.videoFileName)
+      formData.append("VideoUrl", coursecont.videoUrl)
     }
     // else if (this.removeupload==false) {
     //   formData.append("Uploadedfilename", coursecont.uploadedfilename)
@@ -872,6 +946,12 @@ OnClickDown(id:any){
     this.coursecontentForm.controls['contentDescription'].setValue('');
       this.coursecontentForm.controls['author'].setValue('');
       this.coursecontentForm.controls['chapter'].setValue('');
+      this.uploadedfilename=''
+      this.uploadedvideo=''
+      this.name='';
+      this.name1=''
+      this.files=[]
+      this.files1=[]
       this.Save=true;
       this.update=false;
 
@@ -914,13 +994,14 @@ OnClickDown(id:any){
       // rolebyid=finalresult;
       if (finalresult.status == "200") {
         debugger
+     
 
         this.coursecontentForm.patchValue(finalresult.result);
         const course = this.coursecontentForm.getRawValue();
         console.log('coursecontent',course)
         this.contentId=course.id;
         this.uploadedfilename=course.uploadedfilename;
-        this.uploadedvideofile=course.videoFileName;
+        this.uploadedvideo=course.videoFileName;
 
         // this.remove=true
         // if (course.duration == 0) {

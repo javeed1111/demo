@@ -96,7 +96,8 @@ dataSource: MatTableDataSource<any>;
   }
   
   NextButton(){
-    this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+this.coursemoduleForm.value.moduleId+'/'+"add"]);
+    // this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+this.coursemoduleForm.value.moduleId+'/'+"add"]);
+    this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+"add"]);
 
   }
   cancel(){
@@ -220,10 +221,11 @@ dataSource: MatTableDataSource<any>;
   GoToPage(){
     debugger
     var value="edit"
-    if(this.coursemoduleForm.value.moduleId!=""){
-      this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+this.coursemoduleForm.value.moduleId+'/'+value]);
+    // if(this.coursemoduleForm.value.moduleId!=""){
+      // this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+this.coursemoduleForm.value.moduleId+'/'+value]);
+      this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+value]);
 
-    }
+    // }
     this.show=false
   }
   GoToPage1(){
@@ -322,7 +324,7 @@ dataSource: MatTableDataSource<any>;
                 // }, 2000); 
                 // setTimeout(() => {
                   
-                  this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+result.result+'/'+value]);
+                  this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+value]);
                 // }, 2000); 
                 
             }

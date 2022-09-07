@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -31,8 +32,11 @@ export class titlelist {
 })
 export class CourseplaneditComponent implements OnInit {
   selectedProduct: any | null = null;
-  displayedColumns = ['actions', 'titleName',];
-  dataSource: MatTableDataSource<TitleData>;
+  // displayedColumns = ['actions', 'titleName',];
+    // dataSource: MatTableDataSource<TitleData>;
+
+  displayedColumns = ['sno','price', 'offerprice','effectivefrom','effectivetill'];
+  dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   alert: { type: FuseAlertType; message: string } = {
@@ -70,7 +74,7 @@ export class CourseplaneditComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _router: Router,
     private approute: ActivatedRoute,
-    // public datepipe: DatePipe
+     public datepipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -104,7 +108,7 @@ export class CourseplaneditComponent implements OnInit {
     const ctrl = this.horizontalStepperForm.controls.step1.get('offerPrice');
     ctrl.disable();
     this.Edit(pcid,planid,value);
-
+    this.GetFeeInactiveData(planid);
   }
   Edit(pcid:any,planid:any,value:any) {
     debugger
@@ -345,10 +349,28 @@ export class CourseplaneditComponent implements OnInit {
     });
   }
  
-  // getDateItem(date: Date): string {
-  //   debugger
-  //   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-  // }
+  GetFeeInactiveData(id:any){
+    this.Id = id;
+    this._authService.GetAllInActivePlanFees(this.Id).subscribe((finalresult: any) => {
+      debugger
+      console.log(finalresult);
+      //  var finalresult = JSON.parse(result);
+      // rolebyid=finalresult;
+      if (finalresult.status == "200") {
+        debugger
+        for(let i=0;i<finalresult.result.length;i++){
+          finalresult.result[i].effectiveFrom=this.datepipe.transform(finalresult.result[i].effectiveFrom, 'dd-MM-yyyy');
+          finalresult.result[i].effectiveTill=this.datepipe.transform(finalresult.result[i].effectiveTill, 'dd-MM-yyyy');
+            
+          }
+        this.dataSource = new MatTableDataSource(finalresult.result);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        
+      }
+    });
+   
+  }
 
   savecourseplan(): void {
     debugger
@@ -428,7 +450,7 @@ export class CourseplaneditComponent implements OnInit {
       Price: dataa.step1.price,
       OfferPrice: this.OfferPrice,
       EffectiveFrom: maxdate,
-      EffectiveTill: mindate,
+      EffectiveTill: maxdate,
       OldOfferPrice:this.oldofferprice,
       OldPrice:this.oldprice,
       // ListOfCourses: dataa.step2.courseId,
@@ -450,7 +472,7 @@ export class CourseplaneditComponent implements OnInit {
       //     //  IsActive: this.active,
       //  }
       //   this._authService.Addtechnology(data).subscribe((result: any) => {
-      //debugger
+      debugger
       if (result.status == "200") {
         //debugger
 
@@ -463,7 +485,7 @@ export class CourseplaneditComponent implements OnInit {
         };
 
         setTimeout(() => {
-          this._router.navigate(['/courses/courseplan']);
+          this._router.navigate(['/courses/courseplanlist']);
         }, 2000);
       }
       else {
@@ -478,7 +500,16 @@ export class CourseplaneditComponent implements OnInit {
         }, 3000);
       }
       (error) => {
+        this.showAlert = true;
 
+        this.alert = {
+          type: 'error',
+          message: result.message
+        };
+
+        setTimeout(() => {
+          this._router.navigate(['/courses/courseplanlist']);
+        }, 2000);
       }
     });
   }
