@@ -7,6 +7,7 @@ import { MastersComponent } from './masters.component';
 
 const routes: Routes = [
   {
+    
     path:'',component:MastersComponent,
     children:
     [
@@ -14,6 +15,7 @@ const routes: Routes = [
       {path:'enquirystatus',component:EnquirystatusComponent},
       {path:'enquirytype',component:EnquirytypeComponent},
       {path:'learningmode',component:LearningmodeComponent},
+
 
     ]
   }
