@@ -1,4 +1,5 @@
 import { I } from '@angular/cdk/keycodes';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { ChangeDetectorRef, Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -19,8 +20,13 @@ import { OrderByPipe } from '../order-by.pipe';
 
 })
 export class AddCourseModuleComponent implements OnInit {
+  color = 'primary';
+  mode = 'indeterminate';
+  value = 50;
+  displayProgressSpinner = false;
+  spinnerWithoutBackdrop = false;
+ 
   @ViewChild('stepper') stepper: MatStepper;
-  
   isLinear:boolean=false
   active: boolean;
   coursemoduleForm: FormGroup;
@@ -76,6 +82,7 @@ dataSource: MatTableDataSource<any>;
 
   ngOnInit(): void {
      this.courseid = this.approute.snapshot.params['id'];
+     this.displayProgressSpinner = true;
 
     this.coursemoduleForm = this._formBuilder.group({
       moduleId:[''],
@@ -100,13 +107,24 @@ dataSource: MatTableDataSource<any>;
     this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+"add"]);
 
   }
-  cancel(){
-    // this._router.navigate(['/courses/coursemodule/'+this.courseid]);
-        // setTimeout(() => {
-        //     window.location.reload();
-        //    }, 10);
+  // cancel(){
+  //   this._router.navigate(['/courses/coursemodule/'+this.courseid]);
+  //       setTimeout(() => {
+  //           window.location.reload();
+  //          }, 10);
+
+  // }
+
+  cancel() {
+    
+    this._router.navigate(['/courses/course']);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 10);
 
   }
+
+
 
   OnClickUp(id:any){
     debugger
@@ -160,6 +178,7 @@ dataSource: MatTableDataSource<any>;
   AddCourseModule()
   {
       debugger
+      this.displayProgressSpinner = true;
       if (this.coursemoduleForm.invalid) {
           return;
       }
@@ -217,6 +236,32 @@ dataSource: MatTableDataSource<any>;
            }
         });
   }
+
+  selectionChange(event: StepperSelectionEvent) {
+    debugger
+    var value="edit"
+    console.log(event.selectedStep.label);
+    let stepLabel = event.selectedStep.label
+    if (stepLabel == "Step 1") {
+      this._router.navigate(['/courses/editcourse/'+this.courseid+'/'+'edit']);
+    }
+    if (stepLabel == "Step 3") {
+      this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+value]);
+      this.show=false
+
+    }
+    if (stepLabel == "Step 4") {
+      this._router.navigate(['/courses/questions/'+this.courseid]);
+    }
+    if (stepLabel == "Step 5") {
+      this._router.navigate(['/courses/reviews/'+this.courseid]);
+    }
+    // if (stepLabel == "Step 6") {
+    //   this._router.navigate(['/courses/subscriptions/'+this.courseid]);
+    // }
+  }
+
+ 
 
   GoToPage(){
     debugger

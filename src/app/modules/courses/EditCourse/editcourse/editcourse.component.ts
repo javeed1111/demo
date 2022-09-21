@@ -1,4 +1,5 @@
 import { I } from '@angular/cdk/keycodes';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { AuthService } from 'app/core/auth/auth.service';
 import moment from 'moment';
 export interface coursefeeinactiveData {
@@ -102,7 +104,9 @@ export class EditcourseComponent implements OnInit {
   bind: any;
   courses: any;
   faculties: any;
-
+  videoUrl: string=null;
+  uploadvideo:boolean=true
+  deletevideo:boolean=false
   
   constructor(
 
@@ -110,7 +114,9 @@ export class EditcourseComponent implements OnInit {
     private _authService: AuthService,
     private _router: Router,
     private approute: ActivatedRoute,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    private _fuseConfirmationService: FuseConfirmationService,
+
   ) { }
 
   ngOnInit(): void {
@@ -163,9 +169,7 @@ export class EditcourseComponent implements OnInit {
   }
   cancel() {
     this._router.navigate(['/courses/course']);
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
+ 
   }
   onSelectFile(files: FileList) {
     //debugger
@@ -339,6 +343,85 @@ export class EditcourseComponent implements OnInit {
     })
 }
 
+DeleteVideo(){
+  debugger
+  var filename=this.videoUrl.replace('https://ugetit.blob.core.windows.net/coursevideos/',"")
+
+  const confirmation = this._fuseConfirmationService.open({
+    title  : 'Delete Uploaded Video',
+    message: 'Are you sure you want to delete this course?',
+    actions: {
+        confirm: {
+            label: 'Delete'
+        }
+    }
+});
+
+// Subscribe to the confirmation dialog closed action
+confirmation.afterClosed().subscribe((result) => {
+
+    // If the confirm button pressed...
+    if ( result === 'confirmed' )
+    {
+  
+        // Delete the video
+        this._authService.DeleteVideo(filename).subscribe((finalresult: any) => {
+          debugger
+          if(finalresult.status=="200"){
+            this.uploadvideo=true
+            this.deletevideo=false
+            this.videoUrl=null
+            this.name2=''
+            this.files2=[]
+            this.fileToUpload=null
+            this.alert = {
+              type: 'success',
+              message:finalresult.message
+            };
+    
+            // Show the alert
+            this.showAlert = true;
+  
+            setTimeout(() => {
+              this.showAlert = false;
+  
+            }, 3000);
+          }
+      })
+
+              }
+});
+   
+}
+
+UploadVideo(){
+  debugger
+  const formData: FormData = new FormData();
+  if (this.files2.length == 1) {
+    formData.append("files", this.fileToUpload2, this.name2);
+    this._authService.UploadVideo(formData).subscribe((finalresult: any) => {
+      debugger
+      if(finalresult.status=="200"){
+        this.uploadvideo=false
+        this.deletevideo=true
+        this.videoUrl=finalresult.result
+        this.alert = {
+          type: 'success',
+          message:finalresult.message
+        };
+
+        // Show the alert
+        this.showAlert = true;
+
+        setTimeout(() => {
+          this.showAlert = false;
+
+        }, 3000);
+      }
+  })
+  }
+}
+
   GoToFaq(){
     this._router.navigate(['/courses/questions/'+this.courseid]);
   }
@@ -358,6 +441,29 @@ export class EditcourseComponent implements OnInit {
     var value="edit"
     this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+value]);
   }
+
+  selectionChange(event: StepperSelectionEvent) {
+    debugger
+    var value="edit"
+    console.log(event.selectedStep.label);
+    let stepLabel = event.selectedStep.label
+    if (stepLabel == "Step 2") {
+      this._router.navigate(['/courses/addcoursemodule/'+this.courseid]);
+    }
+    if (stepLabel == "Step 3") {
+      this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+value]);
+    }
+    if (stepLabel == "Step 4") {
+      this._router.navigate(['/courses/questions/'+this.courseid]);
+    }
+    if (stepLabel == "Step 5") {
+      this._router.navigate(['/courses/reviews/'+this.courseid]);
+    }
+    if (stepLabel == "Step 6") {
+      this._router.navigate(['/courses/subscriptions/'+this.courseid]);
+    }
+  }
+
   Edit(id: any, value: any) {
     //debugger
     var baseurl = this._authService.baseUrl;
@@ -470,8 +576,11 @@ export class EditcourseComponent implements OnInit {
         }
         if (finalresult.result.videoUrl != null) {
           this.videoSource.push( finalresult.result.videoUrl);
-          // this.noimage=true;;
-
+          this.videoUrl=finalresult.result.videoUrl
+          this.name2=finalresult.result.VideoFileName
+          this.uploadvideo=false
+          this.deletevideo=true
+          // this.noimage=true;
         }
         // if (finalresult.result.isActive == true) {
         //     var check = document.getElementById("userchkactive") as HTMLInputElement;
@@ -650,7 +759,8 @@ export class EditcourseComponent implements OnInit {
     formData.append("RelatedCourses", JSON.stringify(ListOfCourse))
     formData.append("FinalIds", JSON.stringify(finalids))
     formData.append("FacultyId", course.facultyId)
-
+    formData.append("VideoUrl", this.videoUrl)
+    formData.append("VideoFileName", this.name2)
 
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
@@ -666,21 +776,13 @@ export class EditcourseComponent implements OnInit {
       formData.append("iconUrl", course.iconUrl);
 
     }
-    if (this.files2.length == 1) {
-      formData.append("fileupload2", this.fileToUpload2, this.name2);
-    }
-    else {
-      formData.append("VideoUrl", course.videoUrl);
-
-    }
-    // var data = {
-    //   CourseName: course.courseName,
-    //   Description: course.description,
-    //   Title: course.title,
-    //   UpdatedBy: parseInt(localStorage.getItem("LoginId")),
-    //   //  IsActive: tech.isActive,
-    //   CourseId: this.approute.snapshot.params['id'],
+    // if (this.files2.length == 1) {
+    //   formData.append("fileupload2", this.fileToUpload2, this.name2);
     // }
+    // else {
+    //   formData.append("VideoUrl", course.videoUrl);
+
+   
     this._authService.UpdateCourse(formData).subscribe((result: any) => {
 
       //debugger
@@ -723,11 +825,23 @@ export class EditcourseComponent implements OnInit {
       return;
     }
 
+    var finalids=[] 
+    if(this.RelatedcourseIds.length==this.bind.length){
+      for(let i=0;i<this.bind.length;i++){
+        if(this.RelatedcourseIds[i].relatedCourseId!=this.bind[i]){
+        finalids.push(this.bind[i])
+        }
+      }
+    }
+    else{
+      finalids.push(1);
+    }
+
     // Get the contact object
     const course = this.courseForm.getRawValue();
     if(this.oldprice!=course.price){
-      course.effectiveTill=(moment(new Date()).format("DD-MM-YYYY"));
-      }
+    course.effectiveTill=(moment(new Date()).format("DD-MM-YYYY"));
+    }
     if (this.isofferactive == undefined) {
       if(this.isoffer==false && this.isofferactive == undefined){
         this.OfferPrice = '0';
@@ -759,25 +873,16 @@ export class EditcourseComponent implements OnInit {
       this.showonwebsite =course.showOnWebsite;
     }
     
-    
+    var ListOfCourse = [];
+    for (var i = 0; i < this.bind.length; i++) {
+      if (this.bind[i] != "") {
+        // const courselist = new list();
+        // courselist.CourseId = this.bind[i];
+        ListOfCourse.push(this.bind[i]);
+      }
+    }
 
-    // Go through the contact object and clear empty values
-    //  contact.emails = contact.emails.filter(email => email.email);
 
-    //  contact.phoneNumbers = contact.phoneNumbers.filter(phoneNumber => phoneNumber.phoneNumber);
-
-    // if (course.isActive == undefined) {
-    //   course.isActive = true;
-    // }
-    // if (course.duration == "") {
-    //   course.duration = 0
-    //   // this.courseForm.controls['Duration'].setValue(0)
-    // }
-    // if (course.fees == "") {
-    //   course.fees = 0
-    //   // this.courseForm.controls['Fees'].setValue(0)
-    //   // course.fees="";
-    // }
     const formData: FormData = new FormData();
     formData.append("CourseName", course.courseName)
     formData.append("TechnologyId", course.technologyId)
@@ -798,7 +903,7 @@ export class EditcourseComponent implements OnInit {
     formData.append("Status", this.status.toString())
     formData.append("MetaDescription", course.metaDescription)
     formData.append("metaKeywords", course.metaKeywords)
-    formData.append("Certifications", (course.certifications))
+    formData.append("Certifications", course.certifications)
     formData.append("ImageTitle", course.imageTitle)
     formData.append("ImageCaption", course.imageCaption)
     formData.append("ImageShortDescription", course.imageShortDescription)
@@ -806,6 +911,11 @@ export class EditcourseComponent implements OnInit {
     formData.append("EffectiveFrom", (course.effectiveFrom))
     formData.append("EffectiveTill", (course.effectiveTill))
     formData.append("showOnWebsite", (this.showonwebsite).toString())
+    formData.append("RelatedCourses", JSON.stringify(ListOfCourse))
+    formData.append("FinalIds", JSON.stringify(finalids))
+    formData.append("FacultyId", course.facultyId)
+    formData.append("VideoUrl", this.videoUrl)
+    formData.append("VideoFileName", this.name2)
 
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
@@ -821,21 +931,13 @@ export class EditcourseComponent implements OnInit {
       formData.append("iconUrl", course.iconUrl);
 
     }
-    if (this.files2.length == 1) {
-      formData.append("fileupload2", this.fileToUpload2, this.name2);
-    }
-    else {
-      formData.append("VideoUrl", course.videoUrl);
-
-    }
-    // var data = {
-    //   CourseName: course.courseName,
-    //   Description: course.description,
-    //   Title: course.title,
-    //   UpdatedBy: parseInt(localStorage.getItem("LoginId")),
-    //   //  IsActive: tech.isActive,
-    //   CourseId: this.approute.snapshot.params['id'],
+    // if (this.files2.length == 1) {
+    //   formData.append("fileupload2", this.fileToUpload2, this.name2);
     // }
+    // else {
+    //   formData.append("VideoUrl", course.videoUrl);
+
+   
     this._authService.UpdateCourse(formData).subscribe((result: any) => {
 
       //debugger
@@ -843,17 +945,16 @@ export class EditcourseComponent implements OnInit {
       if (result.status == "200") {
         //debugger
         // Set the alert
-        // this.alert = {
-        //   type: 'success',
-        //   message: result.message
-        // };
-        this._router.navigate(['/courses/addcoursemodule/'+this.courseid]);
+        this.alert = {
+          type: 'success',
+          message: result.message
+        };
+
         // Show the alert
-        // this.showAlert = true;
-        // setTimeout(() => {
-        //   window.location.reload();
-        //   // this._router.navigate(['/courses/course']);
-        // }, 1000);
+        this.showAlert = true;
+        setTimeout(() => {
+          this._router.navigate(['/courses/addcoursemodule/'+this.courseid]);
+        }, 1000);
       }
       else {
         // Set the alert
@@ -869,6 +970,6 @@ export class EditcourseComponent implements OnInit {
 
       }
     });
-  }
+      }
 
 }

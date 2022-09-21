@@ -1,14 +1,16 @@
 <div class="flex flex-col w-full">
-    <ng-container>
-        <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
-            <div class="w-full max-w-5xl">
+  <ng-container>
+    <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
+      <div class="w-full max-w-5xl">
 
-              <mat-stepper #stepper>
-                <mat-step [stepControl]="firstFormGroup" >
-                  <form [formGroup]="firstFormGroup">
-                    <ng-template matStepLabel ><p (click)="GoToPage()">Course</p></ng-template>
-                    <!-- <div><a [routerLink]="['/courses/course/']"></a></div> -->
-                    <!-- <div>     
+        <mat-stepper #stepper (selectionChange)="selectionChange($event)">
+          <mat-step label="Step 1" [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+              <ng-template matStepLabel>
+                <p (click)="GoToPage()">Course</p>
+              </ng-template>
+              <!-- <div><a [routerLink]="['/courses/course/']"></a></div> -->
+              <!-- <div>     
                       <div>
                      <mat-form-field appearance="fill">
                       <mat-label>Name</mat-label>
@@ -17,17 +19,19 @@
                       </div>              
                       <span><a ></a></span> 
                     </div> -->
-              
-                   <!-- <div>
+
+              <!-- <div>
                       <button mat-button matStepperNext>Next</button>
                     </div> -->
-                    
-                  </form>
-                </mat-step>
-                <mat-step [stepControl]="secondFormGroup" >
-                  <form [formGroup]="secondFormGroup">
-                    <ng-template matStepLabel><p (click)="GoToPage1()">Module</p></ng-template>
-                    <!-- <mat-form-field appearance="fill">
+
+            </form>
+          </mat-step>
+          <mat-step label="Step 2" [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
+              <ng-template matStepLabel>
+                <p (click)="GoToPage1()">Module</p>
+              </ng-template>
+              <!-- <mat-form-field appearance="fill">
                       <mat-label>Address</mat-label>
                       <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
                              required>
@@ -36,175 +40,170 @@
                       <button mat-button matStepperPrevious>Back</button>
                       <button mat-button matStepperNext>Next</button>
                     </div> -->
-                  </form>
-                </mat-step>
-                <mat-step [stepControl]="coursecontentForm">
-                  <ng-template matStepLabel>Chapter</ng-template>
-                  <!-- Dialog template -->
-                  <ng-template #myDialog>
-                    <h2 matDialogTitle>Please</h2>
-                    <mat-dialog-content>
-                      <p>Wait Video Is Uploading.....</p>
-                    </mat-dialog-content>
-                    <!-- <mat-dialog-actions align="end">
+            </form>
+          </mat-step>
+          <mat-step label="Step 3" [stepControl]="coursecontentForm">
+            <ng-template matStepLabel>Chapter</ng-template>
+            <!-- Dialog template -->
+            <ng-template #myDialog>
+              <h2 matDialogTitle>Please</h2>
+              <mat-dialog-content>
+                <p>Wait Video Is Uploading.....</p>
+              </mat-dialog-content>
+              <!-- <mat-dialog-actions align="end">
                       <button mat-button matDialogClose color="primary">Dismiss</button>
                     </mat-dialog-actions> -->
-                  </ng-template>
-                <form [formGroup]="coursecontentForm"
-                class="flex flex-col  px-8 pt-10 bg-card shadow rounded overflow-hidden">
-                
-                <div class="flex">
-                  <mat-form-field class="flex-auto">
-                      <mat-label>Select Module</mat-label>
-                      <mat-select [placeholder]="'Select Module'" [formControlName]="'selectedmodule'"  (selectionChange)="selectedmodule()">
-                        <mat-option *ngFor="let item of modules" [value]="item.moduleId">{{item.moduleName}}</mat-option>
-                      </mat-select>
-                    <mat-icon
-                        class="icon-size-5"
-                        matPrefix
-                        [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
-                </mat-form-field> 
-                </div>
-                    <!-- Main Grid -->
-                    <div class="flex flex-auto overflow-hidden">
+            </ng-template>
+            <app-progress-spinner class="example-margin" [color]="color" [mode]="mode" [value]="value" [backdropEnabled]="true" [positionGloballyCenter]="true"
+            [displayProgressSpinner]="displayProgressSpinner">
+            </app-progress-spinner>
+            <form [formGroup]="coursecontentForm"
+              class="flex flex-col  px-8 pt-10 bg-card shadow rounded overflow-hidden">
 
-                      <!-- Products list -->
-                      <div class="flex flex-col flex-auto sm:mb-15 overflow-hidden sm:overflow-y-auto">
-                        <ng-container>
-                          <ng-container>
-                            <!-- <div class="example-header">
+              <div class="flex">
+                <mat-form-field class="flex-auto">
+                  <mat-label>Select Module</mat-label>
+                  <mat-select [placeholder]="'Select Module'" [formControlName]="'selectedmodule'"
+                    (selectionChange)="selectedmodule()">
+                    <mat-option *ngFor="let item of modules" [value]="item.moduleId">{{item.moduleName}}</mat-option>
+                  </mat-select>
+                  <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
+                </mat-form-field>
+              </div>
+              <!-- Main Grid -->
+              <div class="flex flex-auto overflow-hidden">
+
+                <!-- Products list -->
+                <div class="flex flex-col flex-auto sm:mb-15 overflow-hidden sm:overflow-y-auto">
+                  <ng-container>
+                    <ng-container>
+                      <!-- <div class="example-header">
                               <mat-form-field>
                                 <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
                               </mat-form-field>
                             </div> -->
 
-                            <div class="example-container mat-elevation-z8">
+                      <div class="example-container mat-elevation-z8">
 
-                              <mat-table [dataSource]="dataSource" matSort>
+                        <mat-table [dataSource]="dataSource" matSort>
 
-                                <!-- ID Column -->
-                                <ng-container matColumnDef="sno">
-                                  <mat-header-cell *matHeaderCellDef> SNO. </mat-header-cell>
-                                  <mat-cell *matCellDef="let row; let i=index">
-                                    {{(i+1)}}</mat-cell>
-                                    <!-- {{ (i+1) + (myPaginator.pageIndex * myPaginator.pageSize) }}</mat-cell> -->
-                                </ng-container>
-                                <ng-container matColumnDef="sorting">
-                                  <mat-header-cell *matHeaderCellDef >Sort </mat-header-cell>
-                                  <mat-cell *matCellDef="let row">
-                                    <a (click)="OnClickUp(row.sortOrderId)"><mat-icon class="icon-size-4 " [svgIcon]="'heroicons_solid:arrow-narrow-up'">
-                                    </mat-icon>
-                                    </a>
-                                    <a (click)="OnClickDown(row.sortOrderId)"><mat-icon class="icon-size-4 " [svgIcon]="'heroicons_solid:arrow-narrow-down'">
-                                    </mat-icon>
-                                    </a>
-                                    </mat-cell>
-                                </ng-container>  
-                                <ng-container matColumnDef="chapter">
-                                  <mat-header-cell *matHeaderCellDef mat-sort-header> Chapter </mat-header-cell>
-                                  <mat-cell *matCellDef="let row"> {{row.chapter}} </mat-cell>
-                                </ng-container>
-
-                                <!-- Progress Column -->
-                                <ng-container matColumnDef="author">
-                                  <mat-header-cell *matHeaderCellDef mat-sort-header> Author</mat-header-cell>
-                                  <mat-cell *matCellDef="let row"> {{row.author}} </mat-cell>
-                                </ng-container>
-
-                               
-
-                                <ng-container matColumnDef="preview">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header> FileName </mat-header-cell>
-                                    <mat-cell *matCellDef="let row"> {{row.uploadedfilename}} </mat-cell>
-                                  </ng-container>
-
-                                
-                                <!-- <ng-container matColumnDef="duration">
-                                  <mat-header-cell *matHeaderCellDef mat-sort-header> Duration </mat-header-cell>
-                                  <mat-cell *matCellDef="let row"> {{row.duration}} </mat-cell>
-                                </ng-container> -->
-                                <!-- <ng-container matColumnDef="fees">
-                                  <mat-header-cell *matHeaderCellDef mat-sort-header> Fees </mat-header-cell>
-                                  <mat-cell *matCellDef="let row"> {{row.fees}} </mat-cell>
-                                </ng-container> -->
-                                <ng-container matColumnDef="actions">
-                                  <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-                                  <mat-cell *matCellDef="let row">
-                                    <div>
-                                      <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
-                                        (click)="EditFromGrid(row.id,'viewcontent')">
-                                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:eye'">
-                                        </mat-icon>
-                                      </a>
-                                      <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
-                                        (click)="EditFromGrid(row.id,'editcontent')">
-                                        <mat-icon class="icon-size-5  mr-2" [svgIcon]="'heroicons_solid:pencil'">
-                                        </mat-icon>
-                                      </a>
-                                      <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
-                                        (click)="deleteFromGrid(row.id)">
-                                        <mat-icon class="icon-size-5 " [svgIcon]="'heroicons_solid:trash'">
-                                        </mat-icon>
-                                      </a>
-                                    </div>
-                                  </mat-cell>
-                                </ng-container>
-
-                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                                <mat-row *matRowDef="let row; columns: displayedColumns;">
-                                </mat-row>
-                              </mat-table>
-
-                              <!-- <mat-paginator #myPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
-                                aria-label="Select page of users"></mat-paginator> -->
-                            </div>
-
+                          <!-- ID Column -->
+                          <ng-container matColumnDef="sno">
+                            <mat-header-cell *matHeaderCellDef> SNO. </mat-header-cell>
+                            <mat-cell *matCellDef="let row; let i=index">
+                              {{(i+1)}}</mat-cell>
+                            <!-- {{ (i+1) + (myPaginator.pageIndex * myPaginator.pageSize) }}</mat-cell> -->
                           </ng-container>
-                        </ng-container>
+                          <ng-container matColumnDef="sorting">
+                            <mat-header-cell *matHeaderCellDef>Sort </mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                              <a (click)="OnClickUp(row.sortOrderId)">
+                                <mat-icon class="icon-size-4 " [svgIcon]="'heroicons_solid:arrow-narrow-up'">
+                                </mat-icon>
+                              </a>
+                              <a (click)="OnClickDown(row.sortOrderId)">
+                                <mat-icon class="icon-size-4 " [svgIcon]="'heroicons_solid:arrow-narrow-down'">
+                                </mat-icon>
+                              </a>
+                            </mat-cell>
+                          </ng-container>
+                          <ng-container matColumnDef="chapter">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Chapter </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.chapter}} </mat-cell>
+                          </ng-container>
 
+                          <!-- Progress Column -->
+                          <!-- <ng-container matColumnDef="VideoFile">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header> VideoFile</mat-header-cell>
+                                  <mat-cell *matCellDef="let row"> {{row.videoFileName}} </mat-cell>
+                                </ng-container> -->
+
+
+
+                          <!-- <ng-container matColumnDef="preview">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> MaterialFile </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.uploadedfilename}} </mat-cell>
+                                  </ng-container> -->
+
+
+                          <ng-container matColumnDef="actions">
+                            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                              <div>
+                                <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                                  (click)="EditFromGrid(row.id,'viewcontent')">
+                                  <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:eye'">
+                                  </mat-icon>
+                                </a>
+                                <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                                  (click)="EditFromGrid(row.id,'editcontent')">
+                                  <mat-icon class="icon-size-5  mr-2" [svgIcon]="'heroicons_solid:pencil'">
+                                  </mat-icon>
+                                </a>
+                                <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                                  (click)="deleteFromGrid(row.id)">
+                                  <mat-icon class="icon-size-5 " [svgIcon]="'heroicons_solid:trash'">
+                                  </mat-icon>
+                                </a>
+                              </div>
+                            </mat-cell>
+                          </ng-container>
+
+                          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                          <mat-row *matRowDef="let row; columns: displayedColumns;">
+                          </mat-row>
+                        </mat-table>
+
+                        <!-- <mat-paginator #myPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
+                                aria-label="Select page of users"></mat-paginator> -->
                       </div>
 
-                    </div>
-                    <div class="grid grid-cols-12 gap-x-1 mb-4">
-                      <div class=" col-span-3">
-                      
-                          <strong style="color: red;">Selected Module</strong> 
-                      
-                      </div>
-                      <div class=" col-span-3" style="color: red;">
-                          : {{Modulename}}
-                      </div>
-                      </div>
-                <div class="flex">
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Course Name</mat-label>
-                        <input matInput appAutofocus readonly [formControlName]="'courseName'" [placeholder]="'Course Name'">
-                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
-                    </mat-form-field>
+                    </ng-container>
+                  </ng-container>
+
                 </div>
-                <!-- <div class="flex">
+
+              </div>
+              <div class="grid grid-cols-12 gap-x-1 mb-4">
+                <div class=" col-span-3">
+
+                  <strong style="color: red;">Selected Module</strong>
+
+                </div>
+                <div class=" col-span-9" style="color: red;">
+                  : {{Modulename}}
+                </div>
+              </div>
+              <div class="flex">
+                <mat-form-field class="flex-auto">
+                  <mat-label>Course Name</mat-label>
+                  <input matInput appAutofocus readonly [formControlName]="'courseName'" [placeholder]="'Course Name'">
+                  <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
+                </mat-form-field>
+              </div>
+              <!-- <div class="flex">
                   <mat-form-field class="flex-auto">
                       <mat-label>Module Name</mat-label>
                       <input matInput readonly [formControlName]="'moduleName'" [placeholder]="'Module Name'">
                       <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
                   </mat-form-field>
               </div> -->
-                <div class="flex">
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Chapter Name</mat-label>
-                        <input matInput [formControlName]="'chapter'" [placeholder]="'Chapter'">
-                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
-                    </mat-form-field>
-                </div>
-                <div class="flex">
+              <div class="flex">
+                <mat-form-field class="flex-auto">
+                  <mat-label>Chapter Name</mat-label>
+                  <input matInput [formControlName]="'chapter'" [placeholder]="'Chapter'">
+                  <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
+                </mat-form-field>
+              </div>
+              <!-- <div class="flex">
                     <mat-form-field class="flex-auto">
                         <mat-label>Author</mat-label>
                         <input matInput [formControlName]="'author'" [placeholder]="'Author'">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon>
                     </mat-form-field>
-                </div>
-                <!--Technologdrop-->
-                <!-- <div class="flex">
+                </div> -->
+              <!--Technologdrop-->
+              <!-- <div class="flex">
                     <mat-form-field class="flex-auto gt-xs:pr-3">
                         <mat-label>Content Type</mat-label>
                         <mat-select name="ContentType" placeholder="Content Type" [formControlName]="'contentType'"
@@ -218,159 +217,184 @@
                     </mat-form-field>
                     
                 </div> -->
-                <!--Description-->
-                <div class="flex-auto mb-4">
-                  <mat-label>Description</mat-label>
-                  <!-- <div class="flex"> -->
-                  <!-- <mat-form-field class="flex-auto"> -->
-                  <quill-editor [formControlName]="'contentDescription'" [modules]="quillModules">
-                  </quill-editor>
-                  <!-- </mat-form-field> -->
-                  <!-- <mat-form-field class="flex-auto">
+              <!--Description-->
+              <div class="flex-auto mb-4">
+                <mat-label>Description</mat-label>
+                <!-- <div class="flex"> -->
+                <!-- <mat-form-field class="flex-auto"> -->
+                <quill-editor [formControlName]="'contentDescription'" [modules]="quillModules">
+                </quill-editor>
+                <!-- </mat-form-field> -->
+                <!-- <mat-form-field class="flex-auto">
                           <mat-label>Description</mat-label>
                           <input matInput [formControlName]="'Description'" [placeholder]="'Description'">
                           <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:menu-alt-1'"></mat-icon>
                       </mat-form-field> -->
-                  <!-- </div> -->
+                <!-- </div> -->
               </div>
-                
-                <!-- Image Add remove -->
-                <div class="grid grid-cols-12 gap-x-1 mt-4">
-                  <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>  -->
-                    <!-- <div class="absolute inset-0 flex items-center justify-center z-20"> -->
-                       <!-- Actions -->
-                    <div class=" mt-4 sm:mt-0 col-span-6">
-                        <!-- Upload button -->
-                        <button mat-flat-button [color]="'primary'"
-                            onclick="document.getElementById('txtfileupload').click()">
-                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                            <span class="ml-1 mr-0">Upload Materiel</span>
 
-                            <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
+              <!-- Image Add remove -->
+              <div class="grid grid-cols-12 gap-x-1 mt-4">
+                <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>  -->
+                <!-- <div class="absolute inset-0 flex items-center justify-center z-20"> -->
+                <!-- Actions -->
+                <div class=" mt-4 sm:mt-0 col-span-6">
+                  <!-- Upload button -->
+                  <button mat-flat-button [color]="'primary'"
+                    onclick="document.getElementById('txtfileupload').click()">
+                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                    <span class="ml-1 mr-0">Upload Material</span>
+
+                    <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
                                 id="txtfileupload" name="fileupload"
                                 (change)="onSelectFile($event.target.files)"> -->
 
-                        </button>
-                        <span class="ml-1 mr-0">{{name}}</span>
-                        <span class="ml-1 mr-0">{{uploadedfilename}}</span>
-                        <!-- <span class="ml-1 mr-0">
+                  </button>
+                  <!-- <span class="ml-1 mr-0">{{name}}</span>
+                        <span class="ml-1 mr-0">{{uploadedfilename}}</span> -->
+                  <!-- <span class="ml-1 mr-0">
                           <button class="ml-auto" mat-button [matTooltip]="'remove'" (click)="removeuploads()" *ngIf="uploadedfilename">
                             Remove
                           </button>
                         </span> -->
-                        <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
-                        <!-- <button style="display:block;width:120px; height:30px;"
+                  <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
+                  <!-- <button style="display:block;width:120px; height:30px;"
                             onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
-                        <input type='file' class="form-control" formControlName="uploader" accept= ".doc" id="txtfileupload"
-                            name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none"
-                            [multiple]="true">
-                        <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
+                  <input type='file' class="form-control" formControlName="uploader" accept=".doc" id="txtfileupload"
+                    name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none"
+                    [multiple]="true">
+                  <br>
+                  <ul *ngFor="let item of files">
+                    <li>{{item.fileName}}
+                      <span *ngIf="item.fileName && update" (click)="DeleteMaterial(item)"><mat-icon svgIcon="heroicons_outline:trash"></mat-icon></span>
+                    </li>
+                  </ul>
+
+                  <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                             id="txtfileupload"  name="fileupload" 
                             (change)="onSelectFile($event.target.files)"> -->
-                    </div>
+                </div>
 
-                    
-                                
-                    <!-- Actions -->
-                    <div class="mt-4 sm:mt-0 col-span-6">
-                        <!-- Upload button -->
-                        <button mat-flat-button [color]="'primary'"
-                            onclick="document.getElementById('txtfileupload1').click()">
-                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                            <span class="ml-1 mr-0">Upload Video</span>
 
-                            <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
+
+                <!-- Actions -->
+                <div class="mt-4 sm:mt-0 col-span-6">
+                  <!-- Upload button -->
+                  <button mat-flat-button [color]="'primary'"
+                    onclick="document.getElementById('txtfileupload1').click()">
+                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                    <span class="ml-1 mr-0">Upload Video</span>
+
+                    <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
                                 id="txtfileupload" name="fileupload"
                                 (change)="onSelectFile($event.target.files)"> -->
 
-                        </button>
-                        <span class="ml-1 mr-0">{{name1}}</span>
-                        <span class="ml-1 mr-0">{{uploadedvideo}}</span>
-                        <!-- <span class="ml-1 mr-0">
+                  </button>
+                  <!-- <span class="ml-2" *ngIf="uploadvideo" (click)="UploadVideo()"><mat-icon svgIcon="heroicons_outline:cloud-upload"></mat-icon></span> -->
+                  <span class="ml-2" *ngIf="value=='editcontent'" (click)="DeleteVideo()">
+                    <mat-icon *ngIf="deletevideo" svgIcon="heroicons_outline:trash"></mat-icon>
+                  </span>
+                  <span class="ml-1 mr-0">{{name1}}</span>
+                  <span class="ml-1 mr-0">{{uploadedvideo}}</span>
+
+
+                  <!-- <span class="ml-1 mr-0">
                           <button class="ml-auto" mat-button [matTooltip]="'remove'" (click)="removeuploads()" *ngIf="uploadedvideofile">
                             Remove
                           </button>
                         </span> -->
-                        <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
-                        <!-- <button style="display:block;width:120px; height:30px;"
+                  <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
+                  <!-- <button style="display:block;width:120px; height:30px;"
                             onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
-                        <input type='file' class="form-control" formControlName="uploader1" accept="video/*"  id="txtfileupload1"
-                            name="fileupload1" (change)="onSelectVideo($event)" style="display:none"
-                            [multiple]="true">
-                        <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
+                  <input type='file' class="form-control" formControlName="uploader1" accept="video/*"
+                    id="txtfileupload1" name="fileupload1" (change)="onSelectVideo($event)" style="display:none"
+                    [multiple]="true">
+                  <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                             id="txtfileupload"  name="fileupload" 
                             (change)="onSelectFile($event.target.files)"> -->
-                    </div>
-  
                 </div>
-                <!-- Alert -->
-                <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
-                    [type]="alert.type" [@shake]="alert.type === 'success'">
-                    {{alert.message}}
-                </fuse-alert>
+              </div>
+              <!-- <div *ngFor="let bar of progressBars">
+        
+                    <mat-progress-bar  mode="determinate" value="bar.progress"></mat-progress-bar>
+               
+                </div> -->
+              <div class="mt-2">
+                  <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+                </div>
+              <!-- Alert -->
+              <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
+                [type]="alert.type" [@shake]="alert.type === 'success'">
+                {{alert.message}}
+              </fuse-alert>
 
-                <div
-                    class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
-                    <!-- Cancel -->
-                    <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="cancel()">
-                        Cancel
-                    </button>
-                    <!--Clear-->
-                    <button class="px-6 ml-3" mat-button [matTooltip]="'Clear'" (click)="clear()"*ngIf="Clear">
-                      Clear
-                  </button>
-                    <!--Save-->
-                    <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="AddCoursecontent()" *ngIf="Save">
-                        Save
-                    </button>
-                    <!-- <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="SaveBack()" *ngIf="Save">
-                      Save Back
-                  </button> -->
-                    <!--update-->
-                    <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UpdateCoursecontent()" *ngIf="update">
-                      Update
-                  </button>
-                </div>
-                </form>
-                <audio id="audio"></audio>
-                </mat-step>
-                <mat-step>
-                  <ng-template matStepLabel><p (click)="GoToFaq()">FAQ</p></ng-template>
-                  <!-- <p>You are now done.</p> -->
-                  <!-- <div>
+              <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
+                <!-- Cancel -->
+                <button class="ml-auto" mat-flat-button [color]="'primary'" [matTooltip]="'Cancel'" (click)="cancel()">
+                  Cancel
+                </button>
+                <!--Clear-->
+                <button class="px-6 ml-3" mat-flat-button [color]="'primary'" [matTooltip]="'Clear'" (click)="clear()"
+                  *ngIf="Clear">
+                  Clear
+                </button>
+                <!--Save-->
+                <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UploadVideo('save')" *ngIf="Save">
+                  Save
+                </button>
+                <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UploadVideo('SaveNext')" *ngIf="Save"
+                  [disabled]="butdisabled">
+                  Save Next
+                </button>
+                <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UploadVideo('UpdateNext')" *ngIf="update"
+                  [disabled]="butdisabled">
+                  Update Next
+                </button>
+                <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UploadVideo('update')"
+                  *ngIf="update">
+                  Update
+                </button>
+              </div>
+            </form>
+
+            <audio id="audio"></audio>
+          </mat-step>
+          <mat-step label="Step 4">
+            <ng-template matStepLabel>
+              <p (click)="GoToFaq()">FAQ</p>
+            </ng-template>
+            <!-- <p>You are now done.</p> -->
+            <!-- <div>
                     <button mat-button matStepperPrevious>Back</button>
                     <button mat-button (click)="stepper.reset()">Reset</button>
                   </div> -->
-                </mat-step>
-                <mat-step>
-                  <ng-template matStepLabel><p (click)="GoToReviews()">Reviews</p></ng-template>
-                  <!-- <p>You are now done.</p> -->
-                  <!-- <div>
+          </mat-step>
+          <mat-step label="Step 5">
+            <ng-template matStepLabel>
+              <p (click)="GoToReviews()">Reviews</p>
+            </ng-template>
+            <!-- <p>You are now done.</p> -->
+            <!-- <div>
                     <button mat-button matStepperPrevious>Back</button>
                     <button mat-button (click)="stepper.reset()">Reset</button>
                   </div> -->
-                </mat-step>
-                <mat-step>
+          </mat-step>
+          <!-- <mat-step label="Step 6">
                   <ng-template matStepLabel><p (click)="GoToSubscriptions()">Subscriptions</p></ng-template>
-                  <!-- <p>You are now done.</p> -->
-                  <!-- <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button (click)="stepper.reset()">Reset</button>
-                  </div> -->
-                </mat-step>
-              </mat-stepper>
-             
+                
+                </mat-step> -->
+        </mat-stepper>
 
- 
-            </div>
-        </div>
-       
 
-    </ng-container>
-    
+
+      </div>
+    </div>
+
+
+  </ng-container>
+
 </div>
-

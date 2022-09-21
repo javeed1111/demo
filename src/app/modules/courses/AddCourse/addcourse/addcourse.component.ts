@@ -12,6 +12,7 @@ import moment from 'moment';
 import { ReplaySubject, Subject,takeUntil } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
 import { take } from 'rxjs/operators';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 export interface Keywords {
   name: string;
@@ -30,7 +31,8 @@ interface facultysearch {
   animations: fuseAnimations
 })
 export class AddcourseComponent implements OnInit {
-
+  uploadvideo:boolean=true
+  deletevideo:boolean=false
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA,SPACE] as const;
   keywords: Keywords[]=[];
@@ -98,11 +100,14 @@ export class AddcourseComponent implements OnInit {
     
     ];
   faculties: any;
+  videoUrl: string=null;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _router: Router,
+    private _fuseConfirmationService: FuseConfirmationService,
+
   ) { }
 
   ngOnInit(): void {
@@ -177,6 +182,8 @@ export class AddcourseComponent implements OnInit {
       this.FacultySearch.filter(bank => bank.firstName.toLowerCase().indexOf(search) > -1 )
     );
   }
+
+  
 
   protected setInitialValue1() {
       
@@ -259,9 +266,8 @@ export class AddcourseComponent implements OnInit {
       }
   }
 
-  SaveNext(){
-     
-      debugger
+  SaveNext() {
+    debugger
     this.showAlert = false;
     if (this.courseForm.invalid) {
       return;
@@ -310,16 +316,27 @@ export class AddcourseComponent implements OnInit {
     formData.append("EffectiveFrom", (moment(course.effectiveFrom).format("DD-MM-YYYY")))
     formData.append("EffectiveTill", efeectivetill)
     formData.append("showOnWebsite", (this.showonwebsite).toString())
-    
+    formData.append("FacultyId", course.instructor.toString())
+    formData.append("VideoUrl", this.videoUrl)
+    formData.append("VideoFileName", this.name2)
+    if(course.relatedcourses==""){
+      course.relatedcourses=[]
+      formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
+
+    }
+    else{
+      formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
+    }
+
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
     }
     if (this.files1.length == 1) {
       formData.append("fileupload1", this.fileToUpload1, this.name1);
     }
-    if (this.files2.length == 1) {
-      formData.append("fileupload2", this.fileToUpload2, this.name2);
-    }
+    // if (this.files2.length == 1) {
+    //   formData.append("fileupload2", this.fileToUpload2, this.name2);
+    // }
     // console.log('formdata',formData)
     // var data = {
     // CourseName: course.courseName,
@@ -358,7 +375,7 @@ export class AddcourseComponent implements OnInit {
         this.showAlert = true;
         setTimeout(() => {
           this.showAlert = false;
-        }, 1000);
+        }, 3000);
       }
       else {
         // Set the alert
@@ -374,7 +391,6 @@ export class AddcourseComponent implements OnInit {
 
       }
     });
-
   }
 
   onSelectFile(files: FileList) {
@@ -530,6 +546,86 @@ export class AddcourseComponent implements OnInit {
     }, 10);
 
   }
+
+  DeleteVideo(){
+    debugger
+    var filename=this.videoUrl.replace('https://ugetit.blob.core.windows.net/coursevideos/',"")
+
+    const confirmation = this._fuseConfirmationService.open({
+      title  : 'Delete Uploaded Video',
+      message: 'Are you sure you want to delete this course?',
+      actions: {
+          confirm: {
+              label: 'Delete'
+          }
+      }
+  });
+
+  // Subscribe to the confirmation dialog closed action
+  confirmation.afterClosed().subscribe((result) => {
+
+      // If the confirm button pressed...
+      if ( result === 'confirmed' )
+      {
+    
+          // Delete the video
+          this._authService.DeleteVideo(filename).subscribe((finalresult: any) => {
+            debugger
+            if(finalresult.status=="200"){
+              this.uploadvideo=true
+              this.deletevideo=false
+              this.videoUrl=null
+              this.name2=''
+              this.files2=[]
+              this.fileToUpload=null
+              this.alert = {
+                type: 'success',
+                message:finalresult.message
+              };
+      
+              // Show the alert
+              this.showAlert = true;
+    
+              setTimeout(() => {
+                this.showAlert = false;
+    
+              }, 3000);
+            }
+        })
+
+                }
+  });
+     
+  }
+
+  UploadVideo(){
+    debugger
+    const formData: FormData = new FormData();
+    if (this.files2.length == 1) {
+      formData.append("files", this.fileToUpload2, this.name2);
+      this._authService.UploadVideo(formData).subscribe((finalresult: any) => {
+        debugger
+        if(finalresult.status=="200"){
+          this.uploadvideo=false
+          this.deletevideo=true
+          this.videoUrl=finalresult.result
+          this.alert = {
+            type: 'success',
+            message:finalresult.message
+          };
+  
+          // Show the alert
+          this.showAlert = true;
+
+          setTimeout(() => {
+            this.showAlert = false;
+
+          }, 3000);
+        }
+    })
+    }
+  }
+
   AddCourse() {
     debugger
     this.showAlert = false;
@@ -581,6 +677,8 @@ export class AddcourseComponent implements OnInit {
     formData.append("EffectiveTill", efeectivetill)
     formData.append("showOnWebsite", (this.showonwebsite).toString())
     formData.append("FacultyId", course.instructor.toString())
+    formData.append("VideoUrl", this.videoUrl)
+    formData.append("VideoFileName", this.name2)
     if(course.relatedcourses==""){
       course.relatedcourses=[]
       formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
@@ -596,9 +694,9 @@ export class AddcourseComponent implements OnInit {
     if (this.files1.length == 1) {
       formData.append("fileupload1", this.fileToUpload1, this.name1);
     }
-    if (this.files2.length == 1) {
-      formData.append("fileupload2", this.fileToUpload2, this.name2);
-    }
+    // if (this.files2.length == 1) {
+    //   formData.append("fileupload2", this.fileToUpload2, this.name2);
+    // }
     // console.log('formdata',formData)
     // var data = {
     // CourseName: course.courseName,
@@ -637,7 +735,7 @@ export class AddcourseComponent implements OnInit {
         this.showAlert = true;
         setTimeout(() => {
           this.showAlert = false;
-        }, 1000);
+        }, 3000);
       }
       else {
         // Set the alert
@@ -654,6 +752,8 @@ export class AddcourseComponent implements OnInit {
       }
     });
   }
+
+
   // toggleCompleted($event: MatSlideToggleChange): void {
   //   //debugger
   //   if ($event.checked != undefined) {

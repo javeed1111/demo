@@ -6,115 +6,23 @@
   
       <!-- Title -->
       <div class="text-4xl font-extrabold tracking-tight">Reviews</div>
-      <!-- Alert -->
-      <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type"
-        [@shake]="alert.type === 'success'">
-        {{alert.message}}
-      </fuse-alert>
-  
-      <!-- Actions -->
-      <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-        <!-- Search -->
-        <!-- <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
-                  <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                  <input matInput [formControl]="searchInputControl" [autocomplete]="'off'"
-                      [placeholder]="'Search Courses'">
-              </mat-form-field> -->
-        <!-- Add product button -->
+      
         
-        <!-- <button class="ml-4" mat-flat-button [color]="'primary'" (click)="createProduct()">
-          <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-          <span class="ml-2 mr-1">Add</span>
-        </button> -->
-      </div>
     </div>
-  
-    <!-- Main -->
-    <div class="flex flex-auto overflow-hidden">
-  
-      <!-- Products list -->
-      <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
-        <ng-container>
-          <ng-container>
-            <!-- <div class="example-header">
-              <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-              </mat-form-field>
-            </div> -->
-  
-            <div class="example-container mat-elevation-z8">
-  
-              <mat-table [dataSource]="dataSource" matSort>
-  
-                <!-- ID Column -->
-                <ng-container matColumnDef="sno">
-                  <mat-header-cell *matHeaderCellDef> SNO. </mat-header-cell>
-                  <mat-cell *matCellDef="let row; let i=index">
-                    {{ (i+1) + (myPaginator.pageIndex * myPaginator.pageSize) }}</mat-cell>
-                </ng-container>
-                <!-- Color Column -->
-                <ng-container matColumnDef="username">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> UserName </mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.title}}
-                    <!-- <a (click)="GoToModules(row.courseId)"> {{row.title}}</a>  </mat-cell> -->
-                  </mat-cell>
-  
-                </ng-container>
-  
-                <!-- Progress Column -->
-                <ng-container matColumnDef="comments">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> Comments</mat-header-cell>
-                  <mat-cell *matCellDef="let row">
-                     {{row.courseName}} </mat-cell>
-                </ng-container>
-  
-                <!-- Name Column -->
-                <ng-container matColumnDef="ratings">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> Rating </mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.technologyName}} </mat-cell>
-                </ng-container>
-  
-                <ng-container matColumnDef="actions">
-                  <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-                  <mat-cell *matCellDef="let row">
-                    <div>
-                      <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
-                        (click)="showViewModal(row.courseId)">
-                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:thumb-up'">
-                        </mat-icon>
-                      </a>
-                      <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
-                        (click)="showEditModal(row.courseId)">
-                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:thumb-down'">
-                        </mat-icon>
-                      </a>
-                      <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
-                        (click)="deleteCourse(row.courseId)">
-                        <mat-icon class="icon-size-5 " [svgIcon]="'heroicons_solid:trash'">
-                        </mat-icon>
-                      </a>
-                    </div>
-                  </mat-cell>
-                </ng-container>
-  
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;">
-                </mat-row>
-              </mat-table>
-  
-              <!-- <mat-paginator #myPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
-                aria-label="Select page of users"></mat-paginator> -->
-            </div>
-  
-          </ng-container>
-        </ng-container>
-  
-  
-  
-  
-  
+    <div class=" flex flex-col mt-2 py-4 px-6 md:px-8">
+      <div class="flex items-center mt-3 " *ngFor="let item of reviews">
+          <div class="flex items-center justify-center w-14 h-14 rounded bg-red-100 text-red-800 dark:bg-red-600 dark:text-red-50">
+            <img src="assets/images/avatars/brian-hughes.jpg" alt="image">
+          </div>
+          <div class="flex-auto ml-4  leading-none">
+              <div class=" font-medium text-2xl"><h3>{{item.userName}}</h3></div>
+              <div class="mt-2 font-medium text-secondary">{{item.comments}}</div>
+          </div>
       </div>
-  
-    </div>
-  
+  </div>
+  <div class="relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden">
+    <div class="flex items-center justify-end  mx-10 mt-4 px-8 py-5 bg-card shadow rounded overflow-hidden">
+    <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Finish()">
+      Finish
+  </button>
   </div>

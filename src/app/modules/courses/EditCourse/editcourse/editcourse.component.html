@@ -3,8 +3,8 @@
     <ng-container>
         <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
             <div class="w-full max-w-5xl">
-                <mat-stepper  #stepper>
-                    <mat-step [stepControl]="courseForm" >
+                <mat-stepper  #stepper (selectionChange)="selectionChange($event)">
+                    <mat-step label="Step 1" [stepControl]="courseForm" >
                         <form [formGroup]="courseForm"
                         class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
                         <ng-template matStepLabel>Course</ng-template>
@@ -367,8 +367,11 @@
                                     (change)="onSelectFile($event.target.files)"> -->
     
                             </button>
-                            <span class="ml-1 mr-0">{{name2}}</span>
-                            <!-- <span class="ml-1 mr-0">{{uploadedvideofile}}</span> -->
+                                <span class="ml-2" *ngIf="uploadvideo" (click)="UploadVideo()"><mat-icon svgIcon="heroicons_outline:cloud-upload"></mat-icon></span>
+                                <span class="ml-2" *ngIf="deletevideo" (click)="DeleteVideo()"><mat-icon svgIcon="heroicons_outline:trash"></mat-icon></span>
+                                <span class="ml-1 mr-0">{{name2}}</span>
+
+                                <!-- <span class="ml-1 mr-0">{{uploadedvideofile}}</span> -->
                             <span class="ml-1 mr-0">
                               <!-- <button class="ml-auto" mat-button [matTooltip]="'remove'" (click)="removeuploads()" >
                                 Remove
@@ -555,7 +558,7 @@
                         <div
                             class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
                             <!-- Cancel -->
-                            <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="cancel()">
+                            <button class="ml-auto" mat-flat-button [color]="'primary'" [matTooltip]="'Cancel'" (click)="cancel()">
                                 Cancel
                             </button>
                             <!--Save-->
@@ -571,7 +574,7 @@
                         </div>
                     </form>
                     </mat-step>
-                    <mat-step [stepControl]="secondFormGroup" >
+                    <mat-step label="Step 2" [stepControl]="secondFormGroup" >
                       <form [formGroup]="secondFormGroup">
                         <ng-template matStepLabel ><p (click)="GoToPage()">Module</p></ng-template>
                         <!-- <div>
@@ -580,7 +583,7 @@
                         </div> -->
                       </form>
                     </mat-step>
-                    <mat-step>
+                    <mat-step label="Step 3">
                       <ng-template matStepLabel ><p (click)="GoToChapters()">Chapter</p></ng-template>
                       <!-- <p>You are now done.</p> -->
                       <!-- <div>
@@ -588,7 +591,7 @@
                         <button mat-button (click)="stepper.reset()">Reset</button>
                       </div> -->
                     </mat-step>
-                    <mat-step>
+                    <mat-step label="Step 4">
                         <ng-template matStepLabel><p (click)="GoToFaq()">FAQ</p></ng-template>
                         <!-- <p>You are now done.</p> -->
                         <!-- <div>
@@ -596,22 +599,13 @@
                           <button mat-button (click)="stepper.reset()">Reset</button>
                         </div> -->
                       </mat-step>
-                    <mat-step>
+                    <mat-step label="Step 5">
                         <ng-template matStepLabel><p (click)="GoToReviews()">Reviews</p></ng-template>
-                        <!-- <p>You are now done.</p> -->
-                        <!-- <div>
-                          <button mat-button matStepperPrevious>Back</button>
-                          <button mat-button (click)="stepper.reset()">Reset</button>
-                        </div> -->
                       </mat-step>
-                      <mat-step>
+                      <!-- <mat-step label="Step 6">
                         <ng-template matStepLabel><p (click)="GoToSubscriptions()">Subscriptions</p></ng-template>
-                        <!-- <p>You are now done.</p> -->
-                        <!-- <div>
-                          <button mat-button matStepperPrevious>Back</button>
-                          <button mat-button (click)="stepper.reset()">Reset</button>
-                        </div> -->
-                      </mat-step>
+                      
+                      </mat-step> -->
                   </mat-stepper>
                
             </div>

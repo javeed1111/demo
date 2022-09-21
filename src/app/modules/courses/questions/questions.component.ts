@@ -1,3 +1,4 @@
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import {  ChangeDetectorRef, Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
@@ -110,6 +111,13 @@ OnClickUp(id:any){
   }
 }
 
+cancel() {
+
+  this._router.navigate(['/courses/course']);
+
+
+}
+
 OnClickDown(id:any){
   debugger
   let item1 = this.questions.find(i => i.orderId === id);
@@ -148,6 +156,9 @@ OnClickDown(id:any){
       this.update=false;
 
   }
+
+ 
+
   EditFromGrid(id: any,value: any) {
     debugger
     var baseurl = this._authService.baseUrl;
@@ -190,7 +201,7 @@ OnClickDown(id:any){
      
     });
   }
-  Update(){
+  Update(val:any){
     debugger
     this.showAlert = false;
     if (this.QuestionsForm.invalid) {
@@ -237,9 +248,17 @@ OnClickDown(id:any){
 
         // Show the alert
         this.showAlert = true;
-        setTimeout(() => {
-        window.location.reload();
-        }, 1000);
+        if(val=='Update'){
+          setTimeout(() => {
+            window.location.reload();
+            }, 3000);
+        }
+        else if(val=='UpdateNext'){
+          setTimeout(() => {
+            this._router.navigate(['/courses/reviews/'+this.courseid]);
+          }, 3000);
+        }
+        
       }
       else {
         // Set the alert
@@ -337,6 +356,29 @@ OnClickDown(id:any){
 
     }
 
+    selectionChange(event: StepperSelectionEvent) {
+      debugger
+      var value="edit"
+      console.log(event.selectedStep.label);
+      let stepLabel = event.selectedStep.label
+      if (stepLabel == "Step 1") {
+        this._router.navigate(['/courses/editcourse/'+this.courseid+'/'+'edit']);
+      }
+      if (stepLabel == "Step 2") {
+        this._router.navigate(['/courses/addcoursemodule/'+this.courseid]);
+  
+      }
+      if (stepLabel == "Step 3") {
+        this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+value]);
+      }
+      if (stepLabel == "Step 5") {
+        this._router.navigate(['/courses/reviews/'+this.courseid]);
+      }
+      // if (stepLabel == "Step 6") {
+      //   this._router.navigate(['/courses/subscriptions/'+this.courseid]);
+      // }
+    }
+
   GoToReviews(){
     this._router.navigate(['/courses/reviews/'+this.courseid]);
 
@@ -378,7 +420,7 @@ OnClickDown(id:any){
 
   }
 
-  SaveQuestions(){
+  SaveQuestions(val:any){
     debugger
     if (this.QuestionsForm.invalid) {
       return;
@@ -402,10 +444,17 @@ OnClickDown(id:any){
 
         // Show the alert
         this.showAlert = true;
-        setTimeout(() => {
-          // this._router.navigate(['/courses/course']);
-          window.location.reload();
-        }, 1000);
+        if(val=='Save'){
+          setTimeout(() => {
+            // this._router.navigate(['/courses/course']);
+            window.location.reload();
+          }, 3000);
+        }
+        else if(val=='SaveNext'){
+          setTimeout(() => {
+            this._router.navigate(['/courses/reviews/'+this.courseid]);
+          }, 3000);
+        }
           
       }
       else {
@@ -418,7 +467,7 @@ OnClickDown(id:any){
     this.showAlert = true;
     setTimeout(() => {
       this.showAlert = false;
-    }, 2000);
+    }, 3000);
       }
       (error) => {
 

@@ -50,6 +50,13 @@ export interface CourseData {
 // ],
 })
 export class CourseComponent implements OnInit {
+  color = 'primary';
+  mode = 'indeterminate';
+  value = 50;
+  displayProgressSpinner = false;
+  spinnerWithoutBackdrop = false;
+
+
   isLoading: boolean = false;
   selectedProduct: any | null = null;
   displayedColumns = ['sno',  'title', 'courseName', 'technologyName','actions'];
@@ -165,6 +172,11 @@ course: any;
      var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
         //debugger
+        this.displayProgressSpinner = true;
+
+        setTimeout(() => {
+          this.displayProgressSpinner = false;
+        }, 3000);
         // for(let i=0;i<finalresult.result.length;i++){
         //   if(finalresult.result[i].duration==0){
         //     finalresult.result[i].duration="";

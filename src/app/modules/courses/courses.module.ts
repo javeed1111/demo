@@ -35,7 +35,6 @@ import { AddcourseComponent } from './AddCourse/addcourse/addcourse.component';
 import { AutofocusDirective } from './directive/autofocus.directive';
 import { EditcourseComponent } from './EditCourse/editcourse/editcourse.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
 import { QuillModule } from 'ngx-quill';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -53,6 +52,9 @@ import { ReviewsComponent } from './reviews/reviews.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { OrderByPipe } from './order-by.pipe';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ProgressSpinnerModule } from '../progressspinner/progress-spinner/progress-spinner.module';
+import { OverlayService } from '../progressspinner/overlay/overlay.service';
 
 // import { CourseContentComponent } from './AddCoursecontent/course-content/course-content.component';
 @NgModule({
@@ -86,6 +88,7 @@ import { OrderByPipe } from './order-by.pipe';
     CommonModule,
     RouterModule,
     MatButtonModule,
+    ProgressSpinnerModule,
     MatCheckboxModule,
     MatChipsModule,
     MatDatepickerModule,
@@ -96,6 +99,7 @@ import { OrderByPipe } from './order-by.pipe';
     MatMenuModule,
     MatMomentDateModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatRadioModule,
     MatRippleModule,
     MatSelectModule,
@@ -125,7 +129,7 @@ import { OrderByPipe } from './order-by.pipe';
         separatorKeyCodes: [ENTER, COMMA]
       }
     },
-    
+    OverlayService,
     DatePipe,
     OrderByPipe
 

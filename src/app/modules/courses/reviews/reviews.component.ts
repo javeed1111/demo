@@ -7,6 +7,7 @@ import { Overlay } from '@angular/cdk/overlay';
 import { FuseAlertType } from '@fuse/components/alert';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'app/core/auth/auth.service';
+
 @Component({
   selector: 'app-reviews',
   templateUrl: './reviews.component.html',
@@ -22,6 +23,7 @@ export class ReviewsComponent implements OnInit {
   };
   showAlert:  boolean = false;
   courseid: any;
+  reviews: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
     private _changeDetectorRef: ChangeDetectorRef,
@@ -41,17 +43,17 @@ export class ReviewsComponent implements OnInit {
 
   GetReviews(id:any){
     this._authService.GetReviews(id).subscribe((finalresult: any) => {
-      //debugger
-      var finalresult = JSON.parse(finalresult);
-      if (finalresult.status == "200") {
-        //debugger
-        //this.dataSource= finalresult.result;
-        //this.techs= finalresult.result;
-        this.dataSource = new MatTableDataSource(finalresult.result);
-        
-      }
+      debugger
+      // var finalresult = JSON.parse(finalresult);
+      this.reviews=finalresult.result
+
 
   })
+
+  }
+
+  Finish(){
+    this._router.navigate(['/courses/course']);
 
   }
 }

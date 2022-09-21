@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
@@ -8,14 +8,14 @@ import { UserService } from 'app/core/user/user.service';
 export class AuthService {
   private _authenticated: boolean = false;
   baseUrl: any
-
+  
 
   /**
    * Constructor
    */
   constructor(private _httpClient: HttpClient, private _userService: UserService) {
-    //this.baseUrl = 'https://localhost:44328/';
-    this.baseUrl = 'https://testugetitapi.fadelsoft.com/';
+    this.baseUrl = 'https://localhost:44328/';
+    //this.baseUrl = 'https://testugetitapi.fadelsoft.com/';
     //this.baseUrl = 'http://testugetitapi.fadelsoft.com/';
   }
 
@@ -95,6 +95,20 @@ export class AuthService {
         return of(response);
       })
     );
+  }
+
+  upload(file: File): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    const req = new HttpRequest('POST', `${this.baseUrl}/upload`, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+    return this._httpClient.request(req);
+  }
+
+  getFiles(): Observable<any> {
+    return this._httpClient.get(`${this.baseUrl}/files`);
   }
 
   public Adduser(data) {
@@ -216,7 +230,6 @@ export class AuthService {
   }
   Addcoursecontent(formdata): Observable<any> {
     //debugger
-    // return
     return this._httpClient.post(this.baseUrl + "api/Admin/Addcoursecontent", formdata);
   }
   Updatecoursecontent(data) {
@@ -273,9 +286,9 @@ export class AuthService {
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteCourseModules", data);
   }
 
-  public GetReviews(id) {
+  public GetReviews(id):Observable<any> {
     debugger
-    return this._httpClient.get(this.baseUrl + "api/UIMain/GetAllReviews", { params: { id } });
+    return this._httpClient.get(this.baseUrl + "api/UIMain/GetReviewsByCourseId?Id="+id );
   }
   AddQuestions(data) {
     //debugger
@@ -369,6 +382,32 @@ export class AuthService {
   public deleteInvoiceNoFormat(data):Observable<any> {
     debugger
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteInvoiceNoFormat", data);
+  }
+  public UploadVideo(formData) {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/UploadVideo", formData);
+  }
+  public DeleteVideo(fileName:string):Observable<any> {
+    debugger
+    return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteVideo?fileName="+fileName);
+  }
+  public UploadChapterVideo(formData) {
+    debugger
+    // return this._httpClient.post(this.baseUrl + "api/Admin/UploadChapterVideo", formData);
+    return this._httpClient.post(this.baseUrl + "api/Admin/UploadChapterVideo", formData,{
+      reportProgress:true,
+      observe:'events'
+    });
+
+
+  }
+  public DeleteChapterVideo(fileName:string):Observable<any> {
+    debugger
+    return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteChapterVideo?fileName="+fileName);
+  }
+  public DeleteFiles(data:any):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/DeleteFiles",data);
   }
   /**
    * Sign in using the access token

@@ -2,24 +2,24 @@
     <ng-container>
         <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
             <div class="w-full max-w-5xl">
-                <mat-stepper [linear]="isLinear" #stepper>
-                    <mat-step [stepControl]="firstFormGroup" >
+                <mat-stepper [linear]="isLinear" #stepper (selectionChange)="selectionChange($event)">
+                    <mat-step label="Step 1" [stepControl]="firstFormGroup" >
                       <form  [formGroup]="firstFormGroup">
                         <ng-template matStepLabel><p (click)="GoToCoursePage()">Course</p></ng-template>
                       
                       </form>
                     </mat-step>
-                    <mat-step [stepControl]="secondFormGroup">
+                    <mat-step label="Step 2" [stepControl]="secondFormGroup">
                         <form [formGroup]="secondFormGroup">
                             <ng-template matStepLabel ><p (click)="GoToModulesPage()">Module</p></ng-template>
                         </form>
                     </mat-step>
-                    <mat-step [stepControl]="thirdFormGroup">
+                    <mat-step label="Step 3" [stepControl]="thirdFormGroup">
                         <form [formGroup]="thirdFormGroup" >
                             <ng-template matStepLabel ><p (click)="GoToPage()">Chapter</p></ng-template>
                         </form>
                     </mat-step>
-                    <mat-step [stepControl]="QuestionsForm">
+                    <mat-step label="Step 4" [stepControl]="QuestionsForm">
                     <form [formGroup]="QuestionsForm">                        
                         <ng-template matStepLabel>FAQ</ng-template>
                         
@@ -125,44 +125,39 @@
                         <div
                             class="flex items-center justify-end  -mx-8 mt-4 px-8 py-5 bg-card shadow rounded overflow-hidden">
                             <!-- Cancel -->
-                            <!-- <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="cancel()">
-                                Cancel
-                            </button> -->
+                            <button class="ml-auto" mat-flat-button [color]="'primary'" [matTooltip]="'Cancel'" (click)="cancel()">
+                              Cancel
+                          </button>
                             <button class="px-6 ml-3" mat-button [matTooltip]="'Clear'" (click)="clear()"*ngIf="Clear">
                                 Clear
                             </button>
                               <!--Save-->
-                              <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="SaveQuestions()" *ngIf="Save">
+                              <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="SaveQuestions('Save')" *ngIf="Save">
                                   Save
                               </button>
                             <!--update-->
-                            <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Update()" *ngIf="update">
+                            <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Update('Update')" *ngIf="update">
                                 Update
                             </button>
-                            <!-- <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UpdateNext()" *ngIf="update">
-                                Update Next
-                            </button> -->
-                            <!-- <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="SaveNext()" *ngIf="Save">
-                                Save Next
-                            </button> -->
+                            <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="SaveQuestions('SaveNext')" *ngIf="Save">
+                              Save Next
+                          </button>
+                          <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Update('UpdateNext')" *ngIf="update">
+                            Update Next
+                        </button>
                         </div>
-                    
                     </form>
                     </mat-step >
-                    <mat-step [stepControl]="fourthFormGroup">
+                    <mat-step label="Step 5" [stepControl]="fourthFormGroup">
                         <form [formGroup]="fourthFormGroup">
                             <ng-template matStepLabel><p (click)="GoToReviews()">Reviews</p></ng-template>
                         </form>
                  
                     </mat-step>
-                    <mat-step>
+                    <!-- <mat-step label="Step 6">
                       <ng-template matStepLabel><p (click)="GoToSubscriptions()">Subscriptions</p></ng-template>
-                      <!-- <p>You are now done.</p> -->
-                      <!-- <div>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button (click)="stepper.reset()">Reset</button>
-                      </div> -->
-                    </mat-step>
+                    
+                    </mat-step> -->
                   </mat-stepper> 
             </div>
         </div>
