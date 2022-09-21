@@ -17,7 +17,7 @@ import { LearningmodeComponent } from './learningmode/learningmode.component';
   ],
   imports: [
     CommonModule,
-    MastersRoutingModule
+    MastersRoutingModule,
   ]
 })
 export class MastersModule { }

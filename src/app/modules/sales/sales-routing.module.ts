@@ -6,6 +6,7 @@ import { ConfigurationsComponent } from './configurations/configurations.compone
 import { DashboardbannerComponent } from './dashboardbanner/dashboardbanner.component';
 import { EditconfigurationsComponent } from './editconfigurations/editconfigurations.component';
 import { EditdashboardbannerComponent } from './editdashboardbanner/editdashboardbanner.component';
+import { MasternavigationComponent } from './masternavigation/masternavigation.component';
 import { SalesComponent } from './sales.component';
 
 const routes: Routes = [
@@ -13,13 +14,16 @@ const routes: Routes = [
     path:'',component:SalesComponent,
     children:
     [
-      {path:'',redirectTo:'configurations',pathMatch:'full'},
+      {path:'',redirectTo:'masternavigation',pathMatch:'full'},
+      
       {path:'dashboardbanner',component:DashboardbannerComponent},
       {path:'adddashboardbanner',component:AdddashboardbannerComponent},
       {path:'editdashboardbanner/:id/:value',component:EditdashboardbannerComponent},
       {path:'configurations',component:ConfigurationsComponent},
       {path:'addconfigurations',component:AddconfigurationsComponent},
       {path:'editconfigurations/:id/:value',component:EditconfigurationsComponent},
+      {path:'masternavigation',component:MasternavigationComponent},
+
 
     ]
   }

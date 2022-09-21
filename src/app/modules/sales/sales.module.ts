@@ -35,7 +35,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatChipsModule } from '@angular/material/chips';
 import { AddconfigurationsComponent } from './addconfigurations/addconfigurations.component';
 import { EditconfigurationsComponent } from './editconfigurations/editconfigurations.component';
-
+import { MasternavigationComponent } from './masternavigation/masternavigation.component';
+//import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
     ConfigurationsComponent,
@@ -43,11 +44,13 @@ import { EditconfigurationsComponent } from './editconfigurations/editconfigurat
     AdddashboardbannerComponent,
     EditdashboardbannerComponent,
     AddconfigurationsComponent,
-    EditconfigurationsComponent
+    EditconfigurationsComponent,
+    MasternavigationComponent
   ],
   imports: [
     CommonModule,
     SalesRoutingModule,
+    MatIconModule,
     MatSortModule,
     RouterModule,
     MatButtonModule,
