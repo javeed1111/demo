@@ -7,12 +7,13 @@ import { AuthService } from 'app/core/auth/auth.service';
 import { MatInputModule } from '@angular/material/input'
 import { fuseAnimations } from '@fuse/animations';
 import {MatChipInputEvent} from '@angular/material/chips';
-import {COMMA, ENTER,SPACE} from '@angular/cdk/keycodes';
+import {COMMA, ENTER,I,SPACE} from '@angular/cdk/keycodes';
 import moment from 'moment';
 import { ReplaySubject, Subject,takeUntil } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
 import { take } from 'rxjs/operators';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 export interface Keywords {
   name: string;
@@ -31,6 +32,8 @@ interface facultysearch {
   animations: fuseAnimations
 })
 export class AddcourseComponent implements OnInit {
+  @BlockUI() blockUI: NgBlockUI;
+
   uploadvideo:boolean=true
   deletevideo:boolean=false
   addOnBlur = true;
@@ -163,6 +166,59 @@ export class AddcourseComponent implements OnInit {
   ngOnDestroy() {
     this._onDestroy.next(10);
     this._onDestroy.complete();
+  }
+  // UploadVideo(){
+  //   debugger
+  //   const formData: FormData = new FormData();
+  //   if (this.files2.length == 1) {
+  //     formData.append("files", this.fileToUpload2, this.name2);
+  //     this._authService.UploadVideo(formData).subscribe((finalresult: any) => {
+  //       debugger
+  //       if(finalresult.status=="200"){
+  //         this.uploadvideo=false
+  //         this.deletevideo=true
+  //         this.videoUrl=finalresult.result
+  //         this.alert = {
+  //           type: 'success',
+  //           message:finalresult.message
+  //         };
+  
+  //         // Show the alert
+  //         this.showAlert = true;
+
+  //         setTimeout(() => {
+  //           this.showAlert = false;
+
+  //         }, 3000);
+  //       }
+  //   })
+  //   }
+  // }
+
+  
+  UploadVideo(value: any) {
+    debugger
+    const formData: FormData = new FormData();
+      if (this.files2.length >= 1) {
+        formData.append("files", this.fileToUpload2, this.name2);
+         
+           this.blockUI.start('Video Is Uploading...');
+
+        this._authService.UploadVideo(formData)
+          .subscribe((finalresult: any) => {
+          debugger
+          this.uploadvideo = false
+          this.deletevideo = true
+          this.videoUrl = finalresult.result
+          this.AddCourse(value);
+        
+        })
+      }
+      else {
+        this.AddCourse(value);
+      }
+    
+  
   }
 
   protected filterBanks1() {
@@ -598,35 +654,9 @@ export class AddcourseComponent implements OnInit {
      
   }
 
-  UploadVideo(){
-    debugger
-    const formData: FormData = new FormData();
-    if (this.files2.length == 1) {
-      formData.append("files", this.fileToUpload2, this.name2);
-      this._authService.UploadVideo(formData).subscribe((finalresult: any) => {
-        debugger
-        if(finalresult.status=="200"){
-          this.uploadvideo=false
-          this.deletevideo=true
-          this.videoUrl=finalresult.result
-          this.alert = {
-            type: 'success',
-            message:finalresult.message
-          };
-  
-          // Show the alert
-          this.showAlert = true;
+ 
 
-          setTimeout(() => {
-            this.showAlert = false;
-
-          }, 3000);
-        }
-    })
-    }
-  }
-
-  AddCourse() {
+  AddCourse(val:any) {
     debugger
     this.showAlert = false;
     if (this.courseForm.invalid) {
@@ -706,6 +736,7 @@ export class AddcourseComponent implements OnInit {
     //  CreatedBy: parseInt(localStorage.getItem("LoginId")),
     //  IsActive: this.active,
     //  }
+    this.blockUI.start('Data Is Saving..')
     this._authService.Addcourse(formData).subscribe((result: any) => {
       debugger
       //var result = JSON.parse(result);
@@ -719,9 +750,18 @@ export class AddcourseComponent implements OnInit {
 
         // Show the alert
         this.showAlert = true;
+        if (val == 'save') {
         setTimeout(() => {
-          this._router.navigate(['/courses/course']);
-        }, 1000);
+          this.blockUI.stop()
+          window.location.reload();
+        }, 3000);
+      }
+      else if (val == 'SaveNext') {
+        setTimeout(() => {
+          this.blockUI.stop();
+          this._router.navigate(['/courses/addcoursemodule/'+result.result]);
+        }, 3000);
+      }
       }
       else if (result.status == "-101") {
         //debugger
@@ -734,6 +774,7 @@ export class AddcourseComponent implements OnInit {
         // Show the alert
         this.showAlert = true;
         setTimeout(() => {
+          this.blockUI.stop()
           this.showAlert = false;
         }, 3000);
       }
@@ -746,9 +787,10 @@ export class AddcourseComponent implements OnInit {
 
         // Show the alert
         this.showAlert = true;
+        this.blockUI.stop()
       }
       (error) => {
-
+        this.blockUI.stop()
       }
     });
   }

@@ -393,11 +393,11 @@ export class AuthService {
   }
   public UploadChapterVideo(formData) {
     debugger
-    // return this._httpClient.post(this.baseUrl + "api/Admin/UploadChapterVideo", formData);
-    return this._httpClient.post(this.baseUrl + "api/Admin/UploadChapterVideo", formData,{
-      reportProgress:true,
-      observe:'events'
-    });
+     return this._httpClient.post(this.baseUrl + "api/Admin/UploadChapterVideo", formData);
+    // return this._httpClient.post(this.baseUrl + "api/Admin/UploadChapterVideo", formData,{
+    //   reportProgress:true,
+    //   observe:'events'
+    // });
 
 
   }

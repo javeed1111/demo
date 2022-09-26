@@ -13,6 +13,7 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 // import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 export interface CourseData {
   sno: string;
@@ -27,6 +28,8 @@ export interface CourseData {
   styleUrls: ['./course-module.component.scss']
 })
 export class CourseModuleComponent implements OnInit {
+  @BlockUI() blockUI: NgBlockUI;
+
   isLoading: boolean = false;
   selectedProduct: any | null = null;
   displayedColumns = ['sno',  'title','actions'];

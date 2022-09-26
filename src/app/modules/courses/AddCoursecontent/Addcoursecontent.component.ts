@@ -18,6 +18,7 @@ import moment from 'moment';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { catchError, map, of } from 'rxjs';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 export interface coursecontentData {
   sno: number;
@@ -49,6 +50,9 @@ export class ProgressBar {
   animations: fuseAnimations
 })
 export class AddcoursecontentComponent implements OnInit {
+  @BlockUI() blockUI: NgBlockUI;
+
+  
   color = 'primary';
   mode = 'indeterminate';
   Value = 50;
@@ -512,28 +516,30 @@ export class AddcoursecontentComponent implements OnInit {
     if (value == 'save') {
       if (this.files1.length >= 1) {
         formData.append("files", this.fileToUpload1, this.name1);
-        // this._authService.UploadChapterVideo(formData)
-         this._authService.UploadChapterVideo(formData).pipe(map(events=>{
-            switch(events.type){
-              case HttpEventType.UploadProgress:
-                this.progress=Math.round(events.loaded / events.total! * 100);
-                break;
-                case HttpEventType.Response:
-                  this.uploadvideo = false
-                  this.deletevideo = true
-                  this.AddCoursecontent(value);
-                   setTimeout(() => {
-                    this.progress = 0;
-                   }, 3000);
-                   //this.videoUrl = finalresult.result
-            }
-          }),
-          catchError((error:HttpErrorResponse)=>{
-            //show alert
-            return of("failed")
-          })
-          ).subscribe((finalresult: any) => {
-            
+         //  this._authService.UploadChapterVideo(formData).pipe(map(events=>{
+        //     switch(events.type){
+        //       case HttpEventType.UploadProgress:
+        //         this.progress=Math.round(events.loaded / events.total! * 100);
+        //         break;
+        //         case HttpEventType.Response:
+        //           this.uploadvideo = false
+        //           this.deletevideo = true
+        //           this.AddCoursecontent(value);
+        //            setTimeout(() => {
+        //             this.progress = 0;
+        //            }, 3000);
+        //            //this.videoUrl = finalresult.result
+        //     }
+        //   }),
+        //   catchError((error:HttpErrorResponse)=>{
+        //     //show alert
+        //     return of("failed")
+        //   })
+        //   )
+           this.blockUI.start('Video Is Uploading...');
+
+        this._authService.UploadChapterVideo(formData)
+          .subscribe((finalresult: any) => {
           debugger
           this.uploadvideo = false
           this.deletevideo = true
@@ -861,7 +867,7 @@ export class AddcoursecontentComponent implements OnInit {
     formData.append("CreatedBy", Loginid);
     formData.append("VideoUrl", this.videoUrl)
     formData.append("VideoFileName", this.name1)
-
+    this.blockUI.start('Data is Saving...')
     this._authService.Addcoursecontent(formData).subscribe((result: any) => {
       debugger
 
@@ -881,13 +887,15 @@ export class AddcoursecontentComponent implements OnInit {
         if (val == 'save') {
           setTimeout(() => {
             // this._router.navigate(['/courses/course']);
+            this.blockUI.stop();
             window.location.reload();
             var modulerow = this.modules.find(x => x.moduleId == localStorage.getItem('moduleid'))
-
+            
           }, 3000);
         }
         else if (val == 'SaveNext') {
           setTimeout(() => {
+            this.blockUI.stop();
             this._router.navigate(['/courses/questions/' + this.courseid]);
           }, 3000);
         }
@@ -905,6 +913,12 @@ export class AddcoursecontentComponent implements OnInit {
 
         // Show the alert
         this.showAlert = true;
+        setTimeout(() => {
+          this.blockUI.stop();
+          this.showAlert = false;
+
+        }, 3000);
+
       }
       (error) => {
         debugger
@@ -917,7 +931,7 @@ export class AddcoursecontentComponent implements OnInit {
         this.showAlert = true;
         setTimeout(() => {
           this.showAlert = false;
-
+          this.blockUI.stop();
         }, 3000);
       }
     });

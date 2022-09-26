@@ -13,6 +13,8 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { AuthService } from 'app/core/auth/auth.service';
 import moment from 'moment';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+
 export interface coursefeeinactiveData {
   sno: number;
   price: string;
@@ -28,6 +30,10 @@ export interface coursefeeinactiveData {
   animations: fuseAnimations
 })
 export class EditcourseComponent implements OnInit {
+  @BlockUI() blockUI: NgBlockUI;
+  ImageAlt=' '
+  VideoAlt=' '
+  CourseImageAlt=' '
   selectedProduct: any | null = null;
   displayedColumns = ['sno','price', 'offerprice','effectivefrom','effectivetill'];
   dataSource: MatTableDataSource<coursefeeinactiveData>;
@@ -107,6 +113,7 @@ export class EditcourseComponent implements OnInit {
   videoUrl: string=null;
   uploadvideo:boolean=true
   deletevideo:boolean=false
+  IconImageAlt: any;
   
   constructor(
 
@@ -394,31 +401,24 @@ confirmation.afterClosed().subscribe((result) => {
    
 }
 
-UploadVideo(){
+UploadVideo(value:any){
   debugger
   const formData: FormData = new FormData();
-  if (this.files2.length == 1) {
+  if (this.files2.length >= 1) {
     formData.append("files", this.fileToUpload2, this.name2);
+    this.blockUI.start('Video Is Uploading...');
     this._authService.UploadVideo(formData).subscribe((finalresult: any) => {
       debugger
       if(finalresult.status=="200"){
         this.uploadvideo=false
         this.deletevideo=true
         this.videoUrl=finalresult.result
-        this.alert = {
-          type: 'success',
-          message:finalresult.message
-        };
-
-        // Show the alert
-        this.showAlert = true;
-
-        setTimeout(() => {
-          this.showAlert = false;
-
-        }, 3000);
+        this.Updatecourse(value);
       }
   })
+  }
+  else {
+    this.Updatecourse(value);
   }
 }
 
@@ -567,12 +567,15 @@ UploadVideo(){
         }
         else {
           // this.ImageURL = baseurl + "/courseFiles/dummy identityproof.png";
-
+          this.CourseImageAlt='Course Image Is Not Uploaded'
         }
         if (finalresult.result.iconUrl != null) {
           this.IconUrl =  finalresult.result.iconUrl;
           // this.noimage=true;;
 
+        }
+        else{
+          this.IconImageAlt='Icon Is Not Uploaded'
         }
         if (finalresult.result.videoUrl != null) {
           this.videoSource.push( finalresult.result.videoUrl);
@@ -581,6 +584,9 @@ UploadVideo(){
           this.uploadvideo=false
           this.deletevideo=true
           // this.noimage=true;
+        }
+        else{
+          this.ImageAlt='Video Is Not Uploaded'
         }
         // if (finalresult.result.isActive == true) {
         //     var check = document.getElementById("userchkactive") as HTMLInputElement;
@@ -662,7 +668,7 @@ UploadVideo(){
     
    
   }
-  Updatecourse() {
+  Updatecourse(val:any) {
     debugger
 
     this.showAlert = false;
@@ -797,10 +803,21 @@ UploadVideo(){
 
         // Show the alert
         this.showAlert = true;
-        setTimeout(() => {
-          window.location.reload();
-          // this._router.navigate(['/courses/course']);
-        }, 1000);
+        if(val=='update'){
+          setTimeout(() => {
+            this.blockUI.stop();
+            window.location.reload();
+            // this._router.navigate(['/courses/course']);
+          }, 3000);
+        }
+        else if (val == 'updatenext') {
+          setTimeout(() => {
+            this.blockUI.stop();
+            this._router.navigate(['/courses/addcoursemodule/'+this.courseid]);
+          }, 3000);
+        }
+       
+        
       }
       else {
         // Set the alert
@@ -811,9 +828,14 @@ UploadVideo(){
 
         // Show the alert
         this.showAlert = true;
+        setTimeout(() => {
+          this.blockUI.stop();
+          this.showAlert = false;
+        }, 3000);
+
       }
       (error) => {
-
+        this.blockUI.stop();
       }
     });
   }

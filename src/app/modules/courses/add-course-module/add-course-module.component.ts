@@ -10,6 +10,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { AuthService } from 'app/core/auth/auth.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { OrderByPipe } from '../order-by.pipe';
 
 @Component({
@@ -20,6 +21,8 @@ import { OrderByPipe } from '../order-by.pipe';
 
 })
 export class AddCourseModuleComponent implements OnInit {
+  @BlockUI() blockUI: NgBlockUI;
+
   color = 'primary';
   mode = 'indeterminate';
   value = 50;
@@ -178,7 +181,6 @@ dataSource: MatTableDataSource<any>;
   AddCourseModule()
   {
       debugger
-      this.displayProgressSpinner = true;
       if (this.coursemoduleForm.invalid) {
           return;
       }
@@ -197,6 +199,7 @@ dataSource: MatTableDataSource<any>;
          CreatedBy: parseInt(localStorage.getItem("LoginId")),
         //  IsActive: this.active,
      }
+    //  this.blockUI.start();
       this._authService.AddCourseModules(data).subscribe((result: any) => {
           debugger
            var result = JSON.parse(result);
@@ -210,11 +213,11 @@ dataSource: MatTableDataSource<any>;
               // Show the alert
               this.showAlert = true;
                 setTimeout(() => {
-                  
+                  // this.blockUI.stop();
                   this.showAlert = false;
-                }, 2000); 
-                // setTimeout(() => {
                   window.location.reload();
+                }, 5000); 
+                // setTimeout(() => {
                   // this._router.navigate(['/courses/coursemodule/'+this.courseid]);
                 // }, 2000); 
                 

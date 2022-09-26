@@ -1,3 +1,4 @@
+<block-ui message="Data is Saving">
 <div class="flex flex-col w-full">
     <ng-container>
         <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
@@ -348,8 +349,7 @@
                                     <span class="ml-1 mr-0">Upload Course Video</span>
                             
                                 </button>
-                                <span class="ml-2" *ngIf="uploadvideo" (click)="UploadVideo()"><mat-icon svgIcon="heroicons_outline:cloud-upload"></mat-icon></span>
-                                <span class="ml-2" *ngIf="deletevideo" (click)="DeleteVideo()"><mat-icon svgIcon="heroicons_outline:trash"></mat-icon></span>
+                                
                                 <span class="ml-1 mr-0">{{name2}}</span>
                                 <span class="ml-1 mr-0">{{uploadedvideofile}}</span>
                             
@@ -374,10 +374,10 @@
                                 Cancel
                             </button>
                             <!--Save-->
-                            <button class="px-6 ml-3" mat-flat-button  [color]="'primary'" (click)="AddCourse()">
+                            <button class="px-6 ml-3" mat-flat-button  [color]="'primary'" (click)="UploadVideo('save')">
                                 Save
                             </button>
-                            <button class="px-6 ml-3" mat-flat-button  [color]="'primary'" (click)="SaveNext()">
+                            <button class="px-6 ml-3" mat-flat-button  [color]="'primary'" (click)="UploadVideo('SaveNext')">
                                 Save Next
                             </button>
                         </div>
@@ -415,3 +415,4 @@
 
     </ng-container>
 </div>
+</block-ui>
