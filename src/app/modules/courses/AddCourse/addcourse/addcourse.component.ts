@@ -6,10 +6,10 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { MatInputModule } from '@angular/material/input'
 import { fuseAnimations } from '@fuse/animations';
-import {MatChipInputEvent} from '@angular/material/chips';
-import {COMMA, ENTER,I,SPACE} from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { COMMA, ENTER, I, SPACE } from '@angular/cdk/keycodes';
 import moment from 'moment';
-import { ReplaySubject, Subject,takeUntil } from 'rxjs';
+import { ReplaySubject, Subject, takeUntil } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
 import { take } from 'rxjs/operators';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
@@ -34,11 +34,11 @@ interface facultysearch {
 export class AddcourseComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
 
-  uploadvideo:boolean=true
-  deletevideo:boolean=false
+  uploadvideo: boolean = true
+  deletevideo: boolean = false
   addOnBlur = true;
-  readonly separatorKeysCodes = [ENTER, COMMA,SPACE] as const;
-  keywords: Keywords[]=[];
+  readonly separatorKeysCodes = [ENTER, COMMA, SPACE] as const;
+  keywords: Keywords[] = [];
 
   active: boolean;
   courseForm: FormGroup;
@@ -83,12 +83,12 @@ export class AddcourseComponent implements OnInit {
   };
   OfferPrice: string;
   istax: boolean;
-  status: boolean=true;
+  status: boolean = true;
   fileToUpload1: File;
   name1: string;
   files1: any[];
-  uploadedvideofile:any;
-  removeupload:boolean=false;
+  uploadedvideofile: any;
+  removeupload: boolean = false;
   uploadedfilename: string;
   files2: any[];
   fileToUpload2: File;
@@ -98,12 +98,12 @@ export class AddcourseComponent implements OnInit {
   public instructorfilterctrl: FormControl = new FormControl();
   public filteredfaculties: ReplaySubject<any> = new ReplaySubject(1);
   @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
-    protected _onDestroy = new Subject();
-    protected FacultySearch: facultysearch[] = [
-    
-    ];
+  protected _onDestroy = new Subject();
+  protected FacultySearch: facultysearch[] = [
+
+  ];
   faculties: any;
-  videoUrl: string=null;
+  videoUrl: string = null;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -133,24 +133,27 @@ export class AddcourseComponent implements OnInit {
       offerApplicable: [''],
       onwebsite: [''],
       offerPrice: ['0'],
-      taxpercent:['0'],
+      taxpercent: ['0'],
       effectiveFrom: ['', Validators.required],
       effectiveTill: [''],
       courseheader: ['', []],
-      courseurl:['', []],
+      courseurl: ['', []],
       metadiscription: ['', []],
-      metakeywords:['', []],
-      certifications:[''],
-      imagetitle:[''],
-      imagecaption:[''],
-      imageshortdescription:[''],
-      videocaption:[''],
-      uploader1     :['', []],
-      relatedcourses:[''],
-      instructor:['',[Validators.required]]
+      metakeywords: ['', []],
+      certifications: [''],
+      imagetitle: [''],
+      imagecaption: [''],
+      imageshortdescription: [''],
+      videocaption: [''],
+      uploader1: ['', [Validators.required]],
+      relatedcourses: [''],
+      UploadCourseIcon: ['', [Validators.required]],
+       UploadCourseVideo:['',[Validators.required]],
+      UploadImage: ['', [Validators.required]],
+      instructor: ['', [Validators.required]]
     });
     // var currentdate=new Date()
-     
+
     this.courseForm.controls['effectiveFrom'].setValue(new Date());
     const ctrl = this.courseForm.controls['offerPrice']
     ctrl.disable();
@@ -159,7 +162,7 @@ export class AddcourseComponent implements OnInit {
 
     this.instructorfilterctrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
       this.filterBanks1();
-      
+
     });
   }
 
@@ -182,7 +185,7 @@ export class AddcourseComponent implements OnInit {
   //           type: 'success',
   //           message:finalresult.message
   //         };
-  
+
   //         // Show the alert
   //         this.showAlert = true;
 
@@ -195,78 +198,79 @@ export class AddcourseComponent implements OnInit {
   //   }
   // }
 
-  
+
   UploadVideo(value: any) {
     debugger
-    const formData: FormData = new FormData();
-      if (this.files2.length >= 1) {
-        formData.append("files", this.fileToUpload2, this.name2);
-         
-           this.blockUI.start('Video Is Uploading...');
 
-        this._authService.UploadVideo(formData)
-          .subscribe((finalresult: any) => {
+    const formData: FormData = new FormData();
+    if (this.files2!=undefined && this.files2.length >= 1 ) {
+      formData.append("files", this.fileToUpload2, this.name2);
+
+      this.blockUI.start('Uploading...');
+
+      this._authService.UploadVideo(formData)
+        .subscribe((finalresult: any) => {
           debugger
           this.uploadvideo = false
           this.deletevideo = true
           this.videoUrl = finalresult.result
           this.AddCourse(value);
-        
+
         })
-      }
-      else {
-        this.AddCourse(value);
-      }
-    
-  
+    }
+    else {
+      this.AddCourse(value);
+    }
+
+
   }
 
   protected filterBanks1() {
     if (!this.FacultySearch) {
       return;
     }
-  
+
     let search = this.instructorfilterctrl.value;
     if (!search) {
-     this.filteredfaculties.next(this.FacultySearch.slice());
+      this.filteredfaculties.next(this.FacultySearch.slice());
       return;
     } else {
       search = search.toLowerCase();
     }
-  
+
     this.filteredfaculties.next(
-      this.FacultySearch.filter(bank => bank.firstName.toLowerCase().indexOf(search) > -1 )
+      this.FacultySearch.filter(bank => bank.firstName.toLowerCase().indexOf(search) > -1)
     );
   }
 
-  
+
 
   protected setInitialValue1() {
-      
+
     this.filteredfaculties
       .pipe(take(1), takeUntil(this._onDestroy))
       .subscribe(() => {
-          this.singleSelect.compareWith = (a: facultysearch, b: facultysearch) => a && b && a.id === b.id;
+        this.singleSelect.compareWith = (a: facultysearch, b: facultysearch) => a && b && a.id === b.id;
       });
   }
 
-  GetFaculty(){
+  GetFaculty() {
 
     this._authService.GetFaculties().subscribe((finalresult: any) => {
-      this.FacultySearch=finalresult.result;
+      this.FacultySearch = finalresult.result;
       this.filteredfaculties.next(this.FacultySearch.slice());
 
-        this.faculties = finalresult.result;
-        // this.courseForm.patchValue(this.faculties);
-        if (finalresult.status == "200") {
+      this.faculties = finalresult.result;
+      // this.courseForm.patchValue(this.faculties);
+      if (finalresult.status == "200") {
 
-        }
+      }
     })
-}
+  }
 
-  ngAfterViewIntit(){
+  ngAfterViewIntit() {
     this.filteredfaculties.next(this.FacultySearch.slice());
-    
+
     this.instructorfilterctrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
@@ -280,26 +284,26 @@ export class AddcourseComponent implements OnInit {
 
     // Add our fruit
     if (value) {
-      this.keywords.push({name: value});
+      this.keywords.push({ name: value });
     }
 
     // Clear the input value
     event.chipInput!.clear();
   }
 
-  GetCourses(){
+  GetCourses() {
     debugger
     this._authService.GetCourses().subscribe((finalresult: any) => {
       debugger
-     this.courses = JSON.parse(finalresult);
-     this.courses=this.courses.result
+      this.courses = JSON.parse(finalresult);
+      this.courses = this.courses.result
     })
   }
 
-  removeuploads(){
-    this.removeupload=true;
-    this.uploadedvideofile='';
-    this.uploadedfilename='';
+  removeuploads() {
+    this.removeupload = true;
+    this.uploadedvideofile = '';
+    this.uploadedfilename = '';
   }
 
   remove(fruit: Keywords): void {
@@ -311,25 +315,26 @@ export class AddcourseComponent implements OnInit {
     }
   }
 
-  Status($event: MatSlideToggleChange): void{
+  Status($event: MatSlideToggleChange): void {
     debugger
     if ($event.checked != undefined) {
       this.status = $event.checked;
     }
-      else {
-        this.status = $event.checked;
+    else {
+      this.status = $event.checked;
 
-      }
+    }
   }
 
   SaveNext() {
+
     debugger
     this.showAlert = false;
     if (this.courseForm.invalid) {
       return;
     }
     const course = this.courseForm.getRawValue();
-    var efeectivetill=course.effectiveTill==""?null:course.effectiveTill.format("DD-MM-YYYY")
+    var efeectivetill = course.effectiveTill == "" ? null : course.effectiveTill.format("DD-MM-YYYY")
 
     if (this.isofferactive == undefined) {
       this.isofferactive = false;
@@ -340,10 +345,10 @@ export class AddcourseComponent implements OnInit {
       // this.horizontalStepperForm.controls['offerPrice'].enable();
       this.OfferPrice = course.offerPrice;
     }
-    if(this.showonwebsite==undefined){
-      this.showonwebsite=true
+    if (this.showonwebsite == undefined) {
+      this.showonwebsite = true
     }
-    
+
     const formData: FormData = new FormData();
     formData.append("CourseName", course.courseName)
     formData.append("CreatedBy", (localStorage.getItem("LoginId")));
@@ -375,14 +380,15 @@ export class AddcourseComponent implements OnInit {
     formData.append("FacultyId", course.instructor.toString())
     formData.append("VideoUrl", this.videoUrl)
     formData.append("VideoFileName", this.name2)
-    if(course.relatedcourses==""){
-      course.relatedcourses=[]
+    if (course.relatedcourses == "") {
+      course.relatedcourses = []
       formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
 
     }
-    else{
+    else {
       formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
     }
+
 
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
@@ -416,7 +422,7 @@ export class AddcourseComponent implements OnInit {
         // Show the alert
         this.showAlert = true;
         setTimeout(() => {
-          this._router.navigate(['/courses/addcoursemodule/'+result.result]);
+          this._router.navigate(['/courses/addcoursemodule/' + result.result]);
         }, 1000);
       }
       else if (result.status == "-101") {
@@ -452,6 +458,7 @@ export class AddcourseComponent implements OnInit {
   onSelectFile(files: FileList) {
     //debugger
     if (files.length === 0)
+
       return;
     if (files.length > 0) {
       this.files = [];
@@ -603,67 +610,80 @@ export class AddcourseComponent implements OnInit {
 
   }
 
-  DeleteVideo(){
+  DeleteVideo() {
     debugger
-    var filename=this.videoUrl.replace('https://ugetit.blob.core.windows.net/coursevideos/',"")
+    var filename = this.videoUrl.replace('https://ugetit.blob.core.windows.net/coursevideos/', "")
 
     const confirmation = this._fuseConfirmationService.open({
-      title  : 'Delete Uploaded Video',
+      title: 'Delete Uploaded Video',
       message: 'Are you sure you want to delete this course?',
       actions: {
-          confirm: {
-              label: 'Delete'
-          }
+        confirm: {
+          label: 'Delete'
+        }
       }
-  });
+    });
 
-  // Subscribe to the confirmation dialog closed action
-  confirmation.afterClosed().subscribe((result) => {
+    // Subscribe to the confirmation dialog closed action
+    confirmation.afterClosed().subscribe((result) => {
 
       // If the confirm button pressed...
-      if ( result === 'confirmed' )
-      {
-    
-          // Delete the video
-          this._authService.DeleteVideo(filename).subscribe((finalresult: any) => {
-            debugger
-            if(finalresult.status=="200"){
-              this.uploadvideo=true
-              this.deletevideo=false
-              this.videoUrl=null
-              this.name2=''
-              this.files2=[]
-              this.fileToUpload=null
-              this.alert = {
-                type: 'success',
-                message:finalresult.message
-              };
-      
-              // Show the alert
-              this.showAlert = true;
-    
-              setTimeout(() => {
-                this.showAlert = false;
-    
-              }, 3000);
-            }
+      if (result === 'confirmed') {
+
+        // Delete the video
+        this._authService.DeleteVideo(filename).subscribe((finalresult: any) => {
+          debugger
+          if (finalresult.status == "200") {
+            this.uploadvideo = true
+            this.deletevideo = false
+            this.videoUrl = null
+            this.name2 = ''
+            this.files2 = []
+            this.fileToUpload = null
+            this.alert = {
+              type: 'success',
+              message: finalresult.message
+            };
+
+            // Show the alert
+            this.showAlert = true;
+
+            setTimeout(() => {
+              this.showAlert = false;
+
+            }, 3000);
+          }
         })
 
-                }
-  });
-     
+      }
+    });
+
   }
 
- 
 
-  AddCourse(val:any) {
+
+  AddCourse(val: any) {
     debugger
     this.showAlert = false;
+ 
+    if (this.files.length != undefined || this.files1.length != undefined || this.files2.length != undefined) {
+       this.showAlert = true;
+
+      this.alert = {
+        type: 'warning',
+        message: "Selecting Files Is Mandatory"
+      };
+     
+      setTimeout(() => {
+        this.showAlert = false;
+      }, 1500);
+    }
     if (this.courseForm.invalid) {
       return;
     }
+
     const course = this.courseForm.getRawValue();
-    var efeectivetill=course.effectiveTill==""?null:course.effectiveTill.format("DD-MM-YYYY")
+    var efeectivetill = course.effectiveTill == "" ? null : course.effectiveTill.format("DD-MM-YYYY")
 
     if (this.isofferactive == undefined) {
       this.isofferactive = false;
@@ -674,10 +694,10 @@ export class AddcourseComponent implements OnInit {
       // this.horizontalStepperForm.controls['offerPrice'].enable();
       this.OfferPrice = course.offerPrice;
     }
-    if(this.showonwebsite==undefined){
-      this.showonwebsite=true
+    if (this.showonwebsite == undefined) {
+      this.showonwebsite = true
     }
-    
+
     const formData: FormData = new FormData();
     formData.append("CourseName", course.courseName)
     formData.append("CreatedBy", (localStorage.getItem("LoginId")));
@@ -709,102 +729,105 @@ export class AddcourseComponent implements OnInit {
     formData.append("FacultyId", course.instructor.toString())
     formData.append("VideoUrl", this.videoUrl)
     formData.append("VideoFileName", this.name2)
-    if(course.relatedcourses==""){
-      course.relatedcourses=[]
-      formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
+    if (course.relatedcourses == "") {
+      course.relatedcourses = []
+      if (course.relatedcourses == "") {
+        course.relatedcourses = []
+        formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
 
-    }
-    else{
-      formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
-    }
-
-    if (this.files.length == 1) {
-      formData.append("fileupload", this.fileToUpload, this.name);
-    }
-    if (this.files1.length == 1) {
-      formData.append("fileupload1", this.fileToUpload1, this.name1);
-    }
-    // if (this.files2.length == 1) {
-    //   formData.append("fileupload2", this.fileToUpload2, this.name2);
-    // }
-    // console.log('formdata',formData)
-    // var data = {
-    // CourseName: course.courseName,
-    // TechnologyId:course.technologyId,
-    // Description: course.Description,
-    // Title: course.Title,
-    //  CreatedBy: parseInt(localStorage.getItem("LoginId")),
-    //  IsActive: this.active,
-    //  }
-    this.blockUI.start('Data Is Saving..')
-    this._authService.Addcourse(formData).subscribe((result: any) => {
-      debugger
-      //var result = JSON.parse(result);
-      if (result.status == "200") {
-        //debugger
-        // Set the alert
-        this.alert = {
-          type: 'success',
-          message: result.message
-        };
-
-        // Show the alert
-        this.showAlert = true;
-        if (val == 'save') {
-        setTimeout(() => {
-          this.blockUI.stop()
-          window.location.reload();
-        }, 3000);
-      }
-      else if (val == 'SaveNext') {
-        setTimeout(() => {
-          this.blockUI.stop();
-          this._router.navigate(['/courses/addcoursemodule/'+result.result]);
-        }, 3000);
-      }
-      }
-      else if (result.status == "-101") {
-        //debugger
-        // Set the alert
-        this.alert = {
-          type: 'error',
-          message: result.message
-        };
-
-        // Show the alert
-        this.showAlert = true;
-        setTimeout(() => {
-          this.blockUI.stop()
-          this.showAlert = false;
-        }, 3000);
       }
       else {
-        // Set the alert
-        this.alert = {
-          type: 'error',
-          message: result.message
-        };
+        formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
+      }
 
-        // Show the alert
-        this.showAlert = true;
-        this.blockUI.stop()
+      if (this.files.length == 1) {
+        formData.append("fileupload", this.fileToUpload, this.name);
       }
-      (error) => {
-        this.blockUI.stop()
+      if (this.files1.length == 1) {
+        formData.append("fileupload1", this.fileToUpload1, this.name1);
       }
-    });
+      // if (this.files2.length == 1) {
+      //   formData.append("fileupload2", this.fileToUpload2, this.name2);
+      // }
+      // console.log('formdata',formData)
+      // var data = {
+      // CourseName: course.courseName,
+      // TechnologyId:course.technologyId,
+      // Description: course.Description,
+      // Title: course.Title,
+      //  CreatedBy: parseInt(localStorage.getItem("LoginId")),
+      //  IsActive: this.active,
+      //  }
+      this.blockUI.start('Saving..')
+      this._authService.Addcourse(formData).subscribe((result: any) => {
+        debugger
+        //var result = JSON.parse(result);
+        if (result.status == "200") {
+          //debugger
+          // Set the alert
+          this.alert = {
+            type: 'success',
+            message: result.message
+          };
+
+          // Show the alert
+          this.showAlert = true;
+          if (val == 'save') {
+            setTimeout(() => {
+              this.blockUI.stop()
+              window.location.reload();
+            }, 3000);
+          }
+          else if (val == 'SaveNext') {
+            setTimeout(() => {
+              this.blockUI.stop();
+              this._router.navigate(['/courses/addcoursemodule/' + result.result]);
+            }, 3000);
+          }
+        }
+        else if (result.status == "-101") {
+          //debugger
+          // Set the alert
+          this.alert = {
+            type: 'error',
+            message: result.message
+          };
+
+          // Show the alert
+          this.showAlert = true;
+          setTimeout(() => {
+            this.blockUI.stop()
+            this.showAlert = false;
+          }, 3000);
+        }
+        else {
+          // Set the alert
+          this.alert = {
+            type: 'error',
+            message: result.message
+          };
+
+          // Show the alert
+          this.showAlert = true;
+          this.blockUI.stop()
+        }
+        (error) => {
+          this.blockUI.stop()
+        }
+      });
+    }
+
+
+    // toggleCompleted($event: MatSlideToggleChange): void {
+    //   //debugger
+    //   if ($event.checked != undefined) {
+    //     this.active = $event.checked;
+    //   }
+    //   else {
+    //     this.active = true;
+    //   }
+    //   //this.active=this.filters.hideCompleted$.next(change.checked);
+    // }
+
   }
-
-
-  // toggleCompleted($event: MatSlideToggleChange): void {
-  //   //debugger
-  //   if ($event.checked != undefined) {
-  //     this.active = $event.checked;
-  //   }
-  //   else {
-  //     this.active = true;
-  //   }
-  //   //this.active=this.filters.hideCompleted$.next(change.checked);
-  // }
-
 }

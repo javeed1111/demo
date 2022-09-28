@@ -1,0 +1,111 @@
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+
+    <!-- Header -->
+    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+        <!-- Loader -->
+
+        <!-- Title -->
+        <div class="text-4xl font-extrabold tracking-tight">Company Details</div>
+        <!-- Alert -->
+        <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
+            {{alert.message}}
+        </fuse-alert>
+
+        <!-- Actions -->
+        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+
+            <button class="ml-4" mat-flat-button [color]="'primary'" (click)="createProduct()">
+          <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+          <span class="ml-2 mr-1">Add</span>
+        </button>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex flex-auto overflow-hidden">
+
+        <!-- Products list -->
+        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+            <ng-container>
+                <ng-container>
+                    <div class="example-header">
+                        <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="example-container mat-elevation-z8">
+
+                        <mat-table [dataSource]="dataSource" matSort>
+
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="sno">
+                                <mat-header-cell *matHeaderCellDef> SNO. </mat-header-cell>
+                                <mat-cell *matCellDef="let row; let i=index">
+                                    {{ (i+1) + (myPaginator.pageIndex * myPaginator.pageSize) }} </mat-cell>
+                            </ng-container>
+
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="companydetails">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Company Name </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.companyName}}</mat-cell>
+                                <!-- {{row.invoiceFormat}} -->
+                            </ng-container>
+
+
+
+
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="phoneno">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Phone No </mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.phoneNo}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="Email">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Email </mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.email}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <div>
+                                        <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="showViewModal(row.id)">
+                                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:eye'">
+                                            </mat-icon>
+                                        </a>
+                                        <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="showEditModal(row.id)">
+                                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil'">
+                                            </mat-icon>
+                                        </a>
+                                        <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="deleteContent(row.id)">
+                                            <mat-icon class="icon-size-5 " [svgIcon]="'heroicons_solid:trash'">
+                                            </mat-icon>
+                                        </a>
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </mat-row>
+                        </mat-table>
+
+                        <mat-paginator #myPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users">
+                        </mat-paginator>
+                    </div>
+
+                </ng-container>
+
+            </ng-container>
+
+
+
+
+
+        </div>
+
+    </div>
+
+</div>

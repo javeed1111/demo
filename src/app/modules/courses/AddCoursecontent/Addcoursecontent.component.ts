@@ -513,7 +513,7 @@ export class AddcoursecontentComponent implements OnInit {
   UploadVideo(value: any) {
     debugger
     const formData: FormData = new FormData();
-    if (value == 'save') {
+    if (value == 'save' || value == 'SaveNext') {
       if (this.files1.length >= 1) {
         formData.append("files", this.fileToUpload1, this.name1);
          //  this._authService.UploadChapterVideo(formData).pipe(map(events=>{
@@ -536,7 +536,7 @@ export class AddcoursecontentComponent implements OnInit {
         //     return of("failed")
         //   })
         //   )
-           this.blockUI.start('Video Is Uploading...');
+           this.blockUI.start('Uploading...');
 
         this._authService.UploadChapterVideo(formData)
           .subscribe((finalresult: any) => {
@@ -611,9 +611,11 @@ export class AddcoursecontentComponent implements OnInit {
         this.AddCoursecontent(value);
       }
     }
-    else if (value == 'update') {
+    else if (value == 'update' || value == 'UpdateNext') {
       if (this.files1.length >= 1) {
         formData.append("files", this.fileToUpload1, this.name1);
+        
+        this.blockUI.start('Uploading...');
         this._authService.UploadChapterVideo(formData).subscribe((finalresult: any) => {
           debugger
           this.uploadvideo = false
@@ -867,7 +869,7 @@ export class AddcoursecontentComponent implements OnInit {
     formData.append("CreatedBy", Loginid);
     formData.append("VideoUrl", this.videoUrl)
     formData.append("VideoFileName", this.name1)
-    this.blockUI.start('Data is Saving...')
+    this.blockUI.start('Saving...')
     this._authService.Addcoursecontent(formData).subscribe((result: any) => {
       debugger
 
@@ -894,6 +896,7 @@ export class AddcoursecontentComponent implements OnInit {
           }, 3000);
         }
         else if (val == 'SaveNext') {
+          debugger
           setTimeout(() => {
             this.blockUI.stop();
             this._router.navigate(['/courses/questions/' + this.courseid]);

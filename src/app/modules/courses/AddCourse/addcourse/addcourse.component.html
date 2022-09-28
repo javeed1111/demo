@@ -1,418 +1,395 @@
 <block-ui message="Data is Saving">
-<div class="flex flex-col w-full">
-    <ng-container>
-        <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
-            <div class="w-full max-w-5xl">
-                <mat-stepper linear #stepper >
-                    <mat-step label="Step 1" [stepControl]="courseForm" >
-                        <form [formGroup]="courseForm"
-                        class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
-                        <ng-template matStepLabel>Course</ng-template>
-                        <div class="flex">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Course Name</mat-label>
-                                <input matInput appAutofocus [formControlName]="'courseName'" [placeholder]="'Course Name'">
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <!--Technologdrop-->
-                        <div class="flex">
-                            <mat-form-field class="flex-auto gt-xs:pr-3">
-                                <mat-label>Technology</mat-label>
-                                <mat-select name="technologyId" placeholder="Technology" [formControlName]="'technologyId'"
-                                    class="input-full-width">
-                                    <mat-option value="">Select Technology</mat-option>
-                                    <mat-option *ngFor="let tech of technology " [value]="tech.technologyId">{{
-                                        tech.technologyName }}</mat-option>
-                                </mat-select>
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
-                                </mat-icon>
-                            </mat-form-field>
-                        
-                        </div>
-                        <!--short Description-->
-                        <div class="flex-auto">
-                            <mat-label>Short Description</mat-label>
-                            <quill-editor [formControlName]="'Description'" [modules]="quillModules">
-                            </quill-editor>
-                        </div>
-                        <!--Description-->
-                        <div class="flex-auto mt-4">
-                            <mat-label>Description</mat-label>
-                            <quill-editor [formControlName]="'Fulldescription'" [modules]="quillModules">
-                            </quill-editor>
-                        </div>
-                        <!--What you'll learn-->
-                        <div class="flex-auto mt-4">
-                            <mat-label>What you'll learn</mat-label>
-                            <quill-editor [formControlName]="'Whatlearn'" [modules]="quillModules">
-                            </quill-editor>
-                        </div>
-                        <!--Requirements-->
-                        <div class="flex-auto mt-4">
-                            <mat-label>Requirements</mat-label>
-                            <quill-editor [formControlName]="'requirements'" [modules]="quillModules">
-                            </quill-editor>
-                        </div>
-                        <!--Title-->
-                        <div class="flex mt-4">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Title</mat-label>
-                                <input matInput [formControlName]="'Title'" [placeholder]="'Title'">
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
-                                </mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <div class="flex">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Price</mat-label>
-                                <input type="number" matInput [formControlName]="'price'" [placeholder]="'Price'"
-                                (blur)='checkprice()' required>
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
-                                </mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <div class="flex">
-                            <div class="space-y-4">
-                                <ng-container>
-                                    <!-- <div class="flex"> -->
-                                    <div class="fuse-mat-no-subscript flex-auto">
-                                        <mat-slide-toggle labelPosition="before"  class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
-                                            id="offerApplicable" (change)="toggleCompleted($event)" [checked]="false">
-                                            Offer Applicable
-                                        </mat-slide-toggle>
-                                    </div>
-                                    <!-- </div> -->
-                                </ng-container>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Offer Price</mat-label>
-                                <input type="number" matInput [formControlName]="'offerPrice'"
-                                    [placeholder]="'Offer Price'" (blur)='checkprice()'>
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
-                                </mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <div class="flex">
-                            <div class="space-y-4">
-                                <ng-container>
-                                    <!-- <div class="flex"> -->
-                                    <div class="fuse-mat-no-subscript flex-auto">
-                                        <mat-slide-toggle labelPosition="before"  class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
-                                            id="taxApplicable" (change)="check($event)" [checked]="false">
-                                            Is Tax
-                                        </mat-slide-toggle>
-                                    </div>
-                                    <!-- </div> -->
-                                </ng-container>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Tax Percent(%)</mat-label>
-                                <input type="number" matInput [formControlName]="'taxpercent'"
-                                    [placeholder]="'Tax Percent'">
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'feather:percent'">
-                                </mat-icon>
-                            </mat-form-field>
-                        </div>
-
-                        <!--Instructor-->
-                        <div class="flex">
-                            <mat-form-field class="flex-auto gt-xs:pr-3">
-                                <mat-label>Instructor</mat-label>
-                                <mat-select name="instructor" placeholder="Instructor" [formControlName]="'instructor'"
-                                    class="input-full-width">
-                                    <mat-option value="">Select Instructor</mat-option>
-                                    <mat-option *ngFor="let tech of faculties " [value]="tech.facultyId">{{
-                                        tech.firstName }}</mat-option>
-                                </mat-select>
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
-                                </mat-icon>
-                            </mat-form-field>
-                        
-                        </div>
-
-                        <!-- <div class="flex mb-4">
-                            <mat-form-field class="fuse-mat-no-subscript w-full">
-                                <mat-label>Effective From</mat-label>
-                                <mat-icon matPrefix class="hidden sm:flex icon-size-5"
-                                    [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
-                                <input matInput [matDatepicker]="effectiveDateDatepicker" [min]="todayDate"
-                                    [formControlName]="'effectiveFrom'" [placeholder]="'effectiveFrom'">
-                                <mat-datepicker-toggle matSuffix [for]="effectiveDateDatepicker">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #effectiveDateDatepicker></mat-datepicker>
-                            </mat-form-field>
-                        </div>
-                        <div class="flex mb-4">
-                            <mat-form-field class="fuse-mat-no-subscript w-full">
-                                <mat-label>Effective Till</mat-label>
-                                <mat-icon matPrefix class="hidden sm:flex icon-size-5"
-                                    [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
-                                <input matInput [matDatepicker]="effectiveTillDatepicker" [min]="todayDate"
-                                    [formControlName]="'effectiveTill'" [placeholder]="'EffectiveTill'">
-                                <mat-datepicker-toggle matSuffix [for]="effectiveTillDatepicker">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #effectiveTillDatepicker></mat-datepicker>
-                            </mat-form-field>
-                        </div> -->
-                       
-                        <!---Searchable DropDown-->
-                        <!-- <div class="flex ">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Instructor</mat-label>
-                              <mat-select [formControl]="instructor" placeholder="Select Instructor" #singleSelect >
-                                <mat-option>
-                                  <ngx-mat-select-search [formControl]="instructorfilterctrl"></ngx-mat-select-search>
-                                </mat-option>
-                                <mat-option *ngFor="let item of filteredfaculties | async" [value]="item.id">
-                                  {{item.firstName}}
-                                </mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                        </div>  -->
-                        
-                        <div class="flex mt-4">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Course Header</mat-label>
-                                <input matInput [formControlName]="'courseheader'" [placeholder]="'Course Header'">
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
-                                </mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <div class="flex mt-4">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Course Url</mat-label>
-                                <input matInput [formControlName]="'courseurl'" [placeholder]="'Course Url'">
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
-                                </mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <div class="flex-auto mt-4">
-                            <mat-label>Meta Description</mat-label>
-                            <quill-editor [formControlName]="'metadiscription'" [modules]="quillModules">
-                            </quill-editor>
-                        </div>
-                        <div class="flex mt-4">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Meta Keywords</mat-label>
-                                <input matInput [formControlName]="'metakeywords'" [placeholder]="'Keywords'">
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
-                                </mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <div class="flex-auto mt-4">
-                            <mat-label>Course Certifications</mat-label>
-                            <quill-editor [formControlName]="'certifications'" [modules]="quillModules">
-                            </quill-editor>
-                        </div>
-                       
-                        <div class="flex mt-4">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Image Title</mat-label>
-                                <input matInput [formControlName]="'imagetitle'" [placeholder]="'Image Title'">
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
-                                </mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <div class="flex mt-4">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Image Caption</mat-label>
-                                <input matInput [formControlName]="'imagecaption'" [placeholder]="'Image Caption'">
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
-                                </mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <div class="flex mt-4">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Image Short Discription</mat-label>
-                                <input matInput [formControlName]="'imageshortdescription'" [placeholder]="'Image Short Description'">
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
-                                </mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <div class="flex mt-4">
-                            <mat-form-field class="flex-auto">
-                                <mat-label>Video Caption </mat-label>
-                                <input matInput [formControlName]="'videocaption'" [placeholder]="'Video Caption'">
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
-                                </mat-icon>
-                            </mat-form-field>
-                        </div>
-                        <div class="flex mt-4">
-                            <mat-form-field class="flex-auto ">
-                                <mat-label>Related Courses</mat-label>
-                                <mat-select name="technologyId" placeholder="Related Courses" [formControlName]="'relatedcourses'"
-                                    class="input-full-width" multiple>
-                                    <mat-option *ngFor="let value of courses " [value]="value.courseId">{{
-                                        value.courseName }}</mat-option>
-                                </mat-select>
-                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
-                                </mat-icon>
-                            </mat-form-field>
-                        </div>
-                          <div class="grid grid-cols-12 gap-x-1 mt-2">
-                            <div class="mt-4 col-span-6">
-                            <div>
-                                <ng-container>
-                                    <div class="fuse-mat-no-subscript flex-auto">
-                                        <mat-slide-toggle labelPosition="before"  class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
-                                            id="status" (change)="Status($event)"   [checked]="true">
-                                            Status
-                                        </mat-slide-toggle>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-                        <div class="mt-4 col-span-6">
-                            <div >
-                                <ng-container>
-                                    <div class="fuse-mat-no-subscript flex-auto">
-                                        <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
-                                            id="onwebsite" (change)="onwebsite($event)" [checked]="true">
-                                            show on website
-                                        </mat-slide-toggle>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-
-                          </div>
- 
-                          <div class="grid grid-cols-12 gap-x-1 mt-4">
-           
-                                <!-- Actions -->
-                                <div class=" mt-4 sm:mt-0 col-span-6">
-                                    <!-- Upload button -->
-                                    <button mat-flat-button [color]="'primary'"
-                                        onclick="document.getElementById('txtfileupload').click()">
-                                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                        <span class="ml-1 mr-0">Upload Course Image</span>
-    
-                                        <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
-                                            id="txtfileupload" name="fileupload"
-                                            (change)="onSelectFile($event.target.files)"> -->
-    
-                                    </button>
-                                    <span class="ml-1 mr-0">{{name}}</span>
-                                    <span class="ml-1 mr-0">Image size should be: 600*485</span>
-                                    <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
-                                    <!-- <button style="display:block;width:120px; height:30px;"
-                                        onclick="document.getElementById('getFile').click()">Your text here</button> -->
-    
-    
-                                    <input type='file' class="form-control" accept=".jpg, .png, .jpeg,.jfif " id="txtfileupload"
-                                        name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none">
-                                    <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
-                                        id="txtfileupload"  name="fileupload" 
-                                        (change)="onSelectFile($event.target.files)"> -->
+    <div class="flex flex-col w-full">
+        <ng-container>
+            <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
+                <div class="w-full max-w-5xl">
+                    <mat-stepper linear #stepper>
+                        <mat-step label="Step 1" [stepControl]="courseForm">
+                            <form [formGroup]="courseForm" class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
+                                <ng-template matStepLabel>Course</ng-template>
+                                <div class="flex">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Course Name</mat-label>
+                                        <input matInput appAutofocus [formControlName]="'courseName'" [placeholder]="'Course Name'">
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
+                                    </mat-form-field>
                                 </div>
-    
-                          
-                                <!-- Actions -->
-                                <div class=" mt-4 sm:mt-0 col-span-6" >
-                                    <!-- Upload button -->
-                                    <button mat-flat-button [color]="'primary'"
-                                        onclick="document.getElementById('txtfileupload1').click()">
-                                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                        <span class="ml-1 mr-0">Upload Course Icon</span>
-    
-                                        <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
-                                            id="txtfileupload" name="fileupload"
-                                            (change)="onSelectFile($event.target.files)"> -->
-    
-                                    </button>
-                                    <span class="ml-1 mr-0">{{name1}}</span>
-                                    <span class="ml-1 mr-0">Image size should be: 600*485</span>
-                                    <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
-                                    <!-- <button style="display:block;width:120px; height:30px;"
-                                        onclick="document.getElementById('getFile').click()">Your text here</button> -->
-    
-    
-                                    <input type='file'  class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload1"
-                                        name="fileupload1" (change)="onSelectFile1($event.target.files)" style="display:none">
-                                    <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
-                                        id="txtfileupload"  name="fileupload" 
-                                        (change)="onSelectFile($event.target.files)"> -->
-                                </div>
-                          </div>    
+                                <!--Technologdrop-->
+                                <div class="flex">
+                                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                                        <mat-label>Technology</mat-label>
+                                        <mat-select name="technologyId" placeholder="Technology" [formControlName]="'technologyId'" class="input-full-width">
+                                            <mat-option value="">Select Technology</mat-option>
+                                            <mat-option *ngFor="let tech of technology " [value]="tech.technologyId">{{ tech.technologyName }}</mat-option>
+                                        </mat-select>
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
+                                        </mat-icon>
+                                    </mat-form-field>
 
-                          <div class="grid grid-cols-12 gap-x-1 mt-4">
-                            <div class="mt-4 sm:mt-0 col-span-6">
-                                <!-- Upload button -->
-                                <button mat-flat-button [color]="'primary'"
-                                    onclick="document.getElementById('txtfileupload2').click()">
-                                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                    <span class="ml-1 mr-0">Upload Course Video</span>
-                            
-                                </button>
+                                </div>
+                                <!--short Description-->
+                                <div class="flex-auto">
+                                    <mat-label>Short Description</mat-label>
+                                    <quill-editor [formControlName]="'Description'" [modules]="quillModules">
+                                    </quill-editor>
+                                </div>
+                                <!--Description-->
+                                <div class="flex-auto mt-4">
+                                    <mat-label>Description</mat-label>
+                                    <quill-editor [formControlName]="'Fulldescription'" [modules]="quillModules">
+                                    </quill-editor>
+                                </div>
+                                <!--What you'll learn-->
+                                <div class="flex-auto mt-4">
+                                    <mat-label>What you'll learn</mat-label>
+                                    <quill-editor [formControlName]="'Whatlearn'" [modules]="quillModules">
+                                    </quill-editor>
+                                </div>
+                                <!--Requirements-->
+                                <div class="flex-auto mt-4">
+                                    <mat-label>Requirements</mat-label>
+                                    <quill-editor [formControlName]="'requirements'" [modules]="quillModules">
+                                    </quill-editor>
+                                </div>
+                                <!--Title-->
+                                <div class="flex mt-4">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Title</mat-label>
+                                        <input matInput [formControlName]="'Title'" [placeholder]="'Title'">
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Price</mat-label>
+                                        <input type="number" matInput [formControlName]="'price'" [placeholder]="'Price'" (blur)='checkprice()' required>
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex">
+                                    <div class="space-y-4">
+                                        <ng-container>
+                                            <!-- <div class="flex"> -->
+                                            <div class="fuse-mat-no-subscript flex-auto">
+                                                <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'" id="offerApplicable" (change)="toggleCompleted($event)" [checked]="false">
+                                                    Offer Applicable
+                                                </mat-slide-toggle>
+                                            </div>
+                                            <!-- </div> -->
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Offer Price</mat-label>
+                                        <input type="number" matInput [formControlName]="'offerPrice'" [placeholder]="'Offer Price'" (blur)='checkprice()'>
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex">
+                                    <div class="space-y-4">
+                                        <ng-container>
+                                            <!-- <div class="flex"> -->
+                                            <div class="fuse-mat-no-subscript flex-auto">
+                                                <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'" id="taxApplicable" (change)="check($event)" [checked]="false">
+                                                    Is Tax
+                                                </mat-slide-toggle>
+                                            </div>
+                                            <!-- </div> -->
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Tax Percent(%)</mat-label>
+                                        <input type="number" matInput [formControlName]="'taxpercent'" [placeholder]="'Tax Percent'">
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'feather:percent'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+
+                                <!--Instructor-->
+                                <div class="flex">
+                                    <mat-form-field class="flex-auto gt-xs:pr-3">
+                                        <mat-label>Instructor</mat-label>
+                                        <mat-select name="instructor" placeholder="Instructor" [formControlName]="'instructor'" class="input-full-width">
+                                            <mat-option value="">Select Instructor</mat-option>
+                                            <mat-option *ngFor="let tech of faculties " [value]="tech.facultyId">{{ tech.firstName }}</mat-option>
+                                        </mat-select>
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
+                                        </mat-icon>
+                                    </mat-form-field>
+
+                                </div>
+
+                                <!-- <div class="flex mb-4">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Effective From</mat-label>
+                                    <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                        [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
+                                    <input matInput [matDatepicker]="effectiveDateDatepicker" [min]="todayDate"
+                                        [formControlName]="'effectiveFrom'" [placeholder]="'effectiveFrom'">
+                                    <mat-datepicker-toggle matSuffix [for]="effectiveDateDatepicker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #effectiveDateDatepicker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex mb-4">
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <mat-label>Effective Till</mat-label>
+                                    <mat-icon matPrefix class="hidden sm:flex icon-size-5"
+                                        [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
+                                    <input matInput [matDatepicker]="effectiveTillDatepicker" [min]="todayDate"
+                                        [formControlName]="'effectiveTill'" [placeholder]="'EffectiveTill'">
+                                    <mat-datepicker-toggle matSuffix [for]="effectiveTillDatepicker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #effectiveTillDatepicker></mat-datepicker>
+                                </mat-form-field>
+                            </div> -->
+
+                                <!---Searchable DropDown-->
+                                <!-- <div class="flex ">
+                                <mat-form-field class="flex-auto">
+                                    <mat-label>Instructor</mat-label>
+                                  <mat-select [formControl]="instructor" placeholder="Select Instructor" #singleSelect >
+                                    <mat-option>
+                                      <ngx-mat-select-search [formControl]="instructorfilterctrl"></ngx-mat-select-search>
+                                    </mat-option>
+                                    <mat-option *ngFor="let item of filteredfaculties | async" [value]="item.id">
+                                      {{item.firstName}}
+                                    </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                            </div>  -->
+
+                                <div class="flex mt-4">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Course Header</mat-label>
+                                        <input matInput [formControlName]="'courseheader'" [placeholder]="'Course Header'">
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex mt-4">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Course Url</mat-label>
+                                        <input matInput [formControlName]="'courseurl'" [placeholder]="'Course Url'">
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex-auto mt-4">
+                                    <mat-label>Meta Description</mat-label>
+                                    <quill-editor [formControlName]="'metadiscription'" [modules]="quillModules">
+                                    </quill-editor>
+                                </div>
+                                <div class="flex mt-4">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Meta Keywords</mat-label>
+                                        <input matInput [formControlName]="'metakeywords'" [placeholder]="'Keywords'">
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex-auto mt-4">
+                                    <mat-label>Course Certifications</mat-label>
+                                    <quill-editor [formControlName]="'certifications'" [modules]="quillModules">
+                                    </quill-editor>
+                                </div>
+
+                                <div class="flex mt-4">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Image Title</mat-label>
+                                        <input matInput [formControlName]="'imagetitle'" [placeholder]="'Image Title'">
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex mt-4">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Image Caption</mat-label>
+                                        <input matInput [formControlName]="'imagecaption'" [placeholder]="'Image Caption'">
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex mt-4">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Image Short Discription</mat-label>
+                                        <input matInput [formControlName]="'imageshortdescription'" [placeholder]="'Image Short Description'">
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex mt-4">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Video Caption </mat-label>
+                                        <input matInput [formControlName]="'videocaption'" [placeholder]="'Video Caption'">
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex mt-4">
+                                    <mat-form-field class="flex-auto ">
+                                        <mat-label>Related Courses</mat-label>
+                                        <mat-select name="technologyId" placeholder="Related Courses" [formControlName]="'relatedcourses'" class="input-full-width" multiple>
+                                            <mat-option *ngFor="let value of courses " [value]="value.courseId">{{ value.courseName }}</mat-option>
+                                        </mat-select>
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="grid grid-cols-12 gap-x-1 mt-2">
+                                    <div class="mt-4 col-span-6">
+                                        <div>
+                                            <ng-container>
+                                                <div class="fuse-mat-no-subscript flex-auto">
+                                                    <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'" id="status" (change)="Status($event)" [checked]="true">
+                                                        Status
+                                                    </mat-slide-toggle>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 col-span-6">
+                                        <div>
+                                            <ng-container>
+                                                <div class="fuse-mat-no-subscript flex-auto">
+                                                    <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'" id="onwebsite" (change)="onwebsite($event)" [checked]="true">
+                                                        show on website
+                                                    </mat-slide-toggle>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="grid grid-cols-12 gap-x-1 mt-4">
+
+                                    <!-- Actions -->
+                                    <div class=" mt-4 sm:mt-0 col-span-6">
+                                        <!-- Upload button -->
+                                        <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload').click()">
+                                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                            <span class="ml-1 mr-0">Upload Course Image</span>
+        
+                                            <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
+                                                id="txtfileupload" name="fileupload"
+                                                (change)="onSelectFile($event.target.files)"> -->
+        
+                                        </button>
+                                        <span class="ml-1 mr-0">{{name}}</span>
+                                        <span class="ml-1 mr-0">Image size should be: 600*485</span>
+                                        <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
+                                        <!-- <button style="display:block;width:120px; height:30px;"
+                                            onclick="document.getElementById('getFile').click()">Your text here</button> -->
+
+
+                                        <input type='file' class="form-control" accept=".jpg, .png, .jpeg,.jfif " id="txtfileupload" name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none" [formControlName]="'UploadImage'">
+                                        <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
+                                            id="txtfileupload"  name="fileupload" 
+                                            (change)="onSelectFile($event.target.files)"> -->
+                                    </div>
+
+
+                                    <!-- Actions -->
+                                    <div class=" mt-4 sm:mt-0 col-span-6">
+                                        <!-- Upload button -->
+                                        <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload1').click()">
+                                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                            <span class="ml-1 mr-0">Upload Course Icon</span>
+        
+                                            <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
+                                                id="txtfileupload" name="fileupload"
+                                                (change)="onSelectFile($event.target.files)"> -->
+        
+                                        </button>
+                                        <span class="ml-1 mr-0">{{name1}}</span>
+                                        <span class="ml-1 mr-0">Image size should be: 600*485</span>
+                                        <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
+                                        <!-- <button style="display:block;width:120px; height:30px;"
+                                            onclick="document.getElementById('getFile').click()">Your text here</button> -->
+
+
+                                        <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload1" name="fileupload1" (change)="onSelectFile1($event.target.files)" style="display:none" [formControlName]="'UploadCourseIcon'">
+                                        <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
+                                            id="txtfileupload"  name="fileupload" 
+                                            (change)="onSelectFile($event.target.files)"> -->
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-12 gap-x-1 mt-4">
+                                    <div class="mt-4 sm:mt-0 col-span-6">
+                                        <!-- Upload button -->
+                                        <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload2').click()">
+                                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                        <span class="ml-1 mr-0">Upload Course Video</span>
                                 
-                                <span class="ml-1 mr-0">{{name2}}</span>
-                                <span class="ml-1 mr-0">{{uploadedvideofile}}</span>
-                            
-                                <input type='file' class="form-control" formControlName="uploader1" accept="video/*"  id="txtfileupload2"
-                                    name="fileupload2" (change)="onSelectVideo($event.target.files)" style="display:none"
-                                    [multiple]="true">
-                                <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
-                                    id="txtfileupload"  name="fileupload" 
-                                    (change)="onSelectFile($event.target.files)"> -->
-                            </div>
-                          </div>
-                        <!-- Alert -->
-                        <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
-                            [type]="alert.type" [@shake]="alert.type === 'success'">
-                            {{alert.message}}
-                        </fuse-alert>
-    
-                        <div
-                            class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
-                            <!-- Cancel -->
-                            <button class="ml-auto" mat-flat-button  [color]="'primary'" [matTooltip]="'Cancel'" (click)="cancel()">
-                                Cancel
-                            </button>
-                            <!--Save-->
-                            <button class="px-6 ml-3" mat-flat-button  [color]="'primary'" (click)="UploadVideo('save')">
-                                Save
-                            </button>
-                            <button class="px-6 ml-3" mat-flat-button  [color]="'primary'" (click)="UploadVideo('SaveNext')">
-                                Save Next
-                            </button>
-                        </div>
-                    </form>
-                    </mat-step>
-                    <mat-step label="Step 2" [stepControl]="secondFormGroup" >
-                      <form [formGroup]="secondFormGroup">
-                        <ng-template matStepLabel>Module</ng-template>
-                        <!-- <div>
-                          <button mat-button matStepperPrevious>Back</button>
-                          <button mat-button matStepperNext>Next</button>
-                        </div> -->
-                      </form>
-                    </mat-step>
-                    <mat-step label="Step 3">
-                      <ng-template matStepLabel>Chapter</ng-template>
-                      <!-- <p>You are now done.</p> -->
-                      <!-- <div>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button (click)="stepper.reset()">Reset</button>
-                      </div> -->
-                    </mat-step>
-                    <mat-step label="Step 4">
-                        <ng-template matStepLabel>FAQ</ng-template>
-                        <!-- <p>You are now done.</p> -->
-                        <!-- <div>
-                          <button mat-button matStepperPrevious>Back</button>
-                          <button mat-button (click)="stepper.reset()">Reset</button>
-                        </div> -->
-                      </mat-step>
-                  </mat-stepper>
-              
-            </div>
-        </div>
+                                    </button>
 
-    </ng-container>
-</div>
+                                        <span class="ml-1 mr-0">{{name2}}</span>
+                                        <span class="ml-1 mr-0">{{uploadedvideofile}}</span>
+
+                                        <input type='file' class="form-control" formControlName="uploader1" accept="video/*" id="txtfileupload2" name="fileupload2" (change)="onSelectVideo($event.target.files)" style="display:none" [formControlName]="'uploader1'" [multiple]="true">
+                                        <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
+                                        id="txtfileupload"  name="fileupload" 
+                                        (change)="onSelectFile($event.target.files)"> -->
+                                    </div>
+                                </div>
+                                <!-- Alert -->
+                                <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
+                                    {{alert.message}}
+                                </fuse-alert>
+
+                                <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
+                                    <!-- Cancel -->
+                                    <button class="ml-auto" mat-flat-button [color]="'primary'" [matTooltip]="'Cancel'" (click)="cancel()">
+                                    Cancel
+                                </button>
+                                    <!--Save-->
+                                    <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UploadVideo('save')">
+                                    Save
+                                </button>
+                                    <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UploadVideo('SaveNext')">
+                                    Save Next
+                                </button>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step label="Step 2" [stepControl]="secondFormGroup">
+                            <form [formGroup]="secondFormGroup">
+                                <ng-template matStepLabel>Module</ng-template>
+                                <!-- <div>
+                              <button mat-button matStepperPrevious>Back</button>
+                              <button mat-button matStepperNext>Next</button>
+                            </div> -->
+                            </form>
+                        </mat-step>
+                        <mat-step label="Step 3">
+                            <ng-template matStepLabel>Chapter</ng-template>
+                            <!-- <p>You are now done.</p> -->
+                            <!-- <div>
+                            <button mat-button matStepperPrevious>Back</button>
+                            <button mat-button (click)="stepper.reset()">Reset</button>
+                          </div> -->
+                        </mat-step>
+                        <mat-step label="Step 4">
+                            <ng-template matStepLabel>FAQ</ng-template>
+                            <!-- <p>You are now done.</p> -->
+                            <!-- <div>
+                              <button mat-button matStepperPrevious>Back</button>
+                              <button mat-button (click)="stepper.reset()">Reset</button>
+                            </div> -->
+                        </mat-step>
+                    </mat-stepper>
+
+                </div>
+            </div>
+
+        </ng-container>
+    </div>
 </block-ui>

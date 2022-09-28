@@ -36,6 +36,10 @@ import { MatChipsModule } from '@angular/material/chips';
 import { AddconfigurationsComponent } from './addconfigurations/addconfigurations.component';
 import { EditconfigurationsComponent } from './editconfigurations/editconfigurations.component';
 import { MasternavigationComponent } from './masternavigation/masternavigation.component';
+// import { CompanydetailsComponent } from './companydetails/companydetails.component';
+import { AddcompanydetailsComponent } from './addcompanydetails/addcompanydetails.component';
+import { EditcompanydetailsComponent } from './editcompanydetails/editcompanydetails.component';
+import { CompanydetailsComponent } from './companydetails/companydetails.component';
 //import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
@@ -45,7 +49,11 @@ import { MasternavigationComponent } from './masternavigation/masternavigation.c
     EditdashboardbannerComponent,
     AddconfigurationsComponent,
     EditconfigurationsComponent,
-    MasternavigationComponent
+    MasternavigationComponent,
+    CompanydetailsComponent,
+    AddcompanydetailsComponent,
+    EditcompanydetailsComponent,
+
   ],
   imports: [
     CommonModule,
@@ -78,7 +86,8 @@ import { MasternavigationComponent } from './masternavigation/masternavigation.c
     SharedModule,
     QuillModule,
     FuseAlertModule,
-    MatStepperModule
+    MatStepperModule,
+    
   ]
 })
 export class SalesModule { }

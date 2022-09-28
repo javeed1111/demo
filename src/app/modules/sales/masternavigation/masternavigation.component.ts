@@ -25,4 +25,8 @@ export class MasternavigationComponent implements OnInit {
 
     this._router.navigate(['/masters/dashboardbanner']);
   }
+  companydetails(){
+debugger
+    this._router.navigate(['/masters/companydetails']);
+  }
 }

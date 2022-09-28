@@ -367,7 +367,7 @@ export class AuthService {
     debugger
     return this._httpClient.get(this.baseUrl + "api/Admin/GetInvoiceNoFormat");
   }
-  AddInvoiceNoFormat(data):Observable<any> {
+  public AddInvoiceNoFormat(data):Observable<any> {
     //debugger
     return this._httpClient.post(this.baseUrl + "api/Admin/AddInvoiceNoFormat", data);
   }
@@ -383,6 +383,7 @@ export class AuthService {
     debugger
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteInvoiceNoFormat", data);
   }
+
   public UploadVideo(formData) {
     debugger
     return this._httpClient.post(this.baseUrl + "api/Admin/UploadVideo", formData);
@@ -409,6 +410,28 @@ export class AuthService {
     debugger
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteFiles",data);
   }
+  public Getcompanydata():Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetCompanyMaster");
+  }
+  public AddCompanyMaster(data):Observable<any> {
+    //debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/AddCompanyMaster", data);
+  }
+  public GetCompanyMasterById(id):Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetCompanyMasterById?Id="+id);
+  }
+  public UpdateCompanyMaster(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/UpdateCompanyMaster", data);
+  }
+  public DeleteCompanyMasterById(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/DeleteCompanyMasterById", data);
+  }
+
+
   /**
    * Sign in using the access token
    */
