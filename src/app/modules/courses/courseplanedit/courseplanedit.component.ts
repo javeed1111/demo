@@ -117,7 +117,7 @@ export class CourseplaneditComponent implements OnInit {
       this.horizontalStepperForm.controls.step1.get('planName').disable();
       this.horizontalStepperForm.controls.step1.get('price').disable();
       this.horizontalStepperForm.controls.step1.get('isOffer').disable();
-     // this.horizontalStepperForm.controls.step1.get('offerPrice').disable();
+      this.horizontalStepperForm.controls.step1.get('offerPrice').disable();
       this.horizontalStepperForm.controls.step1.get('effectiveFrom').disable();
       this.horizontalStepperForm.controls.step1.get('effectiveTill').disable();
       this.horizontalStepperForm.controls.step2.get('courseId').disable();
@@ -129,7 +129,7 @@ export class CourseplaneditComponent implements OnInit {
       this.horizontalStepperForm.controls.step1.get('planName').enable();
       this.horizontalStepperForm.controls.step1.get('price').enable();
       this.horizontalStepperForm.controls.step1.get('isOffer').enable();
-      // this.horizontalStepperForm.controls.step1.get('offerPrice').enable();
+       this.horizontalStepperForm.controls.step1.get('offerPrice').enable();
       this.horizontalStepperForm.controls.step1.get('effectiveFrom').enable();
       this.horizontalStepperForm.controls.step1.get('effectiveTill').enable();
       this.horizontalStepperForm.controls.step2.get('courseId').enable();
@@ -393,7 +393,7 @@ export class CourseplaneditComponent implements OnInit {
     if (this.isofferactive == undefined) {
       this.isofferactive = false;
       // this.horizontalStepperForm.controls['offerPrice'].disable();
-      this.OfferPrice = '0'
+      this.OfferPrice = dataa.step1.offerPrice;
     }
     else {
       // this.horizontalStepperForm.controls['offerPrice'].enable();

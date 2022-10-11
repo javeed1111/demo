@@ -13,7 +13,9 @@ import { AuthService } from 'app/core/auth/auth.service';
 })
 export class EditcompanydetailsComponent implements OnInit {
   showOnWebsite: boolean; 
-  
+  files: Array<any> = new Array<any>();
+  fileToUpload: File = null;
+  name: string;
 
   ConfigurationForm: FormGroup;
   alert: { type: FuseAlertType; message: string } = {
@@ -22,6 +24,7 @@ export class EditcompanydetailsComponent implements OnInit {
   };
   showAlert: boolean = false;
   butdisabled: boolean;
+  Id: any;
   constructor(private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _router: Router,
@@ -37,6 +40,8 @@ export class EditcompanydetailsComponent implements OnInit {
       phoneNo:['',[Validators.required]],
       email:['',[Validators.required]],
       showOnWebsite: [''],
+      CompanyUrl:['',],
+      Companylogo:['',],
     });
 
     this.Edit(id, value);
@@ -51,6 +56,7 @@ export class EditcompanydetailsComponent implements OnInit {
   }
 
   Edit(id: any, value: any) {
+    this.Id=id
     //debugger
     if (value == "view") {
       // this.editsite=false;
@@ -60,15 +66,20 @@ export class EditcompanydetailsComponent implements OnInit {
       this.ConfigurationForm.controls['phoneNo'].disable();
       this.ConfigurationForm.controls['email'].disable();
       this.ConfigurationForm.controls['showOnWebsite'].disable();
+      this.ConfigurationForm.controls['CompanyUrl'].disable();
+      this.ConfigurationForm.controls['Companylogo'].disable();
 
     }
     else {
+      debugger
       this.butdisabled = false;
       this.ConfigurationForm.controls['companyName'].enable();
       this.ConfigurationForm.controls['address'].enable();
       this.ConfigurationForm.controls['phoneNo'].enable();
       this.ConfigurationForm.controls['email'].enable();
       this.ConfigurationForm.controls['showOnWebsite'].enable();
+      this.ConfigurationForm.controls['CompanyUrl'].enable();
+      this.ConfigurationForm.controls['Companylogo'].enable();
     }
 
     this._authService.GetCompanyMasterById(id).subscribe((finalresult: any) => {
@@ -77,8 +88,22 @@ export class EditcompanydetailsComponent implements OnInit {
 
       if (finalresult.status == "200") {
         debugger
+       // this.name= finalresult.result.companylogo
+        // this.ConfigurationForm.patchValue(finalresult.result);
+         this.ConfigurationForm.patchValue({
+          companyName: finalresult.result.companyName,
+          address: finalresult.result.address,
+          email: finalresult.result.email,
+          phoneNo: finalresult.result.phoneNo,
+          showOnWebsite: finalresult.result.showOnWebsite,
+          CompanyUrl: finalresult.result.companyUrl,
+        Companylogo: finalresult.result.companylogo,
+         }
+        
+         );
 
-        this.ConfigurationForm.patchValue(finalresult.result);
+       
+        this.ConfigurationForm.controls['Companylogo']
 
       }
       else {
@@ -87,7 +112,25 @@ export class EditcompanydetailsComponent implements OnInit {
     });
   }
 
+  onSelectFile(files: FileList) {
+    debugger
+    if (files.length === 0)
+
+      return;
+    if (files.length > 0) {
+      this.files = [];
+      for (var i = 0; i < files.length; i++) {
+        this.fileToUpload = files.item(i);
+        const fileReader: FileReader = new FileReader();
+        fileReader.readAsDataURL(this.fileToUpload);
+        this.name = this.fileToUpload.name.split(' ').join('-').replace(/[()]/g, "")
+        this.files.push({ data: this.fileToUpload, fileName: this.name });
+      }
+    }
+  }
+
   Save() {
+
     if (this.ConfigurationForm.invalid) {
       return;
     }
@@ -95,17 +138,33 @@ export class EditcompanydetailsComponent implements OnInit {
 
     const content = this.ConfigurationForm.getRawValue();
 debugger
-    var data = {
-      Id: this.approute.snapshot.params['id'],
-      companyName: content.companyName,
-      Address:content.address,
-      phoneNo:content.phoneNo,
-      email:content.email,
-      showOnWebsite:content.showOnWebsite,
-      UpdatedBy: parseInt(localStorage.getItem("LoginId")),
-      //  IsActive: this.active,
-    }
-    this._authService.UpdateCompanyMaster(data).subscribe((result: any) => {
+    // var data = {
+    //   Id: this.approute.snapshot.params['id'],
+    //   companyName: content.companyName,
+    //   Address:content.address,
+    //   phoneNo:content.phoneNo,
+    //   email:content.email,
+    //   showOnWebsite:content.showOnWebsite,
+    //   UpdatedBy: parseInt(localStorage.getItem("LoginId")),
+    //   //  IsActive: this.active,
+    // }
+    const formData: FormData = new FormData();
+    formData.append("Email", content.email)
+    formData.append("Id", this.Id)
+    formData.append("phoneNo", content.phoneNo)
+    formData.append("companyName", content.companyName)
+    formData.append("Address", content.address)
+    formData.append("CompanyUrl", content.CompanyUrl)
+    formData.append("Companylogo", content.Companylogo)
+    formData.append("showOnWebsite", content.showOnWebsite)
+ formData.append("UpdatedBy", (localStorage.getItem("LoginId")));
+    if (this.files.length == 1) {
+     formData.append("fileupload", this.fileToUpload, this.name);
+   }
+
+
+
+    this._authService.UpdateCompanyMaster(formData).subscribe((result: any) => {
       debugger
       if (result.status == "200") {
         debugger

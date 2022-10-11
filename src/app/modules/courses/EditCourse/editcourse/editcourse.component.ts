@@ -97,6 +97,7 @@ export class EditcourseComponent implements OnInit {
   status: boolean;
   courseid: any;
   istax: boolean;
+
   fileToUpload1: File;
   name1: any;
   oldprice: any;
@@ -114,6 +115,7 @@ export class EditcourseComponent implements OnInit {
   uploadvideo:boolean=true
   deletevideo:boolean=false
   IconImageAlt: any;
+  istaxed: any;
   
   constructor(
 
@@ -150,6 +152,8 @@ export class EditcourseComponent implements OnInit {
       price: ['0', [Validators.required]],
       isOffer: [''],
       offerPrice: ['0'],
+      //taxApplicable:[''],
+      istax:[''],
       taxPercent:['0'],
       effectiveFrom: ['', Validators.required],
       effectiveTill: ['',],
@@ -258,6 +262,8 @@ export class EditcourseComponent implements OnInit {
     }
 
   }
+
+
   toggleCompleted($event: MatSlideToggleChange): void {
     debugger
     if ($event.checked != undefined) {
@@ -514,6 +520,8 @@ UploadVideo(value:any){
       this.courseForm.controls['whatLearn'].enable();
       this.courseForm.controls['requirements'].enable();
       this.courseForm.controls['price'].enable();
+      this.courseForm.controls['taxPercent'].enable();
+
       this.courseForm.controls['isOffer'].enable();
       // this.courseForm.controls['offerPrice'].enable();
       this.courseForm.controls['effectiveFrom'].enable();
@@ -531,6 +539,25 @@ UploadVideo(value:any){
       if (finalresult.status == "200") {
         debugger
 
+      //   if(this.courseForm.controls['isOffer'].value==true)
+      //   {
+      //  this.courseForm.controls['taxPercent'].enable();
+      //   }
+      //   this.courseForm.controls['istax'].setValue(true);
+
+if(finalresult.result.taxPercent!=0){
+  
+  this.courseForm.controls['istax'].setValue(true);
+  
+  
+}
+else{
+  this.courseForm.controls['istax'].setValue(false);
+  const ctrl = this.courseForm.controls['taxPercent'];
+  ctrl.disable();
+  ctrl.setValue('0')
+
+}
         this.courseForm.patchValue(finalresult.result);
         this.status=finalresult.result.status
         const course = this.courseForm.getRawValue();
@@ -542,6 +569,7 @@ UploadVideo(value:any){
         //   this.courseForm.controls['fees'].setValue("")
         // }"0001-01-01T00:00:00"
         this.feedetailsid= course.id;
+        
         this.isoffer  = course.isOffer;
         this.effectivefrm  = course.effectiveFrom;
         this.effectivetil  = course.effectiveTill;
@@ -629,6 +657,7 @@ UploadVideo(value:any){
         const ctrl = this.courseForm.controls['taxPercent'];
         ctrl.disable();
         ctrl.setValue('0')
+
 
       }
 
