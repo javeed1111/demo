@@ -393,7 +393,7 @@ export class CourseplaneditComponent implements OnInit {
     if (this.isofferactive == undefined) {
       this.isofferactive = false;
       // this.horizontalStepperForm.controls['offerPrice'].disable();
-      this.OfferPrice = dataa.step1.offerPrice;
+      this.OfferPrice = '0'
     }
     else {
       // this.horizontalStepperForm.controls['offerPrice'].enable();

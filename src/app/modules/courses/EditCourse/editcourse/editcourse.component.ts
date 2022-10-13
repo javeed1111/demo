@@ -116,6 +116,7 @@ export class EditcourseComponent implements OnInit {
   deletevideo:boolean=false
   IconImageAlt: any;
   istaxed: any;
+  closevideo:boolean=true
   
   constructor(
 
@@ -376,8 +377,8 @@ confirmation.afterClosed().subscribe((result) => {
     // If the confirm button pressed...
     if ( result === 'confirmed' )
     {
-  
-        // Delete the video
+      debugger
+  this.closevideo=false        // Delete the video
         this._authService.DeleteVideo(filename).subscribe((finalresult: any) => {
           debugger
           if(finalresult.status=="200"){
@@ -412,7 +413,7 @@ UploadVideo(value:any){
   const formData: FormData = new FormData();
   if (this.files2.length >= 1) {
     formData.append("files", this.fileToUpload2, this.name2);
-    this.blockUI.start('Video Is Uploading...');
+    this.blockUI.start('Uploading...');
     this._authService.UploadVideo(formData).subscribe((finalresult: any) => {
       debugger
       if(finalresult.status=="200"){

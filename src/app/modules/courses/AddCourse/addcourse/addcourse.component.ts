@@ -134,7 +134,7 @@ export class AddcourseComponent implements OnInit {
       onwebsite: [''],
       offerPrice: ['0'],
       taxpercent: ['0'],
-      effectiveFrom: ['', Validators.required],
+     effectiveFrom: [''],
       effectiveTill: [''],
       courseheader: ['', []],
       courseurl: ['', []],
@@ -145,11 +145,11 @@ export class AddcourseComponent implements OnInit {
       imagecaption: [''],
       imageshortdescription: [''],
       videocaption: [''],
-      uploader1: ['', [Validators.required]],
+      uploader1: ['', ],
       relatedcourses: [''],
-      UploadCourseIcon: ['', [Validators.required]],
-       UploadCourseVideo:['',[Validators.required]],
-      UploadImage: ['', [Validators.required]],
+      UploadCourseIcon: ['', ],
+       UploadCourseVideo:['',],
+      UploadImage: ['', ],
       instructor: ['', [Validators.required]]
     });
     // var currentdate=new Date()
@@ -729,8 +729,7 @@ export class AddcourseComponent implements OnInit {
     formData.append("FacultyId", course.instructor.toString())
     formData.append("VideoUrl", this.videoUrl)
     formData.append("VideoFileName", this.name2)
-    if (course.relatedcourses == "") {
-      course.relatedcourses = []
+   
       if (course.relatedcourses == "") {
         course.relatedcourses = []
         formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
@@ -815,7 +814,7 @@ export class AddcourseComponent implements OnInit {
           this.blockUI.stop()
         }
       });
-    }
+  
 
 
     // toggleCompleted($event: MatSlideToggleChange): void {

@@ -150,6 +150,7 @@ export class AddcoursecontentComponent implements OnInit {
   uploadvideo: boolean = true
   deletevideo: boolean = false
   fileslength: any;
+  butdisabled: boolean = false;;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -1203,21 +1204,25 @@ export class AddcoursecontentComponent implements OnInit {
       baseurl = "http://testugetitapi.fadelsoft.com"
     }
     if (value == "viewcontent") {
+      this.butdisabled = true;
       this.coursecontentForm.controls['courseName'].disable();
       this.coursecontentForm.controls['author'].disable();
       this.coursecontentForm.controls['chapter'].disable();
       this.coursecontentForm.controls['contentType'].disable();
       this.coursecontentForm.controls['contentDescription'].disable();
+     
       this.Save = true;
       this.update = false;
       this.Clear = false;
     }
     else {
+      this.butdisabled = false;
       this.coursecontentForm.controls['courseName'].disable();
       this.coursecontentForm.controls['author'].enable();
       this.coursecontentForm.controls['chapter'].enable();
       this.coursecontentForm.controls['contentType'].enable();
       this.coursecontentForm.controls['contentDescription'].enable();
+     
 
       this.Save = false;
       this.update = true;
