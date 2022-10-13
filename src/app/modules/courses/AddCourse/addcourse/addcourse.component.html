@@ -289,7 +289,7 @@
                                             onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
-                                        <input type='file' class="form-control" accept=".jpg, .png, .jpeg,.jfif " id="txtfileupload" name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none" [formControlName]="'UploadImage'">
+                                        <input type='file' class="form-control" accept=".jpg, .png, .jpeg,.jfif " id="txtfileupload" name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none" >
                                         <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                                             id="txtfileupload"  name="fileupload" 
                                             (change)="onSelectFile($event.target.files)"> -->
@@ -315,7 +315,7 @@
                                             onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
-                                        <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload1" name="fileupload1" (change)="onSelectFile1($event.target.files)" style="display:none" [formControlName]="'UploadCourseIcon'">
+                                        <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload1" name="fileupload1" (change)="onSelectFile1($event.target.files)" style="display:none" >
                                         <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                                             id="txtfileupload"  name="fileupload" 
                                             (change)="onSelectFile($event.target.files)"> -->
@@ -334,7 +334,7 @@
                                         <span class="ml-1 mr-0">{{name2}}</span>
                                         <span class="ml-1 mr-0">{{uploadedvideofile}}</span>
 
-                                        <input type='file' class="form-control" formControlName="uploader1" accept="video/*" id="txtfileupload2" name="fileupload2" (change)="onSelectVideo($event.target.files)" style="display:none" [formControlName]="'uploader1'" [multiple]="true">
+                                        <input type='file' class="form-control" formControlName="uploader1" accept="video/*" id="txtfileupload2" name="fileupload2" (change)="onSelectVideo($event.target.files)" style="display:none" [multiple]="true">
                                         <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                                         id="txtfileupload"  name="fileupload" 
                                         (change)="onSelectFile($event.target.files)"> -->

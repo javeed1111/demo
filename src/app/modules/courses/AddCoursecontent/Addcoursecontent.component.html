@@ -63,9 +63,11 @@
                                     <mat-form-field class="flex-auto">
                                         <mat-label>Select Module</mat-label>
                                         <mat-select [placeholder]="'Select Module'" [formControlName]="'selectedmodule'" (selectionChange)="selectedmodule()">
-                                            <mat-option *ngFor="let item of modules" [value]="item.moduleId">{{item.moduleName}}</mat-option>
+                                            <mat-option *ngFor="let item of modules" [value]="item.moduleId">
+                                                {{item.moduleName}}</mat-option>
                                         </mat-select>
-                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'">
+                                        </mat-icon>
                                     </mat-form-field>
                                 </div>
                                 <!-- Main Grid -->
@@ -106,7 +108,8 @@
                                                             </mat-cell>
                                                         </ng-container>
                                                         <ng-container matColumnDef="chapter">
-                                                            <mat-header-cell *matHeaderCellDef mat-sort-header> Chapter </mat-header-cell>
+                                                            <mat-header-cell *matHeaderCellDef mat-sort-header> Chapter
+                                                            </mat-header-cell>
                                                             <mat-cell *matCellDef="let row"> {{row.chapter}} </mat-cell>
                                                         </ng-container>
 
@@ -125,7 +128,8 @@
 
 
                                                         <ng-container matColumnDef="actions">
-                                                            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                                                            <mat-header-cell *matHeaderCellDef> Actions
+                                                            </mat-header-cell>
                                                             <mat-cell *matCellDef="let row">
                                                                 <div>
                                                                     <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="EditFromGrid(row.id,'viewcontent')">
@@ -144,7 +148,8 @@
                                                             </mat-cell>
                                                         </ng-container>
 
-                                                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                                        <mat-header-row *matHeaderRowDef="displayedColumns">
+                                                        </mat-header-row>
                                                         <mat-row *matRowDef="let row; columns: displayedColumns;">
                                                         </mat-row>
                                                     </mat-table>
@@ -173,7 +178,8 @@
                                     <mat-form-field class="flex-auto">
                                         <mat-label>Course Name</mat-label>
                                         <input matInput appAutofocus readonly [formControlName]="'courseName'" [placeholder]="'Course Name'">
-                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'">
+                                        </mat-icon>
                                     </mat-form-field>
                                 </div>
                                 <!-- <div class="flex">
@@ -235,15 +241,17 @@
                                     <!-- Actions -->
                                     <div class=" mt-4 sm:mt-0 col-span-6">
                                         <!-- Upload button -->
-                                        <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload').click()" [disabled]="butdisabled">
-                      <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                      <span class="ml-1 mr-0">Upload Material</span>
-  
-                      <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
+
+                                        <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload').click()">
+                                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                            <span class="ml-1 mr-0">Upload Material</span>
+
+                                            <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
+
                                   id="txtfileupload" name="fileupload"
                                   (change)="onSelectFile($event.target.files)"> -->
-  
-                    </button>
+
+                                            </button>
                                         <!-- <span class="ml-1 mr-0">{{name}}</span>
                           <span class="ml-1 mr-0">{{uploadedfilename}}</span> -->
                                         <!-- <span class="ml-1 mr-0">
@@ -260,7 +268,9 @@
                                         <br>
                                         <ul *ngFor="let item of files">
                                             <li>{{item.fileName}}
-                                                <span *ngIf="item.fileName && update" (click)="DeleteMaterial(item)"><mat-icon svgIcon="heroicons_outline:trash"></mat-icon></span>
+                                                <span *ngIf="item.fileName && update" (click)="DeleteMaterial(item)">
+                                                    <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
+                                                </span>
                                             </li>
                                         </ul>
 
@@ -274,19 +284,24 @@
                                     <!-- Actions -->
                                     <div class="mt-4 sm:mt-0 col-span-6">
                                         <!-- Upload button -->
-                                        <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload1').click()" [disabled]="butdisabled">
-                      <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                      <span class="ml-1 mr-0">Upload Video</span>
-  
-                      <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
+
+                                        <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
+
+                                        <button mat-flat-button [color]="'primary'"
+                                            onclick="document.getElementById('txtfileupload1').click()">
+                                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                                            <span class="ml-1 mr-0">Upload Video</span>
+
+                                            <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
+
                                   id="txtfileupload" name="fileupload"
                                   (change)="onSelectFile($event.target.files)"> -->
-  
-                    </button>
+
+                                        <!-- </button> -->
                                         <!-- <span class="ml-2" *ngIf="uploadvideo" (click)="UploadVideo()"><mat-icon svgIcon="heroicons_outline:cloud-upload"></mat-icon></span> -->
                                         <span class="ml-2" *ngIf="value=='editcontent'" (click)="DeleteVideo()">
-                      <mat-icon *ngIf="deletevideo" svgIcon="heroicons_outline:trash"></mat-icon>
-                    </span>
+                                            <mat-icon *ngIf="deletevideo" svgIcon="heroicons_outline:trash"></mat-icon>
+                                        </span>
                                         <span class="ml-1 mr-0">{{name1}}</span>
                                         <span class="ml-1 mr-0">{{uploadedvideo}}</span>
 
@@ -322,25 +337,26 @@
                                 <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
                                     <!-- Cancel -->
                                     <button class="ml-auto" mat-flat-button [color]="'primary'" [matTooltip]="'Cancel'" (click)="cancel()">
-                    Cancel
-                  </button>
+                                        Cancel
+                                    </button>
                                     <!--Clear-->
                                     <button class="px-6 ml-3" mat-flat-button [color]="'primary'" [matTooltip]="'Clear'" (click)="clear()" *ngIf="Clear">
-                    Clear
-                  </button>
+                                        Clear
+                                    </button>
                                     <!--Save-->
                                     <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UploadVideo('save')" *ngIf="Save">
-                    Save
-                  </button>
+                                        Save
+                                    </button>
                                     <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UploadVideo('SaveNext')" *ngIf="Save" [disabled]="butdisabled">
-                    Save Next
-                  </button>
-                                    <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UploadVideo('UpdateNext')" *ngIf="update" [disabled]="butdisabled">
-                    Update Next
-                  </button>
+                                        Next
+                                    </button>
                                     <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UploadVideo('update')" *ngIf="update">
-                    Update
-                  </button>
+                                        Update
+                                    </button>
+                                    <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="UploadVideo('UpdateNext')" *ngIf="update" [disabled]="butdisabled">
+                                        Next
+                                    </button>
+
                                 </div>
                             </form>
 

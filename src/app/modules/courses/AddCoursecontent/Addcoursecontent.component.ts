@@ -609,7 +609,12 @@ export class AddcoursecontentComponent implements OnInit {
         })
       }
       else {
+        if(!this.coursecontentForm.dirty){
+          this._router.navigate(['/courses/questions/' + this.courseid]);
+        }
+        else{
         this.AddCoursecontent(value);
+        }
       }
     }
     else if (value == 'update' || value == 'UpdateNext') {
@@ -681,7 +686,12 @@ export class AddcoursecontentComponent implements OnInit {
         })
       }
       else {
+        if(!this.coursecontentForm.dirty){
+          this._router.navigate(['/courses/questions/' + this.courseid]);
+        }
+        else{
         this.UpdateCoursecontent(value);
+        }
       }
     }
     else {
