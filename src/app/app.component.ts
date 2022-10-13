@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Injectable } from "@angular/core";
-import { of } from 'rxjs';
+import { filter, map, mergeMap, of } from 'rxjs';
 const MINUTES_UNITL_AUTO_LOGOUT = 15// in mins
 const CHECK_INTERVAL = 15000 // in ms
 const STORE_KEY =  'lastAction';
@@ -24,7 +24,7 @@ export class AppComponent
     /**
      * Constructor
      */
-     constructor(private route: Router,) { 
+     constructor(private route: Router,private activatedRoute:ActivatedRoute) { 
         this.check();
         this.initListener();
         this.initInterval();
@@ -63,4 +63,10 @@ export class AppComponent
         //   this.route.navigate(['sign-in']);
         }
       }
+
+      ngOnInit() {
+        // Change page title on navigation  based on route data
+       
+      }
+
 }

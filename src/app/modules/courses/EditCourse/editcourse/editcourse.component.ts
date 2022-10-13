@@ -418,7 +418,18 @@ UploadVideo(value:any){
   })
   }
   else {
+    if(!this.courseForm.dirty){
+      if(JSON.stringify(this.RelatedcourseIds)===JSON.stringify(this.bind))
+      {
+        this._router.navigate(['/courses/addcoursemodule/'+this.courseid]);
+      }
+      else{
+        this.Updatecourse(value);
+      }
+    }
+    else{
     this.Updatecourse(value);
+    }
   }
 }
 
@@ -549,6 +560,7 @@ UploadVideo(value:any){
         this.RelatedcourseIds=finalresult.result.relCourses;
         this.bind=this.RelatedcourseIds.map(item => item.relatedCourseId)
         .filter((value, index, self) => self.indexOf(value) === index);
+        this.RelatedcourseIds=this.bind
         // if(course.effectiveFrom=="0001-01-01T00:00:00"){
         //   course.effectiveFrom="effectiveFrom"
         // }
@@ -679,7 +691,7 @@ UploadVideo(value:any){
     var finalids=[] 
     if(this.RelatedcourseIds.length==this.bind.length){
       for(let i=0;i<this.bind.length;i++){
-        if(this.RelatedcourseIds[i].relatedCourseId!=this.bind[i]){
+        if(this.RelatedcourseIds[i]!=this.bind[i]){
         finalids.push(this.bind[i])
         }
       }
@@ -850,7 +862,7 @@ UploadVideo(value:any){
     var finalids=[] 
     if(this.RelatedcourseIds.length==this.bind.length){
       for(let i=0;i<this.bind.length;i++){
-        if(this.RelatedcourseIds[i].relatedCourseId!=this.bind[i]){
+        if(this.RelatedcourseIds[i]!=this.bind[i]){
         finalids.push(this.bind[i])
         }
       }

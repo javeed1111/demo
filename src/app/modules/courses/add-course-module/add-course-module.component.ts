@@ -22,7 +22,7 @@ import { OrderByPipe } from '../order-by.pipe';
 })
 export class AddCourseModuleComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
-
+  tempForm:any
   color = 'primary';
   mode = 'indeterminate';
   value = 50;
@@ -97,6 +97,7 @@ dataSource: MatTableDataSource<any>;
         // userchkactive: ['']
 
     });
+   this.tempForm=this.coursemoduleForm.value
     this.Edit(this.courseid, "editcontent")
     this.GetModulesByCourseId();
   }
@@ -181,6 +182,9 @@ dataSource: MatTableDataSource<any>;
   AddCourseModule()
   {
       debugger
+      if(this.tempForm==this.coursemoduleForm.value){
+
+      }
       if (this.coursemoduleForm.invalid) {
           return;
       }
@@ -238,6 +242,7 @@ dataSource: MatTableDataSource<any>;
    
            }
         });
+
   }
 
   selectionChange(event: StepperSelectionEvent) {
@@ -333,8 +338,12 @@ dataSource: MatTableDataSource<any>;
   }
 
   SaveNext(){
- 
       debugger
+      if(!this.coursemoduleForm.dirty){
+        var value="edit"
+        this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+value]);
+      }
+      else{
       if (this.coursemoduleForm.invalid) {
           return;
       }
@@ -392,14 +401,17 @@ dataSource: MatTableDataSource<any>;
    
            }
         });
-  
+      }
   }
+
   GoToFaq(){
     this._router.navigate(['/courses/questions/'+this.courseid]);
   }
+
   UpdateCourseModule(){
     debugger
-    this.showAlert = false;
+    
+      this.showAlert = false;
     if (this.coursemoduleForm.invalid) {
      
         return
@@ -463,9 +475,15 @@ dataSource: MatTableDataSource<any>;
 
       }
     });
+    
   }
   UpdateNext(){
     debugger
+    if(!this.coursemoduleForm.dirty){
+      var value="edit"
+      this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+value]);
+    }
+    else{
     this.showAlert = false;
     if (this.coursemoduleForm.invalid) {
      
@@ -515,8 +533,8 @@ dataSource: MatTableDataSource<any>;
         // Show the alert
         this.showAlert = true;
         setTimeout(() => {
-          this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+values.moduleId+'/'+value]);
-        }, 1000);
+          this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+value]);
+        }, 3000);
       }
       else {
         // Set the alert
@@ -532,6 +550,7 @@ dataSource: MatTableDataSource<any>;
 
       }
     });
+  }
   }
   clear(){
     this.coursemoduleForm.controls['moduleName'].setValue('');
@@ -580,7 +599,7 @@ dataSource: MatTableDataSource<any>;
 
         this.coursemoduleForm.patchValue(finalresult.result);
         const course = this.coursemoduleForm.getRawValue();
-        console.log('coursecontent',course)
+        this.tempForm=this.coursemoduleForm.value
         // this.remove=true
         // if (course.duration == 0) {
         //   this.courseForm.controls['duration'].setValue("")
@@ -697,4 +716,5 @@ dataSource: MatTableDataSource<any>;
         });
 
     }
-}
+
+  }

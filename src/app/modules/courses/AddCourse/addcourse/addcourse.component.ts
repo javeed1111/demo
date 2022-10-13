@@ -147,9 +147,9 @@ export class AddcourseComponent implements OnInit {
       videocaption: [''],
       uploader1: ['', [Validators.required]],
       relatedcourses: [''],
-      UploadCourseIcon: ['', [Validators.required]],
-       UploadCourseVideo:['',[Validators.required]],
-      UploadImage: ['', [Validators.required]],
+      // UploadCourseIcon: ['', [Validators.required]],
+      //  UploadCourseVideo:['',[Validators.required]],
+      // UploadImage: ['', [Validators.required]],
       instructor: ['', [Validators.required]]
     });
     // var currentdate=new Date()
@@ -201,6 +201,24 @@ export class AddcourseComponent implements OnInit {
 
   UploadVideo(value: any) {
     debugger
+     
+    if (this.files.length == undefined || this.files1.length == undefined || this.files2.length == undefined) {
+      this.showAlert = true;
+
+     this.alert = {
+       type: 'warning',
+       message: "Selecting Files Is Mandatory"
+     };
+    
+     setTimeout(() => {
+       this.showAlert = false;
+       return;
+     }, 1500);
+   }
+
+   if (this.courseForm.invalid) {
+     return;
+   }
 
     const formData: FormData = new FormData();
     if (this.files2!=undefined && this.files2.length >= 1 ) {
@@ -665,22 +683,6 @@ export class AddcourseComponent implements OnInit {
   AddCourse(val: any) {
     debugger
     this.showAlert = false;
- 
-    if (this.files.length != undefined || this.files1.length != undefined || this.files2.length != undefined) {
-       this.showAlert = true;
-
-      this.alert = {
-        type: 'warning',
-        message: "Selecting Files Is Mandatory"
-      };
-     
-      setTimeout(() => {
-        this.showAlert = false;
-      }, 1500);
-    }
-    if (this.courseForm.invalid) {
-      return;
-    }
 
     const course = this.courseForm.getRawValue();
     var efeectivetill = course.effectiveTill == "" ? null : course.effectiveTill.format("DD-MM-YYYY")

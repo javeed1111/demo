@@ -1,28 +1,67 @@
-<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
-
-    <!-- Header -->
-    <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
-      <!-- Loader -->
-  
-      <!-- Title -->
-      <div class="text-4xl font-extrabold tracking-tight">Reviews</div>
-      
-        
-    </div>
-    <div class=" flex flex-col mt-2 py-4 px-6 md:px-8">
-      <div class="flex items-center mt-3 " *ngFor="let item of reviews">
-          <div class="flex items-center justify-center w-14 h-14 rounded bg-red-100 text-red-800 dark:bg-red-600 dark:text-red-50">
-            <img src="assets/images/avatars/brian-hughes.jpg" alt="image">
-          </div>
-          <div class="flex-auto ml-4  leading-none">
-              <div class=" font-medium text-2xl"><h3>{{item.userName}}</h3></div>
-              <div class="mt-2 font-medium text-secondary">{{item.comments}}</div>
+<div class="flex flex-col w-full">
+  <ng-container>
+      <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
+          <div class="w-full max-w-5xl">
+              <mat-stepper [linear]="isLinear" #stepper (selectionChange)="selectionChange($event)">
+                  <mat-step label="Step 1" [stepControl]="firstFormGroup" >
+                    <form  [formGroup]="firstFormGroup">
+                      <ng-template matStepLabel><p (click)="GoToCoursePage()">Course</p></ng-template>
+                    
+                    </form>
+                  </mat-step>
+                  <mat-step label="Step 2" [stepControl]="secondFormGroup">
+                      <form [formGroup]="secondFormGroup">
+                          <ng-template matStepLabel ><p (click)="GoToModulesPage()">Module</p></ng-template>
+                      </form>
+                  </mat-step>
+                  <mat-step label="Step 3" [stepControl]="thirdFormGroup">
+                      <form [formGroup]="thirdFormGroup" >
+                          <ng-template matStepLabel ><p (click)="GoToPage()">Chapter</p></ng-template>
+                      </form>
+                  </mat-step>
+                  <mat-step label="Step 4" [stepControl]="fourthFormGroup">
+                    <form [formGroup]="fourthFormGroup">
+                      <ng-template matStepLabel><p (click)="GoToFaqs()">FAQ</p></ng-template>
+                  </form>
+                  </mat-step >
+                  <mat-step label="Step 5" [stepControl]="ReviewsForm">
+                    <ng-template matStepLabel>Reviews</ng-template>
+                    <form [formGroup]="ReviewsForm">
+                      <!-- Header -->
+                      <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+                        
+                        <!-- Title -->
+                        <div class="text-4xl font-extrabold tracking-tight">Reviews</div>
+                        
+                          
+                      </div>
+                        <div class="flex items-center mt-3 px-6 md:px-8" *ngFor="let item of reviews">
+                            <div class="flex items-center justify-center w-14 h-14 rounded bg-red-100 text-red-800 dark:bg-red-600 dark:text-red-50">
+                              <img src="assets/images/avatars/brian-hughes.jpg" alt="image">
+                            </div>
+                            <div class="flex-auto ml-4  leading-none">
+                                <div class=" font-medium text-2xl"><h3>{{item.userName}}</h3></div>
+                                <div class="mt-2 font-medium text-secondary">{{item.comments}}</div>
+                            </div>
+                        </div>
+                      <div >
+                        <div class="flex items-center justify-end  mx-10 mt-4 px-8 py-5 bg-card shadow rounded overflow-hidden">
+                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Finish()">
+                          Finish
+                      </button>
+                      </div>
+                      </div>
+                    </form>
+                  </mat-step>
+                  <!-- <mat-step label="Step 6">
+                    <ng-template matStepLabel><p (click)="GoToSubscriptions()">Subscriptions</p></ng-template>
+                  
+                  </mat-step> -->
+                </mat-stepper> 
           </div>
       </div>
-  </div>
-  <div class="relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden">
-    <div class="flex items-center justify-end  mx-10 mt-4 px-8 py-5 bg-card shadow rounded overflow-hidden">
-    <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Finish()">
-      Finish
-  </button>
-  </div>
+  </ng-container>
+</div>
+
+
+ 
