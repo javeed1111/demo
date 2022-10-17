@@ -172,6 +172,7 @@ debugger
         // Set the alert
         this.alert = {
           type: 'success',
+          //message: result.message
           message: result.message
         };
 

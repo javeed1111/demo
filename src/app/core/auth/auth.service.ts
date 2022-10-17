@@ -16,7 +16,6 @@ export class AuthService {
   constructor(private _httpClient: HttpClient, private _userService: UserService) {
     this.baseUrl = 'https://localhost:44328/';
     //this.baseUrl = 'https://testugetitapi.fadelsoft.com/';
-    // this.baseUrl = 'https://ugetithome.mbascloud.com/';
     //this.baseUrl = 'http://testugetitapi.fadelsoft.com/';
   }
 
@@ -389,9 +388,9 @@ export class AuthService {
     debugger
     return this._httpClient.post(this.baseUrl + "api/Admin/UploadVideo", formData);
   }
-  public DeleteVideo(fileName:string):Observable<any> {
+  public DeleteVideo(data:any):Observable<any> {
     debugger
-    return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteVideo?fileName="+fileName);
+    return this._httpClient.post(this.baseUrl + "api/Admin/DeleteVideo",data);
   }
   public UploadChapterVideo(formData) {
     debugger

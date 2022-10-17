@@ -10,6 +10,8 @@ import { AuthService } from 'app/core/auth/auth.service';
   templateUrl: './addcompanydetails.component.html',
   styleUrls: ['./addcompanydetails.component.scss']
 })
+
+
 export class AddcompanydetailsComponent implements OnInit {
   showonwebsite: boolean;
   files: Array<any> = new Array<any>();
@@ -131,9 +133,10 @@ showAlert:  boolean = false;
                 setTimeout(() => {
                   
                   this.showAlert = false;
+                  this._router.navigate(['/masters/companydetails']);
                 }, 2000); 
                 // setTimeout(() => {
-                  this._router.navigate(['/masters/companydetails']);
+                  // this._router.navigate(['/masters/companydetails']);
                 // }, 2000); 
                 
             }

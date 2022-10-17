@@ -116,7 +116,9 @@ export class EditcourseComponent implements OnInit {
   deletevideo:boolean=false
   IconImageAlt: any;
   istaxed: any;
-  closevideo:boolean=true
+  closevideo:boolean=true;
+  UpdatedBy:any;
+  CourseId:any;
   
   constructor(
 
@@ -138,6 +140,8 @@ export class EditcourseComponent implements OnInit {
     this.GetTechnologys();
     this.GetCourses();
     this.GetFaculty();
+    this.CourseId;
+
 
     this.courseForm = this._formBuilder.group({
       courseName: ['', [Validators.required]],
@@ -170,7 +174,8 @@ export class EditcourseComponent implements OnInit {
       imageCaption:[''],
       imageShortDescription:[''],
       videoCaption:[''],
-      facultyId:['',[Validators.required]]
+      facultyId:['',[Validators.required]],
+      img:[''],
     });
     const ctrl = this.courseForm.controls['offerPrice'];
     ctrl.disable();
@@ -359,8 +364,15 @@ export class EditcourseComponent implements OnInit {
 
 DeleteVideo(){
   debugger
-  var filename=this.videoUrl.replace('https://ugetit.blob.core.windows.net/coursevideos/',"")
 
+  var filename=this.videoUrl.replace('https://ugetit.blob.core.windows.net/coursevideos/',"")
+ var data = {
+     // MaterialId: row.materialId,
+     VideoFileName: filename,
+      CourseId:parseInt( this.Id),
+      UpdatedBy: parseInt(localStorage.getItem("LoginId")),
+      FolderName: 'coursevideos'
+    }
   const confirmation = this._fuseConfirmationService.open({
     title  : 'Delete Uploaded Video',
     message: 'Are you sure you want to delete this course?',
@@ -379,7 +391,7 @@ confirmation.afterClosed().subscribe((result) => {
     {
       debugger
   this.closevideo=false        // Delete the video
-        this._authService.DeleteVideo(filename).subscribe((finalresult: any) => {
+        this._authService.DeleteVideo(data).subscribe((finalresult: any) => {
           debugger
           if(finalresult.status=="200"){
             this.uploadvideo=true
@@ -439,6 +451,7 @@ UploadVideo(value:any){
     }
   }
 }
+
 
   GoToFaq(){
     this._router.navigate(['/courses/questions/'+this.courseid]);
@@ -520,6 +533,7 @@ UploadVideo(value:any){
       this.courseForm.controls['effectiveTill'].disable();
       this.courseForm.controls['showOnWebsite'].disable();
       this.courseForm.controls['facultyId'].disable();
+      this.courseForm.controls['img'].disable();
 
     }
     else {
@@ -539,7 +553,7 @@ UploadVideo(value:any){
       this.courseForm.controls['effectiveFrom'].enable();
       this.courseForm.controls['effectiveTill'].enable();
       this.courseForm.controls['showOnWebsite'].enable();
-      
+      this.courseForm.controls['img'].enable();
 
     }
     this.Id = id;

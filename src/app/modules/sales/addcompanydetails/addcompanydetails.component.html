@@ -44,9 +44,7 @@
                         </mat-form-field>
                     </div>
 
-                    <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
-                        {{alert.message}}
-                    </fuse-alert>
+
                     <div class="mt-4 col-span-6">
                         <div>
                             <ng-container>
@@ -92,7 +90,9 @@
 
 
 
-
+                    <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
+                        {{alert.message}}
+                    </fuse-alert>
 
                     <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
                         <!-- Cancel -->
