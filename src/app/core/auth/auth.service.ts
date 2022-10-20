@@ -430,8 +430,26 @@ export class AuthService {
     debugger
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteCompanyMasterById", data);
   }
-
-
+  public GetTermspolicy():Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetTermsPolicies");
+  }
+  public GetTermspolicyById(id):Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetTermsPoliciesById?Id="+id);
+  }
+  public AddTermspolicy(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/AddTermsPoliceis", data);
+  }
+  public UpdateTermsPolicies(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/UpdateTermsPolicies", data);
+  }
+  public DeleteTermsPolicies(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/DeleteTermsPolicies", data);
+  }
   /**
    * Sign in using the access token
    */

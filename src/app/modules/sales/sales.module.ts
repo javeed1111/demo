@@ -40,6 +40,9 @@ import { MasternavigationComponent } from './masternavigation/masternavigation.c
 import { AddcompanydetailsComponent } from './addcompanydetails/addcompanydetails.component';
 import { EditcompanydetailsComponent } from './editcompanydetails/editcompanydetails.component';
 import { CompanydetailsComponent } from './companydetails/companydetails.component';
+import { TermsandPolicyComponent } from './termsand-policy/termsand-policy.component';
+import { AddtermsandpolicyComponent } from './addtermsandpolicy/addtermsandpolicy.component';
+import { EdittermsandpolicyComponent } from './edittermsandpolicy/edittermsandpolicy.component';
 //import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
@@ -53,6 +56,9 @@ import { CompanydetailsComponent } from './companydetails/companydetails.compone
     CompanydetailsComponent,
     AddcompanydetailsComponent,
     EditcompanydetailsComponent,
+    TermsandPolicyComponent,
+    AddtermsandpolicyComponent,
+    EdittermsandpolicyComponent,
 
   ],
   imports: [

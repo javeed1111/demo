@@ -5,14 +5,16 @@ import { AddconfigurationsComponent } from './addconfigurations/addconfiguration
 import { AdddashboardbannerComponent } from './adddashboardbanner/adddashboardbanner.component';
 import { CompanydetailsComponent } from './companydetails/companydetails.component';
 // import { CompanydetailsComponent } from './companydetails/companydetails.component';
+import { AddtermsandpolicyComponent } from './addtermsandpolicy/addtermsandpolicy.component';
 import { ConfigurationsComponent } from './configurations/configurations.component';
 import { DashboardbannerComponent } from './dashboardbanner/dashboardbanner.component';
 import { EditcompanydetailsComponent } from './editcompanydetails/editcompanydetails.component';
 import { EditconfigurationsComponent } from './editconfigurations/editconfigurations.component';
 import { EditdashboardbannerComponent } from './editdashboardbanner/editdashboardbanner.component';
+import { EdittermsandpolicyComponent } from './edittermsandpolicy/edittermsandpolicy.component';
 import { MasternavigationComponent } from './masternavigation/masternavigation.component';
 import { SalesComponent } from './sales.component';
-
+import { TermsandPolicyComponent } from './termsand-policy/termsand-policy.component';
 const routes: Routes = [
   {
     path:'',component:SalesComponent,
@@ -30,6 +32,9 @@ const routes: Routes = [
       {path:'companydetails',component:CompanydetailsComponent},
       {path:'addcompanydetails',component:AddcompanydetailsComponent},
       {path:'editcompanydetails/:id/:value',component:EditcompanydetailsComponent},
+      {path:'termsandpolicy',component:TermsandPolicyComponent},
+      {path:'addtermsandpolicy',component:AddtermsandpolicyComponent},
+      {path:'edittermsandpolicy/:id/:value',component:EdittermsandpolicyComponent},
     ]
   }
 ];

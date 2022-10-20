@@ -69,33 +69,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                     }
                 ]
             },
-            {
-                id      : 'masters',
-                title   : 'Masters',
-                type    : 'basic',
-                icon    : 'heroicons_solid:collection',
-                link :      '/masters'
-                // children: [
-                //     {
-                //         id   : 'masters.configurations',
-                //         title: 'Configurations',
-                //         type : 'basic',
-                //         link : '/masters/configurations'
-                //     },
-                //     {
-                //         id   : 'masters.DashboardContent',
-                //         title: 'DashBoard Banner',
-                //         type : 'basic',
-                //         link : '/masters/dashboardbanner'
-                //     },
-                    // {
-                    //     id   : 'masters.learningmode',
-                    //     title: 'Learning Mode',
-                    //     type : 'basic',
-                    //     link : '/masters/learningmode'
-                    // }
-                // ]
-            },
+           
             {
                 id      : 'courses',
                 title   : 'Courses',
@@ -181,6 +155,33 @@ export const defaultNavigation: FuseNavigationItem[] = [
                     //     link : '/faculty/facultypayment'
                     // }   
                 ]
+            },
+            {
+                id      : 'masters',
+                title   : 'Masters',
+                type    : 'basic',
+                icon    : 'heroicons_solid:collection',
+                link :      '/masters'
+                // children: [
+                //     {
+                //         id   : 'masters.configurations',
+                //         title: 'Configurations',
+                //         type : 'basic',
+                //         link : '/masters/configurations'
+                //     },
+                //     {
+                //         id   : 'masters.DashboardContent',
+                //         title: 'DashBoard Banner',
+                //         type : 'basic',
+                //         link : '/masters/dashboardbanner'
+                //     },
+                    // {
+                    //     id   : 'masters.learningmode',
+                    //     title: 'Learning Mode',
+                    //     type : 'basic',
+                    //     link : '/masters/learningmode'
+                    // }
+                // ]
             },
             {
                 id      : 'reports',
