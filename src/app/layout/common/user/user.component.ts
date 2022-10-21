@@ -3,7 +3,10 @@ import { Router } from '@angular/router';
 import { BooleanInput } from '@angular/cdk/coercion';
 import { Subject, takeUntil } from 'rxjs';
 import { User } from 'app/core/user/user.types';
+import { AppConfig, Scheme, Theme, Themes } from 'app/core/config/app.config';
 import { UserService } from 'app/core/user/user.service';
+import { FuseConfigService } from '@fuse/services/config';
+import { Layout } from 'app/layout/layout.types';
 
 @Component({
     selector       : 'user',
@@ -11,9 +14,18 @@ import { UserService } from 'app/core/user/user.service';
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs       : 'user'
+
+    
 })
 export class UserComponent implements OnInit, OnDestroy
 {
+
+    config: AppConfig;
+    layout: Layout;
+    scheme: 'dark' | 'light';
+    theme: string;
+    themes: Themes;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
     /* eslint-disable @typescript-eslint/naming-convention */
     static ngAcceptInputType_showAvatar: BooleanInput;
     /* eslint-enable @typescript-eslint/naming-convention */
@@ -24,7 +36,7 @@ export class UserComponent implements OnInit, OnDestroy
     lastname:string;
     email:string;
 
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    // private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
      * Constructor
@@ -32,7 +44,9 @@ export class UserComponent implements OnInit, OnDestroy
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
-        private _userService: UserService
+        private _userService: UserService,
+    
+        private _fuseConfigService: FuseConfigService
     )
     {
     }
@@ -59,6 +73,13 @@ export class UserComponent implements OnInit, OnDestroy
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });
+            this._fuseConfigService.config$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((config: AppConfig) => {
+
+                // Store the config
+                this.config = config;
+            });
     }
 
     /**
@@ -69,6 +90,39 @@ export class UserComponent implements OnInit, OnDestroy
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
+    }
+
+
+
+    setLayout(layout: string): void
+    {
+        // Clear the 'layout' query param to allow layout changes
+        this._router.navigate([], {
+            queryParams        : {
+                layout: null
+            },
+            queryParamsHandling: 'merge'
+        }).then(() => {
+
+            // Set the config
+            this._fuseConfigService.config = {layout};
+        });
+    }
+
+
+    setScheme(scheme: Scheme): void
+    {
+        this._fuseConfigService.config = {scheme};
+    }
+
+    /**
+     * Set the theme on the config
+     *
+     * @param theme
+     */
+    setTheme(theme: Theme): void
+    {
+        this._fuseConfigService.config = {theme};
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -102,4 +156,5 @@ export class UserComponent implements OnInit, OnDestroy
     {
         this._router.navigate(['/sign-out']);
     }
+   
 }

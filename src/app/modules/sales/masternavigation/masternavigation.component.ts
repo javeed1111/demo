@@ -29,4 +29,9 @@ export class MasternavigationComponent implements OnInit {
 debugger
     this._router.navigate(['/masters/companydetails']);
   }
+
+  emailsetttings(){
+    debugger
+        this._router.navigate(['/masters/emailsettings']);
+      }
 }

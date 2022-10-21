@@ -1,0 +1,92 @@
+<div class="flex flex-col w-full">
+    <ng-container>
+        <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
+            <div class="w-full max-w-5xl">
+
+                <form [formGroup]="ConfigurationForm" class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
+
+
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>From Email</mat-label>
+                            <input matInput appAutofocus [formControlName]="'Sender'" [placeholder]="'Sender'">
+                            <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon> -->
+                        </mat-form-field>
+                    </div>
+
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>SMTP</mat-label>
+                            <input matInput appAutofocus [formControlName]="'Subject'" [placeholder]="'Subject'">
+                            <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon> -->
+                        </mat-form-field>
+                    </div>
+
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>PortNo</mat-label>
+                            <input matInput appAutofocus [formControlName]="'PortNo'" [placeholder]="'PortNo'">
+                            <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon> -->
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label> SMTP User</mat-label>
+                            <input matInput appAutofocus [formControlName]="'User'" [placeholder]="'User'">
+                            <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>SMTP Password</mat-label>
+                            <input matInput appAutofocus [formControlName]="'Password'" [placeholder]="'Password'">
+                            <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon> -->
+                        </mat-form-field>
+                    </div>
+                   
+                    <div class="flex">
+                        <mat-form-field class="flex-auto">
+                            <mat-label>Email DisplayName</mat-label>
+                            <input matInput appAutofocus [formControlName]="'DisplayName'" [placeholder]="'DisplayName'">
+                            <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon> -->
+                        </mat-form-field>
+                    </div>
+
+                    <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
+                        {{alert.message}}
+                    </fuse-alert>
+                   
+                    <mat-checkbox labelPosition="before"  class="mt-8 mb-4  mr-200 sm:mt-0 sm:ml-auto" [color]="'primary'" id="showOnWebsite" [formControlName]="'showOnWebsite'" (change)="onwebsite($event)" [checked]="false">
+                           SMTP SSL  &nbsp;  &nbsp;
+                    </mat-checkbox>
+
+         
+                    <!-- <div class="mt-4 col-span-6">
+                        <div>
+                            <ng-container>
+                                <div class="fuse-mat-no-subscript flex-auto">
+                                    <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'" id="onwebsite" (change)="onwebsite($event)" [checked]="true">
+                                        show on website
+                                    </mat-slide-toggle>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div> -->
+                    <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
+                        <!-- Cancel -->
+                        <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="cancel()">
+                            Cancel
+                        </button>
+                        <!--Save-->
+                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Save()">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </ng-container>
+</div>

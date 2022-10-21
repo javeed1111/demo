@@ -12,6 +12,9 @@ import { EditconfigurationsComponent } from './editconfigurations/editconfigurat
 import { EditdashboardbannerComponent } from './editdashboardbanner/editdashboardbanner.component';
 import { MasternavigationComponent } from './masternavigation/masternavigation.component';
 import { SalesComponent } from './sales.component';
+import { EmailsettingsComponent } from './emailsettings/emailsettings.component';
+import { AddemailComponent } from './addemail/addemail.component';
+import { EditemailComponent } from './editemail/editemail.component';
 
 const routes: Routes = [
   {
@@ -30,6 +33,9 @@ const routes: Routes = [
       {path:'companydetails',component:CompanydetailsComponent},
       {path:'addcompanydetails',component:AddcompanydetailsComponent},
       {path:'editcompanydetails/:id/:value',component:EditcompanydetailsComponent},
+      {path:'emailsettings',component:EmailsettingsComponent},
+      {path:'addemail',component:AddemailComponent},
+      {path:'editemail/:id/:value',component:EditemailComponent},
     ]
   }
 ];

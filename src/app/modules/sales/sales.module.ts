@@ -40,6 +40,10 @@ import { MasternavigationComponent } from './masternavigation/masternavigation.c
 import { AddcompanydetailsComponent } from './addcompanydetails/addcompanydetails.component';
 import { EditcompanydetailsComponent } from './editcompanydetails/editcompanydetails.component';
 import { CompanydetailsComponent } from './companydetails/companydetails.component';
+import { EmailsettingsComponent } from './emailsettings/emailsettings.component';
+import { AddemailComponent } from './addemail/addemail.component';
+import { EditemailComponent } from './editemail/editemail.component';
+
 //import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
@@ -53,6 +57,10 @@ import { CompanydetailsComponent } from './companydetails/companydetails.compone
     CompanydetailsComponent,
     AddcompanydetailsComponent,
     EditcompanydetailsComponent,
+    EmailsettingsComponent,
+    AddemailComponent,
+    EditemailComponent,
+    
 
   ],
   imports: [
