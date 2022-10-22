@@ -74,18 +74,21 @@
 
                         </button>
                         <span class="ml-1 mr-0">{{name}}</span>
+                        <span class="ml-1 mr-0">{{CompanylogoAlt}}</span>
                         <span class="ml-1 mr-0">Image size should be: 600*485</span>
                         <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
                         <!-- <button style="display:block;width:120px; height:30px;"
                             onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
-                        <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload" name="txtfileupload" (change)="onSelectFile($event.target.files)" style="display:none" [formControlName]="'Companylogo'">
+                        <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload" name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none" [formControlName]="'Companylogo'">
                         <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                             id="txtfileupload"  name="fileupload" 
                             (change)="onSelectFile($event.target.files)"> -->
                     </div>
-
+                    <div class="flex" style="margin-top: 10%;" *ngIf="LogoURL">
+                        <img style="width: 30%;  border: 1px solid #555" src="{{LogoURL}}">
+                    </div>
 
                     <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
                         {{alert.message}}

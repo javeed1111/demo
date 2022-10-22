@@ -402,9 +402,9 @@ export class AuthService {
 
 
   }
-  public DeleteChapterVideo(fileName:string):Observable<any> {
+  public DeleteChapterVideo(data:any):Observable<any> {
     debugger
-    return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteChapterVideo?fileName="+fileName);
+    return this._httpClient.post(this.baseUrl + "api/Admin/DeleteChapterVideo",data);
   }
   public DeleteFiles(data:any):Observable<any> {
     debugger

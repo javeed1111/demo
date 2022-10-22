@@ -463,7 +463,13 @@ export class AddcoursecontentComponent implements OnInit {
   DeleteVideo() {
     debugger
     var filename = this.videoUrl.replace('https://ugetit.blob.core.windows.net/coursevideos/', "")
-
+    var data = {
+      // MaterialId: row.materialId,
+      VideoFileName: filename,
+       CourseId:parseInt( this.Id),
+       UpdatedBy: parseInt(localStorage.getItem("LoginId")),
+       FolderName: 'CoursecontentFiles'
+     }
     const confirmation = this._fuseConfirmationService.open({
       title: 'Delete Video',
       message: 'Are you sure you want to delete this Video?',
@@ -481,7 +487,7 @@ export class AddcoursecontentComponent implements OnInit {
       if (result === 'confirmed') {
 
         // Delete the video
-        this._authService.DeleteChapterVideo(filename).subscribe((finalresult: any) => {
+        this._authService.DeleteChapterVideo(data).subscribe((finalresult: any) => {
           debugger
           if (finalresult.status == "200") {
             this.uploadvideo = true
