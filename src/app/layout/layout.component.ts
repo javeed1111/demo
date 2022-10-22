@@ -45,6 +45,12 @@ export class LayoutComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+
+
+
+
+
+        debugger
         // Set the theme and scheme based on the configuration
         combineLatest([
             this._fuseConfigService.config$,
@@ -201,8 +207,10 @@ export class LayoutComponent implements OnInit, OnDestroy
                 this._document.body.classList.remove(className, className.split('-')[1]);
             }
         });
-
+debugger
         // Add class name for the currently selected theme
         this._document.body.classList.add(this.theme);
+       
+       
     }
 }

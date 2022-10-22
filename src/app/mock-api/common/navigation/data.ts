@@ -43,33 +43,33 @@ export const defaultNavigation: FuseNavigationItem[] = [
                     }
                 ]
             },
-            {
-                id      : 'sales',
-                title   : 'Sales',
-                type    : 'collapsable',
-                icon    : 'heroicons_solid:collection',
-                children: [
-                    {
-                        id   : 'masters.enquirystatus',
-                        title: 'Enquiry Status',
-                        type : 'basic',
-                        link : '/sales/enquirystatus'
-                    },
-                    {
-                        id   : 'masters.enquirytype',
-                        title: 'Enquiry Type',
-                        type : 'basic',
-                        link : '/sales/enquirytype'
-                    },
-                    {
-                        id   : 'masters.learningmode',
-                        title: 'Learning Mode',
-                        type : 'basic',
-                        link : '/sales/learningmode'
-                    }
-                ]
-            },
-           
+            // {
+            //     id      : 'sales',
+            //     title   : 'Sales',
+            //     type    : 'collapsable',
+            //     icon    : 'heroicons_solid:collection',
+            //     children: [
+            //         {
+            //             id   : 'masters.enquirystatus',
+            //             title: 'Enquiry Status',
+            //             type : 'basic',
+            //             link : '/sales/enquirystatus'
+            //         },
+            //         {
+            //             id   : 'masters.enquirytype',
+            //             title: 'Enquiry Type',
+            //             type : 'basic',
+            //             link : '/sales/enquirytype'
+            //         },
+            //         {
+            //             id   : 'masters.learningmode',
+            //             title: 'Learning Mode',
+            //             type : 'basic',
+            //             link : '/sales/learningmode'
+            //         }
+            //     ]
+            // },
+
             {
                 id      : 'courses',
                 title   : 'Courses',
@@ -156,6 +156,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                     // }   
                 ]
             },
+
             {
                 id      : 'masters',
                 title   : 'Site Setting',

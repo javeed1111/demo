@@ -29,8 +29,15 @@ export class MasternavigationComponent implements OnInit {
 debugger
     this._router.navigate(['/masters/companydetails']);
   }
+
   termsandpolicy(){
     debugger
         this._router.navigate(['/masters/termsandpolicy']);
+  }
+  emailsetttings(){
+    debugger
+        this._router.navigate(['/masters/emailsettings']);
+
       }
+
 }
