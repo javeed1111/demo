@@ -40,9 +40,10 @@ import { MasternavigationComponent } from './masternavigation/masternavigation.c
 import { AddcompanydetailsComponent } from './addcompanydetails/addcompanydetails.component';
 import { EditcompanydetailsComponent } from './editcompanydetails/editcompanydetails.component';
 import { CompanydetailsComponent } from './companydetails/companydetails.component';
-import { TermsandPolicyComponent } from './termsand-policy/termsand-policy.component';
-import { AddtermsandpolicyComponent } from './addtermsandpolicy/addtermsandpolicy.component';
-import { EdittermsandpolicyComponent } from './edittermsandpolicy/edittermsandpolicy.component';
+import { EmailsettingsComponent } from './emailsettings/emailsettings.component';
+import { AddemailComponent } from './addemail/addemail.component';
+import { EditemailComponent } from './editemail/editemail.component';
+
 //import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
@@ -56,9 +57,9 @@ import { EdittermsandpolicyComponent } from './edittermsandpolicy/edittermsandpo
     CompanydetailsComponent,
     AddcompanydetailsComponent,
     EditcompanydetailsComponent,
-    TermsandPolicyComponent,
-    AddtermsandpolicyComponent,
-    EdittermsandpolicyComponent,
+    EmailsettingsComponent,
+    AddemailComponent,
+    EditemailComponent,
 
   ],
   imports: [

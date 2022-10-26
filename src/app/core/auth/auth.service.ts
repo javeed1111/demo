@@ -414,10 +414,38 @@ export class AuthService {
     debugger
     return this._httpClient.get(this.baseUrl + "api/Admin/GetCompanyMaster");
   }
+  public GetEmails():Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetAllEmails");
+  }
+  
   public AddCompanyMaster(data):Observable<any> {
     //debugger
     return this._httpClient.post(this.baseUrl + "api/Admin/AddCompanyMaster", data);
   }
+
+  public AddEmail(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/AddEmail", data);
+  }
+
+  public GetEmailById(id):Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetEmailById?Id="+id);
+  }
+
+
+  public UpdateEmail(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/UpdateEmail", data);
+  }
+ 
+
+  public DeleteEmailById(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/DeleteEmailById", data);
+  }
+
   public GetCompanyMasterById(id):Observable<any> {
     debugger
     return this._httpClient.get(this.baseUrl + "api/Admin/GetCompanyMasterById?Id="+id);
