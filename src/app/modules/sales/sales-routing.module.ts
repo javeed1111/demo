@@ -14,6 +14,9 @@ import { EditdashboardbannerComponent } from './editdashboardbanner/editdashboar
 import { EdittermsandpolicyComponent } from './edittermsandpolicy/edittermsandpolicy.component';
 import { MasternavigationComponent } from './masternavigation/masternavigation.component';
 import { SalesComponent } from './sales.component';
+
+import { TermsandPolicyComponent } from './termsand-policy/termsand-policy.component';
+
 import { EmailsettingsComponent } from './emailsettings/emailsettings.component';
 import { AddemailComponent } from './addemail/addemail.component';
 import { EditemailComponent } from './editemail/editemail.component';
@@ -35,9 +38,15 @@ const routes: Routes = [
       {path:'companydetails',component:CompanydetailsComponent},
       {path:'addcompanydetails',component:AddcompanydetailsComponent},
       {path:'editcompanydetails/:id/:value',component:EditcompanydetailsComponent},
+
+      {path:'termsandpolicy',component:TermsandPolicyComponent},
+      {path:'addtermsandpolicy',component:AddtermsandpolicyComponent},
+      {path:'edittermsandpolicy/:id/:value',component:EdittermsandpolicyComponent},
+
       {path:'emailsettings',component:EmailsettingsComponent},
       {path:'addemail',component:AddemailComponent},
       {path:'editemail/:id/:value',component:EditemailComponent},
+
     ]
   }
 ];

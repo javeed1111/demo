@@ -65,7 +65,12 @@ export class DashboardbannerComponent implements OnInit {
   
     this._router.navigate(['/masters/adddashboardbanner'])
   }
+  createProducts(){
+    //debugger
 
+    // this._router.navigate(['/userconfig/role/addrole'])
+    this._router.navigate(['/masters/masternavigation'])
+  }
   GetBannerContent() {
     //debugger
     this._authService.GetBannerContent().subscribe((finalresult: any) => {

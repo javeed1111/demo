@@ -13,7 +13,10 @@
 
         <!-- Actions -->
         <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-
+            <button class="ml-4" mat-flat-button [color]="'primary'" (click)="createProducts()">
+                
+                <span class="ml-2 mr-1">Back</span>
+              </button>
             <button class="ml-4" mat-flat-button [color]="'primary'" (click)="createProduct()">
           <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
           <span class="ml-2 mr-1">Add</span>
@@ -61,6 +64,14 @@
                                 <mat-cell *matCellDef="let row">{{row.phoneNo}}
                                 </mat-cell>
                             </ng-container>
+                            <!-- <div class="form-group">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Phone No </mat-header-cell>
+                                <input type="tel" #phone="ngModel" pattern="^\d{10}$" [class.is-valid]="phone.invalid && phone.touched" class="form-control" name="phoneNo" [ngModel]="userModel.phoneNo">
+                                <small class="text-danger" [class.d-none]="phoneNo.valid || phoneNo.untouched">10Digit is required</small>
+                                <mat-cell *matCellDef="let row">{{row.phoneNo}}
+                                </mat-cell>
+                            </div> -->
+
 
                             <!-- Name Column -->
                             <ng-container matColumnDef="Email">

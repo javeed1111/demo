@@ -75,7 +75,7 @@
                             onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
-                        <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload" name="txtfileupload" (change)="onSelectFile($event.target.files)" style="display:none" [formControlName]="'Companylogo'">
+                        <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload" name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none" [formControlName]="'Companylogo'">
                         <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                             id="txtfileupload"  name="fileupload" 
                             (change)="onSelectFile($event.target.files)"> -->

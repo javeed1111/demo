@@ -61,7 +61,12 @@ export class ConfigurationsComponent implements OnInit {
   
     this._router.navigate(['/masters/addconfigurations'])
   }
+  createProducts(){
+    //debugger
 
+    // this._router.navigate(['/userconfig/role/addrole'])
+    this._router.navigate(['/masters/masternavigation'])
+  }
   GetInvoiceNoFormat() {
     //debugger
     this._authService.GetInvoiceNoFormat().subscribe((finalresult: any) => {

@@ -16,7 +16,7 @@ export class EditcompanydetailsComponent implements OnInit {
   files: Array<any> = new Array<any>();
   fileToUpload: File = null;
   name: string;
-
+  LogoURL:any;
   ConfigurationForm: FormGroup;
   alert: { type: FuseAlertType; message: string } = {
     type: 'success',
@@ -25,6 +25,7 @@ export class EditcompanydetailsComponent implements OnInit {
   showAlert: boolean = false;
   butdisabled: boolean;
   Id: any;
+  CompanylogoAlt: string;
   constructor(private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _router: Router,
@@ -42,6 +43,7 @@ export class EditcompanydetailsComponent implements OnInit {
       showOnWebsite: [''],
       CompanyUrl:['',],
       Companylogo:['',],
+      LogoURL: ['', []],
     });
 
     this.Edit(id, value);
@@ -104,7 +106,15 @@ export class EditcompanydetailsComponent implements OnInit {
 
        
         this.ConfigurationForm.controls['Companylogo']
+        if (finalresult.result.LogoURL != null) {
+          this.LogoURL =  finalresult.result.LogoURL;
+          // this.noimage=true;;
 
+        }
+        else {
+          // this.ImageURL = baseurl + "/courseFiles/dummy identityproof.png";
+         this.CompanylogoAlt='Company logo Is Not Uploaded'
+        }
       }
       else {
 
@@ -161,6 +171,10 @@ debugger
     if (this.files.length == 1) {
      formData.append("fileupload", this.fileToUpload, this.name);
    }
+   else {
+    formData.append("LogoURL", content.LogoURL);
+
+  }
 
 
 
