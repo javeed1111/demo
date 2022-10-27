@@ -5,7 +5,7 @@
         <!-- Loader -->
 
         <!-- Title -->
-        <div class="text-3xl font-extrabold tracking-tight">Dashboard Content</div>
+        <div class="text-3xl font-bold tracking-tight">Dashboard Content</div>
         <!-- Alert -->
         <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
             {{alert.message}}
@@ -15,7 +15,7 @@
         <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <button class="ml-4" mat-flat-button [color]="'primary'" (click)="createProducts()">
                 
-            <span class="ml-2 mr-1">Back</span>
+            <span class="ml-2 mr-1"><-- Back</span>
           </button>
             <button class="ml-4" mat-flat-button [color]="'primary'" (click)="createProduct()">
           <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>

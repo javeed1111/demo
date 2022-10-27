@@ -47,6 +47,8 @@ import { EdittermsandpolicyComponent } from './edittermsandpolicy/edittermsandpo
 import { EmailsettingsComponent } from './emailsettings/emailsettings.component';
 import { AddemailComponent } from './addemail/addemail.component';
 import { EditemailComponent } from './editemail/editemail.component';
+import { GooglemapurlComponent } from './googlemapurl/googlemapurl.component';
+import { AddgooglemapurlComponent } from './addgooglemapurl/addgooglemapurl.component';
 
 //import { MatIconModule } from '@angular/material/icon';
 @NgModule({
@@ -69,6 +71,8 @@ import { EditemailComponent } from './editemail/editemail.component';
     EmailsettingsComponent,
     AddemailComponent,
     EditemailComponent,
+    GooglemapurlComponent,
+    AddgooglemapurlComponent,
     
 
 

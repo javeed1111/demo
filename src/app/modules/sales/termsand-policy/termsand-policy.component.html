@@ -9,7 +9,7 @@
         <!-- Loader -->
 
         <!-- Title -->
-        <div class="text-3xl font-extrabold tracking-tight">Terms And Policy</div>
+        <div class="text-3xl font-bold tracking-tight">Terms And Policy</div>
         <!-- Alert -->
         <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
             {{alert.message}}
@@ -26,7 +26,7 @@
             <!-- Add product button -->
             <button class="ml-4" mat-flat-button [color]="'primary'" (click)="createProducts()">
                 
-                <span class="ml-2 mr-1">Back</span>
+                <span class="ml-2 mr-1"><-- Back</span>
               </button>
             <button class="ml-4" mat-flat-button [color]="'primary'" (click)="createProduct()">
           <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>

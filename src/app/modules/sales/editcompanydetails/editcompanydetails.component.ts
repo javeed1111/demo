@@ -106,6 +106,8 @@ export class EditcompanydetailsComponent implements OnInit {
 
        
         this.ConfigurationForm.controls['Companylogo']
+
+        
         if (finalresult.result.LogoURL != null) {
           this.LogoURL =  finalresult.result.LogoURL;
           // this.noimage=true;;

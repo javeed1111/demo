@@ -58,6 +58,12 @@ export class EmailsettingsComponent implements OnInit {
     var value = "view"
     this._router.navigate(['/masters/editemail/' + id + '/' + value])
   }
+  createProducts(){
+    //debugger
+
+    // this._router.navigate(['/userconfig/role/addrole'])
+    this._router.navigate(['/masters/masternavigation'])
+  }
 
   addemail() {
   

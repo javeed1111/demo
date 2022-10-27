@@ -39,5 +39,10 @@ debugger
         this._router.navigate(['/masters/emailsettings']);
 
       }
+      googlemapurl(){
+        debugger
+            this._router.navigate(['/masters/googlemapurl']);
+    
+          }
 
 }
