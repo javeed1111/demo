@@ -29,11 +29,8 @@ export class AddgooglemapurlComponent implements OnInit {
     });
   }
   cancel(){
-    this._router.navigate(['/masters/companydetails']);
-        setTimeout(() => {
-            window.location.reload();
-           }, 10);
-
+    this._router.navigate(['/masters/googlemapurl']);
+ 
   }
   Save()
   {

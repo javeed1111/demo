@@ -69,7 +69,7 @@ export class EdittermsandpolicyComponent implements OnInit {
 
 }
 cancel() {
-  this._router.navigate(['/masters/companydetails']);
+  this._router.navigate(['/masters/termsandpolicy']);
   setTimeout(() => {
     window.location.reload();
   }, 10);

@@ -48,14 +48,16 @@ export class ReviewsComponent implements OnInit {
   ngOnInit(): void {
     this.courseid=this.approute.snapshot.params['id'];
     this.ReviewsForm = this._formBuilder.group({
+      
     });
+    
 
     this.GetReviews(this.courseid);
   }
 
   GetReviews(id:any){
     this._authService.GetReviews(id).subscribe((finalresult: any) => {
-      debugger
+      
       // var finalresult = JSON.parse(finalresult);
       this.reviews=finalresult.result
 
@@ -65,7 +67,7 @@ export class ReviewsComponent implements OnInit {
   }
 
   selectionChange(event: StepperSelectionEvent) {
-    debugger
+    
     var value = "edit"
     console.log(event.selectedStep.label);
     let stepLabel = event.selectedStep.label
@@ -87,10 +89,10 @@ export class ReviewsComponent implements OnInit {
     // }
   }
 
-  GoToReviews() {
-    this._router.navigate(['/courses/reviews/' + this.courseid]);
+  // GoToReviews() {
+  //   this._router.navigate(['/courses/reviews/' + this.courseid]);
 
-  }
+  // }
   GoToSubscriptions() {
     this._router.navigate(['/courses/subscriptions/' + this.courseid]);
 
@@ -99,7 +101,7 @@ export class ReviewsComponent implements OnInit {
 
 
   GoToCoursePage() {
-    debugger
+    
     this._router.navigate(['/courses/editcourse/' + this.courseid + '/' + 'edit']);
   }
 

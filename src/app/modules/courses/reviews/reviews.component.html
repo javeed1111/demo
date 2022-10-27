@@ -2,7 +2,7 @@
   <ng-container>
       <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
           <div class="w-full max-w-5xl">
-              <mat-stepper [linear]="isLinear" #stepper (selectionChange)="selectionChange($event)">
+              <mat-stepper  #stepper (selectionChange)="selectionChange($event)">
                   <mat-step label="Step 1" [stepControl]="firstFormGroup" >
                     <form  [formGroup]="firstFormGroup">
                       <ng-template matStepLabel><p (click)="GoToCoursePage()">Course</p></ng-template>
