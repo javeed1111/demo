@@ -15,8 +15,10 @@ export class AuthService {
    */
   constructor(private _httpClient: HttpClient, private _userService: UserService) {
     this.baseUrl = 'https://localhost:44328/';
+    //this.baseUrl = 'https://ugetithome.mbascloud.com/';
     //this.baseUrl = 'https://testugetitapi.fadelsoft.com/';
     //this.baseUrl = 'http://testugetitapi.fadelsoft.com/';
+    
   }
 
   // -----------------------------------------------------------------------------------------------------
