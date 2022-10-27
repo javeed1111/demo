@@ -50,6 +50,7 @@ import { AddemailComponent } from './addemail/addemail.component';
 import { EditemailComponent } from './editemail/editemail.component';
 import { GooglemapurlComponent } from './googlemapurl/googlemapurl.component';
 import { AddgooglemapurlComponent } from './addgooglemapurl/addgooglemapurl.component';
+import { EditgooglemapurlComponent } from './editgooglemapurl/editgooglemapurl.component';
 
 
 //import { MatIconModule } from '@angular/material/icon';
@@ -75,6 +76,7 @@ import { AddgooglemapurlComponent } from './addgooglemapurl/addgooglemapurl.comp
     EditemailComponent,
     GooglemapurlComponent,
     AddgooglemapurlComponent,
+    EditgooglemapurlComponent,
     
 
 

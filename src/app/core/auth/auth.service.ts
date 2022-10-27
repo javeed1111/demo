@@ -486,6 +486,18 @@ export class AuthService {
     debugger
     return this._httpClient.get(this.baseUrl + "api/Admin/Getgooglemap");
   }
+  public GetgooglemapById(id):Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetgooglemapById?Id="+id);
+  }
+  public Updategooglemap(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/Updategooglemap", data);
+  }
+  public DeletegooglemapById(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/DeletegooglemapById", data);
+  }
 
 
 
