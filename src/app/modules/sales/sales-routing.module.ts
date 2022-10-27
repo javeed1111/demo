@@ -20,6 +20,8 @@ import { TermsandPolicyComponent } from './termsand-policy/termsand-policy.compo
 import { EmailsettingsComponent } from './emailsettings/emailsettings.component';
 import { AddemailComponent } from './addemail/addemail.component';
 import { EditemailComponent } from './editemail/editemail.component';
+import { GooglemapurlComponent } from './googlemapurl/googlemapurl.component';
+import { AddgooglemapurlComponent } from './addgooglemapurl/addgooglemapurl.component';
 
 const routes: Routes = [
   {
@@ -46,7 +48,8 @@ const routes: Routes = [
       {path:'emailsettings',component:EmailsettingsComponent},
       {path:'addemail',component:AddemailComponent},
       {path:'editemail/:id/:value',component:EditemailComponent},
-
+      {path:'googlemapurl',component:GooglemapurlComponent},
+      {path:'addgooglemapurl',component:AddgooglemapurlComponent},
     ]
   }
 ];

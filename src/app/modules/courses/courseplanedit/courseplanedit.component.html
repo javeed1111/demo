@@ -1,8 +1,7 @@
 <div class="flex flex-col flex-auto min-w-0">
 
     <!-- Header -->
-    <div
-        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
         <div class="flex-1 min-w-0">
             <!-- Breadcrumbs -->
             <div class="flex flex-wrap items-center font-medium">
@@ -51,7 +50,7 @@
             <!-- Horizontal stepper -->
             <!-- <div class=" mb-8 text-3xl font-bold">Horizontal Stepper</div> -->
             <div class="example-container mat-elevation-z8">
-    
+
                 <mat-table [dataSource]="dataSource" matSort>
 
                     <!-- ID Column -->
@@ -93,8 +92,7 @@
 
             <form class="p-4 bg-card shadow rounded overflow-hidden" [formGroup]="horizontalStepperForm">
                 <mat-horizontal-stepper [linear]="true" #horizontalStepper>
-                    <mat-step [formGroupName]="'step1'" [stepControl]="horizontalStepperForm.get('step1')"
-                        #horizontalStepperStep1>
+                    <mat-step [formGroupName]="'step1'" [stepControl]="horizontalStepperForm.get('step1')" #horizontalStepperStep1>
                         <ng-template matStepLabel>Plan Details</ng-template>
                         <p class="my-6 font-medium">
                             Fill in your plan details information to let us know your preferences
@@ -109,8 +107,7 @@
                         <div class="flex">
                             <mat-form-field class="flex-auto">
                                 <mat-label>Price</mat-label>
-                                <input type="number" matInput [formControlName]="'price'" [placeholder]="'Price'"
-                                (blur)='checkprice()' required>
+                                <input type="number" matInput [formControlName]="'price'" [placeholder]="'Price'" (blur)='checkprice()' required>
                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
                                 </mat-icon>
                             </mat-form-field>
@@ -120,8 +117,7 @@
                                 <ng-container>
                                     <!-- <div class="flex"> -->
                                     <div class="fuse-mat-no-subscript flex-auto">
-                                        <mat-slide-toggle class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'"
-                                        [formControlName]="'isOffer'" id="isOffer" [disabled]='disabled'(change)="toggleCompleted($event)">
+                                        <mat-slide-toggle class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'" [formControlName]="'isOffer'" id="isOffer" [disabled]='disabled' (change)="toggleCompleted($event)">
                                             Offer Applicable
                                         </mat-slide-toggle>
                                     </div>
@@ -132,12 +128,33 @@
                         <div class="flex">
                             <mat-form-field class="flex-auto">
                                 <mat-label>Offer Price</mat-label>
-                                <input type="number" matInput [formControlName]="'offerPrice'"
-                                    [placeholder]="'Offer Price'" (blur)='checkprice()'>
+                                <input type="number" matInput [formControlName]="'offerPrice'" [placeholder]="'Offer Price'" (blur)='checkprice()'>
                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-rupee'">
                                 </mat-icon>
                             </mat-form-field>
                         </div>
+                        <div class="mt-4 col-span-6">
+                            <div>
+                                <ng-container>
+                                    <div class="fuse-mat-no-subscript flex-auto">
+                                        <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'" id="onwebsite" (change)="onwebsite($event)" [checked]="true">
+                                            show on website
+                                        </mat-slide-toggle>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <!-- <div class="mt-4 col-span-6">
+                            <ng-container>
+                               
+                                <div class="fuse-mat-no-subscript flex-auto">
+                                    <mat-slide-toggle class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'" id="showOnWebsite" [formControlName]="'showOnWebsite'" (change)="onwebsite($event)" [checked]="true">
+                                        showOnWebsite
+                                    </mat-slide-toggle>
+                                </div>
+                             
+                            </ng-container>
+                        </div> -->
                         <!-- <div class="flex mb-4">
                             <mat-form-field class="fuse-mat-no-subscript w-full">
                                 <mat-label>Effective From</mat-label>
@@ -193,25 +210,21 @@
                             </mat-form-field>
                         </div> -->
                         <!-- Alert -->
-                        <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
-                        [type]="alert.type" [@shake]="alert.type === 'success'">
-                        {{alert.message}}
-                    </fuse-alert>
+                        <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
+                            {{alert.message}}
+                        </fuse-alert>
                         <div class="flex justify-end">
-                            <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button"
-                            (click)="Back()">
+                            <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" (click)="Back()">
                             Cancel
                         </button>
-                            <button class="px-8" mat-flat-button [color]="'primary'"
-                                type="button" matStepperNext>
+                            <button class="px-8" mat-flat-button [color]="'primary'" type="button" matStepperNext>
                                 Next
                             </button>
-                            
+
                         </div>
                     </mat-step>
 
-                    <mat-step [formGroupName]="'step2'" [stepControl]="horizontalStepperForm.get('step2')"
-                        #horizontalStepperStep2>
+                    <mat-step [formGroupName]="'step2'" [stepControl]="horizontalStepperForm.get('step2')" #horizontalStepperStep2>
                         <ng-template matStepLabel>Plan Content</ng-template>
                         <p class="my-6 font-medium">
                             People here will get to know you with this information
@@ -220,11 +233,9 @@
                             <div class="flex flex-col">
                                 <mat-form-field class="flex-auto gt-xs:pr-3">
                                     <mat-label>Course</mat-label>
-                                    <mat-select name="courseId" placeholder="Courses" [(ngModel)]="bind" [ngModelOptions]="{standalone: true}"
-                                        class="input-full-width" multiple>
+                                    <mat-select name="courseId" placeholder="Courses" [(ngModel)]="bind" [ngModelOptions]="{standalone: true}" class="input-full-width" multiple>
                                         <mat-option value="">Select Course</mat-option>
-                                        <mat-option *ngFor="let item of cours " [value]="item.courseId"
-                                            >{{ item.courseName }}</mat-option>
+                                        <mat-option *ngFor="let item of cours " [value]="item.courseId">{{ item.courseName }}</mat-option>
                                     </mat-select>
                                     <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
                                     </mat-icon>
@@ -287,24 +298,20 @@
     
                             </div> -->
                             <!-- Alert -->
-                        <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false"
-                        [type]="alert.type" [@shake]="alert.type === 'success'">
-                        {{alert.message}}
-                    </fuse-alert>
-                    <div class="flex justify-end mt-8">
-                        <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button"
-                            matStepperPrevious>
+                            <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
+                                {{alert.message}}
+                            </fuse-alert>
+                            <div class="flex justify-end mt-8">
+                                <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button" matStepperPrevious>
                             Back
                         </button>
-                        <button class="px-8 mr-2" mat-flat-button [color]="'primary'" type="reset" *ngIf="show"
-                            (click)="horizontalStepper.reset();">
+                                <button class="px-8 mr-2" mat-flat-button [color]="'primary'" type="reset" *ngIf="show" (click)="horizontalStepper.reset();">
                             Reset
                         </button>
-                        <button class="px-8" mat-flat-button [color]="'primary'" type="submit"
-                            (click)="savecourseplan();">
+                                <button class="px-8" mat-flat-button [color]="'primary'" type="submit" (click)="savecourseplan();">
                             Save
                         </button>
-                    </div>
+                            </div>
                             <!-- <div class="flex flex-col" *ngFor="let item of techs">
                                     <mat-checkbox class="mb-2" [formControlName]="'techcheck'" [color]="'primary'"[checked]="item.technologyId">
                                         {{item.technologyName}}
@@ -333,7 +340,7 @@
                                     [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
                             </mat-form-field> -->
                         </div>
-                        
+
                         <!-- <div class="flex">
                             <mat-form-field class="fuse-mat-textarea flex-auto">
                                 <textarea
@@ -347,7 +354,7 @@
                                     [svgIcon]="'heroicons_solid:menu-alt-2'"></mat-icon>
                             </mat-form-field>
                         </div> -->
-                        
+
                     </mat-step>
 
                     <!-- <mat-step

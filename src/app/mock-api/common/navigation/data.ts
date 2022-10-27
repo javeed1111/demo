@@ -159,9 +159,9 @@ export const defaultNavigation: FuseNavigationItem[] = [
 
             {
                 id      : 'masters',
-                title   : 'Site Setting',
+                title   : 'Site Settings',
                 type    : 'basic',
-                icon    : 'heroicons_solid:collection',
+                icon    : 'heroicons_solid:cog',
                 link :      '/masters'
                 // children: [
                 //     {

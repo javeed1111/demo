@@ -253,7 +253,7 @@ export class AuthService {
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllPlanCourse", { responseType: 'text' });
   }
   public GetcourseplanById(pcid, planid) {
-    //debugger
+    debugger
     return this._httpClient.get(this.baseUrl + "api/Admin/GetPlanCourseById?pcid=" + pcid + "&planid=" + planid);
   }
   public GetallcoursefeeById(id) {
@@ -478,6 +478,26 @@ export class AuthService {
     debugger
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteTermsPolicies", data);
   }
+  public AddGooglemapurl(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/AddGooglemapurl", data);
+  }
+  public Getgooglemap():Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/Getgooglemap");
+  }
+
+
+
+
+
+
+
+
+
+
+
+
   /**
    * Sign in using the access token
    */

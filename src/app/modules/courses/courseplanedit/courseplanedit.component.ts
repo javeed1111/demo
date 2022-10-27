@@ -68,6 +68,7 @@ export class CourseplaneditComponent implements OnInit {
   oldofferprice: any;
   oldprice: any;
   pcid: any;
+  showonwebsite: boolean=true;
 
   constructor(
     private _authService: AuthService,
@@ -95,6 +96,8 @@ export class CourseplaneditComponent implements OnInit {
         offerPrice: ['0'],
         effectiveFrom: ['', ],
         effectiveTill: ['', ],
+        showOnWebsite: [''],
+        
       }),
       step2: this._formBuilder.group({
         courseId: [''],
@@ -107,6 +110,8 @@ export class CourseplaneditComponent implements OnInit {
     });
     const ctrl = this.horizontalStepperForm.controls.step1.get('offerPrice');
     ctrl.disable();
+
+    console.log("noooor")
     this.Edit(pcid,planid,value);
     this.GetFeeInactiveData(planid);
   }
@@ -121,6 +126,7 @@ export class CourseplaneditComponent implements OnInit {
       this.horizontalStepperForm.controls.step1.get('effectiveFrom').disable();
       this.horizontalStepperForm.controls.step1.get('effectiveTill').disable();
       this.horizontalStepperForm.controls.step2.get('courseId').disable();
+      this.horizontalStepperForm.controls.step1.get('showOnWebsite').disable();
       this.show=false
   }
   else
@@ -133,6 +139,7 @@ export class CourseplaneditComponent implements OnInit {
       this.horizontalStepperForm.controls.step1.get('effectiveFrom').enable();
       this.horizontalStepperForm.controls.step1.get('effectiveTill').enable();
       this.horizontalStepperForm.controls.step2.get('courseId').enable();
+      this.horizontalStepperForm.controls.step1.get('showOnWebsite').enable();
   }
     // this.Id = id;
     this._authService.GetcourseplanById(pcid,planid).subscribe((finalresult: any) => {
@@ -399,6 +406,9 @@ export class CourseplaneditComponent implements OnInit {
       // this.horizontalStepperForm.controls['offerPrice'].enable();
       this.OfferPrice = dataa.step1.offerPrice;
     }
+    if(dataa.showOnWebsite!=undefined){
+      this.showonwebsite =dataa.showOnWebsite;
+    }
     var mindate = new Date(dataa.step1.effectiveFrom);
     // var maxdate = new Date(dataa.step1.effectiveTill);
     var maxdate = new Date();
@@ -453,6 +463,7 @@ export class CourseplaneditComponent implements OnInit {
       EffectiveTill: maxdate,
       OldOfferPrice:this.oldofferprice,
       OldPrice:this.oldprice,
+       showOnWebsite:this.showonwebsite,
       // ListOfCourses: dataa.step2.courseId,
       // ListOfCourses: ListOfCourse,
       ListOfCourses:ListOfCourse,
@@ -513,5 +524,16 @@ export class CourseplaneditComponent implements OnInit {
       }
     });
   }
+  onwebsite($event: MatSlideToggleChange): void {
+    debugger
+    if ($event.checked == undefined || $event.checked == true) {
+      this.showonwebsite = $event.checked;
+    }
+    else {
+      this.showonwebsite = false;
+      // this.isofferactive = false;
+    }
 
+  }
+  Ge
 }
