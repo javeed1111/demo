@@ -53,12 +53,12 @@ applyFilter(filterValue: string) {
 showEditModal(id) {
   debugger
   var value = "edit";
-  this._router.navigate(['/masters/editcompanydetails/' + id + '/' + value])
+  this._router.navigate(['/masters/editgooglemapurl/' + id + '/' + value])
 }
 showViewModal(id) {
   debugger
   var value = "view"
-  this._router.navigate(['/masters/editcompanydetails/' + id + '/' + value])
+  this._router.navigate(['/masters/editgooglemapurl/' + id + '/' + value])
 }
 
 create() {
@@ -114,7 +114,7 @@ deleteContent(Id: any): void {
       }
 
       // Delete the contact
-      this._authService.DeleteCompanyMasterById(data).subscribe((data: any) => {
+      this._authService.DeletegooglemapById(data).subscribe((data: any) => {
         debugger
         if (data.status == "200") {
           // Set the alert
