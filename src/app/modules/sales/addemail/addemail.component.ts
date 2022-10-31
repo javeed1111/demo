@@ -13,119 +13,173 @@ import { AuthService } from 'app/core/auth/auth.service';
 })
 export class AddemailComponent implements OnInit {
 
-  showonwebsite: boolean;
   ConfigurationForm: FormGroup;
   alert: { type: FuseAlertType; message: string } = {
-    type   : 'success',
+    type: 'success',
     message: ''
-    
-};
-showAlert:  boolean = false;
+
+  };
+  showAlert: boolean = false;
+  update: boolean = false;
+  save: boolean = true;
+  smtpSsl:boolean=false;
+
   constructor(private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _router: Router) {
 
-  
-   }
+  }
 
   ngOnInit(): void {
 
     this.ConfigurationForm = this._formBuilder.group({
-      User : ['', [Validators.required]],
-      Password:['',[Validators.required]],
-      Sender:['',[Validators.required]],
-      Subject:['',],
-      PortNo:['',],
-      DisplayName:['',],
+      id:['0'],
+      user: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      sender: ['', [Validators.required]],
+      subject: ['', [Validators.required]],
+      portNo: ['', [Validators.required]],
+      displayName: ['', [Validators.required]],
+    });
+    this.CheckForUpdate();
+  }
+  CheckForUpdate() {
+    this._authService.GetAllEmail().subscribe((res: any) => {
+      debugger
+      if (res.result.length > 0) {
+        this.ConfigurationForm.patchValue(res.result[0]);
+        this.smtpSsl=res.result[0].smtpSsl;
+        this.update = true;
+        this.save = false
+      }
+      else {
+        this.ConfigurationForm.reset();
+        this.update = false;
+        this.save = true;
+      }
+    })
+  }
+  cancel() {
+    this._router.navigate(['/masters/masternavigation']);
+  }
+  Save() {
+    debugger
+    if (this.ConfigurationForm.invalid) {
+      return;
+    }
+
+    const content = this.ConfigurationForm.getRawValue();
+
+    debugger
+    var data = {
+      SmtpSsl: this.smtpSsl,
+      user: content.user,
+      password: content.password,
+      sender: content.sender,
+      subject: content.subject,
+      portNo: content.portNo,
+      displayName: content.displayName,
+      CreatedBy: parseInt(localStorage.getItem("LoginId")),
+      //  IsActive: this.active,
+    }
+    this._authService.AddEmail(data).subscribe((result: any) => {
+      debugger
+      //  var result = JSON.parse(result);
+      if (result.status == "200") {
+        //debugger
+        // Set the alert
+        this.alert = {
+          type: 'success',
+          message: result.message
+        };
+        // Show the alert
+        this.showAlert = true;
+        setTimeout(() => {
+
+          this.showAlert = false;
+          window.location.reload();
+        }, 2000);
+        // setTimeout(() => {
+        // }, 2000); 
+
+      }
+      else {
+        // Set the alert
+        this.alert = {
+          type: 'error',
+          message: result.message
+        };
+        // Show the alert
+        this.showAlert = true;
+        setTimeout(() => {
+          this.showAlert = false;
+        }, 2000);
+      }
+      (error) => {
+
+      }
     });
   }
-  cancel(){
-    this._router.navigate(['/masters/emailsettings']);
-        setTimeout(() => {
-            window.location.reload();
-           }, 10);
 
-  }
-  
-  Save()
-  {
+  Update() {
+    if (this.ConfigurationForm.invalid) {
+      return;
+    }
+    this.showAlert = false;
+    const content = this.ConfigurationForm.getRawValue();
+    debugger
+    var data = {
+      Id: content.id,
+      User: content.user,
+      Password: content.password,
+      Sender: content.sender,
+      Subject: content.subject,
+      PortNo: content.portNo,
+      DisplayName: content.displayName,
+      SmtpSsl:this.smtpSsl,
+      UpdatedBy: parseInt(localStorage.getItem("LoginId")),
+      //  IsActive: this.active,
+    }
+    this._authService.UpdateEmail(data).subscribe((result: any) => {
       debugger
-      if (this.ConfigurationForm.invalid) {
-          return;
-      }
-      if(this.showonwebsite==undefined){
-        this.showonwebsite=true
-      }
-    
+      if (result.status == "200") {
+        debugger
 
-     // formdata.append("showOnWebsite", (this.showonwebsite).toString())
-      //this.showAlert = false;
-      
-      // Get the contact object
-      const content = this.ConfigurationForm.getRawValue();
-    //   if(this.active==undefined){
-    //      this.active = true;
-    //  }
-    debugger
-      var data = {
-        showOnWebsite:this.showonwebsite,
-        user: content.User,
-        password:content.Password,
-        sender:content.Sender,
-        subject:content.Subject,
-        portNo:content.PortNo,
-        displayName:content.DisplayName,
+        // Set the alert
+        this.alert = {
+          type: 'success',
+          message: result.message
+        };
 
-         CreatedBy: parseInt(localStorage.getItem("LoginId")),
-        //  IsActive: this.active,
-     }
-      this._authService.AddEmail(data).subscribe((result: any) => {
-          debugger
-          //  var result = JSON.parse(result);
-            if (result.status == "200") {
-                //debugger
-                 // Set the alert
-                 this.alert = {
-                  type   : 'success',
-                  message: result.message
-              };
-              // Show the alert
-              this.showAlert = true;
-                setTimeout(() => {
-                  
-                  this.showAlert = false;
-                }, 2000); 
-                // setTimeout(() => {
-                  this._router.navigate(['/masters/emailsettings']);
-                // }, 2000); 
-                
-            }
-            else {
-             // Set the alert
-             this.alert = {
-              type   : 'error',
-              message: result.message
-          };
-          // Show the alert
-          this.showAlert = true;
-          setTimeout(() => {
-            this.showAlert = false;
-          }, 2000);
-            }
-            (error) => {
-   
-           }
-        });
+        // Show the alert
+        this.showAlert = true;
+
+        setTimeout(() => {
+          this.showAlert = false;
+          window.location.reload();
+        }, 1000);
+      }
+      else {
+        this.alert = {
+          type: 'error',
+          message: result.message
+
+        };
+        this.showAlert = true;
+      }
+      (error) => {
+
+      }
+    });
   }
 
-
-  onwebsite($event: MatSlideToggleChange): void {
+  onwebsite(value: boolean): void {
     debugger
-    if ($event.checked == undefined || $event.checked == true) {
-      this.showonwebsite = $event.checked;
+    if (value == true) {
+      this.smtpSsl = value;
     }
     else {
-      this.showonwebsite = false;
+      this.smtpSsl = false;
       // this.isofferactive = false;
     }
 

@@ -18,18 +18,38 @@ export class AddgooglemapurlComponent implements OnInit {
     message: ''
   };
   showAlert:  boolean = false;
+  update: boolean;
+  save: boolean;
   constructor(private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _router: Router) { }
 
   ngOnInit(): void {
     this.ConfigurationForm = this._formBuilder.group({
-      googlemapurl : ['', [Validators.required]],
+      id : [''],
+      googleMapUrl : ['', [Validators.required]],
       
     });
+    this.CheckForUpdate();
+
+  }
+  CheckForUpdate() {
+    this._authService.Getgooglemap().subscribe((res: any) => {
+      debugger
+      if (res.result.length > 0) {
+        this.ConfigurationForm.patchValue(res.result[0]);
+        this.update = true;
+        this.save = false
+      }
+      else {
+        this.ConfigurationForm.reset();
+        this.update = false;
+        this.save = true;
+      }
+    })
   }
   cancel(){
-    this._router.navigate(['/masters/googlemapurl']);
+    this._router.navigate(['/masters/masternavigation']);
  
   }
   Save()
@@ -38,30 +58,13 @@ export class AddgooglemapurlComponent implements OnInit {
       if (this.ConfigurationForm.invalid) {
           return;
       }
-      if(this.showonwebsite==undefined){
-        this.showonwebsite=true
-      }
-    
-
-     // formdata.append("showOnWebsite", (this.showonwebsite).toString())
-      //this.showAlert = false;
-      
-      // Get the contact object
       const content = this.ConfigurationForm.getRawValue();
-    //   if(this.active==undefined){
-    //      this.active = true;
-    //  }
-   
+  
       var data = {
-      
-        showOnWebsite:this.showonwebsite,
-        GoogleMapUrl: content.googlemapurl,
-      
-        
+        GoogleMapUrl: content.googleMapUrl,
          CreatedBy: parseInt(localStorage.getItem("LoginId")),
          //IsActive: this.active,
     }
-   
       this._authService.AddGooglemapurl(data).subscribe((result: any) => {
           debugger
           //  var result = JSON.parse(result);
@@ -77,7 +80,7 @@ export class AddgooglemapurlComponent implements OnInit {
                 setTimeout(() => {
                   
                   this.showAlert = false;
-                  this._router.navigate(['/masters/companydetails']);
+                  window.location.reload();
                 }, 2000); 
                 // setTimeout(() => {
                   // this._router.navigate(['/masters/companydetails']);
@@ -101,15 +104,54 @@ export class AddgooglemapurlComponent implements OnInit {
            }
         });
   }
-  onwebsite($event: MatSlideToggleChange): void {
-    debugger
-    if ($event.checked == undefined || $event.checked == true) {
-      this.showonwebsite = $event.checked;
-    }
-    else {
-      this.showonwebsite = false;
-      // this.isofferactive = false;
-    }
 
+  Update() {
+
+    if (this.ConfigurationForm.invalid) {
+      return;
+    }
+    this.showAlert = false;
+
+    const content = this.ConfigurationForm.getRawValue();
+debugger
+    var data = {
+      Id: content.id,
+      GoogleMapUrl: content.googleMapUrl,    
+      UpdatedBy: parseInt(localStorage.getItem("LoginId")),
+    }
+    this._authService.Updategooglemap(data).subscribe((result: any) => {
+      debugger
+      if (result.status == "200") {
+        debugger
+
+        // Set the alert
+        this.alert = {
+          type: 'success',
+          //message: result.message
+          message: result.message
+        };
+
+        // Show the alert
+        this.showAlert = true;
+
+        setTimeout(() => {
+        window.location.reload();
+        }, 1000);
+      }
+      else {
+        this.alert = {
+          type: 'error',
+          message: result.message
+
+        };
+        this.showAlert = true;
+      }
+      (error) => {
+
+      }
+    });
+ 
   }
+
+
 }

@@ -13,7 +13,7 @@ export class MasternavigationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  configuration(){
+  configuration() {
 
     debugger
 
@@ -21,28 +21,27 @@ export class MasternavigationComponent implements OnInit {
 
   }
 
-  dashboardbanner(){
+  dashboardbanner() {
 
     this._router.navigate(['/masters/dashboardbanner']);
   }
-  companydetails(){
-debugger
+  companydetails() {
+    debugger
     this._router.navigate(['/masters/companydetails']);
   }
 
-  termsandpolicy(){
+  termsandpolicy() {
     debugger
-        this._router.navigate(['/masters/termsandpolicy']);
+    this._router.navigate(['/masters/termsandpolicy']);
   }
-  emailsetttings(){
+  emailsetttings() {
     debugger
-        this._router.navigate(['/masters/emailsettings']);
+    this._router.navigate(['/masters/addemail']);
+  }
+  googlemapurl() {
+    debugger
+    this._router.navigate(['/masters/addgooglemapurl']);
 
-      }
-      googlemapurl(){
-        debugger
-            this._router.navigate(['/masters/googlemapurl']);
-    
-          }
+  }
 
 }

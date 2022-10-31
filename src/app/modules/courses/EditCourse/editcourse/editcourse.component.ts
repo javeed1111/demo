@@ -119,6 +119,7 @@ export class EditcourseComponent implements OnInit {
   closevideo:boolean=true;
   UpdatedBy:any;
   CourseId:any;
+  showAlert1: boolean;
   
   constructor(
 
@@ -406,11 +407,11 @@ confirmation.afterClosed().subscribe((result) => {
             };
     
             // Show the alert
-            this.showAlert = true;
+            this.showAlert1 = true;
   
             setTimeout(() => {
-              this.showAlert = false;
-  
+              this.showAlert1 = false;
+              
             }, 3000);
           }
       })

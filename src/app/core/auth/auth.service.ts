@@ -14,8 +14,8 @@ export class AuthService {
    * Constructor
    */
   constructor(private _httpClient: HttpClient, private _userService: UserService) {
-    this.baseUrl = 'https://localhost:44328/';
-    //this.baseUrl = 'https://ugetithome.mbascloud.com/';
+    //this.baseUrl = 'https://localhost:44328/';
+    this.baseUrl = 'https://ugetithome.mbascloud.com/';
     //this.baseUrl = 'https://testugetitapi.fadelsoft.com/';
     //this.baseUrl = 'http://testugetitapi.fadelsoft.com/';
     
@@ -435,8 +435,10 @@ export class AuthService {
     debugger
     return this._httpClient.get(this.baseUrl + "api/Admin/GetEmailById?Id="+id);
   }
-
-
+  public GetAllEmail():Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetAllEmail");
+  }
   public UpdateEmail(data):Observable<any> {
     debugger
     return this._httpClient.post(this.baseUrl + "api/Admin/UpdateEmail", data);
