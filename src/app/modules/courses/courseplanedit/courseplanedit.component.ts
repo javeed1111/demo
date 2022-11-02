@@ -157,6 +157,7 @@ export class CourseplaneditComponent implements OnInit {
         if(this.horizontalStepperForm.controls.step1.get('isOffer').value==true && value == "edit")
         {
        this.horizontalStepperForm.controls.step1.get('offerPrice').enable();
+       this.isofferactive = true
         }
         //let courseid:[]
         let courseidarray=finalresult.result[i].courseId
@@ -380,7 +381,7 @@ export class CourseplaneditComponent implements OnInit {
   }
 
   savecourseplan(): void {
-    debugger
+    // debugger
     // Return if the form is invalid
     if (this.horizontalStepperForm.invalid) {
       return;
@@ -397,6 +398,9 @@ export class CourseplaneditComponent implements OnInit {
       finalids.push(1);
     }
     const dataa = this.horizontalStepperForm.getRawValue();
+
+
+    debugger
     if (this.isofferactive == undefined) {
       this.isofferactive = false;
       // this.horizontalStepperForm.controls['offerPrice'].disable();
