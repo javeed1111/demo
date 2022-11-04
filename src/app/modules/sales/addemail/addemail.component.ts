@@ -94,9 +94,10 @@ showAlert:  boolean = false;
                 setTimeout(() => {
                   
                   this.showAlert = false;
-                }, 2000); 
-                // setTimeout(() => {
                   this._router.navigate(['/masters/emailsettings']);
+                }, 3000); 
+                // setTimeout(() => {
+                
                 // }, 2000); 
                 
             }
@@ -109,7 +110,7 @@ showAlert:  boolean = false;
           // Show the alert
           this.showAlert = true;
           setTimeout(() => {
-            this.showAlert = false;
+            this.showAlert = true;
           }, 2000);
             }
             (error) => {

@@ -474,7 +474,7 @@ export class AddcourseComponent implements OnInit {
   }
 
   onSelectFile(files: FileList) {
-    //debugger
+    debugger
     if (files.length === 0)
 
       return;
