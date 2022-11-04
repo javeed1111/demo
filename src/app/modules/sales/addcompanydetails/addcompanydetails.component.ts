@@ -10,8 +10,14 @@ import { AuthService } from 'app/core/auth/auth.service';
   templateUrl: './addcompanydetails.component.html',
   styleUrls: ['./addcompanydetails.component.scss']
 })
+
+
 export class AddcompanydetailsComponent implements OnInit {
   showonwebsite: boolean;
+  files: Array<any> = new Array<any>();
+  fileToUpload: File = null;
+  fileToUpload1: File=null;
+  name: string;
   ConfigurationForm: FormGroup;
   alert: { type: FuseAlertType; message: string } = {
     type   : 'success',
@@ -33,8 +39,14 @@ showAlert:  boolean = false;
       Address:['',[Validators.required]],
       phoneNo:['',[Validators.required]],
       email:['',],
+     // UploadCourseIcon: ['',],
+      CompanyUrl:['',],
+      Companylogo:['',],
+
     });
   }
+
+  
   cancel(){
     this._router.navigate(['/masters/companydetails']);
         setTimeout(() => {
@@ -43,6 +55,23 @@ showAlert:  boolean = false;
 
   }
   
+  onSelectFile(files: FileList) {
+    debugger
+    if (files.length === 0)
+
+      return;
+    if (files.length > 0) {
+      this.files = [];
+      for (var i = 0; i < files.length; i++) {
+        this.fileToUpload = files.item(i);
+        const fileReader: FileReader = new FileReader();
+        fileReader.readAsDataURL(this.fileToUpload);
+        this.name = this.fileToUpload.name.split(' ').join('-').replace(/[()]/g, "")
+        this.files.push({ data: this.fileToUpload, fileName: this.name });
+      }
+    }
+  }
+
   Save()
   {
       debugger
@@ -62,17 +91,34 @@ showAlert:  boolean = false;
     //   if(this.active==undefined){
     //      this.active = true;
     //  }
-      var data = {
-        showOnWebsite:this.showonwebsite,
-        companyName: content.companyName,
-        Address:content.Address,
-        phoneNo:content.phoneNo,
-        email:content.email,
-
-         CreatedBy: parseInt(localStorage.getItem("LoginId")),
+   
+      //var data = {
+      
+        // showOnWebsite:this.showonwebsite,
+        // companyName: content.companyName,
+        // Address:content.Address,
+        // phoneNo:content.phoneNo,
+        // email:content.email,
+       // Companylogo:content.Companylogo,
+       // CompanyUrl:content.CompanyUrl,
+        
+         //CreatedBy: parseInt(localStorage.getItem("LoginId")),
         //  IsActive: this.active,
-     }
-      this._authService.AddCompanyMaster(data).subscribe((result: any) => {
+    // }
+     const formData: FormData = new FormData();
+     formData.append("Email", content.email)
+     formData.append("CreatedBy", (localStorage.getItem("LoginId")));
+     formData.append("phoneNo", content.phoneNo)
+     formData.append("companyName", content.companyName)
+     formData.append("Address", content.Address)
+     formData.append("CompanyUrl", content.CompanyUrl)
+     formData.append("Companylogo", content.companylogo)
+     formData.append("showOnWebsite", (this.showonwebsite).toString())
+
+     if (this.files.length == 1) {
+      formData.append("fileupload", this.fileToUpload, this.name);
+    }
+      this._authService.AddCompanyMaster(formData).subscribe((result: any) => {
           debugger
           //  var result = JSON.parse(result);
             if (result.status == "200") {
@@ -87,9 +133,10 @@ showAlert:  boolean = false;
                 setTimeout(() => {
                   
                   this.showAlert = false;
+                  this._router.navigate(['/masters/companydetails']);
                 }, 2000); 
                 // setTimeout(() => {
-                  this._router.navigate(['/masters/companydetails']);
+                  // this._router.navigate(['/masters/companydetails']);
                 // }, 2000); 
                 
             }

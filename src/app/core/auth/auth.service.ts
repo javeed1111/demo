@@ -15,9 +15,10 @@ export class AuthService {
    */
   constructor(private _httpClient: HttpClient, private _userService: UserService) {
     this.baseUrl = 'https://localhost:44328/';
+   // this.baseUrl = 'https://ugetithome.mbascloud.com/';
     //this.baseUrl = 'https://testugetitapi.fadelsoft.com/';
-    // this.baseUrl = 'https://ugetithome.mbascloud.com/';
     //this.baseUrl = 'http://testugetitapi.fadelsoft.com/';
+    
   }
 
   // -----------------------------------------------------------------------------------------------------
@@ -254,7 +255,7 @@ export class AuthService {
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllPlanCourse", { responseType: 'text' });
   }
   public GetcourseplanById(pcid, planid) {
-    //debugger
+    debugger
     return this._httpClient.get(this.baseUrl + "api/Admin/GetPlanCourseById?pcid=" + pcid + "&planid=" + planid);
   }
   public GetallcoursefeeById(id) {
@@ -389,9 +390,9 @@ export class AuthService {
     debugger
     return this._httpClient.post(this.baseUrl + "api/Admin/UploadVideo", formData);
   }
-  public DeleteVideo(fileName:string):Observable<any> {
+  public DeleteVideo(data:any):Observable<any> {
     debugger
-    return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteVideo?fileName="+fileName);
+    return this._httpClient.post(this.baseUrl + "api/Admin/DeleteVideo",data);
   }
   public UploadChapterVideo(formData) {
     debugger
@@ -403,9 +404,9 @@ export class AuthService {
 
 
   }
-  public DeleteChapterVideo(fileName:string):Observable<any> {
+  public DeleteChapterVideo(data:any):Observable<any> {
     debugger
-    return this._httpClient.delete(this.baseUrl + "api/Admin/DeleteChapterVideo?fileName="+fileName);
+    return this._httpClient.post(this.baseUrl + "api/Admin/DeleteChapterVideo",data);
   }
   public DeleteFiles(data:any):Observable<any> {
     debugger
@@ -434,8 +435,10 @@ export class AuthService {
     debugger
     return this._httpClient.get(this.baseUrl + "api/Admin/GetEmailById?Id="+id);
   }
-
-
+  public GetAllEmail():Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetAllEmail");
+  }
   public UpdateEmail(data):Observable<any> {
     debugger
     return this._httpClient.post(this.baseUrl + "api/Admin/UpdateEmail", data);
@@ -459,6 +462,56 @@ export class AuthService {
     debugger
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteCompanyMasterById", data);
   }
+  public GetTermspolicy():Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetTermsPolicies");
+  }
+  public GetTermspolicyById(id):Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetTermsPoliciesById?Id="+id);
+  }
+  public AddTermspolicy(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/AddTermsPoliceis", data);
+  }
+  public UpdateTermsPolicies(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/UpdateTermsPolicies", data);
+  }
+  public DeleteTermsPolicies(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/DeleteTermsPolicies", data);
+  }
+  public AddGooglemapurl(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/AddGooglemapurl", data);
+  }
+  public Getgooglemap():Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/Getgooglemap");
+  }
+  public GetgooglemapById(id):Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetgooglemapById?Id="+id);
+  }
+  public Updategooglemap(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/Updategooglemap", data);
+  }
+  public DeletegooglemapById(data):Observable<any> {
+    debugger
+    return this._httpClient.post(this.baseUrl + "api/Admin/DeletegooglemapById", data);
+  }
+
+
+
+
+
+
+
+
+
+
 
 
   /**

@@ -97,6 +97,7 @@ export class EditcourseComponent implements OnInit {
   status: boolean;
   courseid: any;
   istax: boolean;
+
   fileToUpload1: File;
   name1: any;
   oldprice: any;
@@ -114,6 +115,11 @@ export class EditcourseComponent implements OnInit {
   uploadvideo:boolean=true
   deletevideo:boolean=false
   IconImageAlt: any;
+  istaxed: any;
+  closevideo:boolean=true;
+  UpdatedBy:any;
+  CourseId:any;
+  showAlert1: boolean;
   
   constructor(
 
@@ -135,6 +141,8 @@ export class EditcourseComponent implements OnInit {
     this.GetTechnologys();
     this.GetCourses();
     this.GetFaculty();
+    this.CourseId;
+
 
     this.courseForm = this._formBuilder.group({
       courseName: ['', [Validators.required]],
@@ -150,6 +158,8 @@ export class EditcourseComponent implements OnInit {
       price: ['0', [Validators.required]],
       isOffer: [''],
       offerPrice: ['0'],
+      //taxApplicable:[''],
+      istax:[''],
       taxPercent:['0'],
       effectiveFrom: ['', Validators.required],
       effectiveTill: ['',],
@@ -165,7 +175,8 @@ export class EditcourseComponent implements OnInit {
       imageCaption:[''],
       imageShortDescription:[''],
       videoCaption:[''],
-      facultyId:['',[Validators.required]]
+      facultyId:['',[Validators.required]],
+      img:[''],
     });
     const ctrl = this.courseForm.controls['offerPrice'];
     ctrl.disable();
@@ -258,6 +269,8 @@ export class EditcourseComponent implements OnInit {
     }
 
   }
+
+
   toggleCompleted($event: MatSlideToggleChange): void {
     debugger
     if ($event.checked != undefined) {
@@ -352,8 +365,15 @@ export class EditcourseComponent implements OnInit {
 
 DeleteVideo(){
   debugger
-  var filename=this.videoUrl.replace('https://ugetit.blob.core.windows.net/coursevideos/',"")
 
+  var filename=this.videoUrl.replace('https://ugetit.blob.core.windows.net/coursevideos/',"")
+ var data = {
+     // MaterialId: row.materialId,
+     VideoFileName: filename,
+      CourseId:parseInt( this.Id),
+      UpdatedBy: parseInt(localStorage.getItem("LoginId")),
+      FolderName: 'coursevideos'
+    }
   const confirmation = this._fuseConfirmationService.open({
     title  : 'Delete Uploaded Video',
     message: 'Are you sure you want to delete this course?',
@@ -370,9 +390,9 @@ confirmation.afterClosed().subscribe((result) => {
     // If the confirm button pressed...
     if ( result === 'confirmed' )
     {
-  
-        // Delete the video
-        this._authService.DeleteVideo(filename).subscribe((finalresult: any) => {
+      debugger
+  this.closevideo=false        // Delete the video
+        this._authService.DeleteVideo(data).subscribe((finalresult: any) => {
           debugger
           if(finalresult.status=="200"){
             this.uploadvideo=true
@@ -387,11 +407,11 @@ confirmation.afterClosed().subscribe((result) => {
             };
     
             // Show the alert
-            this.showAlert = true;
+            this.showAlert1 = true;
   
             setTimeout(() => {
-              this.showAlert = false;
-  
+              this.showAlert1 = false;
+              
             }, 3000);
           }
       })
@@ -406,7 +426,7 @@ UploadVideo(value:any){
   const formData: FormData = new FormData();
   if (this.files2.length >= 1) {
     formData.append("files", this.fileToUpload2, this.name2);
-    this.blockUI.start('Video Is Uploading...');
+    this.blockUI.start('Uploading...');
     this._authService.UploadVideo(formData).subscribe((finalresult: any) => {
       debugger
       if(finalresult.status=="200"){
@@ -432,6 +452,7 @@ UploadVideo(value:any){
     }
   }
 }
+
 
   GoToFaq(){
     this._router.navigate(['/courses/questions/'+this.courseid]);
@@ -513,6 +534,7 @@ UploadVideo(value:any){
       this.courseForm.controls['effectiveTill'].disable();
       this.courseForm.controls['showOnWebsite'].disable();
       this.courseForm.controls['facultyId'].disable();
+      this.courseForm.controls['img'].disable();
 
     }
     else {
@@ -525,12 +547,14 @@ UploadVideo(value:any){
       this.courseForm.controls['whatLearn'].enable();
       this.courseForm.controls['requirements'].enable();
       this.courseForm.controls['price'].enable();
+      this.courseForm.controls['taxPercent'].enable();
+
       this.courseForm.controls['isOffer'].enable();
       // this.courseForm.controls['offerPrice'].enable();
       this.courseForm.controls['effectiveFrom'].enable();
       this.courseForm.controls['effectiveTill'].enable();
       this.courseForm.controls['showOnWebsite'].enable();
-      
+      this.courseForm.controls['img'].enable();
 
     }
     this.Id = id;
@@ -542,6 +566,25 @@ UploadVideo(value:any){
       if (finalresult.status == "200") {
         debugger
 
+      //   if(this.courseForm.controls['isOffer'].value==true)
+      //   {
+      //  this.courseForm.controls['taxPercent'].enable();
+      //   }
+      //   this.courseForm.controls['istax'].setValue(true);
+
+if(finalresult.result.taxPercent!=0){
+  
+  this.courseForm.controls['istax'].setValue(true);
+  
+  
+}
+else{
+  this.courseForm.controls['istax'].setValue(false);
+  const ctrl = this.courseForm.controls['taxPercent'];
+  ctrl.disable();
+  ctrl.setValue('0')
+
+}
         this.courseForm.patchValue(finalresult.result);
         this.status=finalresult.result.status
         const course = this.courseForm.getRawValue();
@@ -553,6 +596,7 @@ UploadVideo(value:any){
         //   this.courseForm.controls['fees'].setValue("")
         // }"0001-01-01T00:00:00"
         this.feedetailsid= course.id;
+        
         this.isoffer  = course.isOffer;
         this.effectivefrm  = course.effectiveFrom;
         this.effectivetil  = course.effectiveTill;
@@ -641,6 +685,7 @@ UploadVideo(value:any){
         const ctrl = this.courseForm.controls['taxPercent'];
         ctrl.disable();
         ctrl.setValue('0')
+
 
       }
 

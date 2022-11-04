@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { SalesRoutingModule } from './sales-routing.module';
 import { ConfigurationsComponent } from './configurations/configurations.component';
 import { DashboardbannerComponent } from './dashboardbanner/dashboardbanner.component';
@@ -40,9 +39,17 @@ import { MasternavigationComponent } from './masternavigation/masternavigation.c
 import { AddcompanydetailsComponent } from './addcompanydetails/addcompanydetails.component';
 import { EditcompanydetailsComponent } from './editcompanydetails/editcompanydetails.component';
 import { CompanydetailsComponent } from './companydetails/companydetails.component';
+
+import { TermsandPolicyComponent } from './termsand-policy/termsand-policy.component';
+import { AddtermsandpolicyComponent } from './addtermsandpolicy/addtermsandpolicy.component';
+import { EdittermsandpolicyComponent } from './edittermsandpolicy/edittermsandpolicy.component';
+
 import { EmailsettingsComponent } from './emailsettings/emailsettings.component';
 import { AddemailComponent } from './addemail/addemail.component';
 import { EditemailComponent } from './editemail/editemail.component';
+import { GooglemapurlComponent } from './googlemapurl/googlemapurl.component';
+import { AddgooglemapurlComponent } from './addgooglemapurl/addgooglemapurl.component';
+import { EditgooglemapurlComponent } from './editgooglemapurl/editgooglemapurl.component';
 
 //import { MatIconModule } from '@angular/material/icon';
 @NgModule({
@@ -57,10 +64,19 @@ import { EditemailComponent } from './editemail/editemail.component';
     CompanydetailsComponent,
     AddcompanydetailsComponent,
     EditcompanydetailsComponent,
+
+    TermsandPolicyComponent,
+    AddtermsandpolicyComponent,
+    EdittermsandpolicyComponent,
+
     EmailsettingsComponent,
     AddemailComponent,
     EditemailComponent,
+    GooglemapurlComponent,
+    AddgooglemapurlComponent,
+    EditgooglemapurlComponent,
     
+
 
   ],
   imports: [

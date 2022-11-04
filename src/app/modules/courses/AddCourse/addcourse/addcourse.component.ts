@@ -86,11 +86,11 @@ export class AddcourseComponent implements OnInit {
   status: boolean = true;
   fileToUpload1: File;
   name1: string;
-  files1: any[];
+  files1: Array<any> = new Array<any>();
   uploadedvideofile: any;
   removeupload: boolean = false;
   uploadedfilename: string;
-  files2: any[];
+  files2: Array<any> = new Array<any>();
   fileToUpload2: File;
   name2: string;
   courses: any;
@@ -134,7 +134,7 @@ export class AddcourseComponent implements OnInit {
       onwebsite: [''],
       offerPrice: ['0'],
       taxpercent: ['0'],
-      effectiveFrom: ['', Validators.required],
+     effectiveFrom: [''],
       effectiveTill: [''],
       courseheader: ['', []],
       courseurl: ['', []],
@@ -145,11 +145,13 @@ export class AddcourseComponent implements OnInit {
       imagecaption: [''],
       imageshortdescription: [''],
       videocaption: [''],
-      uploader1: ['', [Validators.required]],
+      uploader1: ['', ],
       relatedcourses: [''],
+
       // UploadCourseIcon: ['', [Validators.required]],
       //  UploadCourseVideo:['',[Validators.required]],
       // UploadImage: ['', [Validators.required]],
+
       instructor: ['', [Validators.required]]
     });
     // var currentdate=new Date()
@@ -202,12 +204,20 @@ export class AddcourseComponent implements OnInit {
   UploadVideo(value: any) {
     debugger
      
-    if (this.files.length == undefined || this.files1.length == undefined || this.files2.length == undefined) {
+    if (this.files.length == 0 || this.files1.length == 0 || this.files2.length == 0) {
       this.showAlert = true;
-
+      if(this.files.length == 0){
+        var showmessage="Selecting Course Image Mandatory"
+      }
+      else if(this.files1.length == 0){
+        var showmessage="Selecting Course Icon Mandatory"
+      }
+      else{
+        var showmessage="Selecting  Video Mandatory"
+      }
      this.alert = {
        type: 'warning',
-       message: "Selecting Files Is Mandatory"
+       message: showmessage
      };
     
      setTimeout(() => {
@@ -217,6 +227,7 @@ export class AddcourseComponent implements OnInit {
    }
 
    if (this.courseForm.invalid) {
+    
      return;
    }
 
@@ -731,8 +742,7 @@ export class AddcourseComponent implements OnInit {
     formData.append("FacultyId", course.instructor.toString())
     formData.append("VideoUrl", this.videoUrl)
     formData.append("VideoFileName", this.name2)
-    if (course.relatedcourses == "") {
-      course.relatedcourses = []
+   
       if (course.relatedcourses == "") {
         course.relatedcourses = []
         formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
@@ -797,8 +807,8 @@ export class AddcourseComponent implements OnInit {
 
           // Show the alert
           this.showAlert = true;
+          this.blockUI.stop()
           setTimeout(() => {
-            this.blockUI.stop()
             this.showAlert = false;
           }, 3000);
         }
@@ -817,7 +827,7 @@ export class AddcourseComponent implements OnInit {
           this.blockUI.stop()
         }
       });
-    }
+  
 
 
     // toggleCompleted($event: MatSlideToggleChange): void {

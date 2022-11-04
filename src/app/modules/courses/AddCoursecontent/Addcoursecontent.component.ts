@@ -150,6 +150,7 @@ export class AddcoursecontentComponent implements OnInit {
   uploadvideo: boolean = true
   deletevideo: boolean = false
   fileslength: any;
+  butdisabled: boolean = false;;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -462,7 +463,13 @@ export class AddcoursecontentComponent implements OnInit {
   DeleteVideo() {
     debugger
     var filename = this.videoUrl.replace('https://ugetit.blob.core.windows.net/coursevideos/', "")
-
+    var data = {
+      // MaterialId: row.materialId,
+      VideoFileName: filename,
+       CourseId:parseInt( this.Id),
+       UpdatedBy: parseInt(localStorage.getItem("LoginId")),
+       FolderName: 'CoursecontentFiles'
+     }
     const confirmation = this._fuseConfirmationService.open({
       title: 'Delete Video',
       message: 'Are you sure you want to delete this Video?',
@@ -480,7 +487,7 @@ export class AddcoursecontentComponent implements OnInit {
       if (result === 'confirmed') {
 
         // Delete the video
-        this._authService.DeleteChapterVideo(filename).subscribe((finalresult: any) => {
+        this._authService.DeleteChapterVideo(data).subscribe((finalresult: any) => {
           debugger
           if (finalresult.status == "200") {
             this.uploadvideo = true
@@ -1213,21 +1220,25 @@ export class AddcoursecontentComponent implements OnInit {
       baseurl = "http://testugetitapi.fadelsoft.com"
     }
     if (value == "viewcontent") {
+      this.butdisabled = true;
       this.coursecontentForm.controls['courseName'].disable();
       this.coursecontentForm.controls['author'].disable();
       this.coursecontentForm.controls['chapter'].disable();
       this.coursecontentForm.controls['contentType'].disable();
       this.coursecontentForm.controls['contentDescription'].disable();
+     
       this.Save = true;
       this.update = false;
       this.Clear = false;
     }
     else {
+      this.butdisabled = false;
       this.coursecontentForm.controls['courseName'].disable();
       this.coursecontentForm.controls['author'].enable();
       this.coursecontentForm.controls['chapter'].enable();
       this.coursecontentForm.controls['contentType'].enable();
       this.coursecontentForm.controls['contentDescription'].enable();
+     
 
       this.Save = false;
       this.update = true;

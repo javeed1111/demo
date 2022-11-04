@@ -68,6 +68,7 @@ export class CourseplaneditComponent implements OnInit {
   oldofferprice: any;
   oldprice: any;
   pcid: any;
+  showonwebsite: boolean=true;
 
   constructor(
     private _authService: AuthService,
@@ -95,6 +96,8 @@ export class CourseplaneditComponent implements OnInit {
         offerPrice: ['0'],
         effectiveFrom: ['', ],
         effectiveTill: ['', ],
+        showOnWebsite: [''],
+        
       }),
       step2: this._formBuilder.group({
         courseId: [''],
@@ -107,6 +110,8 @@ export class CourseplaneditComponent implements OnInit {
     });
     const ctrl = this.horizontalStepperForm.controls.step1.get('offerPrice');
     ctrl.disable();
+
+    console.log("noooor")
     this.Edit(pcid,planid,value);
     this.GetFeeInactiveData(planid);
   }
@@ -117,10 +122,11 @@ export class CourseplaneditComponent implements OnInit {
       this.horizontalStepperForm.controls.step1.get('planName').disable();
       this.horizontalStepperForm.controls.step1.get('price').disable();
       this.horizontalStepperForm.controls.step1.get('isOffer').disable();
-     // this.horizontalStepperForm.controls.step1.get('offerPrice').disable();
+      this.horizontalStepperForm.controls.step1.get('offerPrice').disable();
       this.horizontalStepperForm.controls.step1.get('effectiveFrom').disable();
       this.horizontalStepperForm.controls.step1.get('effectiveTill').disable();
       this.horizontalStepperForm.controls.step2.get('courseId').disable();
+      this.horizontalStepperForm.controls.step1.get('showOnWebsite').disable();
       this.show=false
   }
   else
@@ -129,10 +135,11 @@ export class CourseplaneditComponent implements OnInit {
       this.horizontalStepperForm.controls.step1.get('planName').enable();
       this.horizontalStepperForm.controls.step1.get('price').enable();
       this.horizontalStepperForm.controls.step1.get('isOffer').enable();
-      // this.horizontalStepperForm.controls.step1.get('offerPrice').enable();
+       this.horizontalStepperForm.controls.step1.get('offerPrice').enable();
       this.horizontalStepperForm.controls.step1.get('effectiveFrom').enable();
       this.horizontalStepperForm.controls.step1.get('effectiveTill').enable();
       this.horizontalStepperForm.controls.step2.get('courseId').enable();
+      this.horizontalStepperForm.controls.step1.get('showOnWebsite').enable();
   }
     // this.Id = id;
     this._authService.GetcourseplanById(pcid,planid).subscribe((finalresult: any) => {
@@ -150,6 +157,7 @@ export class CourseplaneditComponent implements OnInit {
         if(this.horizontalStepperForm.controls.step1.get('isOffer').value==true && value == "edit")
         {
        this.horizontalStepperForm.controls.step1.get('offerPrice').enable();
+       this.isofferactive = true
         }
         //let courseid:[]
         let courseidarray=finalresult.result[i].courseId
@@ -373,7 +381,7 @@ export class CourseplaneditComponent implements OnInit {
   }
 
   savecourseplan(): void {
-    debugger
+    // debugger
     // Return if the form is invalid
     if (this.horizontalStepperForm.invalid) {
       return;
@@ -390,6 +398,9 @@ export class CourseplaneditComponent implements OnInit {
       finalids.push(1);
     }
     const dataa = this.horizontalStepperForm.getRawValue();
+
+
+    debugger
     if (this.isofferactive == undefined) {
       this.isofferactive = false;
       // this.horizontalStepperForm.controls['offerPrice'].disable();
@@ -398,6 +409,9 @@ export class CourseplaneditComponent implements OnInit {
     else {
       // this.horizontalStepperForm.controls['offerPrice'].enable();
       this.OfferPrice = dataa.step1.offerPrice;
+    }
+    if(dataa.showOnWebsite!=undefined){
+      this.showonwebsite =dataa.showOnWebsite;
     }
     var mindate = new Date(dataa.step1.effectiveFrom);
     // var maxdate = new Date(dataa.step1.effectiveTill);
@@ -453,6 +467,7 @@ export class CourseplaneditComponent implements OnInit {
       EffectiveTill: maxdate,
       OldOfferPrice:this.oldofferprice,
       OldPrice:this.oldprice,
+       showOnWebsite:this.showonwebsite,
       // ListOfCourses: dataa.step2.courseId,
       // ListOfCourses: ListOfCourse,
       ListOfCourses:ListOfCourse,
@@ -513,5 +528,16 @@ export class CourseplaneditComponent implements OnInit {
       }
     });
   }
+  onwebsite($event: MatSlideToggleChange): void {
+    debugger
+    if ($event.checked == undefined || $event.checked == true) {
+      this.showonwebsite = $event.checked;
+    }
+    else {
+      this.showonwebsite = false;
+      // this.isofferactive = false;
+    }
 
+  }
+  Ge
 }

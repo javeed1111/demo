@@ -64,6 +64,12 @@ export class CompanydetailsComponent implements OnInit {
   
     this._router.navigate(['/masters/addcompanydetails'])
   }
+  createProducts(){
+    //debugger
+
+    // this._router.navigate(['/userconfig/role/addrole'])
+    this._router.navigate(['/masters/masternavigation'])
+  }
 
   Getcompanydata() {
     debugger

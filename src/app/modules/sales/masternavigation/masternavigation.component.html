@@ -19,7 +19,7 @@
 
                             <!-- <mat-icon class="icon-size-24 opacity-25 text-green-500 dark:text-green-400" svgIcon="check-circle"></mat-icon> -->
 
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">Configuration</div>
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">Invoice Format</div>
                             <!-- <div class="text-green-600 font-medium text-sm">
                                     Paid on
                                  </div> -->
@@ -54,42 +54,38 @@
             <div class="grid gap-8 sm:grid-flow-col xl:grid-flow-row">
 
                 <!-- <div class="grid gap-8 sm:grid-flow-col xl:grid-flow-row"> -->
+                <!-- Previous statement -->
+                <div class="relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden" (click)="termsandpolicy()">
+                    <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
+                        <mat-icon class="icon-size-24 opacity-30 text-green-600 dark:text-green-400" [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
+                    </div>
+                    <div class="flex items-center">
 
-               
-                <!-- </div> -->
-                <div class="grid gap-8 sm:grid-flow-col xl:grid-flow-row " >
-                    <!-- Previous statement -->
-                    <div class="relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden" (click)="emailsetttings()">
-                        <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
-                            <mat-icon class="icon-size-24 opacity-30 text-green-600 dark:text-green-400" [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
+                        <div class="p-5">
+                            <mat-icon class="icon-display">label</mat-icon>
                         </div>
-                        <div class="flex items-center" icon >
-                            <div class="p-4">
-                                <mat-icon class="icon-display">settings</mat-icon>
-                            </div>
-                            <div class="flex flex-col">
+                        <div class="flex flex-col">
 
 
-                                <div class="text-lg font-medium tracking-tight leading-6 truncate" >Email Settings</div>
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">Terms and Policy</div>
 
-                            </div>
 
                         </div>
-
 
                     </div>
 
 
-
                 </div>
 
+               
+                <!-- </div> -->
                 <div class="relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden" (click)="companydetails()">
                     <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
                         <mat-icon class="icon-size-24 opacity-30 text-green-600 dark:text-green-400" [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
                     </div >
                     <div class="flex items-center">
                         <div class="p-5">
-                            <mat-icon class="icon-display">donut_small</mat-icon>
+                            <mat-icon class="icon-display">account_circle</mat-icon>
                         </div>
                         <div class="flex flex-col">
 
@@ -103,17 +99,66 @@
 
 
                 </div>
+               
+                <!-- </div> -->
 
-            
             </div>
 
+            <div class="grid gap-8 sm:grid-flow-col xl:grid-flow-row">
+
+                <!-- <div class="grid gap-8 sm:grid-flow-col xl:grid-flow-row"> -->
+                <div class="relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden" (click)="emailsetttings()">
+                    <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
+                        <mat-icon class="icon-size-24 opacity-30 text-green-600 dark:text-green-400" [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
+                    </div>
+                    <div class="flex items-center" icon>
+                        <div class="p-5">
+                            <mat-icon class="icon-display">settings</mat-icon>
+                        </div>
+                        <div class="flex flex-col">
+
+
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">Email Settings</div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <!-- </div> -->
+
+                <div class="relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden" (click)="googlemapurl()">
+                    <!-- [style.visibility]="'hidden'" -->
+                    <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
+                        <mat-icon class="icon-size-24 opacity-30 text-green-600 dark:text-green-400" [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
+                    </div>
+                    <div class="flex items-center" icon>
+                        <div class="p-5">
+                            <mat-icon class="icon-display">donut_small</mat-icon>
+                        </div>
+                        <div class="flex flex-col">
+
+
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">Google Map Url</div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
 
         </div>
 
 
-
     </div>
+
 </div>
+
 
 
 

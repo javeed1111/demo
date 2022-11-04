@@ -5,7 +5,7 @@
         <!-- Loader -->
 
         <!-- Title -->
-        <div class="text-3xl font-bold tracking-tight">Company Details</div>
+        <div class="text-3xl font-bold tracking-tight">Google Map Url</div>
         <!-- Alert -->
         <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
             {{alert.message}}
@@ -17,7 +17,7 @@
                 
                 <span class="ml-2 mr-1"><-- Back</span>
               </button>
-            <button class="ml-4" mat-flat-button [color]="'primary'" (click)="createProduct()">
+            <button class="ml-4" mat-flat-button [color]="'primary'" (click)="create()">
           <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
           <span class="ml-2 mr-1">Add</span>
         </button>
@@ -49,21 +49,13 @@
                             </ng-container>
 
                             <!-- Progress Column -->
-                            <ng-container matColumnDef="companydetails">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header> Company Name </mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.companyName}}</mat-cell>
+                            <ng-container matColumnDef="Googlemapurl">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> Google map url </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.googleMapUrl}}</mat-cell>
                                 <!-- {{row.invoiceFormat}} -->
                             </ng-container>
 
 
-
-
-                            <!-- Progress Column -->
-                            <ng-container matColumnDef="phoneno">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header> Phone No </mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.phoneNo}}
-                                </mat-cell>
-                            </ng-container>
                             <!-- <div class="form-group">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header> Phone No </mat-header-cell>
                                 <input type="tel" #phone="ngModel" pattern="^\d{10}$" [class.is-valid]="phone.invalid && phone.touched" class="form-control" name="phoneNo" [ngModel]="userModel.phoneNo">
@@ -72,12 +64,6 @@
                                 </mat-cell>
                             </div> -->
 
-
-                            <!-- Name Column -->
-                            <ng-container matColumnDef="Email">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Email </mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.email}} </mat-cell>
-                            </ng-container>
                             <ng-container matColumnDef="actions">
                                 <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
                                 <mat-cell *matCellDef="let row">
