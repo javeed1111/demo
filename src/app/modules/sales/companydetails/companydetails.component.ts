@@ -74,7 +74,7 @@ export class CompanydetailsComponent implements OnInit {
   Getcompanydata() {
     debugger
     this._authService.Getcompanydata().subscribe((finalresult: any) => {
-      
+      debugger
       if (finalresult.status == "200") {
         console.log('getcompanydtls',finalresult.result);
         this.dataSource = new MatTableDataSource(finalresult.result);

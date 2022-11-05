@@ -18,8 +18,8 @@ export class AddgooglemapurlComponent implements OnInit {
     message: ''
   };
   showAlert:  boolean = false;
-  update: boolean;
-  save: boolean;
+  update: boolean = false;;
+  save: boolean = true;
   constructor(private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _router: Router) { }

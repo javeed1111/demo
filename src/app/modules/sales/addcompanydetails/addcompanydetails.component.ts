@@ -14,6 +14,9 @@ import { AuthService } from 'app/core/auth/auth.service';
 
 export class AddcompanydetailsComponent implements OnInit {
   showonwebsite: boolean;
+  update: boolean = false;
+  save: boolean = true;
+  true:boolean=false;
   files: Array<any> = new Array<any>();
   fileToUpload: File = null;
   fileToUpload1: File=null;
@@ -35,8 +38,9 @@ showAlert:  boolean = false;
   ngOnInit(): void {
 
     this.ConfigurationForm = this._formBuilder.group({
+      Id:['0'],
       companyName : ['', [Validators.required]],
-      Address:['',[Validators.required]],
+      address:['',[Validators.required]],
       phoneNo:['',[Validators.required]],
       email:['',],
      // UploadCourseIcon: ['',],
@@ -44,11 +48,31 @@ showAlert:  boolean = false;
       Companylogo:['',],
 
     });
+    this.CheckForUpdate();
   }
+  CheckForUpdate() {
+    this._authService.Getcompanydata().subscribe((res: any) => {
+      debugger
+      if (res.result.length > 0) {
+        this.ConfigurationForm.patchValue(res.result[0]);
 
+       // this.ConfigurationForm.controls['Address'].setValue(res.result[0].address);
+        this.ConfigurationForm.controls['Companylogo'].setValue(res.result[0].Companylogo);
+        
+        this.true=res.result[0].true;
+        this.update = true;
+        this.save = false;
+      }
+      else {
+        this.ConfigurationForm.reset();
+        this.update = false;
+        this.save = true;
+      }
+    })
+  }
   
   cancel(){
-    this._router.navigate(['/masters/companydetails']);
+    this._router.navigate(['/masters/masternavigation']);
         setTimeout(() => {
             window.location.reload();
            }, 10);
@@ -88,29 +112,16 @@ showAlert:  boolean = false;
       
       // Get the contact object
       const content = this.ConfigurationForm.getRawValue();
-    //   if(this.active==undefined){
-    //      this.active = true;
-    //  }
-   
-      //var data = {
-      
-        // showOnWebsite:this.showonwebsite,
-        // companyName: content.companyName,
-        // Address:content.Address,
-        // phoneNo:content.phoneNo,
-        // email:content.email,
-       // Companylogo:content.Companylogo,
-       // CompanyUrl:content.CompanyUrl,
-        
-         //CreatedBy: parseInt(localStorage.getItem("LoginId")),
-        //  IsActive: this.active,
-    // }
+  
      const formData: FormData = new FormData();
+     
+     formData.append("True", content.true)
+
      formData.append("Email", content.email)
      formData.append("CreatedBy", (localStorage.getItem("LoginId")));
      formData.append("phoneNo", content.phoneNo)
      formData.append("companyName", content.companyName)
-     formData.append("Address", content.Address)
+     formData.append("Address", content.address)
      formData.append("CompanyUrl", content.CompanyUrl)
      formData.append("Companylogo", content.companylogo)
      formData.append("showOnWebsite", (this.showonwebsite).toString())
@@ -133,7 +144,8 @@ showAlert:  boolean = false;
                 setTimeout(() => {
                   
                   this.showAlert = false;
-                  this._router.navigate(['/masters/companydetails']);
+                  // this._router.navigate(['/masters/companydetails']);
+                  window.location.reload();
                 }, 2000); 
                 // setTimeout(() => {
                   // this._router.navigate(['/masters/companydetails']);
@@ -158,6 +170,74 @@ showAlert:  boolean = false;
         });
   }
 
+  Update() {
+
+    if (this.ConfigurationForm.invalid) {
+      return;
+    }
+    this.showAlert = false;
+
+    const content = this.ConfigurationForm.getRawValue();
+debugger
+   
+    const formData: FormData = new FormData();
+    formData.append("Email", content.email)
+    formData.append("Id", content.Id)
+    formData.append("phoneNo", content.phoneNo)
+    formData.append("companyName", content.companyName)
+    formData.append("Address", content.address)
+    formData.append("CompanyUrl", content.CompanyUrl)
+    formData.append("Companylogo", content.Companylogo)
+    formData.append("showOnWebsite", content.showonwebsite)
+    formData.append("True", content.true)
+ formData.append("UpdatedBy", (localStorage.getItem("LoginId")));
+    if (this.files.length == 1) {
+     formData.append("fileupload", this.fileToUpload, this.name);
+   }
+   else {
+    formData.append("LogoURL", content.LogoURL);
+
+  }
+
+
+
+    this._authService.UpdateCompanyMaster(formData).subscribe((result: any) => {
+      debugger
+      if (result.status == "200") {
+        debugger
+
+        // Set the alert
+        this.alert = {
+          type: 'success',
+          //message: result.message
+          message: result.message
+        };
+
+        // Show the alert
+        this.showAlert = true;
+
+        setTimeout(() => {
+          // this._router.navigate(['/masters/companydetails']);
+          window.location.reload();
+        }, 1000);
+      }
+      else {
+        this.alert = {
+          type: 'error',
+          message: result.message
+
+        };
+        this.showAlert = true;
+      }
+      (error) => {
+
+      }
+    });
+    // debugger
+    // if(content.showOnWebsite!=undefined){
+    //   this.showOnWebsite =content.showOnWebsite;
+    // }
+  }
 
   onwebsite($event: MatSlideToggleChange): void {
     debugger

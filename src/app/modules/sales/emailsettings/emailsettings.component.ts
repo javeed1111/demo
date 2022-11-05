@@ -58,18 +58,17 @@ export class EmailsettingsComponent implements OnInit {
     var value = "view"
     this._router.navigate(['/masters/editemail/' + id + '/' + value])
   }
+
+  addemail() {
+  
+    this._router.navigate(['/masters/addemail'])
+  }
   createProducts(){
     //debugger
 
     // this._router.navigate(['/userconfig/role/addrole'])
     this._router.navigate(['/masters/masternavigation'])
   }
-
-  addemail() {
-  
-    this._router.navigate(['/masters/addemail'])
-  }
-
   GetEmails() {
     debugger
     this._authService.GetEmails().subscribe((finalresult: any) => {
@@ -104,6 +103,7 @@ export class EmailsettingsComponent implements OnInit {
     confirmation.afterClosed().subscribe((result) => {
 
       // If the confirm button pressed...
+      
       if (result === 'confirmed') {
         var CreatedBy = parseInt(localStorage.getItem("LoginId"))
         var data= {
