@@ -33,7 +33,7 @@ export class FuseConfigService
         const config = merge({}, this._config.getValue(), value);
 
         // Execute the observable
-        this._config.next(config);
+        this._config.next(config);  
     }
 
     get config$(): Observable<any>

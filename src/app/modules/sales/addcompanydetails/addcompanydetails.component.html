@@ -16,7 +16,7 @@
                     <div class="flex">
                         <mat-form-field class="flex-auto">
                             <mat-label>Address</mat-label>
-                            <input matInput appAutofocus [formControlName]="'Address'" [placeholder]="'Address'">
+                            <input matInput appAutofocus [formControlName]="'address'" [placeholder]="'Address'">
                             <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon> -->
                         </mat-form-field>
                     </div>
@@ -96,12 +96,18 @@
 
                     <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
                         <!-- Cancel -->
-                        <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="cancel()">
+                        <!-- <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="cancel()">
                             Cancel
+                        </button> -->
+                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="cancel()">
+                            Save
                         </button>
                         <!--Save-->
-                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Save()">
+                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" *ngIf="save" (click)="Save()">
                             Save
+                        </button>
+                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" *ngIf="update" (click)="Update()">
+                            Update
                         </button>
                     </div>
                 </form>
