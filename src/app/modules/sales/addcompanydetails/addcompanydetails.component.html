@@ -8,7 +8,7 @@
 
                     <div class="flex">
                         <mat-form-field class="flex-auto">
-                            <mat-label>Comapny Names</mat-label>
+                            <mat-label>Company Name</mat-label>
                             <input matInput appAutofocus [formControlName]="'companyName'" [placeholder]="'Comapny Names'">
                             <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon> -->
                         </mat-form-field>
@@ -16,13 +16,13 @@
                     <div class="flex">
                         <mat-form-field class="flex-auto">
                             <mat-label>Address</mat-label>
-                            <input matInput appAutofocus [formControlName]="'Address'" [placeholder]="'Address'">
+                            <input matInput appAutofocus [formControlName]="'address'" [placeholder]="'Address'">
                             <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon> -->
                         </mat-form-field>
                     </div>
                     <div class="flex">
                         <mat-form-field class="flex-auto">
-                            <mat-label>Phone No</mat-label>
+                            <mat-label>Phone Number</mat-label>
                             <input matInput appAutofocus [formControlName]="'phoneNo'" [placeholder]="'Phone No'">
                             <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon> -->
                         </mat-form-field>
@@ -56,8 +56,8 @@
                             </ng-container>
                         </div>
                     </div>
-
-                    <div class=" mt-4 sm:mt-0 col-span-6">
+                    <div class="grid grid-cols-12 gap-x-1 mt-4">
+                    <div class="mt-4 sm:mt-0 col-span-6">
                         <!-- Upload button -->
                         <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload').click()">
                             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
@@ -80,7 +80,7 @@
                             id="txtfileupload"  name="fileupload" 
                             (change)="onSelectFile($event.target.files)"> -->
                     </div>
-
+                    </div>
 
 
 
@@ -100,8 +100,11 @@
                             Cancel
                         </button>
                         <!--Save-->
-                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="Save()">
+                        <button class="px-6 ml-3" mat-flat-button [color]="'primary'"  *ngIf="save" (click)="Save()">
                             Save
+                        </button>
+                        <button class="px-6 ml-3" *ngIf="update" mat-flat-button [color]="'primary'" (click)="Update()">
+                            Update
                         </button>
                     </div>
                 </form>

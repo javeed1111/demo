@@ -27,7 +27,7 @@ export class MasternavigationComponent implements OnInit {
   }
   companydetails() {
     debugger
-    this._router.navigate(['/masters/companydetails']);
+    this._router.navigate(['/masters/addcompanydetails']);
   }
 
   termsandpolicy() {
