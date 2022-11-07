@@ -122,6 +122,7 @@ export class UserComponent implements OnInit, OnDestroy
      */
     setTheme(theme: Theme): void
     {
+        debugger
         this._fuseConfigService.config = {theme};
     }
 

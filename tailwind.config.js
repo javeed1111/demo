@@ -10,19 +10,25 @@ const generatePalette = require(path.resolve(__dirname, ('src/@fuse/tailwind/uti
  * Tailwind-like color palettes automatically
  */
 const customPalettes = {
-    brand: generatePalette('#2196F3')
+    brand: generatePalette('#2196F3'),
+    default: generatePalette('#2d3748'),
+    Charcoal: generatePalette('#36454F'),
+    Coral: generatePalette('#F96167'),
+    Orange: generatePalette('#EE4E34'),
+    Blues: generatePalette('#6883BC'),
+    Teal: generatePalette('#317773'),
+    Green: generatePalette('#3A6B35'),
 };
-
+// const customPalettes1 = {
+//     brand1: generatePalette('#2d3748')
+// };
 /**
  * Themes
  */
-const themes = {
+ const themes = {
     // Default theme is required for theming system to work correctly
     'default': {
-        primary  : {
-            ...colors.indigo,
-            DEFAULT: colors.indigo[600]
-        },
+        primary  : customPalettes.Teal,
         accent   : {
             ...colors.slate,
             DEFAULT: colors.slate[800]
@@ -37,28 +43,75 @@ const themes = {
     },
     // Rest of the themes will use the 'default' as the base theme
     // and extend them with their given configuration
-    'brand' : {
-        primary: customPalettes.brand
+    'charcoal' : {
+        primary: customPalettes.Charcoal
     },
-    'teal'  : {
-        primary: {
-            ...colors.teal,
-            DEFAULT: colors.teal[600]
-        }
+    // 'teal'  : {
+    //     primary:customPalettes.Teal
+    //     // primary: {
+    //     //     ...colors.teal,
+    //     //     DEFAULT: colors.teal[600]
+    //     // }
+    // },
+    'coral'  : {
+        primary: customPalettes.Coral
     },
-    'rose'  : {
-        primary: colors.rose
+    'orange': {
+      primary:customPalettes.Orange
     },
-    'purple': {
-        primary: {
-            ...colors.purple,
-            DEFAULT: colors.purple[600]
-        }
+    'blues' : {
+        primary: customPalettes.Blues
     },
-    'amber' : {
-        primary: colors.amber
+    'green':{
+        primary:customPalettes.Green
     }
+    
 };
+// const themes = {
+//     // Default theme is required for theming system to work correctly
+//     'default': {
+//         primary  : {
+//             ...colors.indigo,
+//             DEFAULT: colors.indigo[600]
+//         },
+//         accent   : {
+//             ...colors.slate,
+//             DEFAULT: colors.slate[800]
+//         },
+//         warn     : {
+//             ...colors.red,
+//             DEFAULT: colors.red[600]
+//         },
+//         'on-warn': {
+//             500: colors.red['50']
+//         }
+//     },
+//     // Rest of the themes will use the 'default' as the base theme
+//     // and extend them with their given configuration
+//     'brand' : {
+//         primary: customPalettes.brand
+//     },
+//     'teal'  : {
+//         primary:customPalettes.Teal
+//         // primary: {
+//         //     ...colors.teal,
+//         //     DEFAULT: colors.teal[600]
+//         // }
+//     },
+//     'rose'  : {
+//         primary: colors.rose
+//     },
+//     'purple': {
+//         primary: {
+//             ...colors.purple,
+//             DEFAULT: colors.purple[600]
+//         }
+//     },
+//     'amber' : {
+//         primary: colors.amber
+//     },
+    
+// };
 
 /**
  * Tailwind configuration

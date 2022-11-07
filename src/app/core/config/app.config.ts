@@ -45,27 +45,60 @@ export const appConfig: AppConfig = {
     themes : [
         {
             id  : 'theme-default',
-            name: 'Default'
-        },
-        {
-            id  : 'theme-brand',
-            name: 'Brand'
-        },
-        {
-            id  : 'theme-teal',
             name: 'Teal'
         },
         {
-            id  : 'theme-rose',
-            name: 'Rose'
+            id  : 'theme-charcoal',
+            name: 'Charcoal'
+        },
+        // {
+        //     id  : 'theme-teal',
+        //     name: 'Teal'
+        // },
+        {
+            id  : 'theme-coral',
+            name: 'Coral'
         },
         {
-            id  : 'theme-purple',
-            name: 'Purple'
+            id  : 'theme-orange',
+            name: 'Orange'
         },
         {
-            id  : 'theme-amber',
-            name: 'Amber'
+            id  : 'theme-blues',
+            name: 'Blues'
+        },
+        {
+            id  : 'theme-green',
+            name: 'Green'
         }
+        
     ]
-};
+    // themes : [
+    //     {
+    //         id  : 'theme-default',
+    //         name: 'Default'
+    //     },
+    //     {
+    //         id  : 'theme-brand',
+    //         name: 'Brand'
+    //     },
+    //     {
+    //         id  : 'theme-teal',
+    //         name: 'Teal'
+    //     },
+    //     {
+    //         id  : 'theme-rose',
+    //         name: 'Rose'
+    //     },
+    //     {
+    //         id  : 'theme-purple',
+    //         name: 'Purple'
+    //     },
+    //     {
+    //         id  : 'theme-amber',
+    //         name: 'Amber'
+    //     }
+        
+    // ]
+
+      };
