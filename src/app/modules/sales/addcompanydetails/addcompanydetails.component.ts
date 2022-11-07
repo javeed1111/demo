@@ -50,14 +50,19 @@ showAlert:  boolean = false;
     });
     this.CheckForUpdate();
   }
+
   CheckForUpdate() {
     this._authService.Getcompanydata().subscribe((res: any) => {
       debugger
       if (res.result.length > 0) {
         this.ConfigurationForm.patchValue(res.result[0]);
-
+        this.ConfigurationForm.controls['CompanyUrl'].setValue(res.result[0].companyUrl);
+        this.ConfigurationForm.controls['Id'].setValue(res.result[0].id);
        // this.ConfigurationForm.controls['Address'].setValue(res.result[0].address);
-        this.ConfigurationForm.controls['Companylogo'].setValue(res.result[0].Companylogo);
+        // this.ConfigurationForm.controls['Companylogo'].setValue(res.result[0].companylogo);
+       this.name=res.result[0].companylogo;
+       
+
         
         this.true=res.result[0].true;
         this.update = true;
@@ -123,7 +128,7 @@ showAlert:  boolean = false;
      formData.append("companyName", content.companyName)
      formData.append("Address", content.address)
      formData.append("CompanyUrl", content.CompanyUrl)
-     formData.append("Companylogo", content.companylogo)
+     formData.append("Companylogo", content.Companylogo)
      formData.append("showOnWebsite", (this.showonwebsite).toString())
 
      if (this.files.length == 1) {
@@ -169,7 +174,6 @@ showAlert:  boolean = false;
            }
         });
   }
-
   Update() {
 
     if (this.ConfigurationForm.invalid) {
@@ -188,7 +192,7 @@ debugger
     formData.append("Address", content.address)
     formData.append("CompanyUrl", content.CompanyUrl)
     formData.append("Companylogo", content.Companylogo)
-    formData.append("showOnWebsite", content.showonwebsite)
+    formData.append("showOnWebsite", this.true.toString())
     formData.append("True", content.true)
  formData.append("UpdatedBy", (localStorage.getItem("LoginId")));
     if (this.files.length == 1) {
