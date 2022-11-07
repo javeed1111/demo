@@ -81,15 +81,6 @@
                             (change)="onSelectFile($event.target.files)"> -->
                     </div>
 
-
-
-
-
-
-
-
-
-
                     <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
                         {{alert.message}}
                     </fuse-alert>
@@ -100,7 +91,7 @@
                             Cancel
                         </button> -->
                         <button class="px-6 ml-3" mat-flat-button [color]="'primary'" (click)="cancel()">
-                            Save
+                            Cancel
                         </button>
                         <!--Save-->
                         <button class="px-6 ml-3" mat-flat-button [color]="'primary'" *ngIf="save" (click)="Save()">
