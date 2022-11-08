@@ -69,10 +69,10 @@ export class UsersService
      */
     getContacts(): Observable<Contact[]>
     {
-        //debugger
+        //
         return this._httpClient.get<Contact[]>(this.baseUrl + "api/Admin/GetAllusers").pipe(
             tap((contacts) => {
-                //debugger
+                //
                 this._contacts.next(contacts);
             })
         );
@@ -90,7 +90,7 @@ export class UsersService
          }).pipe(
              tap((contacts) => {
                  contacts = contacts.filter(contact => contact.firstName && contact.firstName.toLowerCase().includes(query.toLowerCase()));
-                 //debugger
+                 //
                  this._contacts.next(contacts);
              })
          );
@@ -111,11 +111,11 @@ export class UsersService
      */
     getContactById(id: string): Observable<Contact>
     {
-        //debugger
+        //
         return this._contacts.pipe(
             take(1),
             map((contacts) => {
-                //debugger
+                //
 
                 // Find the contact
                 const contact = contacts.find(item => item.id == id) || null;
@@ -159,7 +159,7 @@ export class UsersService
         );
     }
     public UpdateUser(data) {
-        //debugger
+        //
         return this._httpClient.post(this.baseUrl + "api/Admin/UpdateUser", data);
       }
 
@@ -218,7 +218,7 @@ export class UsersService
     //         take(1),
     //         switchMap(contacts => this._httpClient.delete(this.baseUrl + "api/Admin/DeleteUser", {params: {id}}).pipe(
     //             map((isDeleted: boolean) => {
-    //             //debugger
+    //             //
 
     //                 // Find the index of the deleted contact
     //                 const index = contacts.findIndex(item => item.id === id);
@@ -236,7 +236,7 @@ export class UsersService
     //     );
     // }
     public deleteUser(data) {
-        //debugger
+        //
         return this._httpClient.post(this.baseUrl + "api/Admin/DeleteUser", data);
       }
 

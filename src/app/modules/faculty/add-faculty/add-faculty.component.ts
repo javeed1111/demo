@@ -62,15 +62,10 @@ export class AddFacultyComponent implements OnInit {
 
   cancel() {
     this._router.navigate(['/faculty/facultydetails/']);
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
-
-
   }
 
   onSelectFile(files: FileList) {
-    //debugger
+    //
     if (files.length === 0)
       return;
     if (files.length > 0) {
@@ -94,7 +89,7 @@ export class AddFacultyComponent implements OnInit {
  
   AddFaculty() {
     this.showAlert = false
-    debugger
+    
     if (this.FacultyForm.invalid) {
       return;
     }
@@ -117,10 +112,10 @@ export class AddFacultyComponent implements OnInit {
     }
 
     this._authService.AddFaculty(formData).subscribe((result: any) => {
-      //debugger
+      //
       // var result = JSON.parse(result);
       if (result.status == "200") {
-        //debugger
+        //
         // Set the alert
         this.alert = {
           type: 'success',

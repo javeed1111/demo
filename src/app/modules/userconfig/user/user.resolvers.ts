@@ -59,7 +59,7 @@ export class ContactsContactResolver implements Resolve<any>
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Contact>
     {
-        //debugger
+        //
         return this._contactsService.getContactById(route.paramMap.get('id'))
                    .pipe(
                        // Error here means the requested contact is not available

@@ -75,7 +75,7 @@ export class QuestionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger
+    
     this.courseid = this.approute.snapshot.params['id'];
 
     this.QuestionsForm = this._formBuilder.group({
@@ -92,7 +92,7 @@ export class QuestionsComponent implements OnInit {
 
 
   OnClickUp(id: any) {
-    debugger
+    
     let item1 = this.questions.find(i => i.orderId === id);
     let item2 = this.questions.find(i => i.orderId === (id - 1));
     if (item1.orderId > 1) {
@@ -102,7 +102,7 @@ export class QuestionsComponent implements OnInit {
       this.sortedarray.push(item2);
 
       this._authService.UpdateFaqsOrderId(this.sortedarray).subscribe((result: any) => {
-        debugger
+        
         window.location.reload();
       });
     }
@@ -119,7 +119,7 @@ export class QuestionsComponent implements OnInit {
   }
 
   OnClickDown(id: any) {
-    debugger
+    
     let item1 = this.questions.find(i => i.orderId === id);
     let item2 = this.questions.find(i => i.orderId === (id + 1));
     if (item1.orderId < this.questions.length && item1.orderId > 0) {
@@ -129,7 +129,7 @@ export class QuestionsComponent implements OnInit {
       this.sortedarray.push(item2);
 
       this._authService.UpdateFaqsOrderId(this.sortedarray).subscribe((result: any) => {
-        debugger
+        
         window.location.reload();
       });
     }
@@ -144,7 +144,7 @@ export class QuestionsComponent implements OnInit {
 
   GetCourseByID() {
     this._authService.GetcourseById(this.courseid).subscribe((result: any) => {
-      debugger
+      
       var item = result.result
       this.QuestionsForm.controls['courseName'].setValue(item.courseName);
     });
@@ -160,7 +160,7 @@ export class QuestionsComponent implements OnInit {
 
 
   EditFromGrid(id: any, value: any) {
-    debugger
+    
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
       baseurl = "https://localhost:44358"
@@ -187,12 +187,12 @@ export class QuestionsComponent implements OnInit {
       this.Clear = true;
     }
     this._authService.GetQuestionsById(id).subscribe((finalresult: any) => {
-      debugger
+      
       console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
       if (finalresult.status == "200") {
-        debugger
+        
 
         this.QuestionsForm.patchValue(finalresult.result);
         const course = this.QuestionsForm.getRawValue();
@@ -202,7 +202,7 @@ export class QuestionsComponent implements OnInit {
     });
   }
   Update(val: any) {
-    debugger
+    
     if (!this.QuestionsForm.dirty) {
       this._router.navigate(['/courses/reviews/' + this.courseid]);
     }
@@ -240,10 +240,10 @@ export class QuestionsComponent implements OnInit {
       }
 
       this._authService.UpdateQuestion(data).subscribe((result: any) => {
-        //debugger
+        //
         var result = JSON.parse(result);
         if (result.status == "200") {
-          //debugger
+          //
           // Set the alert
           this.alert = {
             type: 'success',
@@ -281,7 +281,7 @@ export class QuestionsComponent implements OnInit {
     }
   }
   deleteFromGrid(id: any): void {
-    debugger
+    
     this.showAlert = false
     // Open the confirmation dialog
     const confirmation = this._fuseConfirmationService.open({
@@ -305,7 +305,7 @@ export class QuestionsComponent implements OnInit {
         }
         // Delete the contact
         this._authService.DeleteQuestion(id).subscribe((data: any) => {
-          //debugger
+          //
           if (data.status == "200") {
 
 
@@ -360,7 +360,7 @@ export class QuestionsComponent implements OnInit {
   }
 
   selectionChange(event: StepperSelectionEvent) {
-    debugger
+    
     var value = "edit"
     console.log(event.selectedStep.label);
     let stepLabel = event.selectedStep.label
@@ -392,14 +392,14 @@ export class QuestionsComponent implements OnInit {
   }
 
   GoToPage() {
-    debugger
+    
     var value = "edit"
 
     this.show = false
   }
 
   GoToCoursePage() {
-    debugger
+    
     this._router.navigate(['/courses/editcourse/' + this.courseid + '/' + 'edit']);
   }
 
@@ -409,9 +409,9 @@ export class QuestionsComponent implements OnInit {
   }
 
   GetQuestionsByCourseId(Id: any) {
-    debugger
+    
     this._authService.GetQuestions(Id).subscribe((result: any) => {
-      debugger
+      
       var values = this._orderpipi.transform(result.result, "asc", "orderId", "number");
       this.questions = values[0]
 
@@ -424,7 +424,7 @@ export class QuestionsComponent implements OnInit {
   }
 
   SaveQuestions(val: any) {
-    debugger
+    
     if (!this.QuestionsForm.dirty) {
       this._router.navigate(['/courses/reviews/'+this.courseid]);
     }
@@ -441,7 +441,7 @@ export class QuestionsComponent implements OnInit {
         //  IsActive: this.active,
       }
       this._authService.AddQuestions(data).subscribe((result: any) => {
-        debugger
+        
         var result = JSON.parse(result);
         if (result.status == "200") {
           this.alert = {

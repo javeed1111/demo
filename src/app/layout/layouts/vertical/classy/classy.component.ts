@@ -7,6 +7,7 @@ import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { User } from 'app/core/user/user.types';
 import { UserService } from 'app/core/user/user.service';
+import { AuthService } from 'app/core/auth/auth.service';
 
 @Component({
     selector     : 'classy-layout',
@@ -19,6 +20,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
     navigation: Navigation;
     user: User;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    companylogo: string;
 
     /**
      * Constructor
@@ -29,7 +31,8 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
         private _navigationService: NavigationService,
         private _userService: UserService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        private _authService: AuthService,
     )
     {
     }
@@ -77,6 +80,31 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
                 // Check if the screen is small
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
+           this. GetCompanydetails();
+    }
+
+    GetCompanydetails()
+    {
+        debugger
+        this._authService.GetCompanydetails().subscribe((result: any) => {
+          debugger
+             var result = JSON.parse(result);
+              if (result.status == "200") {
+                  
+                  console.log('details',result.result)
+                if(result.result[0].companylogo!="")
+                  this.companylogo=result.result[0].companylogo;
+                else
+                this.companylogo="assets/images/logo/logo1.png";
+                
+              }
+              else {
+              }
+              (error) => {
+  
+     
+             }
+          });
     }
 
     /**

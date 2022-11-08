@@ -53,7 +53,7 @@ export class EditemailComponent implements OnInit {
   }
 
   Edit(id: any, value: any) {
-    //debugger
+    //
     if (value == "view") {
       // this.editsite=false;
       this.butdisabled = true;
@@ -78,11 +78,11 @@ export class EditemailComponent implements OnInit {
     }
 
     this._authService.GetEmailById(id).subscribe((finalresult: any) => {
-      //debugger
+      //
       console.log(finalresult);
 
       if (finalresult.status == "200") {
-        debugger
+        
 
         this.ConfigurationForm.patchValue(finalresult.result);
 
@@ -108,7 +108,7 @@ export class EditemailComponent implements OnInit {
     this.showAlert = false;
 
     const content = this.ConfigurationForm.getRawValue();
-debugger
+
     var data = {
       Id: this.approute.snapshot.params['id'],
       User: content.User,
@@ -122,9 +122,9 @@ debugger
       //  IsActive: this.active,
     }
     this._authService.UpdateEmail(data).subscribe((result: any) => {
-      debugger
+      
       if (result.status == "200") {
-        debugger
+        
 
         // Set the alert
         this.alert = {
@@ -151,14 +151,14 @@ debugger
 
       }
     });
-    debugger
+    
     if(content.showOnWebsite!=undefined){
       this.showOnWebsite =content.showOnWebsite;
     }
   }
 
   onwebsite($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked == undefined || $event.checked == true) {
       this.showOnWebsite = $event.checked;
     }

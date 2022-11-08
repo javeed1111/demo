@@ -134,10 +134,14 @@ fuse-vertical-navigation {
         box-shadow: inset -1px 0 0 var(--fuse-border);
 
         /* Header */
-        .fuse-vertical-navigation-header {
+        // .fuse-vertical-navigation-header {
 
+        // }
+        .fuse-vertical-navigation-content-header{
+          img{
+            background-color: white;
+          }  
         }
-
         /* Content */
         .fuse-vertical-navigation-content {
             flex: 1 1 auto;

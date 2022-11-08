@@ -131,7 +131,7 @@ dataSource: MatTableDataSource<any>;
 
 
   OnClickUp(id:any){
-    debugger
+    
     let item1 = this.modules.find(i => i.orderId === id);
     let item2=this.modules.find(i => i.orderId === (id-1));
     if(item1.orderId>1){
@@ -141,7 +141,7 @@ dataSource: MatTableDataSource<any>;
         this.sortedarray.push(item2);
 
         this._authService.UpdateOrderId(this.sortedarray).subscribe((result: any) => {
-          debugger
+          
           window.location.reload();
         });
     }
@@ -151,7 +151,7 @@ dataSource: MatTableDataSource<any>;
   }
 
   OnClickDown(id:any){
-    debugger
+    
     let item1 = this.modules.find(i => i.orderId === id);
     let item2=this.modules.find(i => i.orderId === (id+1));
     if(item1.orderId<this.modules.length && item1.orderId>0){
@@ -161,7 +161,7 @@ dataSource: MatTableDataSource<any>;
         this.sortedarray.push(item2);
 
         this._authService.UpdateOrderId(this.sortedarray).subscribe((result: any) => {
-          debugger
+          
           window.location.reload();
         });
     }
@@ -181,7 +181,7 @@ dataSource: MatTableDataSource<any>;
 
   AddCourseModule()
   {
-      debugger
+      
       if(this.tempForm==this.coursemoduleForm.value){
 
       }
@@ -205,10 +205,10 @@ dataSource: MatTableDataSource<any>;
      }
     //  this.blockUI.start();
       this._authService.AddCourseModules(data).subscribe((result: any) => {
-          debugger
+          
            var result = JSON.parse(result);
             if (result.status == "200") {
-                //debugger
+                //
                  // Set the alert
                  this.alert = {
                   type   : 'success',
@@ -246,7 +246,7 @@ dataSource: MatTableDataSource<any>;
   }
 
   selectionChange(event: StepperSelectionEvent) {
-    debugger
+    
     var value="edit"
     console.log(event.selectedStep.label);
     let stepLabel = event.selectedStep.label
@@ -272,7 +272,7 @@ dataSource: MatTableDataSource<any>;
  
 
   GoToPage(){
-    debugger
+    
     var value="edit"
     // if(this.coursemoduleForm.value.moduleId!=""){
       // this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+this.coursemoduleForm.value.moduleId+'/'+value]);
@@ -282,14 +282,14 @@ dataSource: MatTableDataSource<any>;
     this.show=false
   }
   GoToPage1(){
-    debugger
+    
     this._router.navigate(['/courses/editcourse/'+this.courseid+'/'+'edit']);
 
   }
   GetModulesByCourseId(){
 
     this._authService.GetCourseModules(this.courseid).subscribe((finalresult: any) => {
-      debugger
+      
       var finalresult = JSON.parse(finalresult);
       var values=this._orderpipi.transform(finalresult.result,"asc","orderId","number") ;
       this.modules=values[0]
@@ -301,7 +301,7 @@ dataSource: MatTableDataSource<any>;
 
   
   Edit(id: any, value: any) {
-    //debugger
+    //
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
       baseurl = "https://localhost:44358"
@@ -328,7 +328,7 @@ dataSource: MatTableDataSource<any>;
 
     }
       this._authService.GetcourseById(this.courseid).subscribe((result: any) => {
-        debugger
+        
          var item=result.result
         this.coursemoduleForm.controls['courseName'].setValue(item.courseName);
       });
@@ -338,7 +338,7 @@ dataSource: MatTableDataSource<any>;
   }
 
   SaveNext(){
-      debugger
+      
       if(!this.coursemoduleForm.dirty){
         var value="edit"
         this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+value]);
@@ -363,11 +363,11 @@ dataSource: MatTableDataSource<any>;
         //  IsActive: this.active,
      }
       this._authService.AddCourseModules(data).subscribe((result: any) => {
-          debugger
+          
            var result = JSON.parse(result);
             if (result.status == "200") {
               var value="add"
-                //debugger
+                //
                  // Set the alert
               //    this.alert = {
               //     type   : 'success',
@@ -409,7 +409,7 @@ dataSource: MatTableDataSource<any>;
   }
 
   UpdateCourseModule(){
-    debugger
+    
     
       this.showAlert = false;
     if (this.coursemoduleForm.invalid) {
@@ -445,10 +445,10 @@ dataSource: MatTableDataSource<any>;
   }
     
     this._authService.UpdateCourseModules(data).subscribe((result: any) => {
-      //debugger
+      //
       var result = JSON.parse(result);
       if (result.status == "200") {
-        //debugger
+        //
         // Set the alert
         this.alert = {
           type: 'success',
@@ -478,7 +478,7 @@ dataSource: MatTableDataSource<any>;
     
   }
   UpdateNext(){
-    debugger
+    
     if(!this.coursemoduleForm.dirty){
       var value="edit"
       this._router.navigate(['/courses/addcoursecontent/'+this.courseid+'/'+value]);
@@ -518,10 +518,10 @@ dataSource: MatTableDataSource<any>;
   }
     
     this._authService.UpdateCourseModules(data).subscribe((result: any) => {
-      //debugger
+      //
       var result = JSON.parse(result);
       if (result.status == "200") {
-        //debugger
+        //
         var value="add"
 
         // Set the alert
@@ -562,7 +562,7 @@ dataSource: MatTableDataSource<any>;
   }
 
   EditFromGrid(id: any,value: any) {
-    debugger
+    
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
       baseurl = "https://localhost:44358"
@@ -590,12 +590,12 @@ dataSource: MatTableDataSource<any>;
       this.Clear=true;
     }
     this._authService.GetCourseModulesById(id).subscribe((finalresult: any) => {
-      debugger
+      
       console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
       if (finalresult.status == "200") {
-        debugger
+        
 
         this.coursemoduleForm.patchValue(finalresult.result);
         const course = this.coursemoduleForm.getRawValue();
@@ -632,7 +632,7 @@ dataSource: MatTableDataSource<any>;
   }
   deleteFromGrid(id:any): void
     {
-      debugger
+      
       this.showAlert=false
       var data={
         ModuleId:id
@@ -660,7 +660,7 @@ dataSource: MatTableDataSource<any>;
           //  }
                 // Delete the contact
                 this._authService.DeleteCourseModule(data).subscribe((data:any) => {
-                    //debugger
+                    //
                     if (data.status == "200") {
                         
                           

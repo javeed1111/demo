@@ -53,14 +53,14 @@ export class UsersListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        //debugger
+        //
         // Get the contacts
         this.contacts$ = this._contactsService.contacts$;
-        //debugger
+        //
         this._contactsService.contacts$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((contacts: Contact[]) => {
-                //debugger
+                //
                 // Update the counts
                 this.contactsCount = contacts.length;
 
@@ -180,7 +180,7 @@ export class UsersListComponent implements OnInit, OnDestroy
      */
     createContact(): void
     {
-        //debugger
+        //
         this._router.navigate(['/userconfig/user/adduser']);
 
         

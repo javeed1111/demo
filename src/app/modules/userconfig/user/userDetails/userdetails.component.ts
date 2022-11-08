@@ -93,7 +93,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        //debugger
+        //
         // Open the drawer
         this._contactsListComponent.matDrawer.open();
 
@@ -129,7 +129,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
         this._contactsService.contact$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((contact: any) => {
-                //debugger
+                //
 
                 // Open the drawer in case it is closed
                 this._contactsListComponent.matDrawer.open();
@@ -142,7 +142,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
                 // (this.contactForm.get('phoneNumbers') as FormArray).clear();
                 //(this.contactForm.get('alternateemail') as FormArray).clear();
                 // (this.contactForm.get('alternatephoneNumber') as FormArray).clear();
-                //debugger
+                //
 
                 // Patch values to the form
                 this.contactForm.patchValue(contact);
@@ -163,7 +163,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
 
                 // if ( contact.emails.length > 0 )
                 // {
-                //     //debugger
+                //     //
                 //     // Iterate through them
                 //     contact.emails.forEach((email) => {
 
@@ -293,7 +293,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
         this._contactsService.countries$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((codes: Country[]) => {
-                //debugger
+                //
                 this.countries = codes;
 
                 // Mark for check
@@ -340,7 +340,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
         return this._contactsListComponent.matDrawer.close();
     }
     Close(){
-        //debugger
+        //
         this._router.navigate(['/userconfig/user/']);
         
         setTimeout(() => {
@@ -357,7 +357,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
      */
     toggleEditMode(editMode: boolean | null = null): void
     {
-        //debugger
+        //
         if ( editMode === null )
         {
             this.editMode = !this.editMode;
@@ -384,7 +384,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
      */
     updateContact(): void
     {
-        debugger
+        
         // Get the contact object
         const contact = this.contactForm.getRawValue();
         // this.contact.isActive = this.contactForm.getRawValue().userchkactive;
@@ -396,10 +396,10 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
 
         // Update the contact on the server
         this._contactsService.UpdateUser(contact).subscribe((result: any) => {
-            debugger
+            
             //   var result = JSON.parse(result);
                if (result.status == "200") {
-                   //debugger
+                   //
                    
                     // Show the alert
                    this.showAlert = true;
@@ -436,7 +436,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
     }
     toggleCompleted($event: MatSlideToggleChange): void
     {
-        //debugger
+        //
         if($event.checked!=undefined){
             this.active = $event.checked;
         }
@@ -450,7 +450,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
      */
      updateUser()
      {
-         //debugger
+         //
          if (this.contactForm.invalid) {
              return;
          }
@@ -493,10 +493,10 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
  
          // Update the contact on the server
          this._contactsService.UpdateUser(data).subscribe((result: any) => {
-             //debugger
+             //
               var result = JSON.parse(result);
                if (result.status == "200") {
-                   //debugger
+                   //
                    
                     // Show the alert
                    this.showAlert = true;
@@ -568,7 +568,7 @@ export class UsersDetailsComponent implements OnInit, OnDestroy
                  }
                 // Delete the contact
                 this._contactsService.deleteUser(data).subscribe((data:any) => {
-                    //debugger
+                    //
                     if (data.status == "200") {
                       // Set the alert
                 this.alert = {

@@ -114,7 +114,7 @@ export class AddcourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger
+    
     this.GetTechnologys();
     this.GetCourses();
     this.GetFaculty();
@@ -173,12 +173,12 @@ export class AddcourseComponent implements OnInit {
     this._onDestroy.complete();
   }
   // UploadVideo(){
-  //   debugger
+  //   
   //   const formData: FormData = new FormData();
   //   if (this.files2.length == 1) {
   //     formData.append("files", this.fileToUpload2, this.name2);
   //     this._authService.UploadVideo(formData).subscribe((finalresult: any) => {
-  //       debugger
+  //       
   //       if(finalresult.status=="200"){
   //         this.uploadvideo=false
   //         this.deletevideo=true
@@ -202,7 +202,7 @@ export class AddcourseComponent implements OnInit {
 
 
   UploadVideo(value: any) {
-    debugger
+    
      
     if (this.files.length == 0 || this.files1.length == 0 || this.files2.length == 0) {
       this.showAlert = true;
@@ -239,7 +239,7 @@ export class AddcourseComponent implements OnInit {
 
       this._authService.UploadVideo(formData)
         .subscribe((finalresult: any) => {
-          debugger
+          
           this.uploadvideo = false
           this.deletevideo = true
           this.videoUrl = finalresult.result
@@ -321,9 +321,9 @@ export class AddcourseComponent implements OnInit {
   }
 
   GetCourses() {
-    debugger
+    
     this._authService.GetCourses().subscribe((finalresult: any) => {
-      debugger
+      
       this.courses = JSON.parse(finalresult);
       this.courses = this.courses.result
     })
@@ -336,7 +336,7 @@ export class AddcourseComponent implements OnInit {
   }
 
   remove(fruit: Keywords): void {
-    debugger
+    
     const index = this.keywords.indexOf(fruit);
 
     if (index >= 0) {
@@ -345,7 +345,7 @@ export class AddcourseComponent implements OnInit {
   }
 
   Status($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked != undefined) {
       this.status = $event.checked;
     }
@@ -357,7 +357,7 @@ export class AddcourseComponent implements OnInit {
 
   SaveNext() {
 
-    debugger
+    
     this.showAlert = false;
     if (this.courseForm.invalid) {
       return;
@@ -438,10 +438,10 @@ export class AddcourseComponent implements OnInit {
     //  IsActive: this.active,
     //  }
     this._authService.Addcourse(formData).subscribe((result: any) => {
-      debugger
+      
       //var result = JSON.parse(result);
       if (result.status == "200") {
-        //debugger
+        //
         // Set the alert
         this.alert = {
           type: 'success',
@@ -455,7 +455,7 @@ export class AddcourseComponent implements OnInit {
         }, 1000);
       }
       else if (result.status == "-101") {
-        //debugger
+        //
         // Set the alert
         this.alert = {
           type: 'error',
@@ -485,7 +485,7 @@ export class AddcourseComponent implements OnInit {
   }
 
   onSelectFile(files: FileList) {
-    debugger
+    
     if (files.length === 0)
 
       return;
@@ -502,7 +502,7 @@ export class AddcourseComponent implements OnInit {
   }
 
   onSelectFile1(files: FileList) {
-    //debugger
+    //
     if (files.length === 0)
       return;
     if (files.length > 0) {
@@ -518,7 +518,7 @@ export class AddcourseComponent implements OnInit {
   }
 
   onSelectVideo(files: FileList) {
-    //debugger
+    //
     if (files.length === 0)
       return;
     if (files.length > 0) {
@@ -534,7 +534,7 @@ export class AddcourseComponent implements OnInit {
   }
 
   checkprice() {
-    debugger
+    
     const dataa = this.courseForm.getRawValue();
     var price = dataa.price;
     var offerprice = dataa.offerPrice;
@@ -556,7 +556,7 @@ export class AddcourseComponent implements OnInit {
 
   }
   toggleCompleted($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked != undefined) {
       this.isofferactive = $event.checked;
       if (this.isofferactive == true) {
@@ -580,7 +580,7 @@ export class AddcourseComponent implements OnInit {
   }
 
   check($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked != undefined) {
       this.istax = $event.checked;
       if (this.istax == true) {
@@ -603,7 +603,7 @@ export class AddcourseComponent implements OnInit {
     //this.active=this.filters.hideCompleted$.next(change.checked);
   }
   onwebsite($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked == undefined || $event.checked == true) {
       this.showonwebsite = $event.checked;
     }
@@ -614,12 +614,12 @@ export class AddcourseComponent implements OnInit {
 
   }
   GetTechnologys() {
-    //debugger
+    //
     this._authService.GetTechnologies().subscribe((finalresult: any) => {
-      //debugger
+      //
       var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
-        //debugger
+        //
         //this.dataSource= finalresult.result;
         this.technology = finalresult.result;
         //this.roles = finalresult.result;
@@ -640,7 +640,7 @@ export class AddcourseComponent implements OnInit {
   }
 
   DeleteVideo() {
-    debugger
+    
     var filename = this.videoUrl.replace('https://ugetit.blob.core.windows.net/coursevideos/', "")
 
     const confirmation = this._fuseConfirmationService.open({
@@ -661,7 +661,7 @@ export class AddcourseComponent implements OnInit {
 
         // Delete the video
         this._authService.DeleteVideo(filename).subscribe((finalresult: any) => {
-          debugger
+          
           if (finalresult.status == "200") {
             this.uploadvideo = true
             this.deletevideo = false
@@ -692,7 +692,7 @@ export class AddcourseComponent implements OnInit {
 
 
   AddCourse(val: any) {
-    debugger
+    
     this.showAlert = false;
 
     const course = this.courseForm.getRawValue();
@@ -772,10 +772,10 @@ export class AddcourseComponent implements OnInit {
       //  }
       this.blockUI.start('Saving..')
       this._authService.Addcourse(formData).subscribe((result: any) => {
-        debugger
+        
         //var result = JSON.parse(result);
         if (result.status == "200") {
-          //debugger
+          //
           // Set the alert
           this.alert = {
             type: 'success',
@@ -798,7 +798,7 @@ export class AddcourseComponent implements OnInit {
           }
         }
         else if (result.status == "-101") {
-          //debugger
+          //
           // Set the alert
           this.alert = {
             type: 'error',
@@ -831,7 +831,7 @@ export class AddcourseComponent implements OnInit {
 
 
     // toggleCompleted($event: MatSlideToggleChange): void {
-    //   //debugger
+    //   //
     //   if ($event.checked != undefined) {
     //     this.active = $event.checked;
     //   }

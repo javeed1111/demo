@@ -52,7 +52,7 @@ export class EditfacultyComponent implements OnInit {
     private approute: ActivatedRoute,) { }
 
   ngOnInit(): void {
-    debugger
+    
     var loginId = localStorage.getItem("LoginId");
     var id = this.approute.snapshot.params['id'];
     var value = this.approute.snapshot.params['value'];
@@ -71,15 +71,10 @@ export class EditfacultyComponent implements OnInit {
 
   cancel() {
     this._router.navigate(['/faculty/facultydetails/']);
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
-
-
   }
 
   onSelectFile(files: FileList) {
-    //debugger
+    //
     if (files.length === 0)
       return;
     if (files.length > 0) {
@@ -102,7 +97,7 @@ export class EditfacultyComponent implements OnInit {
   }
 
   Edit(id: any, value: any) {
-    //debugger
+    //
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
       baseurl = "https://localhost:44358"
@@ -137,10 +132,10 @@ export class EditfacultyComponent implements OnInit {
     }
     
     this._authService.GetFacultyById(id).subscribe((finalresult: any) => {
-      debugger
+      
   
       if (finalresult.status == "200") {
-        debugger
+        
 
         this.FacultyForm.patchValue(finalresult.result);
         if (finalresult.result.imageUrl != null) {
@@ -156,7 +151,7 @@ export class EditfacultyComponent implements OnInit {
 
   UpdateFaculty() {
     this.showAlert = false;
-    debugger
+    
     if (this.FacultyForm.invalid) {
       return;
     }
@@ -184,9 +179,9 @@ export class EditfacultyComponent implements OnInit {
     
     this._authService.UpdateFaculty(formData).subscribe((result: any) => {
 
-      //debugger
+      //
       if (result.status == "200") {
-        //debugger
+        //
         // Show the alert
         this.alert = {
           type: 'success',

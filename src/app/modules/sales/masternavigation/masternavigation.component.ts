@@ -15,7 +15,7 @@ export class MasternavigationComponent implements OnInit {
 
   configuration() {
 
-    debugger
+    
 
     this._router.navigate(['/masters/configurations']);
 
@@ -26,24 +26,24 @@ export class MasternavigationComponent implements OnInit {
     this._router.navigate(['/masters/dashboardbanner']);
   }
   // companydetails() {
-  //   debugger
+  //   
   //   this._router.navigate(['/masters/companydetails']);
   // }
   companydetails() {
-    debugger
+    
     this._router.navigate(['/masters/addcompanydetails']);
   }
 
   termsandpolicy() {
-    debugger
+    
     this._router.navigate(['/masters/termsandpolicy']);
   }
   emailsetttings() {
-    debugger
+    
     this._router.navigate(['/masters/addemail']);
   }
   googlemapurl() {
-    debugger
+    
     this._router.navigate(['/masters/addgooglemapurl']);
 
   }

@@ -44,7 +44,7 @@ export class EditconfigurationsComponent implements OnInit {
   }
 
   Edit(id: any, value: any) {
-    //debugger
+    //
     if (value == "view") {
       // this.editsite=false;
       this.butdisabled = true;
@@ -59,11 +59,11 @@ export class EditconfigurationsComponent implements OnInit {
     }
 
     this._authService.GetInvoiceNoFormatById(id).subscribe((finalresult: any) => {
-      //debugger
+      //
       console.log(finalresult);
 
       if (finalresult.status == "200") {
-        //debugger
+        //
 
         this.ConfigurationForm.patchValue(finalresult.result);
 
@@ -91,9 +91,9 @@ export class EditconfigurationsComponent implements OnInit {
     }
     this._authService.UpdateInvoiceNoFormat(data).subscribe((result: any) => {
 
-      //debugger
+      //
       if (result.status == "200") {
-        //debugger
+        //
 
         // Set the alert
         this.alert = {

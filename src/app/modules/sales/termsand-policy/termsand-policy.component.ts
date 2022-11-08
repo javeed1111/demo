@@ -68,7 +68,7 @@ course: any;
        
     }
     applyFilter(filterValue: string) {
-      //debugger
+      //
       filterValue = filterValue.trim(); // Remove whitespace
       filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
       this.dataSource.filter = filterValue;
@@ -81,24 +81,24 @@ course: any;
     //       this.selectedProduct = null;
     //   }
       showEditModal(id) {
-        debugger
+        
         var value = "edit";
         this._router.navigate(['/masters/edittermsandpolicy/' + id + '/' + value])
       }
       showViewModal(id) {
-        debugger
+        
         var value = "view"
         this._router.navigate(['/masters/edittermsandpolicy/' + id + '/' + value])
       }
     
       createProduct(){
-        //debugger
+        //
     
         // this._router.navigate(['/userconfig/role/addrole'])
         this._router.navigate(['/masters/addtermsandpolicy'])
       }
       createProducts(){
-        //debugger
+        //
     
         // this._router.navigate(['/userconfig/role/addrole'])
         this._router.navigate(['/masters/masternavigation'])
@@ -111,7 +111,7 @@ course: any;
     // }
  
     GetTermplocydata() {
-      debugger
+      
       this._authService.GetTermspolicy().subscribe((finalresult: any) => {
         
         if (finalresult.status == "200") {
@@ -128,7 +128,7 @@ course: any;
   
    
     deleteContent(Id: any): void {
-      //debugger
+      //
       this.showAlert = false
       // Open the confirmation dialog
       const confirmation = this._fuseConfirmationService.open({
@@ -154,7 +154,7 @@ course: any;
   
           // Delete the contact
           this._authService.DeleteTermsPolicies(data).subscribe((data: any) => {
-            debugger
+            
             if (data.status == "200") {
               // Set the alert
               this.alert = {

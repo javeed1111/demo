@@ -83,7 +83,7 @@ export class AddtermsandpolicyComponent implements OnInit {
     private _fuseConfirmationService: FuseConfirmationService,) { }
 
     ngOnInit(): void {
-      debugger
+      
       
       // this.secondFormGroup = this._formBuilder.group({
       //   secondCtrl: ['', Validators.required],
@@ -109,7 +109,7 @@ export class AddtermsandpolicyComponent implements OnInit {
 
   Save()
   {
-    debugger
+    
     if (this.ConfigurationForm.invalid) {
         return;
     }
@@ -133,10 +133,10 @@ export class AddtermsandpolicyComponent implements OnInit {
   
 
     this._authService.AddTermspolicy(data).subscribe((result: any) => {
-        debugger
+        
         //  var result = JSON.parse(result);
           if (result.status == "200") {
-              //debugger
+              //
                // Set the alert
                this.alert = {
                 type   : 'success',
@@ -179,7 +179,7 @@ export class AddtermsandpolicyComponent implements OnInit {
 
   }
   onwebsite($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked == undefined || $event.checked == true) {
       this.showonwebsite = $event.checked;
     }

@@ -4,8 +4,6 @@
             <div class="w-full max-w-5xl">
 
                 <form [formGroup]="ConfigurationForm" class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden">
-
-
                     <div class="flex">
                         <mat-form-field class="flex-auto">
                             <mat-label>Company Name</mat-label>
@@ -38,7 +36,7 @@
                     <div class="flex mt-4">
                         <mat-form-field class="flex-auto">
                             <mat-label>Company Url</mat-label>
-                            <input matInput [formControlName]="'CompanyUrl'" [placeholder]="'Comapny Url'">
+                            <input matInput [formControlName]="'companyUrl'" [placeholder]="'Comapny Url'">
                             <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
                             </mat-icon>
                         </mat-form-field>
@@ -49,14 +47,13 @@
                         <div>
                             <ng-container>
                                 <div class="fuse-mat-no-subscript flex-auto">
-                                    <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'" id="onwebsite" (change)="onwebsite($event)" [checked]="true">
+                                    <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'" [formControlName]="'showOnWebsite'" >
                                         show on website
                                     </mat-slide-toggle>
                                 </div>
                             </ng-container>
                         </div>
                     </div>
-                    <div class="grid grid-cols-12 gap-x-1 mt-4">
                     <div class="mt-4 sm:mt-0 col-span-6">
                         <!-- Upload button -->
                         <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload').click()">
@@ -75,12 +72,14 @@
                             onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
-                        <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload" name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none" [formControlName]="'Companylogo'">
+                        <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload" name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none" >
                         <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                             id="txtfileupload"  name="fileupload" 
                             (change)="onSelectFile($event.target.files)"> -->
                     </div>
-
+                    <div class="flex mt-2"  *ngIf="ImageURL">
+                        <img style="width: 30%;  border: 1px solid #555" src="{{ImageURL}}">
+                    </div>
                     <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
                         {{alert.message}}
                     </fuse-alert>

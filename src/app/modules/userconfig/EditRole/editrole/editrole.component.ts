@@ -36,7 +36,7 @@ showAlert:  boolean = false;
     ) { }
 
   ngOnInit(): void {
-    //debugger;
+    //;
     var loginId = localStorage.getItem("LoginId"); 
     var id = this.approute.snapshot.params['id'];
     var value = this.approute.snapshot.params['value'];
@@ -59,7 +59,7 @@ showAlert:  boolean = false;
 
   }
   Edit(id: any, value: any) {
-    //debugger
+    //
     if (value == "view") {
       // this.editsite=false;
       this.butdisabled=true;
@@ -75,12 +75,12 @@ showAlert:  boolean = false;
   }
     this.Id = id;
     this._authService.GetRoleById(this.Id).subscribe((finalresult: any) => {
-        //debugger
+        //
         console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
         if (finalresult.status == "200") {
-          //debugger
+          //
 
           this.roleForm.patchValue(finalresult.result);
          
@@ -101,7 +101,7 @@ showAlert:  boolean = false;
   }
   UpdateRole()
   {
-      //debugger
+      //
       if (this.roleForm.invalid) {
           return;
       }
@@ -127,10 +127,10 @@ showAlert:  boolean = false;
      }
       this._authService.Updaterole(data).subscribe((result: any) => {
           
-        //debugger
+        //
            var result = JSON.parse(result);
             if (result.status == "200") {
-                //debugger
+                //
                 
                  // Set the alert
                  this.alert = {
@@ -160,7 +160,7 @@ showAlert:  boolean = false;
   }
   toggleCompleted($event: MatSlideToggleChange): void
     {
-        //debugger
+        //
         if($event.checked!=undefined){
             this.active = $event.checked;
         }

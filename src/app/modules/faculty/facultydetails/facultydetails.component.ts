@@ -50,19 +50,19 @@ export class FacultydetailsComponent implements OnInit {
   }
   
   applyFilter(filterValue: string) {
-    //debugger
+    //
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
 
   showEditModal(id) {
-    debugger
+    
     var value = "edit";
     this._router.navigate(['/faculty/editfaculty/' + id + '/' + value])
   }
   showViewModal(id) {
-    debugger
+    
     var value = "view"
     this._router.navigate(['/faculty/editfaculty/' + id + '/' + value])
   }
@@ -72,11 +72,11 @@ export class FacultydetailsComponent implements OnInit {
     this._router.navigate(['/faculty/addfaculty'])
   }
   GetFaculties() {
-    //debugger
+    //
     this._authService.GetFaculties().subscribe((finalresult: any) => {
-      debugger
+      
       if (finalresult.status == "200") {
-        //debugger
+        //
         //this.dataSource= finalresult.result;
         //this.techs= finalresult.result;
         this.dataSource = new MatTableDataSource(finalresult.result);
@@ -90,7 +90,7 @@ export class FacultydetailsComponent implements OnInit {
     });
   }
   deleteFaculty(Id: any): void {
-    //debugger
+    //
     this.showAlert = false
     // Open the confirmation dialog
     const confirmation = this._fuseConfirmationService.open({
@@ -115,7 +115,7 @@ export class FacultydetailsComponent implements OnInit {
 
         // Delete the contact
         this._authService.deleteFaculty(data).subscribe((data: any) => {
-          debugger
+          
           if (data.status == "200") {
             // Set the alert
             this.alert = {

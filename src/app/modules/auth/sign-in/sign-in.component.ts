@@ -22,6 +22,7 @@ export class AuthSignInComponent implements OnInit
     };
     signInForm: FormGroup;
     showAlert: boolean = false;
+    companylogo: any;
     /**
      * Constructor
      */
@@ -49,6 +50,33 @@ export class AuthSignInComponent implements OnInit
             password  : ['', Validators.required],
             rememberMe: ['']
         });
+        this.GetCompanydetails();
+    }
+
+    GetCompanydetails()
+    {
+        debugger
+        this._authService.GetCompanydetails().subscribe((result: any) => {
+          debugger
+             var result = JSON.parse(result);
+              if (result.status == "200") {
+                  
+                  console.log('details',result.result)
+                if(result.result[0].companylogo!="")
+                  this.companylogo=result.result[0].companylogo;
+                else
+                this.companylogo="assets/images/logo/logo1.png";
+                  
+                  setTimeout(() => {
+                  }, 1000);
+              }
+              else {
+              }
+              (error) => {
+  
+     
+             }
+          });
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -88,9 +116,9 @@ export class AuthSignInComponent implements OnInit
  
                  },
                  (response) => {
-                     //debugger
+                     //
                      if(response.status=='200'){
-                         //debugger
+                         //
                         localStorage.setItem("firstname", response.result.firstName);
                         localStorage.setItem("lastname", response.result.lastName);
                         localStorage.setItem("email", response.result.email);
@@ -136,7 +164,7 @@ export class AuthSignInComponent implements OnInit
      }
     //  signIn(): void
     //  {
-    //      //debugger
+    //      //
     //      // Return if the form is invalid
     //      if ( this.signInForm.invalid )
     //      {
@@ -157,7 +185,7 @@ export class AuthSignInComponent implements OnInit
     //      this._authService.UserLogin(data)
     //          .subscribe(
     //              () => {
-    //                  //debugger
+    //                  //
  
     //                  // Set the redirect url.
     //                  // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
@@ -171,7 +199,7 @@ export class AuthSignInComponent implements OnInit
  
     //              },
     //              (response) => {
-    //                 //debugger
+    //                 //
     //                 if(response.status=='200'){
     //                     localStorage.setItem("firstname", response.result.firstName);
     //             localStorage.setItem("lastname", response.result.lastName);
@@ -202,7 +230,7 @@ export class AuthSignInComponent implements OnInit
      * Sign in
      */
     // signInm(){
-    //     //debugger
+    //     //
     //     // Return if the form is invalid
     //     if ( this.signInForm.invalid )
     //     {
@@ -221,14 +249,14 @@ export class AuthSignInComponent implements OnInit
     //     // Sign in
     //     this._authService.UserLogin(data).subscribe(
     //         (finalresult: any) => {
-    //             //debugger;
+    //             //;
     //             const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
  
     //                  // Navigate to the redirect url
     //                  this._router.navigateByUrl(redirectURL);
             
     //         if (finalresult.status == "200") {
-    //             //debugger
+    //             //
     //             localStorage.setItem("firstname", finalresult.result.firstName);
     //             localStorage.setItem("lastname", finalresult.result.lastName);
     //             localStorage.setItem("email", finalresult.result.email);

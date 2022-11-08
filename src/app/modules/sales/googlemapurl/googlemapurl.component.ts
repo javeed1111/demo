@@ -44,19 +44,19 @@ export class GooglemapurlComponent implements OnInit {
 
 
 applyFilter(filterValue: string) {
-  //debugger
+  //
   filterValue = filterValue.trim(); // Remove whitespace
   filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
   this.dataSource.filter = filterValue;
 }
 
 showEditModal(id) {
-  debugger
+  
   var value = "edit";
   this._router.navigate(['/masters/editgooglemapurl/' + id + '/' + value])
 }
 showViewModal(id) {
-  debugger
+  
   var value = "view"
   this._router.navigate(['/masters/editgooglemapurl/' + id + '/' + value])
 }
@@ -66,14 +66,14 @@ create() {
   this._router.navigate(['/masters/addgooglemapurl'])
 }
 createProducts(){
-  //debugger
+  //
 
   // this._router.navigate(['/userconfig/role/addrole'])
   this._router.navigate(['/masters/masternavigation'])
 }
 
 Getgooglemap() {
-  debugger
+  
   this._authService.Getgooglemap().subscribe((finalresult: any) => {
     
     if (finalresult.status == "200") {
@@ -89,7 +89,7 @@ Getgooglemap() {
 }
 
 deleteContent(Id: any): void {
-  //debugger
+  //
   this.showAlert = false
   // Open the confirmation dialog
   const confirmation = this._fuseConfirmationService.open({
@@ -115,7 +115,7 @@ deleteContent(Id: any): void {
 
       // Delete the contact
       this._authService.DeletegooglemapById(data).subscribe((data: any) => {
-        debugger
+        
         if (data.status == "200") {
           // Set the alert
           this.alert = {

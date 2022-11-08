@@ -28,7 +28,7 @@ export class FuseConfigService
      */
     set config(value: any)
     {
-        debugger
+        
         // Merge the new config over to the current config
         const config = merge({}, this._config.getValue(), value);
 

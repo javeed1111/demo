@@ -95,7 +95,7 @@ course: any;
   }
 
   ngOnInit(): void {
-    //debugger
+    //
    
     
        // this.searchInputControl.valueChanges
@@ -103,7 +103,7 @@ course: any;
        //     takeUntil(this._unsubscribeAll),
        //     debounceTime(300),
        //     switchMap((query) => {
-       //       //debugger
+       //       //
        //         this.closeDetails();
        //         this.isLoading = true;
        //         return this._authService.GetRoles(0, 10, 'roleName', 'asc', query);
@@ -130,7 +130,7 @@ course: any;
 
   }
   applyFilter(filterValue: string) {
-    //debugger
+    //
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
@@ -141,12 +141,12 @@ course: any;
     }
 
   showEditModal(id) {
-    //debugger
+    //
     var value="edit"
     this._router.navigate(['/courses/editcourse/'+id+'/'+value])
   }
   showViewModal(id) {
-    //debugger
+    //
     var value="view"
     this._router.navigate(['/courses/editcourse/'+id+'/'+value])
   }
@@ -158,7 +158,7 @@ course: any;
       this._unsubscribeAll.complete();
   }
   createProduct(){
-    //debugger
+    //
 
     // this._router.navigate(['/userconfig/role/addrole'])
     this._router.navigate(['/courses/addcourse'])
@@ -166,12 +166,12 @@ course: any;
 
   courseData :any= []
   GetCourses() {
-    //debugger
+    //
     this._authService.GetCourses().subscribe((finalresult: any) => {
-      //debugger
+      //
      var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
-        //debugger
+        //
         this.displayProgressSpinner = true;
 
         setTimeout(() => {
@@ -205,7 +205,7 @@ course: any;
   }
   deleteCourse(id:any): void
     {
-      //debugger
+      //
       this.showAlert=false
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
@@ -231,7 +231,7 @@ course: any;
 
                 // Delete the contact
                 this._authService.deletecourse(data).subscribe((data:any) => {
-                    //debugger
+                    //
                     if (data.status == "200") {
                       // Set the alert
                       this.alert = {

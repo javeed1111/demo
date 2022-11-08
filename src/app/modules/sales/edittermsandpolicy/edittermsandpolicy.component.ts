@@ -77,7 +77,7 @@ cancel() {
 }
   Edit(id: any, value: any) {
     this.Id=id
-    debugger
+    
     if (value == "view") {
       // this.editsite=false;
       this.butdisabled = true;
@@ -88,7 +88,7 @@ cancel() {
 
     }
     else {
-      debugger
+      
       this.butdisabled = false;
       this.ConfigurationForm.controls['tabName'].enable();
       this.ConfigurationForm.controls['description'].enable();
@@ -97,11 +97,11 @@ cancel() {
     }
 
     this._authService.GetTermspolicyById(id).subscribe((finalresult: any) => {
-      debugger
+      
       console.log(finalresult);
 
       if (finalresult.status == "200") {
-        debugger
+        
        // this.name= finalresult.result.companylogo
         // this.ConfigurationForm.patchValue(finalresult.result);
          this.ConfigurationForm.patchValue({
@@ -119,14 +119,14 @@ cancel() {
   }
 
   Save() {
-debugger
+
     if (this.ConfigurationForm.invalid) {
       return;
     }
     this.showAlert = false;
 
     const content = this.ConfigurationForm.getRawValue();
-debugger
+
     var data = {
       Id: this.approute.snapshot.params['id'],
       TabName: content.tabName,
@@ -140,9 +140,9 @@ debugger
  
     this._authService.UpdateTermsPolicies(data).subscribe((result: any) => {
       
-      //debugger
+      //
           if (result.status == "200") {
-              //debugger
+              //
               
                // Set the alert
                this.alert = {
@@ -169,14 +169,14 @@ debugger
   
          }
       });
-    debugger
+    
     if(content.showOnWebsite!=undefined){
       this.showOnWebsite =content.showOnWebsite;
     }
   }
 
   onwebsite($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked == undefined || $event.checked == true) {
       this.showOnWebsite = $event.checked;
     }

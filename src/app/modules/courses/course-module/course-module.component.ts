@@ -77,7 +77,7 @@ course: any;
   }
 
   applyFilter(filterValue: string) {
-    //debugger
+    //
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
@@ -88,12 +88,12 @@ course: any;
     }
 
   showEditModal(id,courseid) {
-    //debugger
+    //
     var value="edit"
     this._router.navigate(['/courses/editcoursemodule/'+id+'/'+courseid+'/'+value])
   }
   showViewModal(id) {
-    //debugger
+    //
     var value="view"
     this._router.navigate(['/courses/editcoursemodule/'+id+'/'+value])
   }
@@ -105,7 +105,7 @@ course: any;
       this._unsubscribeAll.complete();
   }
   createProduct(id:any){
-    debugger
+    
 
     // this._router.navigate(['/userconfig/role/addrole'])
     this._router.navigate(['/courses/addcoursemodule/'+id])
@@ -113,12 +113,12 @@ course: any;
 
   courseData :any= []
   GetCourseModules(Id:any) {
-    //debugger
+    //
     this._authService.GetCourseModules(Id).subscribe((finalresult: any) => {
-      //debugger
+      //
      var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
-        //debugger
+        //
         // for(let i=0;i<finalresult.result.length;i++){
         //   if(finalresult.result[i].duration==0){
         //     finalresult.result[i].duration="";
@@ -147,7 +147,7 @@ course: any;
   }
   deleteCourse(id:any): void
     {
-      debugger
+      
       this.showAlert=false
       var data={
         ModuleId:id
@@ -173,10 +173,10 @@ course: any;
           //  var data={
           //   id:id,
           //  }
-              debugger
+              
                 // Delete the contact
                 this._authService.DeleteCourseModule(data).subscribe((data:any) => {
-                    //debugger
+                    //
                     if (data.status == "200") {
                       // Set the alert
                       this.alert = {

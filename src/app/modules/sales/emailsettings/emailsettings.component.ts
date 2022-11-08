@@ -42,19 +42,19 @@ export class EmailsettingsComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    //debugger
+    //
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
 
   showEditModal(id) {
-    debugger
+    
     var value = "edit";
     this._router.navigate(['./masters/editemail/'+ id + '/' + value ])
   }
   showViewModal(id) {
-    debugger
+    
     var value = "view"
     this._router.navigate(['/masters/editemail/' + id + '/' + value])
   }
@@ -64,13 +64,13 @@ export class EmailsettingsComponent implements OnInit {
     this._router.navigate(['/masters/addemail'])
   }
   createProducts(){
-    //debugger
+    //
 
     // this._router.navigate(['/userconfig/role/addrole'])
     this._router.navigate(['/masters/masternavigation'])
   }
   GetEmails() {
-    debugger
+    
     this._authService.GetEmails().subscribe((finalresult: any) => {
       
       if (finalresult.status == "200") {
@@ -86,7 +86,7 @@ export class EmailsettingsComponent implements OnInit {
   }
 
   deleteContent(Id: any): void {
-    //debugger
+    //
     this.showAlert = false
     // Open the confirmation dialog
     const confirmation = this._fuseConfirmationService.open({
@@ -113,7 +113,7 @@ export class EmailsettingsComponent implements OnInit {
 
         // Delete the contact
         this._authService.DeleteEmailById(data).subscribe((data: any) => {
-          debugger
+          
           if (data.status == "200") {
             // Set the alert
             this.alert = {

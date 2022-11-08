@@ -45,7 +45,7 @@ export class AddemailComponent implements OnInit {
   }
   CheckForUpdate() {
     this._authService.GetAllEmail().subscribe((res: any) => {
-      debugger
+      
       if (res.result.length > 0) {
         this.ConfigurationForm.patchValue(res.result[0]);
         this.smtpSsl=res.result[0].smtpSsl;
@@ -63,14 +63,14 @@ export class AddemailComponent implements OnInit {
     this._router.navigate(['/masters/masternavigation']);
   }
   Save() {
-    debugger
+    
     if (this.ConfigurationForm.invalid) {
       return;
     }
 
     const content = this.ConfigurationForm.getRawValue();
 
-    debugger
+    
     var data = {
       SmtpSsl: this.smtpSsl,
       user: content.user,
@@ -83,10 +83,10 @@ export class AddemailComponent implements OnInit {
       //  IsActive: this.active,
     }
     this._authService.AddEmail(data).subscribe((result: any) => {
-      debugger
+      
       //  var result = JSON.parse(result);
       if (result.status == "200") {
-        //debugger
+        //
         // Set the alert
         this.alert = {
           type: 'success',
@@ -127,7 +127,7 @@ export class AddemailComponent implements OnInit {
     }
     this.showAlert = false;
     const content = this.ConfigurationForm.getRawValue();
-    debugger
+    
     var data = {
       Id: content.id,
       User: content.user,
@@ -141,9 +141,9 @@ export class AddemailComponent implements OnInit {
       //  IsActive: this.active,
     }
     this._authService.UpdateEmail(data).subscribe((result: any) => {
-      debugger
+      
       if (result.status == "200") {
-        debugger
+        
 
         // Set the alert
         this.alert = {
@@ -174,7 +174,7 @@ export class AddemailComponent implements OnInit {
   }
 
   onwebsite(value: boolean): void {
-    debugger
+    
     if (value == true) {
       this.smtpSsl = value;
     }

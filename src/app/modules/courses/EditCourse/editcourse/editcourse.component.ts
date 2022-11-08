@@ -133,7 +133,7 @@ export class EditcourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger;
+    ;
     var loginId = localStorage.getItem("LoginId");
     var id = this.approute.snapshot.params['id'];
     var value = this.approute.snapshot.params['value'];
@@ -190,7 +190,7 @@ export class EditcourseComponent implements OnInit {
  
   }
   onSelectFile(files: FileList) {
-    //debugger
+    //
     if (files.length === 0)
       return;
     if (files.length > 0) {
@@ -205,7 +205,7 @@ export class EditcourseComponent implements OnInit {
     }
   }
   onSelectFile1(files: FileList) {
-    //debugger
+    //
     if (files.length === 0)
       return;
     if (files.length > 0) {
@@ -223,7 +223,7 @@ export class EditcourseComponent implements OnInit {
 
 
   onSelectVideo(files: FileList) {
-    //debugger
+    //
     if (files.length === 0)
       return;
     if (files.length > 0) {
@@ -238,7 +238,7 @@ export class EditcourseComponent implements OnInit {
     }
   }
   Status($event: MatSlideToggleChange): void{
-    debugger
+    
     if ($event.checked != undefined) {
       this.status = $event.checked;
     }
@@ -248,7 +248,7 @@ export class EditcourseComponent implements OnInit {
       }
   }
   checkprice() {
-    debugger
+    
     const dataa = this.courseForm.getRawValue();
     var price = dataa.price;
     var offerprice = dataa.offerPrice;
@@ -272,7 +272,7 @@ export class EditcourseComponent implements OnInit {
 
 
   toggleCompleted($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked != undefined) {
       this.isofferactive = $event.checked;
       if (this.isofferactive == true) {
@@ -307,7 +307,7 @@ export class EditcourseComponent implements OnInit {
     //this.active=this.filters.hideCompleted$.next(change.checked);
   }
   onwebsite($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked == undefined || $event.checked == true) {
       this.showonwebsite = $event.checked;
     }
@@ -318,12 +318,12 @@ export class EditcourseComponent implements OnInit {
 
   }
   GetTechnologys() {
-    //debugger
+    //
     this._authService.GetTechnologies().subscribe((finalresult: any) => {
-      //debugger
+      //
       var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
-        //debugger
+        //
         //this.dataSource= finalresult.result;
         this.technology = finalresult.result;
         if(this.courseForm.controls['isOffer'].value==true)
@@ -341,9 +341,9 @@ export class EditcourseComponent implements OnInit {
   }
 
   GetCourses(){
-    debugger
+    
     this._authService.GetCourses().subscribe((finalresult: any) => {
-      debugger
+      
      this.courses = JSON.parse(finalresult);
      this.courses=this.courses.result
     })
@@ -364,7 +364,7 @@ export class EditcourseComponent implements OnInit {
 }
 
 DeleteVideo(){
-  debugger
+  
 
   var filename=this.videoUrl.replace('https://ugetit.blob.core.windows.net/coursevideos/',"")
  var data = {
@@ -390,10 +390,10 @@ confirmation.afterClosed().subscribe((result) => {
     // If the confirm button pressed...
     if ( result === 'confirmed' )
     {
-      debugger
+      
   this.closevideo=false        // Delete the video
         this._authService.DeleteVideo(data).subscribe((finalresult: any) => {
-          debugger
+          
           if(finalresult.status=="200"){
             this.uploadvideo=true
             this.deletevideo=false
@@ -422,13 +422,13 @@ confirmation.afterClosed().subscribe((result) => {
 }
 
 UploadVideo(value:any){
-  debugger
+  
   const formData: FormData = new FormData();
   if (this.files2.length >= 1) {
     formData.append("files", this.fileToUpload2, this.name2);
     this.blockUI.start('Uploading...');
     this._authService.UploadVideo(formData).subscribe((finalresult: any) => {
-      debugger
+      
       if(finalresult.status=="200"){
         this.uploadvideo=false
         this.deletevideo=true
@@ -475,7 +475,7 @@ UploadVideo(value:any){
   }
 
   selectionChange(event: StepperSelectionEvent) {
-    debugger
+    
     var value="edit"
     console.log(event.selectedStep.label);
     let stepLabel = event.selectedStep.label
@@ -497,7 +497,7 @@ UploadVideo(value:any){
   }
 
   Edit(id: any, value: any) {
-    //debugger
+    //
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
       baseurl = "https://localhost:44358"
@@ -506,7 +506,7 @@ UploadVideo(value:any){
       baseurl = "http://testugetitapi.fadelsoft.com"
     }
     if (value == "view") {
-      debugger
+      
       // this.editsite=false;
       this.butdisabled = true;
       this.courseForm.controls['courseName'].disable();
@@ -559,12 +559,12 @@ UploadVideo(value:any){
     }
     this.Id = id;
     this._authService.GetcourseById(this.Id).subscribe((finalresult: any) => {
-      debugger
+      
       console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
       if (finalresult.status == "200") {
-        debugger
+        
 
       //   if(this.courseForm.controls['isOffer'].value==true)
       //   {
@@ -674,7 +674,7 @@ else{
   }
 
   check($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked != undefined) {
       this.istax = $event.checked;
       if (this.istax == true) {
@@ -701,12 +701,12 @@ else{
   GetFeeInactiveData(id:any){
     this.Id = id;
     this._authService.GetallcoursefeeById(this.Id).subscribe((finalresult: any) => {
-      debugger
+      
       console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
       if (finalresult.status == "200") {
-        debugger
+        
         for(let i=0;i<finalresult.result.length;i++){
           finalresult.result[i].effectiveFrom=this.datepipe.transform(finalresult.result[i].effectiveFrom, 'dd-MM-yyyy');
           finalresult.result[i].effectiveTill=this.datepipe.transform(finalresult.result[i].effectiveTill, 'dd-MM-yyyy');
@@ -726,7 +726,7 @@ else{
    
   }
   Updatecourse(val:any) {
-    debugger
+    
 
     this.showAlert = false;
     if (this.courseForm.invalid) {
@@ -848,10 +848,10 @@ else{
    
     this._authService.UpdateCourse(formData).subscribe((result: any) => {
 
-      //debugger
+      //
       var result = JSON.parse(result);
       if (result.status == "200") {
-        //debugger
+        //
         // Set the alert
         this.alert = {
           type: 'success',
@@ -898,7 +898,7 @@ else{
   }
 
   UpdateNext() {
-    debugger
+    
     this.showAlert = false;
     if (this.courseForm.invalid) {
       return;
@@ -1019,10 +1019,10 @@ else{
    
     this._authService.UpdateCourse(formData).subscribe((result: any) => {
 
-      //debugger
+      //
       var result = JSON.parse(result);
       if (result.status == "200") {
-        //debugger
+        //
         // Set the alert
         this.alert = {
           type: 'success',

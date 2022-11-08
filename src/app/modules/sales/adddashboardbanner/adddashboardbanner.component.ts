@@ -42,7 +42,7 @@ showAlert:  boolean = false;
   }
   Save()
   {
-      debugger
+      
       if (this.bannerForm.invalid) {
           return;
       }
@@ -60,10 +60,10 @@ showAlert:  boolean = false;
         //  IsActive: this.active,
      }
       this._authService.AddBannerContent(data).subscribe((result: any) => {
-          debugger
+          
           //  var result = JSON.parse(result);
             if (result.status == "200") {
-                //debugger
+                //
                  // Set the alert
                  this.alert = {
                   type   : 'success',

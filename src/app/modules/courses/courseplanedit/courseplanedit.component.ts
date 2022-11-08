@@ -79,7 +79,7 @@ export class CourseplaneditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger
+    
     var loginId = localStorage.getItem("LoginId");
     var pcid = this.approute.snapshot.params['pcid'];
     var planid = this.approute.snapshot.params['planid'];
@@ -116,7 +116,7 @@ export class CourseplaneditComponent implements OnInit {
     this.GetFeeInactiveData(planid);
   }
   Edit(pcid:any,planid:any,value:any) {
-    debugger
+    
     if (value == "view") {
       this.disabled=true;
       this.horizontalStepperForm.controls.step1.get('planName').disable();
@@ -143,14 +143,14 @@ export class CourseplaneditComponent implements OnInit {
   }
     // this.Id = id;
     this._authService.GetcourseplanById(pcid,planid).subscribe((finalresult: any) => {
-      debugger
+      
       console.log(finalresult);
       //  var finalresult = JSON.parse(finalresult);
       // $scope.selectedBrands = [$scope.brands[0],$scope.brands[1]];
     //  this.horizontalStepperForm.controls.step1['courseId'].setValue(17);
 
       if (finalresult.status == "200") {
-        debugger
+        
         for(let i=0;i<finalresult.result.length;i++){
           this.horizontalStepperForm.controls.step1.patchValue(finalresult.result[0]);
           this.offerpricenbind =this.horizontalStepperForm.controls.step1.get('offerPrice').value;
@@ -199,7 +199,7 @@ export class CourseplaneditComponent implements OnInit {
     });
   }
   checkprice(){
-    debugger
+    
     const dataa = this.horizontalStepperForm.getRawValue();
     var price = dataa.step1.price;
     var offerprice = dataa.step1.offerPrice;
@@ -224,7 +224,7 @@ export class CourseplaneditComponent implements OnInit {
     this._router.navigate(['/courses/courseplanlist/']);
   }
   change(itemObj, event) {
-    debugger
+    
     if (this.horizontalStepperForm.invalid) {
       return;
     }
@@ -238,7 +238,7 @@ export class CourseplaneditComponent implements OnInit {
       let unmatchedFilteredData = []
       if (this.Filter.length > 0) {
         this.Filter.forEach((element, i) => {
-          debugger
+          
           if (element.courseId != itemObj.courseId) {
             unmatchedFilteredData.push(element)
           }
@@ -256,10 +256,10 @@ export class CourseplaneditComponent implements OnInit {
     if (event.isUserInput) {
       console.log(event.source.value, event.source.selected);
       this._authService.GetCourseContent().subscribe((finalresult: any) => {
-        debugger
+        
         var finalresult = JSON.parse(finalresult);
         if (finalresult.status == "200") {
-          debugger
+          
 
           let filteredData = this.cours.filter(x => x.courseId == event.source.value)
           let filteredData1 = finalresult.result.filter(x => x.courseId == event.source.value)
@@ -284,7 +284,7 @@ export class CourseplaneditComponent implements OnInit {
             let data = { courseId: chapters['courseId'], title: chapters['courseName'], chapterId: y.id }
             this.Filter.push(data)
           })
-          debugger;
+          ;
           this.dataSource = new MatTableDataSource(this.Filter);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -299,13 +299,13 @@ export class CourseplaneditComponent implements OnInit {
     }
   }
   onChangecheckbox(event: MatCheckboxChange) {
-    debugger
+    
     console.log(event.checked + " => " + event.source.value);
   // }
 }
  
   toggleCompleted($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked != undefined) {
       this.isofferactive = $event.checked;
       if (this.isofferactive == true) {
@@ -333,18 +333,18 @@ export class CourseplaneditComponent implements OnInit {
     //this.active=this.filters.hideCompleted$.next(change.checked);
   }
   applyFilter(filterValue: string) {
-    //debugger
+    //
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
   GetCourse() {
-    //debugger
+    //
     this._authService.GetCourses().subscribe((finalresult: any) => {
-      //debugger
+      //
       var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
-        //debugger
+        //
         //this.dataSource= finalresult.result;
         this.cours = finalresult.result;
         //this.roles = finalresult.result;
@@ -360,12 +360,12 @@ export class CourseplaneditComponent implements OnInit {
   GetFeeInactiveData(id:any){
     this.Id = id;
     this._authService.GetAllInActivePlanFees(this.Id).subscribe((finalresult: any) => {
-      debugger
+      
       console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
       if (finalresult.status == "200") {
-        debugger
+        
         for(let i=0;i<finalresult.result.length;i++){
           finalresult.result[i].effectiveFrom=this.datepipe.transform(finalresult.result[i].effectiveFrom, 'dd-MM-yyyy');
           finalresult.result[i].effectiveTill=this.datepipe.transform(finalresult.result[i].effectiveTill, 'dd-MM-yyyy');
@@ -381,7 +381,7 @@ export class CourseplaneditComponent implements OnInit {
   }
 
   savecourseplan(): void {
-    // debugger
+    // 
     // Return if the form is invalid
     if (this.horizontalStepperForm.invalid) {
       return;
@@ -400,7 +400,7 @@ export class CourseplaneditComponent implements OnInit {
     const dataa = this.horizontalStepperForm.getRawValue();
 
 
-    debugger
+    
     if (this.isofferactive == undefined) {
       this.isofferactive = false;
       // this.horizontalStepperForm.controls['offerPrice'].disable();
@@ -487,9 +487,9 @@ export class CourseplaneditComponent implements OnInit {
       //     //  IsActive: this.active,
       //  }
       //   this._authService.Addtechnology(data).subscribe((result: any) => {
-      debugger
+      
       if (result.status == "200") {
-        //debugger
+        //
 
         // Show the alert
         this.showAlert = true;
@@ -529,7 +529,7 @@ export class CourseplaneditComponent implements OnInit {
     });
   }
   onwebsite($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked == undefined || $event.checked == true) {
       this.showonwebsite = $event.checked;
     }

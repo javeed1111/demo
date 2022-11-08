@@ -67,7 +67,7 @@ course: any;
     this.GetCourseplans();
   }
   applyFilter(filterValue: string) {
-    //debugger
+    //
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
@@ -77,12 +77,12 @@ course: any;
       this.selectedProduct = null;
   }
   showEditModal(pcid,planid) {
-    //debugger
+    //
     var value="edit"
     this._router.navigate(['/courses/editcourseplan/'+pcid+'/'+planid+'/'+value])
   }
   showViewModal(pcid,planid) {
-    //debugger
+    //
     var value="view"
     this._router.navigate(['/courses/editcourseplan/'+pcid+'/'+planid+'/'+value])
   }
@@ -97,13 +97,13 @@ course: any;
   }
   courseData :any= []
   GetCourseplans() {
-    //debugger
+    //
     this._authService.GetCourseplans().subscribe((finalresult: any) => {
-      //debugger
+      //
      var finalresult = JSON.parse(finalresult);
      
       if (finalresult.status == "200") {
-        debugger
+        
         console.log('coursepalns',finalresult.result)
         // finalresult.result.noofchapters =0
         for(let i=0;i<finalresult.result.length;i++){
@@ -138,7 +138,7 @@ course: any;
   }
   deleteCourse(pcid,planid): void
     {
-      debugger
+      
       this.showAlert=false
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
@@ -164,7 +164,7 @@ course: any;
            }
                 // Delete the courseplan
                 this._authService.deletecourseplan(data).subscribe((data:any) => {
-                    //debugger
+                    //
                     if (data.status == "200") {
                         
                           

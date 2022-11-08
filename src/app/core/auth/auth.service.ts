@@ -29,13 +29,13 @@ export class AuthService {
    * Setter & getter for access token
    */
   set accessToken(token: string) {
-    debugger
+    
     //localStorage.setItem('accessToken', token);
     token == undefined ? '' : localStorage.setItem('accessToken', token);
   }
 
   get accessToken(): string {
-    //debugger
+    //
     return localStorage.getItem('accessToken') ?? '';
   }
 
@@ -66,7 +66,7 @@ export class AuthService {
    * 
    */
   public signIn(credentials: { mobileno: string; password: string }): Observable<any> {
-    debugger
+    
     // Throw error, if the user is already logged in
     if (this._authenticated) {
       return throwError('User is already logged in.');
@@ -74,7 +74,7 @@ export class AuthService {
 
     return this._httpClient.post(this.baseUrl + "api/Admin/userlogin", credentials).pipe(
       switchMap((response: any) => {
-        debugger
+        
         // if(response.status=='200'){
         // Store the access token in the local storage
         this.accessToken = response.result.token;
@@ -114,7 +114,7 @@ export class AuthService {
   }
 
   public Adduser(data) {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/CreateUser", data, { responseType: 'text' });
   }
 
@@ -125,82 +125,82 @@ export class AuthService {
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllRoles", { responseType: 'text' });
   }
   public Addrole(data) {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/AddRole", data, { responseType: 'text' });
   }
   public deleteRole(data) {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteRole", data);
   }
   public Updaterole(data) {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/UpdateRole", data, { responseType: 'text' });
   }
   public GetRoleById(id) {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetRoleById", { params: { id } });
   }
   public GetTechnologies() {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllTechnologies", { responseType: 'text' });
   }
   //   public Addtechnology(data) {
-  //     debugger
+  //     
   //     return this._httpClient.post(this.baseUrl + "api/Admin/AddTechnology  ", data, {responseType: 'text'});
   //   }
   Addtechnology(formdata) {
-    //debugger
+    //
     return this._httpClient.post(this.baseUrl + "api/Admin/AddTechnology", formdata, { responseType: 'text' });
   }
   public GetechnologyById(id) {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetTechnologyById", { params: { id } });
   }
   public Updatetechnology(formdata) {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/UpdateTechnology", formdata, { responseType: 'text' });
   }
   public deletetechnology(data) {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/Removetechnology", data);
   }
   public GetCourses() {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllCourses", { responseType: 'text' });
   }
   public Addcourse(formData) {
-    debugger
+    
    
     return this._httpClient.post(this.baseUrl + "api/Admin/AddCourses", formData);
 
   }
   public uploadAvatar(id, file) {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllCourses", { responseType: 'text' });
   }
   public GetcourseById(id) {
-    //debugger
+    //
     return this._httpClient.get(this.baseUrl + "api/Admin/GetCourseById", { params: { id } });
   }
   public UpdateCourse(formData) {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/UpdateCourse", formData, { responseType: 'text' });
   }
   public deletecourse(data) {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteCourse", data);
   }
   AddCoursePlan(data): Observable<any> {
-    //debugger
+    //
     //return;
     return this._httpClient.post(this.baseUrl + "api/Admin/AddPlanCourse", data, { responseType: 'text' });
   }
   public deletecourseplan(data) {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/DeletePlanCourse", data);
   }
   UpdateCoursePlan(data): Observable<any> {
-    //debugger
+    //
     // return;
     return this._httpClient.post(this.baseUrl + "api/Admin/UpdatePlanCourse", data);
   }
@@ -208,66 +208,66 @@ export class AuthService {
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllPlanMaster", { responseType: 'text' });
   }
   public GetPlanmastersById(id) {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetPlanMasterById", { params: { id } });
   }
   // yet to implement
   public GettitleById(data) {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/GetTitleById", data);
   }
   //end yet
 
   public gridcoursecontentbycourseid(id) {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/Getcoursecontentbycourseid", { params: { id } });
   }
   public GetCoursechapters() {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllCoursechapters", { responseType: 'text' });
   }
   public GetcoursecontentById(id) {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/Getcoursecontentbyid", { params: { id } });
   }
   Addcoursecontent(formdata): Observable<any> {
-    //debugger
+    //
     return this._httpClient.post(this.baseUrl + "api/Admin/Addcoursecontent", formdata);
   }
   Updatecoursecontent(data) {
-    //debugger
+    //
     return this._httpClient.post(this.baseUrl + "api/Admin/Updatecoursecontent", data, { responseType: 'text' });
   }
   Updatecoursecontentvideo(data) {
-    //debugger
+    //
     return this._httpClient.post(this.baseUrl + "api/Admin/Updatecoursecontentvideo", data);
   }
   public deletecoursecontent(data) {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/Deletecoursecontent", data);
   }
   public GetCourseContent() {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetCourseContent", { responseType: 'text' });
   }
   public GetCourseplans() {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllPlanCourse", { responseType: 'text' });
   }
   public GetcourseplanById(pcid, planid) {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetPlanCourseById?pcid=" + pcid + "&planid=" + planid);
   }
   public GetallcoursefeeById(id) {
-    //debugger
+    //
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllCourseFeeById", { params: { id } });
   }
   public GetAllInActivePlanFees(id) {
-    //debugger
+    //
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllInActivePlanFees", { params: { id } });
   }
   public GetCourseModules(Id: any) {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetCourseModulesByCourseId?Id=" + Id, { responseType: 'text' });
   }
 
@@ -289,11 +289,11 @@ export class AuthService {
   }
 
   public GetReviews(id):Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/UIMain/GetReviewsByCourseId?Id="+id );
   }
   AddQuestions(data) {
-    //debugger
+    //
     return this._httpClient.post(this.baseUrl + "api/Admin/AddFaqs", data, { responseType: 'text' });
   }
   GetQuestions(Id: any) {
@@ -325,77 +325,77 @@ export class AuthService {
   }
 
   public GetFaculties():Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllFaculties");
   }
   AddFaculty(formdata):Observable<any> {
-    //debugger
+    //
     return this._httpClient.post(this.baseUrl + "api/Admin/AddFaculty", formdata);
   }
   public GetFacultyById(id):Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetFacultyById?Id="+id);
   }
   public UpdateFaculty(formdata):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/UpdateFaculty", formdata);
   }
   public deleteFaculty(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/RemoveFaculty", data);
   }
 
   public GetBannerContent():Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetBannerContent");
   }
   AddBannerContent(data):Observable<any> {
-    //debugger
+    //
     return this._httpClient.post(this.baseUrl + "api/Admin/AddBannerContent", data);
   }
   public GetBannerContentById(id):Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetBannerContentById?Id="+id);
   }
   public UpdateBannerContent(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/UpdateBannerContent", data);
   }
   public deleteBannerContent(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteBannerContent", data);
   }
   public GetInvoiceNoFormat():Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetInvoiceNoFormat");
   }
   public AddInvoiceNoFormat(data):Observable<any> {
-    //debugger
+    //
     return this._httpClient.post(this.baseUrl + "api/Admin/AddInvoiceNoFormat", data);
   }
   public GetInvoiceNoFormatById(id):Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetInvoiceNoFormatById?Id="+id);
   }
   public UpdateInvoiceNoFormat(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/UpdateInvoiceNoFormat", data);
   }
   public deleteInvoiceNoFormat(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteInvoiceNoFormat", data);
   }
 
   public UploadVideo(formData) {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/UploadVideo", formData);
   }
   public DeleteVideo(data:any):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteVideo",data);
   }
   public UploadChapterVideo(formData) {
-    debugger
+    
      return this._httpClient.post(this.baseUrl + "api/Admin/UploadChapterVideo", formData);
     // return this._httpClient.post(this.baseUrl + "api/Admin/UploadChapterVideo", formData,{
     //   reportProgress:true,
@@ -405,104 +405,106 @@ export class AuthService {
 
   }
   public DeleteChapterVideo(data:any):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteChapterVideo",data);
   }
   public DeleteFiles(data:any):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteFiles",data);
   }
   public Getcompanydata():Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetCompanyMaster");
   }
   public GetEmails():Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllEmails");
   }
   
   public AddCompanyMaster(data):Observable<any> {
-    //debugger
+    //
     return this._httpClient.post(this.baseUrl + "api/Admin/AddCompanyMaster", data);
   }
 
   public AddEmail(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/AddEmail", data);
   }
 
   public GetEmailById(id):Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetEmailById?Id="+id);
   }
   public GetAllEmail():Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllEmail");
   }
   public UpdateEmail(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/UpdateEmail", data);
   }
  
 
   public DeleteEmailById(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteEmailById", data);
   }
 
   public GetCompanyMasterById(id):Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetCompanyMasterById?Id="+id);
   }
   public UpdateCompanyMaster(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/UpdateCompanyMaster", data);
   }
   public DeleteCompanyMasterById(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteCompanyMasterById", data);
   }
   public GetTermspolicy():Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetTermsPolicies");
   }
   public GetTermspolicyById(id):Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetTermsPoliciesById?Id="+id);
   }
   public AddTermspolicy(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/AddTermsPoliceis", data);
   }
   public UpdateTermsPolicies(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/UpdateTermsPolicies", data);
   }
   public DeleteTermsPolicies(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/DeleteTermsPolicies", data);
   }
   public AddGooglemapurl(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/AddGooglemapurl", data);
   }
   public Getgooglemap():Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/Getgooglemap");
   }
   public GetgooglemapById(id):Observable<any> {
-    debugger
+    
     return this._httpClient.get(this.baseUrl + "api/Admin/GetgooglemapById?Id="+id);
   }
   public Updategooglemap(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/Updategooglemap", data);
   }
   public DeletegooglemapById(data):Observable<any> {
-    debugger
+    
     return this._httpClient.post(this.baseUrl + "api/Admin/DeletegooglemapById", data);
   }
-
+  public GetCompanydetails() {
+    return this._httpClient.get(this.baseUrl + "api/UIMain/Getcompanymaster", {responseType: 'text'});
+  }
 
 
 
@@ -548,7 +550,7 @@ export class AuthService {
    * Sign out
    */
   signOut(): Observable<any> {
-    //debugger
+    //
     // Remove the access token from the local storage
     localStorage.removeItem('accessToken');
 
@@ -581,7 +583,7 @@ export class AuthService {
    * Check the authentication status
    */
   check(): Observable<boolean> {
-    //debugger
+    //
     // Check if the user is logged in
     if (this._authenticated) {
       return of(true);

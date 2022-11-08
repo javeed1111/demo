@@ -40,19 +40,19 @@ export class ConfigurationsComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    //debugger
+    //
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
 
   showEditModal(id) {
-    debugger
+    
     var value = "edit";
     this._router.navigate(['/masters/editconfigurations/' + id + '/' + value])
   }
   showViewModal(id) {
-    debugger
+    
     var value = "view"
     this._router.navigate(['/masters/editconfigurations/' + id + '/' + value])
   }
@@ -62,17 +62,17 @@ export class ConfigurationsComponent implements OnInit {
     this._router.navigate(['/masters/addconfigurations'])
   }
   createProducts(){
-    //debugger
+    //
 
     // this._router.navigate(['/userconfig/role/addrole'])
     this._router.navigate(['/masters/masternavigation'])
   }
   GetInvoiceNoFormat() {
-    //debugger
+    //
     this._authService.GetInvoiceNoFormat().subscribe((finalresult: any) => {
-      debugger
+      
       if (finalresult.status == "200") {
-        //debugger
+        //
     
         this.dataSource = new MatTableDataSource(finalresult.result);
         this.dataSource.paginator = this.paginator;
@@ -84,7 +84,7 @@ export class ConfigurationsComponent implements OnInit {
     });
   }
   deleteContent(Id: any): void {
-    //debugger
+    //
     this.showAlert = false
     // Open the confirmation dialog
     const confirmation = this._fuseConfirmationService.open({
@@ -110,7 +110,7 @@ export class ConfigurationsComponent implements OnInit {
 
         // Delete the contact
         this._authService.deleteInvoiceNoFormat(data).subscribe((data: any) => {
-          debugger
+          
           if (data.status == "200") {
             // Set the alert
             this.alert = {

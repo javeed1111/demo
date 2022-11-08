@@ -13,7 +13,6 @@ import { AuthService } from 'app/core/auth/auth.service';
 
 
 export class AddcompanydetailsComponent implements OnInit {
-  showonwebsite: boolean;
   update: boolean = false;
   save: boolean = true;
   true:boolean=false;
@@ -24,28 +23,28 @@ export class AddcompanydetailsComponent implements OnInit {
   ConfigurationForm: FormGroup;
   alert: { type: FuseAlertType; message: string } = {
     type   : 'success',
-    message: ''
-    
-};
-showAlert:  boolean = false;
-  constructor(private _formBuilder: FormBuilder,
+    message: ''   
+  };
+  showAlert:  boolean = false;
+  ImageURL:string=null  
+
+constructor(private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _router: Router) {
 
-  
    }
 
   ngOnInit(): void {
 
     this.ConfigurationForm = this._formBuilder.group({
-      Id:['0'],
+      id:['0'],
       companyName : ['', [Validators.required]],
       address:['',[Validators.required]],
       phoneNo:['',[Validators.required]],
-      email:['',],
-     // UploadCourseIcon: ['',],
-      CompanyUrl:['',],
-      Companylogo:['',],
+      email:[''],
+      showOnWebsite:[false,[Validators.required]],
+      companyUrl:[''],
+      companylogo:[''],
 
     });
     this.CheckForUpdate();
@@ -56,15 +55,11 @@ showAlert:  boolean = false;
       debugger
       if (res.result.length > 0) {
         this.ConfigurationForm.patchValue(res.result[0]);
-        this.ConfigurationForm.controls['CompanyUrl'].setValue(res.result[0].companyUrl);
-        this.ConfigurationForm.controls['Id'].setValue(res.result[0].id);
-       // this.ConfigurationForm.controls['Address'].setValue(res.result[0].address);
-        // this.ConfigurationForm.controls['Companylogo'].setValue(res.result[0].companylogo);
-       this.name=res.result[0].companylogo;
-       
+        if(res.result[0].companylogo!="")
+        this.ImageURL=res.result[0].companylogo
+        else
+        this.ImageURL="assets/images/default/courses1.jpg";
 
-        
-        this.true=res.result[0].true;
         this.update = true;
         this.save = false;
       }
@@ -78,14 +73,11 @@ showAlert:  boolean = false;
   
   cancel(){
     this._router.navigate(['/masters/masternavigation']);
-        setTimeout(() => {
-            window.location.reload();
-           }, 10);
 
   }
   
   onSelectFile(files: FileList) {
-    debugger
+    
     if (files.length === 0)
 
       return;
@@ -107,38 +99,28 @@ showAlert:  boolean = false;
       if (this.ConfigurationForm.invalid) {
           return;
       }
-      if(this.showonwebsite==undefined){
-        this.showonwebsite=true
-      }
-    
 
-     // formdata.append("showOnWebsite", (this.showonwebsite).toString())
-      //this.showAlert = false;
-      
-      // Get the contact object
       const content = this.ConfigurationForm.getRawValue();
   
      const formData: FormData = new FormData();
      
-     formData.append("True", content.true)
-
      formData.append("Email", content.email)
      formData.append("CreatedBy", (localStorage.getItem("LoginId")));
      formData.append("phoneNo", content.phoneNo)
      formData.append("companyName", content.companyName)
      formData.append("Address", content.address)
-     formData.append("CompanyUrl", content.CompanyUrl)
+     formData.append("CompanyUrl", content.companyUrl)
      formData.append("Companylogo", content.Companylogo)
-     formData.append("showOnWebsite", (this.showonwebsite).toString())
+     formData.append("showOnWebsite",content.showOnWebsite)
 
      if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
     }
       this._authService.AddCompanyMaster(formData).subscribe((result: any) => {
-          debugger
+          
           //  var result = JSON.parse(result);
             if (result.status == "200") {
-                //debugger
+                //
                  // Set the alert
                  this.alert = {
                   type   : 'success',
@@ -175,41 +157,33 @@ showAlert:  boolean = false;
         });
   }
   Update() {
-
+    debugger
     if (this.ConfigurationForm.invalid) {
       return;
     }
     this.showAlert = false;
 
     const content = this.ConfigurationForm.getRawValue();
-debugger
-   
     const formData: FormData = new FormData();
     formData.append("Email", content.email)
-    formData.append("Id", content.Id)
+    formData.append("Id", content.id)
     formData.append("phoneNo", content.phoneNo)
     formData.append("companyName", content.companyName)
     formData.append("Address", content.address)
-    formData.append("CompanyUrl", content.CompanyUrl)
-    formData.append("Companylogo", content.Companylogo)
-    formData.append("showOnWebsite", this.true.toString())
-    formData.append("True", content.true)
- formData.append("UpdatedBy", (localStorage.getItem("LoginId")));
+    formData.append("CompanyUrl", content.companyUrl)
+    formData.append("showOnWebsite", content.showOnWebsite)
+    formData.append("UpdatedBy", (localStorage.getItem("LoginId")));
     if (this.files.length == 1) {
      formData.append("fileupload", this.fileToUpload, this.name);
    }
    else {
-    formData.append("LogoURL", content.LogoURL);
+    formData.append("Companylogo", content.companylogo);
 
   }
 
-
-
     this._authService.UpdateCompanyMaster(formData).subscribe((result: any) => {
-      debugger
+      
       if (result.status == "200") {
-        debugger
-
         // Set the alert
         this.alert = {
           type: 'success',
@@ -237,21 +211,8 @@ debugger
 
       }
     });
-    // debugger
-    // if(content.showOnWebsite!=undefined){
-    //   this.showOnWebsite =content.showOnWebsite;
-    // }
-  }
-
-  onwebsite($event: MatSlideToggleChange): void {
-    debugger
-    if ($event.checked == undefined || $event.checked == true) {
-      this.showonwebsite = $event.checked;
-    }
-    else {
-      this.showonwebsite = false;
-      // this.isofferactive = false;
-    }
 
   }
+
+  
 }

@@ -45,7 +45,7 @@ showAlert:  boolean = false;
   }
 
   Edit(id: any, value: any) {
-    //debugger
+    //
     if (value == "view") {
       // this.editsite=false;
       this.butdisabled=true;
@@ -61,11 +61,11 @@ showAlert:  boolean = false;
   }
   
     this._authService.GetBannerContentById(id).subscribe((finalresult: any) => {
-        //debugger
+        //
         console.log(finalresult);
     
         if (finalresult.status == "200") {
-          //debugger
+          //
 
           this.bannerForm.patchValue(finalresult.result);
          
@@ -102,9 +102,9 @@ showAlert:  boolean = false;
  }
   this._authService.UpdateBannerContent(data).subscribe((result: any) => {
       
-    //debugger
+    //
         if (result.status == "200") {
-            //debugger
+            //
             
              // Set the alert
              this.alert = {

@@ -64,7 +64,7 @@ course: any;
     this.GetCourses();
   }
   applyFilter(filterValue: string) {
-    //debugger
+    //
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
@@ -74,13 +74,13 @@ course: any;
       this.selectedProduct = null;
   }
   showEditModal(courseid) {
-    //debugger
+    //
     var value="edit"
     var moduleid=4
     this._router.navigate(['/courses/addcoursecontent/'+courseid+'/'+moduleid+'/'+value])
   }
   showViewModal(courseid) {
-    //debugger
+    //
     var value="add"
     var moduleid=4
     this._router.navigate(['/courses/addcoursecontent/'+courseid+'/'+moduleid+'/'+value])
@@ -93,12 +93,12 @@ course: any;
   }
   courseData :any= []
   GetCourses() {
-    //debugger
+    //
     this._authService.GetCoursechapters().subscribe((finalresult: any) => {
-      //debugger
+      //
      var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
-        //debugger
+        //
         console.log(finalresult.result);
         // finalresult.result.noofchapters =0
         // for(let i=0;i<finalresult.result.length;i++){
@@ -129,7 +129,7 @@ course: any;
   }
   deleteCourse(id:any): void
     {
-      //debugger
+      //
       this.showAlert=false
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
@@ -152,7 +152,7 @@ course: any;
 
                 // Delete the contact
                 this._authService.deletecourse(id).subscribe((data:any) => {
-                    //debugger
+                    //
                     if (data.status == "200") {
                         
                           

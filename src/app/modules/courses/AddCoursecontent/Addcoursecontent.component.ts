@@ -166,7 +166,7 @@ export class AddcoursecontentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger
+    
     var loginId = localStorage.getItem("LoginId");
     // var Moduleid = this.approute.snapshot.params['moduleid'];
     var courseid = this.approute.snapshot.params['courseid'];
@@ -209,7 +209,7 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   onSelectFile(files: FileList) {
-    debugger
+    
     if (files.length === 0)
       return;
     if (files.length > 0) {
@@ -233,7 +233,7 @@ export class AddcoursecontentComponent implements OnInit {
 
 
   OnClickUp(id: any) {
-    debugger
+    
     let item1 = this.contents.find(i => i.sortOrderId === id);
     let item2 = this.contents.find(i => i.sortOrderId === (id - 1));
     if (item1.sortOrderId > 1) {
@@ -243,7 +243,7 @@ export class AddcoursecontentComponent implements OnInit {
       this.sortedarray.push(item2);
 
       this._authService.UpdateCourseContentOrderId(this.sortedarray).subscribe((result: any) => {
-        debugger
+        
         window.location.reload();
       });
     }
@@ -253,7 +253,7 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   OnClickDown(id: any) {
-    debugger
+    
     let item1 = this.contents.find(i => i.sortOrderId === id);
     let item2 = this.contents.find(i => i.sortOrderId === (id + 1));
     if (item1.sortOrderId < this.contents.length && item1.sortOrderId > 0) {
@@ -263,7 +263,7 @@ export class AddcoursecontentComponent implements OnInit {
       this.sortedarray.push(item2);
 
       this._authService.UpdateCourseContentOrderId(this.sortedarray).subscribe((result: any) => {
-        debugger
+        
         window.location.reload();
       });
     }
@@ -310,7 +310,7 @@ export class AddcoursecontentComponent implements OnInit {
 
 
   onSelectVideo(files) {
-    debugger
+    
     this.GetVideoDuration(files);
     // var val=localStorage.getItem('videoduration');
 
@@ -332,10 +332,10 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   Getgridcoursecontent(id: any,) {
-    debugger
+    
     this.Id = id;
     this._authService.gridcoursecontentbycourseid(this.Id).subscribe((finalresult: any) => {
-      debugger
+      
       // var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
         console.log(finalresult.result)
@@ -354,7 +354,7 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   selectionChange(event: StepperSelectionEvent) {
-    debugger
+    
     var value = "edit"
     console.log(event.selectedStep.label);
     let stepLabel = event.selectedStep.label
@@ -390,12 +390,12 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   GoToPage() {
-    debugger
+    
     this._router.navigate(['/courses/editcourse/' + this.courseid + '/' + 'edit']);
 
   }
   GoToPage1() {
-    debugger
+    
     this._router.navigate(['/courses/addcoursemodule/' + this.courseid]);
 
   }
@@ -409,7 +409,7 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   DeleteMaterial(row: any) {
-    debugger
+    
     var filename = row.Url.replace('https://ugetit.blob.core.windows.net/coursecontentfiles/', "")
     var data = {
       MaterialId: row.materialId,
@@ -435,7 +435,7 @@ export class AddcoursecontentComponent implements OnInit {
 
         // Delete the video
         this._authService.DeleteFiles(data).subscribe((finalresult: any) => {
-          debugger
+          
           if (finalresult.status == "200") {
             let index = this.files.findIndex((element) => element["materialId"] == row.materialId);
 
@@ -461,7 +461,7 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   DeleteVideo() {
-    debugger
+    
     var filename = this.videoUrl.replace('https://ugetit.blob.core.windows.net/coursevideos/', "")
     var data = {
       // MaterialId: row.materialId,
@@ -488,7 +488,7 @@ export class AddcoursecontentComponent implements OnInit {
 
         // Delete the video
         this._authService.DeleteChapterVideo(data).subscribe((finalresult: any) => {
-          debugger
+          
           if (finalresult.status == "200") {
             this.uploadvideo = true
             this.deletevideo = false
@@ -518,7 +518,7 @@ export class AddcoursecontentComponent implements OnInit {
 
 
   UploadVideo(value: any) {
-    debugger
+    
     const formData: FormData = new FormData();
     if (value == 'save' || value == 'SaveNext') {
       if (this.files1.length >= 1) {
@@ -547,7 +547,7 @@ export class AddcoursecontentComponent implements OnInit {
 
         this._authService.UploadChapterVideo(formData)
           .subscribe((finalresult: any) => {
-          debugger
+          
           this.uploadvideo = false
           this.deletevideo = true
           this.videoUrl = finalresult.result
@@ -571,7 +571,7 @@ export class AddcoursecontentComponent implements OnInit {
           //   // }, 500)
           // }
           //   else if (event.type === HttpEventType.Response) {
-          //   debugger
+          //   
           //   this.uploadvideo=false
           //   this.deletevideo=true
           //  this.videoUrl= finalresult.result
@@ -629,7 +629,7 @@ export class AddcoursecontentComponent implements OnInit {
         
         this.blockUI.start('Uploading...');
         this._authService.UploadChapterVideo(formData).subscribe((finalresult: any) => {
-          debugger
+          
           this.uploadvideo = false
           this.deletevideo = true
           this.videoUrl = finalresult.result
@@ -648,7 +648,7 @@ export class AddcoursecontentComponent implements OnInit {
           //   // }, 500)
           // }
           //   else if (event.type === HttpEventType.Response) {
-          //   debugger
+          //   
           //   this.uploadvideo=false
           //   this.deletevideo=true
           //  this.videoUrl= finalresult.result
@@ -707,7 +707,7 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   Edit(id: any, value: any) {
-    //debugger
+    //
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
       baseurl = "https://localhost:44358"
@@ -737,12 +737,12 @@ export class AddcoursecontentComponent implements OnInit {
     }
     this.Id = id;
     this._authService.GetcourseById(this.Id).subscribe((finalresult: any) => {
-      //debugger
+      //
       console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
       if (finalresult.status == "200") {
-        //debugger
+        //
 
         this.coursecontentForm.patchValue(finalresult.result);
         const course = this.coursecontentForm.getRawValue();
@@ -754,12 +754,12 @@ export class AddcoursecontentComponent implements OnInit {
     });
 
     // this._authService.GetCourseModulesById(moduleid).subscribe((finalresult: any) => {
-    //   debugger
+    //   
     //   console.log(finalresult);
     //   //  var finalresult = JSON.parse(finalresult);
     //   // rolebyid=finalresult;
     //   if (finalresult.status == "200") {
-    //     //debugger
+    //     //
     //     this.coursecontentForm.controls['moduleName'].setValue(finalresult.result.moduleName)
     //     this.coursecontentForm.patchValue(finalresult.result);
     //     const course = this.coursecontentForm.getRawValue();
@@ -770,14 +770,14 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    //debugger
+    //
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
 
   selectedmodule() {
-    debugger
+    
     this.clear();
     var id = this.coursecontentForm.controls['selectedmodule'].value;
     var item = this.modules.find(x => x.moduleId == id);
@@ -788,7 +788,7 @@ export class AddcoursecontentComponent implements OnInit {
   GetModulesByCourseId() {
 
     this._authService.GetCourseModules(this.courseid).subscribe((finalresult: any) => {
-      debugger
+      
       var finalresult = JSON.parse(finalresult);
       var values = this._orderpipi.transform(finalresult.result, "asc", "orderId", "number");
       this.modules = values[0];
@@ -811,7 +811,7 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   contentchange() {
-    debugger
+    
     const coursecont = this.coursecontentForm.getRawValue();
     if (coursecont.contentType == "Video") {
       this.type = 'video/*';
@@ -827,7 +827,7 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   AddCoursecontent(val: any) {
-    debugger
+    
     this.showAlert = false;
     // this.openDialogWithTemplateRef(this.myDialog);
     // if(this.files1.length<1 ||this.files.length<1){
@@ -888,11 +888,11 @@ export class AddcoursecontentComponent implements OnInit {
     formData.append("VideoFileName", this.name1)
     this.blockUI.start('Saving...')
     this._authService.Addcoursecontent(formData).subscribe((result: any) => {
-      debugger
+      
 
       // var result = JSON.parse(result);
       if (result.status == "200") {
-        //debugger
+        //
         this.dialog.closeAll();
 
         // Set the alert
@@ -913,7 +913,7 @@ export class AddcoursecontentComponent implements OnInit {
           }, 3000);
         }
         else if (val == 'SaveNext') {
-          debugger
+          
           setTimeout(() => {
             this.blockUI.stop();
             this._router.navigate(['/courses/questions/' + this.courseid]);
@@ -941,7 +941,7 @@ export class AddcoursecontentComponent implements OnInit {
 
       }
       (error) => {
-        debugger
+        
         this.alert = {
           type: 'warn',
           message: "Error While Saving Data"
@@ -964,7 +964,7 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   UpdateCoursecontent(val: any) {
-    debugger
+    
     this.showAlert = false;
 
     if (this.coursecontentForm.invalid) {
@@ -1020,11 +1020,11 @@ export class AddcoursecontentComponent implements OnInit {
     // }
 
     this._authService.Updatecoursecontent(formData).subscribe((result: any) => {
-      debugger
+      
       var result = JSON.parse(result);
       if (result.status == "200") {
         //  this.videoUpload();
-        //debugger
+        //
         // Set the alert
         this.alert = {
           type: 'success',
@@ -1086,7 +1086,7 @@ export class AddcoursecontentComponent implements OnInit {
   UploadFile(TargetFile) {
     this.TotalParts;
     var file = TargetFile[0];
-    debugger;
+    ;
     // document.getElementById('videoupload').innerHTML = file.name
     var newFileName = this.newName + file.name;
     this.uploadedNewFileName = newFileName
@@ -1132,7 +1132,7 @@ export class AddcoursecontentComponent implements OnInit {
     var FD = new FormData();
     FD.append('file', Chunk, FileName);
     this._authService.Updatecoursecontentvideo(FD).subscribe((result: any) => {
-      debugger
+      
       count++;
       console.log('TotalParts', this.TotalParts)
       console.log('count', count)
@@ -1145,7 +1145,7 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   public uploadFile = (files) => {
-    debugger
+    
     if (files.length === 0) {
       return;
     }
@@ -1168,19 +1168,19 @@ export class AddcoursecontentComponent implements OnInit {
   }
 
   videoUpload() {
-    debugger
+    
     const data: FormData = new FormData();
 
     if (this.files1.length == 1) {
       data.append("fileupload", this.fileToUpload1, this.name1);
     }
     this._authService.Updatecoursecontentvideo(data).subscribe((result: any) => {
-      debugger
+      
     });
   }
 
   toggleCompleted($event: MatSlideToggleChange): void {
-    //debugger
+    //
     if ($event.checked != undefined) {
       this.active = $event.checked;
     }
@@ -1190,7 +1190,7 @@ export class AddcoursecontentComponent implements OnInit {
     //this.active=this.filters.hideCompleted$.next(change.checked);
   }
   showEditModal(id) {
-    //debugger
+    //
     var value = "editcontent"
     this._router.navigate(['/courses/addcoursecontent/' + id + '/' + value])
   }
@@ -1210,7 +1210,7 @@ export class AddcoursecontentComponent implements OnInit {
 
   }
   EditFromGrid(id: any, value: any) {
-    debugger
+    
     this.value = value
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
@@ -1246,12 +1246,12 @@ export class AddcoursecontentComponent implements OnInit {
     }
     this.Id = id;
     this._authService.GetcoursecontentById(this.Id).subscribe((finalresult: any) => {
-      debugger
+      
       console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
       if (finalresult.status == "200") {
-        debugger
+        
         this.coursecontentForm.patchValue(finalresult.result);
         const course = this.coursecontentForm.getRawValue();
         console.log('coursecontent', course)
@@ -1287,7 +1287,7 @@ export class AddcoursecontentComponent implements OnInit {
     });
   }
   deleteFromGrid(id: any): void {
-    debugger
+    
     this.showAlert = false
     // Open the confirmation dialog
     const confirmation = this._fuseConfirmationService.open({
@@ -1311,7 +1311,7 @@ export class AddcoursecontentComponent implements OnInit {
         }
         // Delete the contact
         this._authService.deletecoursecontent(data).subscribe((data: any) => {
-          //debugger
+          //
           if (data.status == "200") {
 
 

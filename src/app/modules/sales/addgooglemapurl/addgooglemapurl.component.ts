@@ -35,7 +35,7 @@ export class AddgooglemapurlComponent implements OnInit {
   }
   CheckForUpdate() {
     this._authService.Getgooglemap().subscribe((res: any) => {
-      debugger
+      
       if (res.result.length > 0) {
         this.ConfigurationForm.patchValue(res.result[0]);
         this.update = true;
@@ -54,7 +54,7 @@ export class AddgooglemapurlComponent implements OnInit {
   }
   Save()
   {
-      debugger
+      
       if (this.ConfigurationForm.invalid) {
           return;
       }
@@ -66,10 +66,10 @@ export class AddgooglemapurlComponent implements OnInit {
          //IsActive: this.active,
     }
       this._authService.AddGooglemapurl(data).subscribe((result: any) => {
-          debugger
+          
           //  var result = JSON.parse(result);
             if (result.status == "200") {
-                //debugger
+                //
                  // Set the alert
                  this.alert = {
                   type   : 'success',
@@ -113,16 +113,16 @@ export class AddgooglemapurlComponent implements OnInit {
     this.showAlert = false;
 
     const content = this.ConfigurationForm.getRawValue();
-debugger
+
     var data = {
       Id: content.id,
       GoogleMapUrl: content.googleMapUrl,    
       UpdatedBy: parseInt(localStorage.getItem("LoginId")),
     }
     this._authService.Updategooglemap(data).subscribe((result: any) => {
-      debugger
+      
       if (result.status == "200") {
-        debugger
+        
 
         // Set the alert
         this.alert = {

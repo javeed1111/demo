@@ -54,7 +54,7 @@ export class EditgooglemapurlComponent implements OnInit {
 
   Edit(id: any, value: any) {
     this.Id=id
-    //debugger
+    //
     if (value == "view") {
       // this.editsite=false;
       this.butdisabled = true;
@@ -65,7 +65,7 @@ export class EditgooglemapurlComponent implements OnInit {
 
     }
     else {
-      debugger
+      
       this.butdisabled = false;
       this.ConfigurationForm.controls['GoogleMapUrl'].enable();   
       this.ConfigurationForm.controls['showOnWebsite'].enable();
@@ -73,11 +73,11 @@ export class EditgooglemapurlComponent implements OnInit {
     }
 
     this._authService.GetgooglemapById(id).subscribe((finalresult: any) => {
-      debugger
+      
       console.log(finalresult);
 
       if (finalresult.status == "200") {
-        debugger
+        
        // this.name= finalresult.result.companylogo
         // this.ConfigurationForm.patchValue(finalresult.result);
          this.ConfigurationForm.patchValue({
@@ -102,7 +102,7 @@ export class EditgooglemapurlComponent implements OnInit {
     this.showAlert = false;
 
     const content = this.ConfigurationForm.getRawValue();
-debugger
+
     var data = {
       Id: this.approute.snapshot.params['id'],
       GoogleMapUrl: content.GoogleMapUrl,    
@@ -111,9 +111,9 @@ debugger
       //  IsActive: this.active,
     }
     this._authService.Updategooglemap(data).subscribe((result: any) => {
-      debugger
+      
       if (result.status == "200") {
-        debugger
+        
 
         // Set the alert
         this.alert = {
@@ -141,14 +141,14 @@ debugger
 
       }
     });
-    debugger
+    
     if(content.showOnWebsite!=undefined){
       this.showOnWebsite =content.showOnWebsite;
     }
   }
 
   onwebsite($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked == undefined || $event.checked == true) {
       this.showOnWebsite = $event.checked;
     }

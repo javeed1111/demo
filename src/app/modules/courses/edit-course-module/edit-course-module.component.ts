@@ -31,7 +31,7 @@ moduleid: any;
 
 
   ngOnInit(): void {
-    debugger
+    
     this.moduleid = this.approute.snapshot.params['id'];
     this.courseid=this.approute.snapshot.params['courseid'];
     var value=this.approute.snapshot.params['value'];
@@ -53,7 +53,7 @@ moduleid: any;
   }
 
   Edit(id: any, value: any) {
-    //debugger
+    //
     if (value == "view") {
       // this.editsite=false;
       this.butdisabled=true;
@@ -69,12 +69,12 @@ moduleid: any;
   }
     // this.Id = id;
     this._authService.GetCourseModulesById(id).subscribe((finalresult: any) => {
-        //debugger
+        //
         console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
         if (finalresult.status == "200") {
-          //debugger
+          //
 
           this.coursemoduleForm.patchValue(finalresult.result);
          
@@ -118,10 +118,10 @@ moduleid: any;
  }
   this._authService.UpdateCourseModules(data).subscribe((result: any) => {
       
-    //debugger
+    //
        var result = JSON.parse(result);
         if (result.status == "200") {
-            //debugger
+            //
             
              // Set the alert
              this.alert = {

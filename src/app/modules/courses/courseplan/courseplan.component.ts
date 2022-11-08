@@ -99,7 +99,7 @@ export class CourseplanComponent implements OnInit {
     this._router.navigate(['/courses/courseplanlist/']);
   }
   checkprice() {
-    debugger
+    
     const dataa = this.horizontalStepperForm.getRawValue();
     var price = dataa.step1.price;
     var offerprice = dataa.step1.offerPrice;
@@ -121,7 +121,7 @@ export class CourseplanComponent implements OnInit {
 
   }
   change(itemObj, event) {
-    debugger
+    
     if (this.horizontalStepperForm.invalid) {
       return;
     }
@@ -135,7 +135,7 @@ export class CourseplanComponent implements OnInit {
       let unmatchedFilteredData = []
       if (this.Filter.length > 0) {
         this.Filter.forEach((element, i) => {
-          debugger
+          
           if (element.courseId != itemObj.courseId) {
             unmatchedFilteredData.push(element)
           }
@@ -153,10 +153,10 @@ export class CourseplanComponent implements OnInit {
     if (event.isUserInput) {
       console.log(event.source.value, event.source.selected);
       this._authService.GetCourseContent().subscribe((finalresult: any) => {
-        debugger
+        
         var finalresult = JSON.parse(finalresult);
         if (finalresult.status == "200") {
-          debugger
+          
 
           let filteredData = this.cours.filter(x => x.courseId == event.source.value)
           let filteredData1 = finalresult.result.filter(x => x.courseId == event.source.value)
@@ -181,7 +181,7 @@ export class CourseplanComponent implements OnInit {
             let data = { courseId: chapters['courseId'], title: chapters['courseName'], chapterId: y.id }
             this.Filter.push(data)
           })
-          debugger;
+          ;
           this.dataSource = new MatTableDataSource(this.Filter);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -197,7 +197,7 @@ export class CourseplanComponent implements OnInit {
   }
 
   onwebsite($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked == undefined || $event.checked == true) {
       this.showonwebsite = $event.checked;
     }
@@ -209,7 +209,7 @@ export class CourseplanComponent implements OnInit {
   }
 
   onChangecheckbox(event: MatCheckboxChange, chapterid, courseid) {
-    debugger
+    
     console.log(event.checked + " => " + event.source.value);
     let data =
     {
@@ -225,7 +225,7 @@ export class CourseplanComponent implements OnInit {
     // }
   }
   // onChange() {
-  //   debugger
+  //   
   //   if (this.horizontalStepperForm.invalid) {
   //     return;
   //   }
@@ -244,10 +244,10 @@ export class CourseplanComponent implements OnInit {
   //     ListOfCourses: ListOfCourse,
   //   }
   //   this._authService.GettitleById(data).subscribe((finalresult: any) => {
-  //     debugger
+  //     
   //     // var finalresult = JSON.parse(finalresult);
   //     if (finalresult.status == "200") {
-  //       debugger
+  //       
   //       var ListOfTitles = [];
   //       for (var i = 0; i < finalresult.result.length; i++) {
   //         const titles = new titlelist();
@@ -269,7 +269,7 @@ export class CourseplanComponent implements OnInit {
   //   });
   // }
   toggleCompleted($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked != undefined) {
       this.isofferactive = $event.checked;
       if (this.isofferactive == true) {
@@ -292,18 +292,18 @@ export class CourseplanComponent implements OnInit {
     //this.active=this.filters.hideCompleted$.next(change.checked);
   }
   applyFilter(filterValue: string) {
-    //debugger
+    //
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
   GetCourse() {
-    //debugger
+    //
     this._authService.GetCourses().subscribe((finalresult: any) => {
-      //debugger
+      //
       var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
-        //debugger
+        //
         //this.dataSource= finalresult.result;
         this.cours = finalresult.result;
         //this.roles = finalresult.result;
@@ -317,12 +317,12 @@ export class CourseplanComponent implements OnInit {
   }
 
   // getDateItem(date: Date): string {
-  //   debugger
+  //   
   //   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
   // }
 
   savecourseplan(): void {
-    debugger
+    
     // Return if the form is invalid
     if (this.horizontalStepperForm.invalid) {
       return;
@@ -406,10 +406,10 @@ export class CourseplanComponent implements OnInit {
       CreatedBy: parseInt(localStorage.getItem("LoginId")),
     }
     this._authService.AddCoursePlan(data).subscribe((result: any) => {
-      //debugger
+      //
       var result = JSON.parse(result);
       if (result.status == "200") {
-        debugger
+        
 
         // Show the alert
         this.showAlert = true;
@@ -424,7 +424,7 @@ export class CourseplanComponent implements OnInit {
         }, 1000);
       }
       else if (result.status == "-101") {
-        debugger
+        
 
         // Show the alert
         this.showAlert = true;

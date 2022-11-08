@@ -59,7 +59,7 @@ export class EditcompanydetailsComponent implements OnInit {
 
   Edit(id: any, value: any) {
     this.Id=id
-    //debugger
+    //
     if (value == "view") {
       // this.editsite=false;
       this.butdisabled = true;
@@ -73,7 +73,7 @@ export class EditcompanydetailsComponent implements OnInit {
 
     }
     else {
-      debugger
+      
       this.butdisabled = false;
       this.ConfigurationForm.controls['companyName'].enable();
       this.ConfigurationForm.controls['address'].enable();
@@ -85,11 +85,11 @@ export class EditcompanydetailsComponent implements OnInit {
     }
 
     this._authService.GetCompanyMasterById(id).subscribe((finalresult: any) => {
-      //debugger
+      //
       console.log(finalresult);
 
       if (finalresult.status == "200") {
-        debugger
+        
        // this.name= finalresult.result.companylogo
         // this.ConfigurationForm.patchValue(finalresult.result);
          this.ConfigurationForm.patchValue({
@@ -125,7 +125,7 @@ export class EditcompanydetailsComponent implements OnInit {
   }
 
   onSelectFile(files: FileList) {
-    debugger
+    
     if (files.length === 0)
 
       return;
@@ -149,7 +149,7 @@ export class EditcompanydetailsComponent implements OnInit {
     this.showAlert = false;
 
     const content = this.ConfigurationForm.getRawValue();
-debugger
+
     // var data = {
     //   Id: this.approute.snapshot.params['id'],
     //   companyName: content.companyName,
@@ -181,9 +181,9 @@ debugger
 
 
     this._authService.UpdateCompanyMaster(formData).subscribe((result: any) => {
-      debugger
+      
       if (result.status == "200") {
-        debugger
+        
 
         // Set the alert
         this.alert = {
@@ -211,14 +211,14 @@ debugger
 
       }
     });
-    debugger
+    
     if(content.showOnWebsite!=undefined){
       this.showOnWebsite =content.showOnWebsite;
     }
   }
 
   onwebsite($event: MatSlideToggleChange): void {
-    debugger
+    
     if ($event.checked == undefined || $event.checked == true) {
       this.showOnWebsite = $event.checked;
     }
