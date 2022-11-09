@@ -59,7 +59,7 @@ export class CourseComponent implements OnInit {
 
   isLoading: boolean = false;
   selectedProduct: any | null = null;
-  displayedColumns = ['sno',  'title', 'courseName', 'technologyName','actions'];
+  displayedColumns = ['sno',   'courseName', 'technologyName','actions'];
   dataSource: MatTableDataSource<CourseData>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
