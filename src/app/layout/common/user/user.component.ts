@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BooleanInput } from '@angular/cdk/coercion';
 import { Subject, takeUntil } from 'rxjs';
 import { User } from 'app/core/user/user.types';
@@ -7,6 +7,8 @@ import { AppConfig, Scheme, Theme, Themes } from 'app/core/config/app.config';
 import { UserService } from 'app/core/user/user.service';
 import { FuseConfigService } from '@fuse/services/config';
 import { Layout } from 'app/layout/layout.types';
+import { AuthService } from 'app/core/auth/auth.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector       : 'user',
@@ -35,6 +37,8 @@ export class UserComponent implements OnInit, OnDestroy
     firstname:string;
     lastname:string;
     email:string;
+    dataSource: MatTableDataSource<any>;
+    
 
     // private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -46,7 +50,9 @@ export class UserComponent implements OnInit, OnDestroy
         private _router: Router,
         private _userService: UserService,
     
-        private _fuseConfigService: FuseConfigService
+        private _fuseConfigService: FuseConfigService,
+        private _authService: AuthService,
+        private approute: ActivatedRoute
     )
     {
     }
@@ -58,12 +64,20 @@ export class UserComponent implements OnInit, OnDestroy
     /**
      * On init
      */
+     item: number = 0;
+     subscription: any;
     ngOnInit(): void
     {
+        debugger;
+        var Id = this.approute.snapshot.params['Id'];
         this.firstname=localStorage.getItem("firstname");
         this.lastname=localStorage.getItem("lastname");
         this.email=localStorage.getItem("email");
-
+        this.subscription = this._authService.getuserchangeemitter().subscribe(item =>{
+        debugger;
+       this.getThemeColor(item)
+      });
+        
         // Subscribe to user changes
         this._userService.user$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -120,10 +134,43 @@ export class UserComponent implements OnInit, OnDestroy
      *
      * @param theme
      */
-    setTheme(theme: Theme): void
+    setTheme(theme: Theme,type): void
     {
-        
+        debugger;
         this._fuseConfigService.config = {theme};
+        var Id = localStorage.getItem('LoginId');
+        if(type=="yes"){
+        this._authService.setThemeColor(theme,Id).subscribe((finalresult: any) => {
+            debugger
+            // if (finalresult.status == "200") {
+              
+            //   console.log('getcompanydtls',finalresult.result);
+            //   this.dataSource = new MatTableDataSource(finalresult.result);
+            //   // this.dataSource.paginator = this.paginator;
+            //   // this.dataSource.sort = this.sort;
+            // }
+        //    this.setTheme(finalresult.themecolor)
+            
+          });
+    
+        }
+
+
+    }
+
+    getThemeColor(item){
+        this._authService.Gettheme(item).subscribe((finalresult: any) => {
+            debugger
+            // if (finalresult.status == "200") {
+              
+            //   console.log('getcompanydtls',finalresult.result);
+            //   this.dataSource = new MatTableDataSource(finalresult.result);
+            //   // this.dataSource.paginator = this.paginator;
+            //   // this.dataSource.sort = this.sort;
+            // }
+           this.setTheme(finalresult.themecolor,'no')
+            
+          });
     }
 
     // -----------------------------------------------------------------------------------------------------

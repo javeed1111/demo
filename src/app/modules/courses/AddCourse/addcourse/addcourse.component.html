@@ -69,6 +69,14 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="flex">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Dollar Price</mat-label>
+                                        <input type="number" matInput [formControlName]="'price'" [placeholder]="'Price'" (blur)='checkprice()' required>
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:currency-dollar'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex">
                                     <div class="space-y-4">
                                         <ng-container>
                                             <!-- <div class="flex"> -->
@@ -268,10 +276,172 @@
 
                                 </div>
 
+
+
+                               
+                               
+                            <!-- Main -->
+                            <div class="sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+
+                               
+                                <div class="flex flex-auto overflow-hidden">
+
+                                    
+
+                                    <!-- Products list -->
+                                    <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+                                        <ng-container>
+                                            <ng-container>
+                                                <div class="grid">
+                                                    <!-- Header -->
+                                                    <!-- <div
+                                                        class="inventory-grid z-10 sticky top-0 grid gap-8 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                                                        matSort
+                                                        matSortDisableClear> -->
+                                                        <!-- <div
+                                                            class="hidden md:block"
+                                                            [mat-sort-header]="'sku'">
+                                                            Upload Files
+                                                        </div> -->
+                                                        <!-- <div [mat-sort-header]="'name'">Sno.</div>
+                                                        <div [mat-sort-header]="'name'">Upload Files</div>
+                                                        <div [mat-sort-header]="'name'">Icon</div>
+                                                        <div>Required</div>
+                                                        <div>selected File</div> -->
+                                                        <!-- <div
+                                                            class="hidden sm:block"
+                                                            [mat-sort-header]="'price'">
+                                                            Price
+                                                        </div>
+                                                        <div
+                                                            class="hidden lg:block"
+                                                            [mat-sort-header]="'stock'">
+                                                            Stock
+                                                        </div> -->
+                                                    <!-- </div> -->
+                                                    <!-- Rows -->
+                                                    <p style="font-size: 16px;"><span style="color: red;"> * </span> Image size should be: 600*485</p>
+                                                    <p style="font-size: 16px;"><span style="color: red;"> * </span> Image size should be: 600*485</p>
+
+                                                    <ng-container>
+                                                        <ng-container>
+                                                            <div class="inventory-grid grid p-5 items-center gap-10 py-3 px-6 md:px-8 border-b">
+                            
+                                                                <!-- Image -->
+                            
+                                                                <!-- SKU -->
+                                                                <div class="hidden md:block truncate">
+                                                                    1
+                                                                </div>
+                            
+                                                                <!-- Name -->
+                                                                <div class="truncate">
+                                                                    Course Image
+                                                                </div>
+                                                                <div class="truncate">
+                                                                    <mat-icon onclick="document.getElementById('txtfileupload').click()" [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+
+                                                                </div>
+                                                                <!-- <div class="">
+                                                                    Image size should be: 600*485
+                                                                </div> -->
+                                                                <div>
+                                                                    {{name}}
+
+                                                                </div>
+                            
+                                                                <!-- Price -->
+                                                                <!-- <div class="hidden sm:block">
+                                                                    test
+                                                                </div>
+                            
+                                                                <!-- Stock 
+                                                                <div class="hidden lg:flex items-center">
+                                                                    <div class="min-w-4">stock</div>
+                                                                </div> -->
+                                                            </div>
+                                                            <div class="inventory-grid grid items-center gap-10 py-3 px-6 md:px-8 border-b">
+                            
+                                                                <!-- Image -->
+                            
+                                                                <!-- SKU -->
+                                                                <div class="hidden md:block truncate">
+                                                                    2
+                                                                </div>
+                            
+                                                                <!-- Name -->
+                                                                <div class="truncate">
+                                                                    Course Icon
+                                                                </div>
+                                                                <div class="truncate">
+                                                                    <mat-icon onclick="document.getElementById('txtfileupload1').click()" [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+
+                                                                </div>
+                                                                <!-- <div class="">
+                                                                    Image size should be: 600*485
+                                                                </div> -->
+                                                                <div>
+                                                                    {{name1}}
+
+                                                                </div>
+                            
+                                                                <!-- Price -->
+                                                                <!-- <div class="hidden sm:block">
+                                                                    test
+                                                                </div>
+                            
+                                                                <!-- Stock 
+                                                                <div class="hidden lg:flex items-center">
+                                                                    <div class="min-w-4">stock</div>
+                                                                </div> -->
+                                                            </div>
+                                                            <div class="inventory-grid grid items-center gap-10 py-3 px-6 md:px-8 border-b">
+                            
+                                                                <!-- Image -->
+                            
+                                                                <!-- SKU -->
+                                                                <div class="hidden md:block truncate">
+                                                                   3
+                                                                </div>
+                            
+                                                                <!-- Name -->
+                                                                <div class="truncate">
+                                                                    Course Video
+                                                                </div>
+                                                                <div class="truncate">
+                                                                    <mat-icon onclick="document.getElementById('txtfileupload2').click()" [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+                                                                </div>
+                                                                <div>{{name2}}</div>
+                                                                
+                            
+                                                                <!-- Price -->
+                                                                <!-- <div class="hidden sm:block">
+                                                                    test
+                                                                </div>
+                            
+                                                                <!-- Stock 
+                                                                <div class="hidden lg:flex items-center">
+                                                                    <div class="min-w-4">stock</div>
+                                                                </div> -->
+                                                            </div>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </div>
+                            
+                                            </ng-container>
+                                        </ng-container>
+                            
+                                    </div>
+                                  
+                                </div>
+                            
+                            </div>
+                            
+
                                 <div class="grid grid-cols-12 gap-x-1 mt-4">
 
                                     <!-- Actions -->
-                                    <div class=" mt-4 sm:mt-0 col-span-6">
+                                    <div class=" mt-4 sm:mt-0 col-span-6"  style="display: none;">
                                         <!-- Upload button -->
                                         <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload').click()">
                                             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
@@ -297,7 +467,7 @@
 
 
                                     <!-- Actions -->
-                                    <div class=" mt-4 sm:mt-0 col-span-6">
+                                    <div class=" mt-4 sm:mt-0 col-span-6" style="display: none;">
                                         <!-- Upload button -->
                                         <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload1').click()">
                                             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
@@ -323,9 +493,9 @@
                                 </div>
 
                                 <div class="grid grid-cols-12 gap-x-1 mt-4">
-                                    <div class="mt-4 sm:mt-0 col-span-6">
+                                    <div class="mt-4 sm:mt-0 col-span-6"  style="display: none;">
                                         <!-- Upload button -->
-                                        <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload2').click()">
+                                        <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload2').click()" >
                                         <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                                         <span class="ml-1 mr-0">Upload Course Video</span>
                                 

@@ -81,6 +81,14 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
            this. GetCompanydetails();
+
+         
+          debugger;
+          setTimeout(() => {
+            let data =  localStorage.getItem("LoginId");
+            this._authService.emituserdetailsevent(data);
+          }, 0);
+         
     }
 
     GetCompanydetails()

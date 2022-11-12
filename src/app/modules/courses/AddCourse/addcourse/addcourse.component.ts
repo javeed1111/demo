@@ -781,13 +781,14 @@ export class AddcourseComponent implements OnInit {
             type: 'success',
             message: result.message
           };
-
+debugger
           // Show the alert
           this.showAlert = true;
           if (val == 'save') {
             setTimeout(() => {
               this.blockUI.stop()
-              window.location.reload();
+             // window.location.reload();
+             
             }, 3000);
           }
           else if (val == 'SaveNext') {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { AuthUtils } from 'app/core/auth/auth.utils';
@@ -19,6 +19,14 @@ export class AuthService {
     //this.baseUrl = 'https://testugetitapi.fadelsoft.com/';
     //this.baseUrl = 'http://testugetitapi.fadelsoft.com/';
     
+  }
+
+  navchange: EventEmitter<number> = new EventEmitter();
+  emituserdetailsevent(number) {
+    this.navchange.emit(number);
+  }
+  getuserchangeemitter() {
+    return this.navchange;
   }
 
   // -----------------------------------------------------------------------------------------------------
@@ -84,7 +92,7 @@ export class AuthService {
         localStorage.setItem("LoginId", response.result.id);
         localStorage.setItem("token", response.result.token);
         // }
-
+        // this.emituserdetailsevent(response);
         // Set the authenticated flag to true
         this._authenticated = true;
         //localStorage.setItem("_authenticated",this._authenticated)
@@ -416,6 +424,10 @@ export class AuthService {
     
     return this._httpClient.get(this.baseUrl + "api/Admin/GetCompanyMaster");
   }
+  public Gettheme(Id):Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/Gettheme?Id="+Id);
+  }
   public GetEmails():Observable<any> {
     
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllEmails");
@@ -504,6 +516,9 @@ export class AuthService {
   }
   public GetCompanydetails() {
     return this._httpClient.get(this.baseUrl + "api/UIMain/Getcompanymaster", {responseType: 'text'});
+  }
+  public setThemeColor(theme,id) {
+    return this._httpClient.get(this.baseUrl + "api/Admin/settheme?Theme="+theme+"&ID="+id, {responseType: 'text'});
   }
 
 

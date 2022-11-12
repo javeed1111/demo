@@ -1,7 +1,7 @@
 import { I } from '@angular/cdk/keycodes';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -119,10 +119,19 @@ export class EditcourseComponent implements OnInit {
   closevideo:boolean=true;
   UpdatedBy:any;
   CourseId:any;
+  preview:any;
+  preview1:any;
   showAlert1: boolean;
+  newid: any;
+  icon: string;
+  comparecount=1
+  preview2: any;
+
   
   constructor(
 
+
+    private _changeDetectorRef: ChangeDetectorRef,
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _router: Router,
@@ -133,7 +142,9 @@ export class EditcourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    ;
+
+    this.preview=false;
+    this.preview1=false;
     var loginId = localStorage.getItem("LoginId");
     var id = this.approute.snapshot.params['id'];
     var value = this.approute.snapshot.params['value'];
@@ -178,6 +189,7 @@ export class EditcourseComponent implements OnInit {
       facultyId:['',[Validators.required]],
       img:[''],
     });
+  this.newid = this.approute.snapshot.params['id'];
     const ctrl = this.courseForm.controls['offerPrice'];
     ctrl.disable();
     const ctrl1 = this.courseForm.controls['taxPercent']
@@ -189,6 +201,74 @@ export class EditcourseComponent implements OnInit {
     this._router.navigate(['/courses/course']);
  
   }
+  previews(){
+
+    this.preview=true
+     this.preview1=true
+     this.preview2=true
+  }
+  closeDetails(): void
+    {
+        this.newid = null;
+    }
+
+  toggleDetails()
+    {
+      var count =1
+      if(count==this.comparecount){
+      this.preview=true;
+      this.comparecount+=1;
+    }
+    else{
+      this.preview=false;
+      this.comparecount-=1;
+
+    }
+      // if(selectedid== this.newid){
+        // this.closeDetails();
+        // return;
+      // }
+      this._changeDetectorRef.markForCheck();
+           
+    }
+
+    toggleDetails1()
+    {
+      var count =1
+      if(count==this.comparecount){
+      this.preview1=true;
+      this.comparecount+=1;
+    }
+    else{
+      this.preview1=false;
+      this.comparecount-=1;
+
+    }
+      // if(selectedid== this.newid){
+        // this.closeDetails();
+        // return;
+      // }
+      this._changeDetectorRef.markForCheck();
+           
+    }
+
+
+    toggleDetails2()
+    {
+      var count =1
+      if(count==this.comparecount){
+      this.preview2=true;
+      this.comparecount+=1;
+    }
+    else{
+      this.preview2=false;
+      this.comparecount-=1;
+
+    }
+      
+      this._changeDetectorRef.markForCheck();
+           
+    }
   onSelectFile(files: FileList) {
     //
     if (files.length === 0)

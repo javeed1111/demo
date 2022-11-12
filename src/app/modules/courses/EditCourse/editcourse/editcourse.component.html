@@ -342,34 +342,258 @@
                                     </div>
                                 </div>
 
+
+
+
+                                <div class="sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+
+                               
+                                    <div class="flex flex-auto overflow-hidden" >
+    
+                                        
+    
+                                        <!-- Products list -->
+                                        <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto" >
+                                            <ng-container>
+                                                <ng-container>
+                                                    <div class="grid">
+                                                        <!-- Header -->
+                                                        <!-- <div
+                                                            class="inventory-grid z-10 sticky top-0 grid gap-8 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                                                            matSort
+                                                            matSortDisableClear> -->
+                                                            <!-- <div
+                                                                class="hidden md:block"
+                                                                [mat-sort-header]="'sku'">
+                                                                Upload Files
+                                                            </div> -->
+                                                            <!-- <div [mat-sort-header]="'name'">Sno.</div>
+                                                            <div [mat-sort-header]="'name'">Upload Files</div>
+                                                            <div [mat-sort-header]="'name'">Icon</div>
+                                                            <div>Required</div>
+                                                            <div>selected File</div> -->
+                                                            <!-- <div
+                                                                class="hidden sm:block"
+                                                                [mat-sort-header]="'price'">
+                                                                Price
+                                                            </div>
+                                                            <div
+                                                                class="hidden lg:block"
+                                                                [mat-sort-header]="'stock'">
+                                                                Stock
+                                                            </div> -->
+                                                        <!-- </div> -->
+                                                        <!-- Rows -->
+                                                        <p style="font-size: 16px;"><span style="color: red;"> * </span> Image size should be: 600*485</p>
+                                                        <p style="font-size: 16px;"><span style="color: red;"> * </span> Image size should be: 600*485</p>
+                                                        
+                                                        <ng-container>
+                                                            <ng-container>
+                                                                <div class="inventory-grid grid p-5 items-center gap-10 py-3 px-6 md:px-8 border-b">
+                                
+                                                                    <!-- Image -->
+                                
+                                                                    <!-- SKU -->
+                                                                    <div class="hidden md:block truncate">
+                                                                        1
+                                                                    </div>
+                                
+                                                                    <!-- Name -->
+                                                                    <div class="truncate">
+                                                                        Course Image
+                                                                    </div>
+                                                                    <div class="truncate">
+                                                                        <mat-icon  onclick="document.getElementById('txtfileupload').click()" [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+    
+                                                                    </div>
+                                                                    <!-- <div class="">
+                                                                        Image size should be: 600*485
+                                                                    </div> -->
+                                                                    <div>
+                                                                        {{name}}
+                                                                        {{CourseImageAlt}}
+                                                                       
+                                                                    </div>
+                                                                   
+                                                                    <div>
+                                                                        <button
+                                                                            class="min-w-10 min-h-7 h-7 px-2 leading-6"
+                                                                            mat-stroked-button
+                                                                            (click)="toggleDetails1()">
+                                                                            <mat-icon
+                                                                                class="icon-size-5"
+                                                                                [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                                                                        </button>
+                                                                    </div>
+                                         
+                                                                </div>
+
+                                                                <div class="grid">
+                                                                    <ng-container *ngIf="preview1">
+                                                                        <ng-container>
+                                                                        
+                                                                            <div class="flex" style="margin-top: 10%;" *ngIf="ImageURL">
+                                                                                <img *ngIf="preview1"  style="width: 30%;  border: 1px solid #555" src="{{ImageURL}}">
+                                                                            </div>
+
+                                                                        </ng-container>
+                                                                    </ng-container>
+                                                                </div>
+                                                                <div class="inventory-grid grid items-center gap-10 py-3 px-6 md:px-8 border-b">
+                                
+                                         
+                                                                    <div class="hidden md:block truncate">
+                                                                        2
+                                                                    </div>
+                                
+                                                                    <!-- Name -->
+                                                                    <div class="truncate">
+                                                                        Course Icon
+                                                                    </div>
+                                                                    <div class="truncate">
+                                                                        <mat-icon onclick="document.getElementById('txtfileupload1').click()" [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+    
+                                                                    </div>
+                                                                  
+                                                                    <div>
+                                                                        {{name1}}
+                                                                        {{IconImageAlt}}
+    
+                                                                    </div>
+                                                                    <div>
+                                                                        <button
+                                                                            class="min-w-10 min-h-7 h-7 px-2 leading-6"
+                                                                            mat-stroked-button
+                                                                            (click)="toggleDetails2()">
+                                                                            <mat-icon
+                                                                                class="icon-size-5"
+                                                                                [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                                                                        </button>
+                                                                    </div>
+                                
+                                                                 </div>
+                                                                 <div class="grid">
+                                                                    <ng-container *ngIf="preview2">
+                                                                        <ng-container>
+                                                                        
+                                                                            <div   class="flex" style="margin-top: 10%;" *ngIf="IconUrl">
+                                                                                <img *ngIf="preview2" style="width: 30%;  border: 1px solid #555" src="{{IconUrl}}">
+                                                                            </div>
+
+                                                                        </ng-container>
+                                                                    </ng-container>
+                                                                </div>
+                                                                                       
+                                                                <div class="inventory-grid grid items-center gap-10 py-3 px-6 md:px-8 border-b">
+                                
+                                                                    <!-- Image -->
+                                
+                                                                    <!-- SKU -->
+                                                                    <div class="hidden md:block truncate">
+                                                                       3
+                                                                    </div>
+                                
+                                                                    <!-- Name -->
+                                                                    <div class="truncate">
+                                                                        Course Video
+                                                                    </div>
+                                                                    <div class="truncate">
+                                                                        <mat-icon  onclick="document.getElementById('txtfileupload2').click()"  [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+                                                                    </div>
+                                                                    <div>{{name2}}
+                                                                        {{VideoAlt}}
+                                                                    </div>
+
+                                                                 
+                                                                    <div>
+                                                                        <button
+                                                                            class="min-w-10 min-h-7 h-7 px-2 leading-6"
+                                                                            mat-stroked-button
+                                                                            (click)="toggleDetails()">
+                                                                            <mat-icon
+                                                                                class="icon-size-5"
+                                                                                [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>  
+                                                                    <div class="grid">
+                                                                        <ng-container *ngIf="preview">
+                                                                            <ng-container>
+                                                                                <div  class="video" *ngFor="let video of videoSource">
+                                                                                    <video *ngIf="preview" controls width="300" height="300" controlsList="nodownload" (click)="toggleVideo()" #videoPlayer>
+                                                                                              <source src="{{video}}" type="video/mp4" />
+                                                                                                     Browser not supported
+                                                                                    </video>
+                                                                                </div>
+
+                                                                            </ng-container>
+                                                                        </ng-container>
+                                                                    </div>
+                                                                                                 
+            
+                                                                
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </div>
+                                
+                                                </ng-container>
+                                            </ng-container>
+
+                                         
+                            
+                                
+                                        </div>
+                                      
+                                    </div>
+                                
+                                </div>
+                                
+    
+
+
+
                                 <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert1" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'success'">
                                     {{alert.message}}
                                 </fuse-alert>
-                                <div class="mt-4 sm:mt-0 col-span-6">
+                                    
+                                    <!-- <div class="mt-4 sm:mt-0 col-span-6"><button   mat-flat-button [color]="'primary'" (click)="previews()">Preview UploadFiles</button>
+                                    </div>-->
+                                    <br> 
+                                    <div class="grid grid-cols-12 gap-x-1 mt-4">
+                                <div class="mt-4 sm:mt-0 col-span-6" style="display:none;">
                                     <!-- Upload button -->
                                     <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload2').click()" [disabled]="butdisabled">
                                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                                        <span class="ml-1 mr-0">Upload Video</span>
+                                        <span  class="ml-1 mr-0">Upload Video</span>
     
                                      <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg "
                                             id="txtfileupload" name="fileupload"
                                         (change)="onSelectFile($event.target.files)"> -->
     
                                     </button>
-
+                                    
+                                    <!-- <button   mat-flat-button [color]="'primary'" (click)="previews()">preview</button> -->
 
 
                                     <!-- <span class="ml-2" *ngIf="uploadvideo" (click)="UploadVideo()"><mat-icon svgIcon="heroicons_outline:cloud-upload"></mat-icon></span> -->
                                     <span class="ml-2" *ngIf="deletevideo" (click)="DeleteVideo()">
                                         <mat-icon  svgIcon="heroicons_outline:trash"></mat-icon>
+                                     
                                         <!-- <button mat-icon-button [formControlName]="'img'" ><mat-icon  svgIcon="heroicons_outline:trash"></mat-icon></button> -->
                                     
                                     </span>
-                                    <span class="ml-1 mr-0">{{name2}}</span>
-                                    <span class="ml-1 mr-0">{{VideoAlt}}</span>
+                                    <span>  <a class="min-w-10 min-h-7 h-7 p-3 ml-2" mat-stroked-button
+                                        (click)="previews()">
+                                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:eye'">
+                                        </mat-icon>
+                                      </a></span>
+                                  
+                                    <span  class="ml-1 mr-0">{{name2}}</span>
+                                    <span  class="ml-1 mr-0">{{VideoAlt}}</span>
 
                                     <!-- <span class="ml-1 mr-0">{{uploadedvideofile}}</span> -->
-                                    <span class="ml-1 mr-0">
+                                    <span  class="ml-1 mr-0">
+                                        
                                            <!-- <button class="ml-auto" mat-button [matTooltip]="'remove'" (click)="removeuploads()" >
                                          Remove
                                             </button> -->
@@ -379,28 +603,39 @@
                                       onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
-                                    <input type='file' class="form-control" formControlName="uploader1" accept="video/*" id="txtfileupload2" name="fileupload2" (change)="onSelectVideo($event.target.files)" style="display:none" [multiple]="true" [formControlName]="'img'">
+                                    <input  type='file' class="form-control" formControlName="uploader1" accept="video/*" id="txtfileupload2" name="fileupload2" (change)="onSelectVideo($event.target.files)" style="display:none" [multiple]="true" [formControlName]="'img'">
                                     <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                                      id="txtfileupload"  name="fileupload" 
                                        (change)="onSelectFile($event.target.files)"> -->
-                                </div>
-                                <div class="flex" style="margin-top: 10%;" *ngIf="deletevideo">
+                               
+
+
+
+                                            <div class="flex" style="margin-top: 10%;" *ngIf="deletevideo" >
+
+                                                <!-- <div class="mt-4 sm:mt-0 col-span-6"><button   mat-flat-button [color]="'primary'" (click)="previews()">Preview UploadFiles</button>
+                                                </div> -->
+                                             
+                                                
                                     <!-- <div *ngIf="closevideo"> -->
                                     <!-- <img style="width: 30%;  border: 1px solid #555" src="{{ImageURL}}"> -->
-                                    <div class="video" *ngFor="let video of videoSource">
-                                        <video controls width="300" height="300" controlsList="nodownload" (click)="toggleVideo()" #videoPlayer>
+                                    <div  class="video" *ngFor="let video of videoSource">
+                                        <video *ngIf="preview" controls width="300" height="300" controlsList="nodownload" (click)="toggleVideo()" #videoPlayer>
                                                   <source src="{{video}}" type="video/mp4" />
                                                          Browser not supported
                                         </video>
                                     </div>
                                     <!-- </div> -->
                                 </div>
-                                <div class="flex mt-4">
+                                    </div>
+                               
+                           
+                                <div class="mt-4 sm:mt-0 col-span-6" style="display:none;">
                                     <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>  -->
                                     <!-- <div class="absolute inset-0 flex items-center justify-center z-20"> -->
-                                    <div>
+                                  
                                         <!-- Actions -->
-                                        <div class="mt-4 sm:mt-0">
+                                        <!-- <div class="mt-4 sm:mt-0"> -->
                                             <!-- Upload button -->
                                             <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload').click()" [disabled]="butdisabled">
                                         <mat-icon [svgIcon]="'heroicons_outline:plus'" ></mat-icon>
@@ -411,20 +646,24 @@
                                             (change)="onSelectFile($event.target.files)"> -->
     
                                     </button>
+                                    
                                             <span class="ml-1 mr-0">{{name}}</span>
                                             <span class="ml-1 mr-0">{{CourseImageAlt}}</span>
 
-                                            <span class="ml-1 mr-0">Image size should be: 600*485</span>
+                                            <!-- <span class="ml-1 mr-0">Image size should be: 600*485</span> -->
                                             <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
                                             <!-- <button style="display:block;width:120px; height:30px;"
                                         onclick="document.getElementById('getFile').click()">Your text here</button> -->
 
 
                                             <input type='file' class="form-control" accept=".jpg, .png, .jpeg " id="txtfileupload" name="fileupload" (change)="onSelectFile($event.target.files)" style="display:none" [formControlName]="'img'">
+                                            <div class="flex" style="margin-top: 10%;" *ngIf="ImageURL">
+                                                <img *ngIf="preview"  style="width: 30%;  border: 1px solid #555" src="{{ImageURL}}">
+                                            </div>
                                             <!-- <input type="file" class="form-control" accept=".jpg, .png, .jpeg " 
                                         id="txtfileupload"  name="fileupload" 
                                         (change)="onSelectFile($event.target.files)"> -->
-                                        </div>
+                                        <!-- </div> -->
 
                                         <!-- <div class="col-sm-4"> -->
 
@@ -445,7 +684,7 @@
                                             class="text-white"
                                             [svgIcon]="'heroicons_outline:camera'"></mat-icon>
                                     </label> -->
-                                    </div>
+                                   
                                     <!-- <div>
                                     <button
                                         mat-icon-button
@@ -457,17 +696,18 @@
                                 </div> -->
                                     <!-- </div> -->
                                 </div>
-                                <div class="flex" style="margin-top: 10%;" *ngIf="ImageURL">
-                                    <img style="width: 30%;  border: 1px solid #555" src="{{ImageURL}}">
-                                </div>
+                            </div>
+                                <!-- <div class="flex" style="margin-top: 10%;" *ngIf="ImageURL">
+                                    <img *ngIf="preview"  style="width: 30%;  border: 1px solid #555" src="{{ImageURL}}">
+                                </div> -->
 
 
-                                <div class="flex mt-4">
+                                <div class="flex mt-4" style="display:none;">
                                     <!-- <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>  -->
                                     <!-- <div class="absolute inset-0 flex items-center justify-center z-20"> -->
                                     <div>
                                         <!-- Actions -->
-                                        <div class="mt-4 sm:mt-0">
+                                        <div class="mt-4 sm:mt-0" style="display:none;">
                                             <!-- Upload button -->
                                             <button mat-flat-button [color]="'primary'" onclick="document.getElementById('txtfileupload1').click()" [disabled]="butdisabled">
                                         <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
@@ -480,7 +720,7 @@
                                       </button>
                                             <span class="ml-1 mr-0">{{name1}}</span>
                                             <span class="ml-1 mr-0">{{IconImageAlt}}</span>
-                                            <span class="ml-1 mr-0">Image size should be: 600*485</span>
+                                            <!-- <span class="ml-1 mr-0">Image size should be: 600*485</span> -->
                                             <!-- <img style="width: 30%;  border: 1px solid #555" src="{{fileToUpload}}"> -->
                                             <!-- <button style="display:block;width:120px; height:30px;"
                                         onclick="document.getElementById('getFile').click()">Your text here</button> -->
@@ -523,8 +763,8 @@
                                  </div> -->
                                     <!-- </div> -->
                                 </div>
-                                <div class="flex" style="margin-top: 10%;" *ngIf="IconUrl">
-                                    <img style="width: 30%;  border: 1px solid #555" src="{{IconUrl}}">
+                                <div   class="flex" style="margin-top: 10%;" *ngIf="IconUrl">
+                                    <img *ngIf="preview" style="width: 30%;  border: 1px solid #555" src="{{IconUrl}}">
                                 </div>
 
 
