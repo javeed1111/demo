@@ -56,6 +56,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProgressSpinnerModule } from '../progressspinner/progress-spinner/progress-spinner.module';
 import { OverlayService } from '../progressspinner/overlay/overlay.service';
 import { BlockUIModule } from 'ng-block-ui';
+import { SearchPipe } from './course/search.pipe';
 
 // import { CourseContentComponent } from './AddCoursecontent/course-content/course-content.component';
 @NgModule({
@@ -80,6 +81,7 @@ import { BlockUIModule } from 'ng-block-ui';
     SubscriptionsComponent,
     QuestionsComponent,
     OrderByPipe,
+    SearchPipe,
     // CourseContentComponent
   ],
   imports: [

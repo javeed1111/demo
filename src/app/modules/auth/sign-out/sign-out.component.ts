@@ -10,6 +10,8 @@ import { AuthService } from 'app/core/auth/auth.service';
 })
 export class AuthSignOutComponent implements OnInit, OnDestroy
 {
+
+    companylogo: any;
     countdown: number = 5;
     countdownMapping: any = {
         '=1'   : '# second',
@@ -50,6 +52,7 @@ export class AuthSignOutComponent implements OnInit, OnDestroy
                 tap(() => this.countdown--)
             )
             .subscribe();
+            this.GetCompanydetails();
     }
 
     /**
@@ -60,5 +63,31 @@ export class AuthSignOutComponent implements OnInit, OnDestroy
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
+    }
+
+    GetCompanydetails()
+    {
+        debugger
+        this._authService.GetCompanydetails().subscribe((result: any) => {
+          debugger
+             var result = JSON.parse(result);
+              if (result.status == "200") {
+                  
+                  console.log('details',result.result)
+                if(result.result[0].companylogo!="")
+                  this.companylogo=result.result[0].companylogo;
+                else
+                this.companylogo="assets/images/logo/logo1.png";
+                  
+                  setTimeout(() => {
+                  }, 1000);
+              }
+              else {
+              }
+              (error) => {
+  
+     
+             }
+          });
     }
 }

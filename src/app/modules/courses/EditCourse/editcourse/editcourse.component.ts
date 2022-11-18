@@ -156,6 +156,8 @@ export class EditcourseComponent implements OnInit {
 
 
     this.courseForm = this._formBuilder.group({
+      startingNumber:['',[]],
+
       courseName: ['', [Validators.required]],
       technologyId: ['', []],
       description: ['', []],
@@ -589,6 +591,8 @@ UploadVideo(value:any){
       
       // this.editsite=false;
       this.butdisabled = true;
+      this.courseForm.controls['startingNumber'].disable();
+
       this.courseForm.controls['courseName'].disable();
       this.courseForm.controls['technologyId'].disable();
       this.courseForm.controls['description'].disable();
@@ -618,7 +622,10 @@ UploadVideo(value:any){
 
     }
     else {
+      debugger
       this.butdisabled = false;
+      this.courseForm.controls['startingNumber'].enable();
+
       this.courseForm.controls['courseName'].enable();
       this.courseForm.controls['technologyId'].enable();
       this.courseForm.controls['description'].enable();
@@ -639,7 +646,7 @@ UploadVideo(value:any){
     }
     this.Id = id;
     this._authService.GetcourseById(this.Id).subscribe((finalresult: any) => {
-      
+      debugger
       console.log(finalresult);
       //  var finalresult = JSON.parse(result);
       // rolebyid=finalresult;
@@ -872,6 +879,7 @@ else{
 
 
     const formData: FormData = new FormData();
+    formData.append("StartingNumber", course.startingNumber)
     formData.append("CourseName", course.courseName)
     formData.append("TechnologyId", course.technologyId)
     formData.append("UpdatedBy", (localStorage.getItem("LoginId")));
@@ -1043,6 +1051,7 @@ else{
 
 
     const formData: FormData = new FormData();
+    formData.append("StartingNumber", course.startingNumber)
     formData.append("CourseName", course.courseName)
     formData.append("TechnologyId", course.technologyId)
     formData.append("UpdatedBy", (localStorage.getItem("LoginId")));

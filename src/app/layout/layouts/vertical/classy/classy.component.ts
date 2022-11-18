@@ -98,7 +98,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
           debugger
              var result = JSON.parse(result);
               if (result.status == "200") {
-                  
+                  debugger
                   console.log('details',result.result)
                 if(result.result[0].companylogo!="")
                   this.companylogo=result.result[0].companylogo;

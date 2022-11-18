@@ -13,7 +13,11 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { DataSource } from '@angular/cdk/collections';
+import { courses } from 'app/mock-api/apps/academy/data';
 // import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+
+import { Pipe, PipeTransform } from '@angular/core';
 export interface CourseData {
   sno: string;
   courseName: string;
@@ -22,6 +26,7 @@ export interface CourseData {
   Actions: string;
 }
 
+// const ELEMENT_Data: Element[]=[];
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
@@ -49,7 +54,15 @@ export interface CourseData {
 //     `
 // ],
 })
+
 export class CourseComponent implements OnInit {
+  transform(value: number): string {
+    var data = this.courseData.filter(
+      (element) => element.position === value
+    );
+    return data[0].name;
+  }
+ 
   color = 'primary';
   mode = 'indeterminate';
   value = 50;
@@ -58,6 +71,7 @@ export class CourseComponent implements OnInit {
 
 
   isLoading: boolean = false;
+  searchTxt: any;
   selectedProduct: any | null = null;
   displayedColumns = ['sno',   'courseName', 'technologyName','actions'];
   dataSource: MatTableDataSource<CourseData>;
@@ -95,9 +109,28 @@ course: any;
   }
 
   ngOnInit(): void {
-    //
    
-    
+    // this.dataSource.filterPredicate = function(data, filter: string): boolean {
+    //   var dataa = data.courseName.toString().filter(
+    //            element => element.position === data.sno );
+    //        return data.courseName.toLowerCase().includes(filter) 
+    //        || data.technologyName.toLowerCase().includes(filter)
+    //        || dataa[0].courseName.toString().toLowerCase().includes(filter.toLowerCase());
+    //      };
+   
+         this.dataSource.filterPredicate = function (data, filter: any): boolean {
+          var dataa = filter(
+            (element) => element.sno === data.sno
+          );
+          return (
+            data.sno.toString().toLowerCase().includes(filter) ||
+            data.courseName.toLowerCase().includes(filter) ||
+            data.technologyName.toString().toLowerCase() === filter ||
+            dataa[0].courseName.toString().toLowerCase().includes(filter.toLowerCase())
+          );
+        };
+        
+    //  
        // this.searchInputControl.valueChanges
        // .pipe(
        //     takeUntil(this._unsubscribeAll),
@@ -129,8 +162,16 @@ course: any;
   ngAfterViewInit() {
 
   }
+  // applyFilter(filterValue: any) {
+  //   //
+  //   debugger
+  //   filterValue = filterValue.trim(); // Remove whitespace
+  //   filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+  //   this.dataSource.filter = filterValue;
+  // }
+
   applyFilter(filterValue: string) {
-    //
+    debugger
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
@@ -166,9 +207,9 @@ course: any;
 
   courseData :any= []
   GetCourses() {
-    //
+   debugger
     this._authService.GetCourses().subscribe((finalresult: any) => {
-      //
+      debugger
      var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
         //
@@ -189,6 +230,7 @@ course: any;
         //   }
 
         // }
+        debugger
         this.dataSource = new MatTableDataSource(finalresult.result);
         // this.course= finalresult.result;
         
@@ -312,3 +354,8 @@ course: any;
     }
 
 }
+
+
+
+
+

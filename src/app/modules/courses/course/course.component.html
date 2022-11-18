@@ -40,19 +40,24 @@
     <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
       <ng-container>
         <ng-container>
-          <div class="example-header">
+          <!-- <div class="example-header">
             <mat-form-field>
               <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
             </mat-form-field>
-          </div>
+          </div> -->
+          <div class="example-header " >
+            <mat-form-field >
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" >
+            </mat-form-field>
+        </div>
 
           <div class="example-container mat-elevation-z8">
 
-            <mat-table [dataSource]="dataSource" matSort>
+            <mat-table #table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
               <!-- ID Column -->
               <ng-container matColumnDef="sno">
-                <mat-header-cell *matHeaderCellDef  > SNO. </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> SNO. </mat-header-cell>
                 <mat-cell *matCellDef="let row; let i=index">
                   {{ (i+1) + (myPaginator.pageIndex * myPaginator.pageSize) }}</mat-cell>
               </ng-container>

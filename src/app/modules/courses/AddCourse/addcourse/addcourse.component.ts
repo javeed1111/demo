@@ -122,6 +122,7 @@ export class AddcourseComponent implements OnInit {
       secondCtrl: ['', Validators.required],
     });
     this.courseForm = this._formBuilder.group({
+      startingNumber:['',[]],
       courseName: ['', [Validators.required]],
       technologyId: ['', []],
       Description: ['', []],
@@ -130,6 +131,8 @@ export class AddcourseComponent implements OnInit {
       Whatlearn: ['', []],
       requirements: ['', []],
       price: ['0', [Validators.required]],
+      DollarPrice:['0', []],
+      
       offerApplicable: [''],
       onwebsite: [''],
       offerPrice: ['0'],
@@ -379,6 +382,7 @@ export class AddcourseComponent implements OnInit {
     }
 
     const formData: FormData = new FormData();
+    formData.append("StartingNumber", course.startingNumber)
     formData.append("CourseName", course.courseName)
     formData.append("CreatedBy", (localStorage.getItem("LoginId")));
     formData.append("TechnologyId", course.technologyId)
@@ -388,6 +392,7 @@ export class AddcourseComponent implements OnInit {
     formData.append("Requirements", course.requirements)
     formData.append("Title", course.Title)
     formData.append("Price", course.price)
+    formData.append("DollarPrice", course.DollarPrice)
     formData.append("IsOffer", (this.isofferactive).toString())
     formData.append("OfferPrice", this.OfferPrice)
     formData.append("TaxPercent", course.taxpercent)
@@ -712,6 +717,8 @@ export class AddcourseComponent implements OnInit {
     }
 
     const formData: FormData = new FormData();
+    // formData.append("CourseName", course.)
+    formData.append("StartingNumber", course.startingNumber)
     formData.append("CourseName", course.courseName)
     formData.append("CreatedBy", (localStorage.getItem("LoginId")));
     formData.append("TechnologyId", course.technologyId)
@@ -721,6 +728,7 @@ export class AddcourseComponent implements OnInit {
     formData.append("Requirements", course.requirements)
     formData.append("Title", course.Title)
     formData.append("Price", course.price)
+    formData.append("DollarPrice", course.DollarPrice)
     formData.append("IsOffer", (this.isofferactive).toString())
     formData.append("OfferPrice", this.OfferPrice)
     formData.append("TaxPercent", course.taxpercent)
@@ -788,6 +796,7 @@ debugger
             setTimeout(() => {
               this.blockUI.stop()
              // window.location.reload();
+             this._router.navigate(['/courses/editcourse/'+result.result+'/edit'])
              
             }, 3000);
           }

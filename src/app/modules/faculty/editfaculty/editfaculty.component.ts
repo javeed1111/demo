@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseAlertType } from '@fuse/components/alert';
@@ -22,6 +22,8 @@ export class EditfacultyComponent implements OnInit {
   fileToUpload: File = null;
   name: string;
   imageSrc:any;
+  comparecount=1
+  preview2: any;
   quillModules: any = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -46,7 +48,7 @@ export class EditfacultyComponent implements OnInit {
   };
   butdisabled: boolean;
   imageUrl: any;
-  constructor(private _formBuilder: FormBuilder,
+  constructor(private _changeDetectorRef: ChangeDetectorRef,private _formBuilder: FormBuilder,
     private _authService: AuthService,
     private _router: Router,
     private approute: ActivatedRoute,) { }
@@ -72,7 +74,22 @@ export class EditfacultyComponent implements OnInit {
   cancel() {
     this._router.navigate(['/faculty/facultydetails/']);
   }
+  toggleDetails2()
+    {
+      var count =1
+      if(count==this.comparecount){
+      this.preview2=true;
+      this.comparecount+=1;
+    }
+    else{
+      this.preview2=false;
+      this.comparecount-=1;
 
+    }
+      
+      this._changeDetectorRef.markForCheck();
+           
+    }
   onSelectFile(files: FileList) {
     //
     if (files.length === 0)

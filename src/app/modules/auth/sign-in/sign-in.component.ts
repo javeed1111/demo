@@ -22,6 +22,7 @@ export class AuthSignInComponent implements OnInit
     signInForm: FormGroup;
     showAlert: boolean = false;
     companylogo: any;
+    companyName: any;
     /**
      * Constructor
      */
@@ -61,6 +62,7 @@ export class AuthSignInComponent implements OnInit
               if (result.status == "200") {
                   
                   console.log('details',result.result)
+                  this.companyName=result.result[0].companyName;
                 if(result.result[0].companylogo!="")
                   this.companylogo=result.result[0].companylogo;
                 else

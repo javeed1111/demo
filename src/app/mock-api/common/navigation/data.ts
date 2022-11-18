@@ -139,22 +139,25 @@ export const defaultNavigation: FuseNavigationItem[] = [
             {
                 id      : 'faculty',
                 title   : 'Faculty',
-                type    : 'collapsable',
+                type    : 'basic',
                 icon    : 'heroicons_solid:user',
-                children: [
-                    {
-                        id   : 'faculty.facultydetails',
-                        title: 'Faculty Details',
-                        type : 'basic',
-                        link : '/faculty/facultydetails'
-                    },
+                link :      '/faculty/facultydetails'
+                //children: [
+                    // {
+                    //     id   : 'faculty.facultydetails',
+                    //     title: 'Faculty Details',
+                    //     type : 'basic',
+                    //     link : '/faculty/facultydetails'
+                    // },
+
+
                     // {
                     //     id   : 'faculty.facultypayment',
                     //     title: 'Faculty Payment',
                     //     type : 'basic',
                     //     link : '/faculty/facultypayment'
                     // }   
-                ]
+               // ]
             },
 
             {
