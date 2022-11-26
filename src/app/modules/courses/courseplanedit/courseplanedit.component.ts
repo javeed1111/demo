@@ -68,8 +68,8 @@ export class CourseplaneditComponent implements OnInit {
   oldofferprice: any;
   oldprice: any;
   pcid: any;
-  showonwebsite: boolean=true;
-
+ showonwebsite: boolean=true;
+  //showonwebsite: boolean;
   constructor(
     private _authService: AuthService,
     private _formBuilder: FormBuilder,
@@ -116,7 +116,7 @@ export class CourseplaneditComponent implements OnInit {
     this.GetFeeInactiveData(planid);
   }
   Edit(pcid:any,planid:any,value:any) {
-    
+    debugger
     if (value == "view") {
       this.disabled=true;
       this.horizontalStepperForm.controls.step1.get('planName').disable();
@@ -153,6 +153,8 @@ export class CourseplaneditComponent implements OnInit {
         
         for(let i=0;i<finalresult.result.length;i++){
           this.horizontalStepperForm.controls.step1.patchValue(finalresult.result[0]);
+
+          //this.horizontalStepperForm.controls.step1['showOnWebsite'].setValue(finalresult.result[0].showOnWebsite);
           this.offerpricenbind =this.horizontalStepperForm.controls.step1.get('offerPrice').value;
         if(this.horizontalStepperForm.controls.step1.get('isOffer').value==true && value == "edit")
         {
@@ -341,7 +343,7 @@ export class CourseplaneditComponent implements OnInit {
   GetCourse() {
     //
     this._authService.GetCourses().subscribe((finalresult: any) => {
-      //
+    debugger
       var finalresult = JSON.parse(finalresult);
       if (finalresult.status == "200") {
         //
@@ -381,6 +383,7 @@ export class CourseplaneditComponent implements OnInit {
   }
 
   savecourseplan(): void {
+    debugger
     // 
     // Return if the form is invalid
     if (this.horizontalStepperForm.invalid) {
@@ -401,7 +404,7 @@ export class CourseplaneditComponent implements OnInit {
 
 
     
-    if (this.isofferactive == undefined) {
+    if (this.isofferactive == undefined || this.isofferactive == false || this.isofferactive == null  ) {
       this.isofferactive = false;
       // this.horizontalStepperForm.controls['offerPrice'].disable();
       this.OfferPrice = '0'
@@ -410,6 +413,7 @@ export class CourseplaneditComponent implements OnInit {
       // this.horizontalStepperForm.controls['offerPrice'].enable();
       this.OfferPrice = dataa.step1.offerPrice;
     }
+    debugger
     if(dataa.showOnWebsite!=undefined){
       this.showonwebsite =dataa.showOnWebsite;
     }
@@ -529,7 +533,7 @@ export class CourseplaneditComponent implements OnInit {
     });
   }
   onwebsite($event: MatSlideToggleChange): void {
-    
+    debugger
     if ($event.checked == undefined || $event.checked == true) {
       this.showonwebsite = $event.checked;
     }

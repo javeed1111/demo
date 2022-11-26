@@ -142,7 +142,7 @@ export class EditcourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    
     this.preview=false;
     this.preview1=false;
     var loginId = localStorage.getItem("LoginId");
@@ -388,8 +388,9 @@ export class EditcourseComponent implements OnInit {
     }
     //this.active=this.filters.hideCompleted$.next(change.checked);
   }
+  debugger
   onwebsite($event: MatSlideToggleChange): void {
-    
+    debugger
     if ($event.checked == undefined || $event.checked == true) {
       this.showonwebsite = $event.checked;
     }
@@ -400,7 +401,7 @@ export class EditcourseComponent implements OnInit {
 
   }
   GetTechnologys() {
-    //
+    
     this._authService.GetTechnologies().subscribe((finalresult: any) => {
       //
       var finalresult = JSON.parse(finalresult);
@@ -579,7 +580,7 @@ UploadVideo(value:any){
   }
 
   Edit(id: any, value: any) {
-    //
+    debugger
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
       baseurl = "https://localhost:44358"
@@ -864,6 +865,7 @@ else{
     // {
     //   course.effectiveTill=(course.effectiveTill).format("DD-MM-YYYY")
     // }
+    debugger
     if(course.showOnWebsite!=undefined){
       this.showonwebsite =course.showOnWebsite;
     }

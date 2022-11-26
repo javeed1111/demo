@@ -14,6 +14,7 @@ import { MatSelect } from '@angular/material/select';
 import { take } from 'rxjs/operators';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { MatPaginator } from '@angular/material/paginator';
 
 export interface Keywords {
   name: string;
@@ -33,7 +34,6 @@ interface facultysearch {
 })
 export class AddcourseComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
-
   uploadvideo: boolean = true
   deletevideo: boolean = false
   addOnBlur = true;
@@ -94,6 +94,7 @@ export class AddcourseComponent implements OnInit {
   fileToUpload2: File;
   name2: string;
   courses: any;
+  courses1: any;
   public instructor: FormControl = new FormControl();
   public instructorfilterctrl: FormControl = new FormControl();
   public filteredfaculties: ReplaySubject<any> = new ReplaySubject(1);
@@ -104,6 +105,8 @@ export class AddcourseComponent implements OnInit {
   ];
   faculties: any;
   videoUrl: string = null;
+  startingNumber: any;
+  
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -114,7 +117,9 @@ export class AddcourseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+
+
+   this.GetstartingNumber();
     this.GetTechnologys();
     this.GetCourses();
     this.GetFaculty();
@@ -169,6 +174,7 @@ export class AddcourseComponent implements OnInit {
       this.filterBanks1();
 
     });
+   
   }
 
   ngOnDestroy() {
@@ -331,6 +337,19 @@ export class AddcourseComponent implements OnInit {
       this.courses = this.courses.result
     })
   }
+  GetstartingNumber() {
+    debugger
+    this._authService.GetstartingNumber().subscribe((finalresult: any) => {
+      debugger
+      this.courses1 = JSON.parse(finalresult);
+
+      this.courseForm.controls['startingNumber'].setValue(this.courses1.result[0].startingNumber)
+      // this.courses1 = this.courses1.result
+    })
+  }
+
+
+ 
 
   removeuploads() {
     this.removeupload = true;
@@ -795,6 +814,8 @@ debugger
           if (val == 'save') {
             setTimeout(() => {
               this.blockUI.stop()
+             
+              
              // window.location.reload();
              this._router.navigate(['/courses/editcourse/'+result.result+'/edit'])
              
@@ -838,7 +859,7 @@ debugger
         }
       });
   
-
+     
 
     // toggleCompleted($event: MatSlideToggleChange): void {
     //   //

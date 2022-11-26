@@ -13,6 +13,7 @@ export class AuthService {
   /**
    * Constructor
    */
+
   constructor(private _httpClient: HttpClient, private _userService: UserService) {
       this.baseUrl = 'https://localhost:44328/';
     // this.baseUrl = 'https://ugetithome.mbascloud.com/';
@@ -148,6 +149,14 @@ export class AuthService {
     
     return this._httpClient.get(this.baseUrl + "api/Admin/GetRoleById", { params: { id } });
   }
+
+
+  public GetstartingNumber() {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetstartingNumber", { responseType: 'text' });
+  }
+
+
   public GetTechnologies() {
     
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllTechnologies", { responseType: 'text' });

@@ -118,17 +118,17 @@ course: any;
     //        || dataa[0].courseName.toString().toLowerCase().includes(filter.toLowerCase());
     //      };
    
-         this.dataSource.filterPredicate = function (data, filter: any): boolean {
-          var dataa = filter(
-            (element) => element.sno === data.sno
-          );
-          return (
-            data.sno.toString().toLowerCase().includes(filter) ||
-            data.courseName.toLowerCase().includes(filter) ||
-            data.technologyName.toString().toLowerCase() === filter ||
-            dataa[0].courseName.toString().toLowerCase().includes(filter.toLowerCase())
-          );
-        };
+        //  this.dataSource.filterPredicate = function (data, filter: any): boolean {
+        //   var dataa = filter(
+        //     (element) => element.sno === data.sno
+        //   );
+        //   return (
+        //     data.sno.toString().toLowerCase().includes(filter) ||
+        //     data.courseName.toLowerCase().includes(filter) ||
+        //     data.technologyName.toString().toLowerCase() === filter ||
+        //     dataa[0].courseName.toString().toLowerCase().includes(filter.toLowerCase())
+        //   );
+        // };
         
     //  
        // this.searchInputControl.valueChanges

@@ -137,12 +137,25 @@
                             <div>
                                 <ng-container>
                                     <div class="fuse-mat-no-subscript flex-auto">
-                                        <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'" id="onwebsite" (change)="onwebsite($event)" [checked]="true">
-                                            show on website
+                                        <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [formControlName]="'showOnWebsite'" [color]="'primary'" id="onwebsite" (change)="onwebsite($event)" >
+                                            showOnWebsite
                                         </mat-slide-toggle>
                                     </div>
                                 </ng-container>
                             </div>
+
+                            <!-- <ng-container>
+                              
+                                <div class="fuse-mat-no-subscript flex-auto">
+                                    <mat-slide-toggle class="mt-6 mb-4 sm:mt-0 sm:ml-auto"
+                                        [color]="'primary'" id="showOnWebsite"
+                                        [formControlName]="'showOnWebsite'" (change)="onwebsite($event)"
+                                        [checked]="false">
+                                        showOnWebsite
+                                    </mat-slide-toggle>
+                                </div>
+                               
+                            </ng-container> -->
                         </div>
                         <!-- <div class="mt-4 col-span-6">
                             <ng-container>

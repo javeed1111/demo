@@ -11,11 +11,23 @@
                                 <div class="flex mt-4">
                                     <mat-form-field class="flex-auto">
                                         <mat-label>Starting Number</mat-label>
+                                        <input matInput [formControlName]="'startingNumber'"  [placeholder]="'Starting Number'">
+                                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                          
+                                        </mat-icon>
+                                        
+                                    </mat-form-field>
+
+                                   
+                                </div>
+                                <!-- <div class="flex mt-4">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Starting Number</mat-label>
                                         <input matInput [formControlName]="'startingNumber'" [placeholder]="'Starting Number'">
                                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
                                         </mat-icon>
                                     </mat-form-field>
-                                </div>
+                                </div> -->
                                 <div class="flex">
                                     <mat-form-field class="flex-auto">
                                         <mat-label>Course Name</mat-label>

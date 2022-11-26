@@ -292,13 +292,13 @@ export class CourseplanComponent implements OnInit {
     //this.active=this.filters.hideCompleted$.next(change.checked);
   }
   applyFilter(filterValue: string) {
-    //
+  debugger
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
   GetCourse() {
-    //
+    debugger
     this._authService.GetCourses().subscribe((finalresult: any) => {
       //
       var finalresult = JSON.parse(finalresult);

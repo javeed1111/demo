@@ -60,6 +60,7 @@ constructor(private _formBuilder: FormBuilder,
         else
         this.ImageURL="assets/images/default/courses1.jpg";
 
+        
         this.update = true;
         this.save = false;
       }
