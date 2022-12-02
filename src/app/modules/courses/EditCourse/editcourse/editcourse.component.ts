@@ -126,6 +126,7 @@ export class EditcourseComponent implements OnInit {
   icon: string;
   comparecount=1
   preview2: any;
+  courseName: any;
 
   
   constructor(
@@ -153,49 +154,106 @@ export class EditcourseComponent implements OnInit {
     this.GetCourses();
     this.GetFaculty();
     this.CourseId;
-
-
+   debugger
     this.courseForm = this._formBuilder.group({
-      startingNumber:['',[]],
-
-      courseName: ['', [Validators.required]],
-      technologyId: ['', []],
-      description: ['', []],
-      title: ['', []],
-      fullDescription: ['', []],
+      step1: this._formBuilder.group({  
+        id: [''],
+        courseName: ['', [Validators.required]],
+        technologyId: ['', []],
+        title: ['', []],
+        facultyId:['',[Validators.required]],
+        bind: [''],
+         
+      }),
+      step2: this._formBuilder.group({
+        description: ['', []],
+         fullDescription: ['', []],
       whatLearn: ['', []],
       requirements: ['', []],
-      imageURL: ['', []],
+      certifications:[''],
+         
+      }),
+      step3: this._formBuilder.group({
+        price: ['0', [Validators.required]],
+        isOffer: [''],
+        offerPrice: ['0'],
+        //taxApplicable:[''],
+        istax:[''],
+        taxPercent:['0'],
+      }),
+      step4: this._formBuilder.group({
+        imageTitle:[''],
+        imageCaption:[''],
+        imageShortDescription:[''],
+        videoCaption:[''],
+        imageURL: ['', []],
       iconUrl: ['', []],
       videoUrl: ['', []],
-      price: ['0', [Validators.required]],
-      isOffer: [''],
-      offerPrice: ['0'],
-      //taxApplicable:[''],
-      istax:[''],
-      taxPercent:['0'],
-      effectiveFrom: ['', Validators.required],
-      effectiveTill: ['',],
-      id: [''],
-      showOnWebsite: [''],
-      courseHeader: ['', []],
-      courseUrl:['', []],
-      metaDescription: ['', []],
-      metaKeywords:['', []],
-      stauts:[''],
-      certifications:[''],
-      imageTitle:[''],
-      imageCaption:[''],
-      imageShortDescription:[''],
-      videoCaption:[''],
-      facultyId:['',[Validators.required]],
       img:[''],
-    });
+        // uploader1: ['', ],
+      
+      }),
+      step5: this._formBuilder.group({
+        courseHeader: ['', []],
+        courseUrl:['', []],
+        metaDescription: ['', []],
+        metaKeywords:['', []],
+      
+      }),
+      step6: this._formBuilder.group({
+        startingNumber:['',[]],
+        onwebsite: [''],
+        effectiveFrom: [''],
+       effectiveTill: [''],
+       showOnWebsite: [''],
+       status:[''],
+      })
+  });
+  
+    //this.courseForm = this._formBuilder.group({
+      //startingNumber:['',[]],
+
+      //courseName: ['', [Validators.required]],
+      //technologyId: ['', []],
+     // description: ['', []],
+     // title: ['', []],
+      // fullDescription: ['', []],
+      // whatLearn: ['', []],
+      // requirements: ['', []],
+      // imageURL: ['', []],
+      // iconUrl: ['', []],
+      // videoUrl: ['', []],
+      // price: ['0', [Validators.required]],
+      // isOffer: [''],
+      // offerPrice: ['0'],
+      // //taxApplicable:[''],
+      // istax:[''],
+      // taxPercent:['0'],
+      // effectiveFrom: ['', Validators.required],
+      // effectiveTill: ['',],
+      // id: [''],
+      //showOnWebsite: [''],
+      //stauts:[''],
+      // courseHeader: ['', []],
+      // courseUrl:['', []],
+      // metaDescription: ['', []],
+      // metaKeywords:['', []],
+      
+      // certifications:[''],
+      // imageTitle:[''],
+      // imageCaption:[''],
+      // imageShortDescription:[''],
+      // videoCaption:[''],
+      //facultyId:['',[Validators.required]],
+      // img:[''],
+   // });
   this.newid = this.approute.snapshot.params['id'];
-    const ctrl = this.courseForm.controls['offerPrice'];
-    ctrl.disable();
-    const ctrl1 = this.courseForm.controls['taxPercent']
-    ctrl1.disable();
+    // const ctrl = this.courseForm.controls.step3.['offerPrice'];
+    this.courseForm.controls.step3.get('offerPrice').disable();
+    // ctrl.disable();
+    // const ctrl1 = this.courseForm.controls.step3['taxPercent']
+    this.courseForm.controls.step3.get('taxPercent').disable();
+    // ctrl1.disable();
     this.Edit(id, value);
     this.GetFeeInactiveData(id);
   }
@@ -332,8 +390,8 @@ export class EditcourseComponent implements OnInit {
   checkprice() {
     
     const dataa = this.courseForm.getRawValue();
-    var price = dataa.price;
-    var offerprice = dataa.offerPrice;
+    var price = dataa.step3.price;
+    var offerprice = dataa.step3.offerPrice;
     if (price <= offerprice) {
       this.showAlert = true;
 
@@ -358,8 +416,9 @@ export class EditcourseComponent implements OnInit {
     if ($event.checked != undefined) {
       this.isofferactive = $event.checked;
       if (this.isofferactive == true) {
-        const ctrl = this.courseForm.controls['offerPrice'];
-        ctrl.enable();
+        const ctrl=this.courseForm.controls.step3.get('offerPrice');
+        // const ctrl = this.courseForm.controls['offerPrice'];
+         ctrl.enable();
         if(this.offerpricenbind!=0){
           ctrl.setValue(this.offerpricenbind)
         }
@@ -368,7 +427,8 @@ export class EditcourseComponent implements OnInit {
         }
       }
       else {
-        const ctrl = this.courseForm.controls['offerPrice'];
+        const ctrl=this.courseForm.controls.step3.get('offerPrice');
+        // const ctrl = this.courseForm.controls['offerPrice'];
         ctrl.disable();
         ctrl.setValue('0')
         // if(this.offerpricenbind!=0){
@@ -409,9 +469,10 @@ export class EditcourseComponent implements OnInit {
         //
         //this.dataSource= finalresult.result;
         this.technology = finalresult.result;
-        if(this.courseForm.controls['isOffer'].value==true)
+        if(this.courseForm.controls.step3.get('isOffer').value==true)
         {
-       this.courseForm.controls['offerPrice'].enable();
+          this.courseForm.controls.step3.get('offerPrice').enable();
+      //  this.courseForm.controls['offerPrice'].enable();
         }
         //this.roles = finalresult.result;
         console.log('techs', this.technology)
@@ -505,7 +566,7 @@ confirmation.afterClosed().subscribe((result) => {
 }
 
 UploadVideo(value:any){
-  
+  debugger
   const formData: FormData = new FormData();
   if (this.files2.length >= 1) {
     formData.append("files", this.fileToUpload2, this.name2);
@@ -521,6 +582,7 @@ UploadVideo(value:any){
   })
   }
   else {
+    debugger
     if(!this.courseForm.dirty){
       if(JSON.stringify(this.RelatedcourseIds)===JSON.stringify(this.bind))
       {
@@ -592,57 +654,111 @@ UploadVideo(value:any){
       
       // this.editsite=false;
       this.butdisabled = true;
-      this.courseForm.controls['startingNumber'].disable();
+      // this.courseForm.controls['startingNumber'].disable();
+      this.courseForm.controls.step6.get('startingNumber').disable();
+      this.courseForm.controls.step1.get('courseName').disable();
+      this.courseForm.controls.step1.get('technologyId').disable();
+      this.courseForm.controls.step2.get('description').disable();
+      this.courseForm.controls.step1.get('title').disable();
+      this.courseForm.controls.step2.get('fullDescription').disable();
+      this.courseForm.controls.step2.get('whatLearn').disable();
+      this.courseForm.controls.step2.get('requirements').disable();
+      this.courseForm.controls.step3.get('isOffer').disable();
+      this.courseForm.controls.step3.get('offerPrice').disable();
+      this.courseForm.controls.step3.get('price').disable();
+      this.courseForm.controls.step3.get('taxPercent').disable();
+      this.courseForm.controls.step5.get('courseHeader').disable();
+      this.courseForm.controls.step5.get('courseUrl').disable();
+      this.courseForm.controls.step5.get('metaDescription').disable();
+      this.courseForm.controls.step5.get('metaKeywords').disable();
+      this.courseForm.controls.step6.get('showOnWebsite').disable();
+      this.courseForm.controls.step4.get('imageTitle').disable();
+      this.courseForm.controls.step4.get('imageCaption').disable();
+      this.courseForm.controls.step4.get('imageShortDescription').disable();
+      this.courseForm.controls.step4.get('videoCaption').disable();
+      this.courseForm.controls.step2.get('certifications').disable();
+      this.courseForm.controls.step6.get('effectiveFrom').disable();
+      this.courseForm.controls.step6.get('effectiveTill').disable();
+      this.courseForm.controls.step1.get('facultyId').disable();
+      this.courseForm.controls.step4.get('img').disable();
 
-      this.courseForm.controls['courseName'].disable();
-      this.courseForm.controls['technologyId'].disable();
-      this.courseForm.controls['description'].disable();
-      this.courseForm.controls['title'].disable();
-      this.courseForm.controls['fullDescription'].disable();
-      this.courseForm.controls['whatLearn'].disable();
-      this.courseForm.controls['requirements'].disable();
-      this.courseForm.controls['isOffer'].disable();
-      this.courseForm.controls['offerPrice'].disable();
-      this.courseForm.controls['price'].disable();
-      this.courseForm.controls['taxPercent'].disable();
-      this.courseForm.controls['courseHeader'].disable();
-      this.courseForm.controls['courseUrl'].disable();
-      this.courseForm.controls['metaDescription'].disable();
-      this.courseForm.controls['metaKeywords'].disable();
-      this.courseForm.controls['showOnWebsite'].disable();
-      this.courseForm.controls['imageTitle'].disable();
-      this.courseForm.controls['imageCaption'].disable();
-      this.courseForm.controls['imageShortDescription'].disable();
-      this.courseForm.controls['videoCaption'].disable();
-       this.courseForm.controls['certifications'].disable();
-      this.courseForm.controls['effectiveFrom'].disable();
-      this.courseForm.controls['effectiveTill'].disable();
-      this.courseForm.controls['showOnWebsite'].disable();
-      this.courseForm.controls['facultyId'].disable();
-      this.courseForm.controls['img'].disable();
+      // this.courseForm.controls['courseName'].disable();
+      // this.courseForm.controls['technologyId'].disable();
+      // this.courseForm.controls['description'].disable();
+      // this.courseForm.controls['title'].disable();
+      // this.courseForm.controls['fullDescription'].disable();
+      // this.courseForm.controls['whatLearn'].disable();
+      // this.courseForm.controls['requirements'].disable();
+      // this.courseForm.controls['isOffer'].disable();
+      // this.courseForm.controls['offerPrice'].disable();
+      // this.courseForm.controls['price'].disable();
+      // this.courseForm.controls['taxPercent'].disable();
+      // this.courseForm.controls['courseHeader'].disable();
+      // this.courseForm.controls['courseUrl'].disable();
+      // this.courseForm.controls['metaDescription'].disable();
+      // this.courseForm.controls['metaKeywords'].disable();
+      // this.courseForm.controls['showOnWebsite'].disable();
+      // this.courseForm.controls['imageTitle'].disable();
+      // this.courseForm.controls['imageCaption'].disable();
+      // this.courseForm.controls['imageShortDescription'].disable();
+      // this.courseForm.controls['videoCaption'].disable();
+      //  this.courseForm.controls['certifications'].disable();
+      // this.courseForm.controls['effectiveFrom'].disable();
+      // this.courseForm.controls['effectiveTill'].disable();
+      // this.courseForm.controls['showOnWebsite'].disable();
+      // this.courseForm.controls['facultyId'].disable();
+      // this.courseForm.controls['img'].disable();
 
     }
     else {
       debugger
       this.butdisabled = false;
-      this.courseForm.controls['startingNumber'].enable();
 
-      this.courseForm.controls['courseName'].enable();
-      this.courseForm.controls['technologyId'].enable();
-      this.courseForm.controls['description'].enable();
-      this.courseForm.controls['title'].enable();
-      this.courseForm.controls['fullDescription'].enable();
-      this.courseForm.controls['whatLearn'].enable();
-      this.courseForm.controls['requirements'].enable();
-      this.courseForm.controls['price'].enable();
-      this.courseForm.controls['taxPercent'].enable();
 
-      this.courseForm.controls['isOffer'].enable();
-      // this.courseForm.controls['offerPrice'].enable();
-      this.courseForm.controls['effectiveFrom'].enable();
-      this.courseForm.controls['effectiveTill'].enable();
-      this.courseForm.controls['showOnWebsite'].enable();
-      this.courseForm.controls['img'].enable();
+      this.courseForm.controls.step6.get('startingNumber').enable();
+      this.courseForm.controls.step1.get('courseName').enable();
+      this.courseForm.controls.step1.get('technologyId').enable();
+      this.courseForm.controls.step2.get('description').enable();
+      this.courseForm.controls.step1.get('title').enable();
+      this.courseForm.controls.step2.get('fullDescription').enable();
+      this.courseForm.controls.step2.get('whatLearn').enable();
+      this.courseForm.controls.step2.get('requirements').enable();
+      this.courseForm.controls.step3.get('isOffer').enable();
+      // this.courseForm.controls.step3.get('offerPrice').disable();
+      this.courseForm.controls.step3.get('price').enable();
+      this.courseForm.controls.step3.get('taxPercent').enable();
+      // this.courseForm.controls.step5.get('courseHeader').disable();
+      // this.courseForm.controls.step5.get('courseUrl').disable();
+      // this.courseForm.controls.step5.get('metaDescription').disable();
+      // this.courseForm.controls.step5.get('metaKeywords').disable();
+      this.courseForm.controls.step6.get('showOnWebsite').enable();
+      // this.courseForm.controls.step4.get('imageTitle').disable();
+      // this.courseForm.controls.step4.get('imageCaption').disable();
+      // this.courseForm.controls.step4.get('imageShortDescription').disable();
+      // this.courseForm.controls.step4.get('videoCaption').disable();
+      // this.courseForm.controls.step2.get('certifications').disable();
+      this.courseForm.controls.step6.get('effectiveFrom').enable();
+      this.courseForm.controls.step6.get('effectiveTill').enable();
+      this.courseForm.controls.step1.get('facultyId').enable();
+      this.courseForm.controls.step4.get('img').enable();
+
+
+      // this.courseForm.controls['startingNumber'].enable();
+      // this.courseForm.controls['courseName'].enable();
+      // this.courseForm.controls['technologyId'].enable();
+      // this.courseForm.controls['description'].enable();
+      // this.courseForm.controls['title'].enable();
+      // this.courseForm.controls['fullDescription'].enable();
+      // this.courseForm.controls['whatLearn'].enable();
+      // this.courseForm.controls['requirements'].enable();
+      // this.courseForm.controls['price'].enable();
+      // this.courseForm.controls['taxPercent'].enable();
+      // this.courseForm.controls['isOffer'].enable();
+      // // this.courseForm.controls['offerPrice'].enable();
+      // this.courseForm.controls['effectiveFrom'].enable();
+      // this.courseForm.controls['effectiveTill'].enable();
+      // this.courseForm.controls['showOnWebsite'].enable();
+      // this.courseForm.controls['img'].enable();
 
     }
     this.Id = id;
@@ -661,19 +777,53 @@ UploadVideo(value:any){
       //   this.courseForm.controls['istax'].setValue(true);
 
 if(finalresult.result.taxPercent!=0){
-  
-  this.courseForm.controls['istax'].setValue(true);
+  this.courseForm.controls.step3.get('istax').setValue(true);
+  // this.courseForm.controls['istax'].setValue(true);
   
   
 }
 else{
-  this.courseForm.controls['istax'].setValue(false);
-  const ctrl = this.courseForm.controls['taxPercent'];
-  ctrl.disable();
+  // this.courseForm.controls['istax'].setValue(false);
+  this.courseForm.controls.step3.get('istax').setValue(false);
+  // const ctrl = this.courseForm.controls['taxPercent'];
+  const ctrl =  this.courseForm.controls.step3.get('taxPercent')
+  // ctrl.disable();
   ctrl.setValue('0')
 
 }
+debugger
         this.courseForm.patchValue(finalresult.result);
+        this.courseForm.controls.step1.get('courseName').setValue(finalresult.result.courseName)
+        this.courseForm.controls.step1.get('technologyId').setValue(finalresult.result.technologyId)
+        this.courseForm.controls.step1.get('facultyId').setValue(finalresult.result.facultyId)
+        this.courseForm.controls.step1.get('title').setValue(finalresult.result.title)
+        this.courseForm.controls.step1.get('id').setValue(finalresult.result.id)
+        this.bind= finalresult.result.relCourses;
+        this.courseForm.controls.step2.get('description').setValue(finalresult.result.description)
+        this.courseForm.controls.step2.get('fullDescription').setValue(finalresult.result.fullDescription)
+        this.courseForm.controls.step2.get('whatLearn').setValue(finalresult.result.whatLearn)
+        this.courseForm.controls.step2.get('requirements').setValue(finalresult.result.requirements)
+        this.courseForm.controls.step2.get('certifications').setValue(finalresult.result.certifications)
+        this.courseForm.controls.step3.get('price').setValue(finalresult.result.price)
+        this.courseForm.controls.step3.get('offerPrice').setValue(finalresult.result.offerPrice)
+        this.courseForm.controls.step3.get('taxPercent').setValue(finalresult.result.taxPercent)
+        this.courseForm.controls.step4.get('imageTitle').setValue(finalresult.result.imageTitle)
+        this.courseForm.controls.step4.get('imageCaption').setValue(finalresult.result.imageCaption)
+        this.courseForm.controls.step4.get('imageShortDescription').setValue(finalresult.result.imageShortDescription)
+        this.courseForm.controls.step4.get('videoCaption').setValue(finalresult.result.videoCaption)
+        this.courseForm.controls.step4.get('iconUrl').setValue(finalresult.result.iconUrl)
+        this.courseForm.controls.step4.get('imageURL').setValue(finalresult.result.imageURL)
+        this.courseForm.controls.step4.get('videoUrl').setValue(finalresult.result.videoUrl)
+        this.courseForm.controls.step5.get('courseHeader').setValue(finalresult.result.courseHeader)
+        this.courseForm.controls.step5.get('courseUrl').setValue(finalresult.result.courseUrl)
+        this.courseForm.controls.step5.get('metaDescription').setValue(finalresult.result.metaDescription)
+        this.courseForm.controls.step5.get('metaKeywords').setValue(finalresult.result.metaKeywords)
+        this.courseForm.controls.step6.get('status').setValue(finalresult.result.status)
+        this.courseForm.controls.step6.get('showOnWebsite').setValue(finalresult.result.showOnWebsite)
+        this.courseForm.controls.step6.get('startingNumber').setValue(finalresult.result.startingNumber)
+        this.courseForm.controls.step6.get('effectiveFrom').setValue(finalresult.result.effectiveFrom)
+        this.courseForm.controls.step6.get('effectiveTill').setValue(finalresult.result.effectiveTill)
+        // this.Id = id;
         this.status=finalresult.result.status
         const course = this.courseForm.getRawValue();
         this.courseid=finalresult.result.courseId
@@ -683,12 +833,12 @@ else{
         // if (course.fees == 0) {
         //   this.courseForm.controls['fees'].setValue("")
         // }"0001-01-01T00:00:00"
-        this.feedetailsid= course.id;
-        
-        this.isoffer  = course.isOffer;
-        this.effectivefrm  = course.effectiveFrom;
-        this.effectivetil  = course.effectiveTill;
-        this.oldprice=course.price
+        this.feedetailsid= course.step1.id;
+        this.courseName=course.step1.courseName;
+        this.isoffer  = course.step3.isOffer;
+        this.effectivefrm  = course.step6.effectiveFrom;
+        this.effectivetil  = course.step6.effectiveTill;
+        this.oldprice=course.step3.price
         this.RelatedcourseIds=finalresult.result.relCourses;
         this.bind=this.RelatedcourseIds.map(item => item.relatedCourseId)
         .filter((value, index, self) => self.indexOf(value) === index);
@@ -699,10 +849,11 @@ else{
         // if(course.effectiveTill=="0001-01-01T00:00:00"){
         //   course.effectiveTill="effectiveTill"
         // }
-        this.offerpricenbind =this.courseForm.controls['offerPrice'].value;
-        if(this.courseForm.controls['isOffer'].value==true && value == "edit")
+        this.offerpricenbind =this.courseForm.controls.step3.get('offerPrice').value;
+        if(this.courseForm.controls.step3.get('isOffer').value==true && value == "edit")
         {
-       this.courseForm.controls['offerPrice'].enable();
+       this.courseForm.controls.step3.get('offerPrice').enable();
+       
         }
         if (finalresult.result.imageURL != null) {
           this.ImageURL =  finalresult.result.imageURL;
@@ -766,11 +917,11 @@ else{
     if ($event.checked != undefined) {
       this.istax = $event.checked;
       if (this.istax == true) {
-        const ctrl = this.courseForm.controls['taxPercent'];
+        const ctrl = this.courseForm.controls.step3.get('taxPercent');
         ctrl.enable();
       }
       else {
-        const ctrl = this.courseForm.controls['taxPercent'];
+        const ctrl = this.courseForm.controls.step3.get('taxPercent');
         ctrl.disable();
         ctrl.setValue('0')
 
@@ -815,7 +966,7 @@ else{
   }
   Updatecourse(val:any) {
     
-
+debugger
     this.showAlert = false;
     if (this.courseForm.invalid) {
       return;
@@ -832,10 +983,11 @@ else{
     else{
       finalids.push(1);
     }
-
+   
     // Get the contact object
     const course = this.courseForm.getRawValue();
-    if(this.oldprice!=course.price){
+    debugger
+    if(this.oldprice!=course.step3.price){
     course.effectiveTill=(moment(new Date()).format("DD-MM-YYYY"));
     }
     if (this.isofferactive == undefined) {
@@ -850,12 +1002,12 @@ else{
         this.isofferactive = this.isoffer;
       // this.horizontalStepperForm.controls['offerPrice'].disable();
       
-      this.OfferPrice = course.offerPrice;
+      this.OfferPrice = course.step3.offerPrice;
       } 
     }
     else {
       // this.horizontalStepperForm.controls['offerPrice'].enable();
-      this.OfferPrice = course.offerPrice;
+      this.OfferPrice = course.step3.offerPrice;
     }
     // if(this.effectivefrm!=course.effectiveFrom)
     // {
@@ -866,8 +1018,8 @@ else{
     //   course.effectiveTill=(course.effectiveTill).format("DD-MM-YYYY")
     // }
     debugger
-    if(course.showOnWebsite!=undefined){
-      this.showonwebsite =course.showOnWebsite;
+    if(course.step6.showOnWebsite!=undefined){
+      this.showonwebsite =course.step6.showOnWebsite;
     }
     
     var ListOfCourse = [];
@@ -881,52 +1033,53 @@ else{
 
 
     const formData: FormData = new FormData();
-    formData.append("StartingNumber", course.startingNumber)
-    formData.append("CourseName", course.courseName)
-    formData.append("TechnologyId", course.technologyId)
+    
+    formData.append("StartingNumber", course.step6.startingNumber)
+    formData.append("CourseName", course.step1.courseName)
+    formData.append("TechnologyId", course.step1.technologyId)
     formData.append("UpdatedBy", (localStorage.getItem("LoginId")));
-    formData.append("Description", course.description)
-    formData.append("FullDescription", course.fullDescription)
-    formData.append("WhatLearn", course.whatLearn)
-    formData.append("Requirements", course.requirements)
-    formData.append("Title", course.title)
+    formData.append("Description", course.step2.description)
+    formData.append("FullDescription", course.step2.fullDescription)
+    formData.append("WhatLearn", course.step2.whatLearn)
+    formData.append("Requirements", course.step2.requirements)
+    formData.append("Title", course.step1.title)
     formData.append("CourseId", this.approute.snapshot.params['id'])
     formData.append("Id", this.feedetailsid)
-    formData.append("Price", course.price)
+    formData.append("Price", course.step3.price)
     formData.append("IsOffer", (this.isofferactive).toString())
     formData.append("OfferPrice", this.OfferPrice)
-    formData.append("TaxPercent", course.taxPercent)
-    formData.append("CourseHeader", course.courseHeader)
-    formData.append("CourseUrl", course.courseUrl)
+    formData.append("TaxPercent", course.step3.taxPercent)
+    formData.append("CourseHeader", course.step5.courseHeader)
+    formData.append("CourseUrl", course.step5.courseUrl)
     formData.append("Status", this.status.toString())
-    formData.append("MetaDescription", course.metaDescription)
-    formData.append("metaKeywords", course.metaKeywords)
-    formData.append("Certifications", course.certifications)
-    formData.append("ImageTitle", course.imageTitle)
-    formData.append("ImageCaption", course.imageCaption)
-    formData.append("ImageShortDescription", course.imageShortDescription)
-    formData.append("VideoCaption", course.videoCaption)
-    formData.append("EffectiveFrom", (course.effectiveFrom))
-    formData.append("EffectiveTill", (course.effectiveTill))
+    formData.append("MetaDescription", course.step5.metaDescription)
+    formData.append("metaKeywords", course.step5.metaKeywords)
+    formData.append("Certifications", course.step2.certifications)
+    formData.append("ImageTitle", course.step4.imageTitle)
+    formData.append("ImageCaption", course.step4.imageCaption)
+    formData.append("ImageShortDescription", course.step4.imageShortDescription)
+    formData.append("VideoCaption", course.step4.videoCaption)
+    formData.append("EffectiveFrom", (course.step6.effectiveFrom))
+    formData.append("EffectiveTill", (course.step6.effectiveTill))
     formData.append("showOnWebsite", (this.showonwebsite).toString())
     formData.append("RelatedCourses", JSON.stringify(ListOfCourse))
     formData.append("FinalIds", JSON.stringify(finalids))
-    formData.append("FacultyId", course.facultyId)
+    formData.append("FacultyId", course.step1.facultyId)
     formData.append("VideoUrl", this.videoUrl)
     formData.append("VideoFileName", this.name2)
-
+debugger
     if (this.files.length == 1) {
       formData.append("fileupload", this.fileToUpload, this.name);
     }
     else {
-      formData.append("imageURL", course.imageURL);
+      formData.append("imageURL", course.step4.imageURL);
 
     }
     if (this.files1.length == 1) {
       formData.append("fileupload1", this.fileToUpload1, this.name1);
     }
     else {
-      formData.append("iconUrl", course.iconUrl);
+      formData.append("iconUrl", course.step4.iconUrl);
 
     }
     // if (this.files2.length == 1) {
@@ -1023,12 +1176,12 @@ else{
         this.isofferactive = this.isoffer;
       // this.horizontalStepperForm.controls['offerPrice'].disable();
       
-      this.OfferPrice = course.offerPrice;
+      this.OfferPrice = course.step3.offerPrice;
       } 
     }
     else {
       // this.horizontalStepperForm.controls['offerPrice'].enable();
-      this.OfferPrice = course.offerPrice;
+      this.OfferPrice = course.step3.offerPrice;
     }
     // if(this.effectivefrm!=course.effectiveFrom)
     // {
@@ -1038,8 +1191,8 @@ else{
     // {
     //   course.effectiveTill=(course.effectiveTill).format("DD-MM-YYYY")
     // }
-    if(course.showOnWebsite!=undefined){
-      this.showonwebsite =course.showOnWebsite;
+    if(course.step6.showOnWebsite!=undefined){
+      this.showonwebsite =course.step6.showOnWebsite;
     }
     
     var ListOfCourse = [];
@@ -1053,37 +1206,37 @@ else{
 
 
     const formData: FormData = new FormData();
-    formData.append("StartingNumber", course.startingNumber)
-    formData.append("CourseName", course.courseName)
-    formData.append("TechnologyId", course.technologyId)
+    formData.append("StartingNumber", course.step6.startingNumber)
+    formData.append("CourseName", course.step1.courseName)
+    formData.append("TechnologyId", course.step1.technologyId)
     formData.append("UpdatedBy", (localStorage.getItem("LoginId")));
-    formData.append("Description", course.description)
-    formData.append("FullDescription", course.fullDescription)
-    formData.append("WhatLearn", course.whatLearn)
-    formData.append("Requirements", course.requirements)
-    formData.append("Title", course.title)
+    formData.append("Description", course.step2.description)
+    formData.append("FullDescription", course.step2.fullDescription)
+    formData.append("WhatLearn", course.step2.whatLearn)
+    formData.append("Requirements", course.step2.requirements)
+    formData.append("Title", course.step1.title)
     formData.append("CourseId", this.approute.snapshot.params['id'])
     formData.append("Id", this.feedetailsid)
-    formData.append("Price", course.price)
+    formData.append("Price", course.step3.price)
     formData.append("IsOffer", (this.isofferactive).toString())
     formData.append("OfferPrice", this.OfferPrice)
-    formData.append("TaxPercent", course.taxPercent)
-    formData.append("CourseHeader", course.courseHeader)
-    formData.append("CourseUrl", course.courseUrl)
+    formData.append("TaxPercent", course.step3.taxPercent)
+    formData.append("CourseHeader", course.step5.courseHeader)
+    formData.append("CourseUrl", course.step5.courseUrl)
     formData.append("Status", this.status.toString())
-    formData.append("MetaDescription", course.metaDescription)
-    formData.append("metaKeywords", course.metaKeywords)
-    formData.append("Certifications", course.certifications)
-    formData.append("ImageTitle", course.imageTitle)
-    formData.append("ImageCaption", course.imageCaption)
-    formData.append("ImageShortDescription", course.imageShortDescription)
-    formData.append("VideoCaption", course.videoCaption)
-    formData.append("EffectiveFrom", (course.effectiveFrom))
-    formData.append("EffectiveTill", (course.effectiveTill))
+    formData.append("MetaDescription", course.step5.metaDescription)
+    formData.append("metaKeywords", course.step5.metaKeywords)
+    formData.append("Certifications", course.step2.certifications)
+    formData.append("ImageTitle", course.step4.imageTitle)
+    formData.append("ImageCaption", course.step4.imageCaption)
+    formData.append("ImageShortDescription", course.step4.imageShortDescription)
+    formData.append("VideoCaption", course.step4.videoCaption)
+    formData.append("EffectiveFrom", (course.step6.effectiveFrom))
+    formData.append("EffectiveTill", (course.step6.effectiveTill))
     formData.append("showOnWebsite", (this.showonwebsite).toString())
     formData.append("RelatedCourses", JSON.stringify(ListOfCourse))
     formData.append("FinalIds", JSON.stringify(finalids))
-    formData.append("FacultyId", course.facultyId)
+    formData.append("FacultyId", course.step1.facultyId)
     formData.append("VideoUrl", this.videoUrl)
     formData.append("VideoFileName", this.name2)
 
@@ -1091,14 +1244,14 @@ else{
       formData.append("fileupload", this.fileToUpload, this.name);
     }
     else {
-      formData.append("imageURL", course.imageURL);
+      formData.append("imageURL", course.step4.imageURL);
 
     }
     if (this.files1.length == 1) {
       formData.append("fileupload1", this.fileToUpload1, this.name1);
     }
     else {
-      formData.append("iconUrl", course.iconUrl);
+      formData.append("iconUrl", course.step4.iconUrl);
 
     }
     // if (this.files2.length == 1) {

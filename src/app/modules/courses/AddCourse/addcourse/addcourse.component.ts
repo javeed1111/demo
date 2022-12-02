@@ -95,6 +95,7 @@ export class AddcourseComponent implements OnInit {
   name2: string;
   courses: any;
   courses1: any;
+  verticalStepperForm: FormGroup;
   public instructor: FormControl = new FormControl();
   public instructorfilterctrl: FormControl = new FormControl();
   public filteredfaculties: ReplaySubject<any> = new ReplaySubject(1);
@@ -126,49 +127,107 @@ export class AddcourseComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required],
     });
-    this.courseForm = this._formBuilder.group({
-      startingNumber:['',[]],
-      courseName: ['', [Validators.required]],
-      technologyId: ['', []],
+
+
+  // Vertical stepper form
+  this.courseForm = this._formBuilder.group({
+    step1: this._formBuilder.group({
+          courseName: ['', [Validators.required]],
+          technologyId: ['', []],
+          Title: ['', []],
+          instructor: ['', [Validators.required]],
+          relatedcourses: [''],
+       
+    }),
+    step2: this._formBuilder.group({
       Description: ['', []],
-      Title: ['', []],
       Fulldescription: ['', []],
       Whatlearn: ['', []],
       requirements: ['', []],
+      certifications: [''],
+       
+    }),
+    step3: this._formBuilder.group({
       price: ['0', [Validators.required]],
       DollarPrice:['0', []],
       
       offerApplicable: [''],
-      onwebsite: [''],
+     
       offerPrice: ['0'],
       taxpercent: ['0'],
-     effectiveFrom: [''],
-      effectiveTill: [''],
-      courseheader: ['', []],
-      courseurl: ['', []],
-      metadiscription: ['', []],
-      metakeywords: ['', []],
-      certifications: [''],
+    }),
+    step4: this._formBuilder.group({
       imagetitle: [''],
       imagecaption: [''],
       imageshortdescription: [''],
       videocaption: [''],
-      uploader1: ['', ],
-      relatedcourses: [''],
+     
+       uploader1: ['', ],
+    
+    }),
+    step5: this._formBuilder.group({
+      courseheader: ['', []],
+      courseurl: ['', []],
+      metadiscription: ['', []],
+      metakeywords: ['', []],
+    
+    }),
+    step6: this._formBuilder.group({
+      startingNumber:['',[]],
+      onwebsite: [''],
+      effectiveFrom: [''],
+     effectiveTill: [''],
+    })
+});
 
-      // UploadCourseIcon: ['', [Validators.required]],
-      //  UploadCourseVideo:['',[Validators.required]],
-      // UploadImage: ['', [Validators.required]],
 
-      instructor: ['', [Validators.required]]
-    });
-    // var currentdate=new Date()
 
-    this.courseForm.controls['effectiveFrom'].setValue(new Date());
-    const ctrl = this.courseForm.controls['offerPrice']
-    ctrl.disable();
-    const ctrl1 = this.courseForm.controls['taxpercent']
-    ctrl1.disable();
+
+    // this.courseForm = this._formBuilder.group({
+    //   startingNumber:['',[]],
+    //   courseName: ['', [Validators.required]],
+    //   technologyId: ['', []],
+    //   Description: ['', []],
+    //   Title: ['', []],
+    //   Fulldescription: ['', []],
+    //   Whatlearn: ['', []],
+    //   requirements: ['', []],
+    //   price: ['0', [Validators.required]],
+    //   DollarPrice:['0', []],
+      
+    //   offerApplicable: [''],
+    //   onwebsite: [''],
+    //   offerPrice: ['0'],
+    //   taxpercent: ['0'],
+    //  effectiveFrom: [''],
+    //   effectiveTill: [''],
+    //   courseheader: ['', []],
+    //   courseurl: ['', []],
+    //   metadiscription: ['', []],
+    //   metakeywords: ['', []],
+    //   certifications: [''],
+    //   imagetitle: [''],
+    //   imagecaption: [''],
+    //   imageshortdescription: [''],
+    //   videocaption: [''],
+    //   uploader1: ['', ],
+    //   relatedcourses: [''],
+
+    //   // UploadCourseIcon: ['', [Validators.required]],
+    //   //  UploadCourseVideo:['',[Validators.required]],
+    //   // UploadImage: ['', [Validators.required]],
+
+    //   instructor: ['', [Validators.required]]
+    // });
+     var currentdate=new Date()
+
+    this.courseForm.controls.step6.get('effectiveFrom').setValue(new Date());
+    this.courseForm.controls.step3.get('offerPrice').disable();
+    // const ctrl = this.courseForm.controls['offerPrice']
+    // ctrl.disable();
+    this.courseForm.controls.step3.get('taxpercent').disable();
+    // const ctrl1 = this.courseForm.controls['taxpercent']
+    // ctrl1.disable();
 
     this.instructorfilterctrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
       this.filterBanks1();
@@ -234,12 +293,12 @@ export class AddcourseComponent implements OnInit {
        return;
      }, 1500);
    }
-
+debugger
    if (this.courseForm.invalid) {
-    
+    debugger
      return;
    }
-
+debugger
     const formData: FormData = new FormData();
     if (this.files2!=undefined && this.files2.length >= 1 ) {
       formData.append("files", this.fileToUpload2, this.name2);
@@ -338,12 +397,16 @@ export class AddcourseComponent implements OnInit {
     })
   }
   GetstartingNumber() {
-    debugger
+    
     this._authService.GetstartingNumber().subscribe((finalresult: any) => {
       debugger
       this.courses1 = JSON.parse(finalresult);
+debugger
+      
+this.startingNumber=this.courses1.result[0].startingNumber
+// this.courseForm.controls['startingNumber'].setValue(this.courses1.result[0].startingNumber)
+this.startingNumber=this.courses1.result[0].startingNumber
 
-      this.courseForm.controls['startingNumber'].setValue(this.courses1.result[0].startingNumber)
       // this.courses1 = this.courses1.result
     })
   }
@@ -385,7 +448,7 @@ export class AddcourseComponent implements OnInit {
       return;
     }
     const course = this.courseForm.getRawValue();
-    var efeectivetill = course.effectiveTill == "" ? null : course.effectiveTill.format("DD-MM-YYYY")
+    //var efeectivetill = course.effectiveTill == "" ? null : course.effectiveTill.format("DD-MM-YYYY")
 
     if (this.isofferactive == undefined) {
       this.isofferactive = false;
@@ -394,52 +457,52 @@ export class AddcourseComponent implements OnInit {
     }
     else {
       // this.horizontalStepperForm.controls['offerPrice'].enable();
-      this.OfferPrice = course.offerPrice;
+      this.OfferPrice = course.step3.offerPrice;
     }
     if (this.showonwebsite == undefined) {
       this.showonwebsite = true
     }
 
     const formData: FormData = new FormData();
-    formData.append("StartingNumber", course.startingNumber)
-    formData.append("CourseName", course.courseName)
+    formData.append("StartingNumber", this.startingNumber)
+    formData.append("CourseName", course.step1.courseName)
     formData.append("CreatedBy", (localStorage.getItem("LoginId")));
-    formData.append("TechnologyId", course.technologyId)
-    formData.append("Description", course.Description)
-    formData.append("FullDescription", course.Fulldescription)
-    formData.append("WhatLearn", course.Whatlearn)
-    formData.append("Requirements", course.requirements)
-    formData.append("Title", course.Title)
-    formData.append("Price", course.price)
+    formData.append("TechnologyId", course.step1.technologyId)
+    formData.append("Description", course.step2.Description)
+    formData.append("FullDescription", course.step2.Fulldescription)
+    formData.append("WhatLearn", course.step2.Whatlearn)
+    formData.append("Requirements", course.step2.requirements)
+    formData.append("Title", course.step1.Title)
+    formData.append("Price", course.step3.price)
     formData.append("DollarPrice", course.DollarPrice)
     formData.append("IsOffer", (this.isofferactive).toString())
     formData.append("OfferPrice", this.OfferPrice)
-    formData.append("TaxPercent", course.taxpercent)
-    formData.append("CourseHeader", course.courseheader)
-    formData.append("CourseUrl", course.courseurl)
-    formData.append("MetaDescription", course.metadiscription)
+    formData.append("TaxPercent", course.step3.taxpercent)
+    formData.append("CourseHeader", course.step5.courseheader)
+    formData.append("CourseUrl", course.step5.courseurl)
+    formData.append("MetaDescription", course.step5.metadiscription)
     // formData.append("keywords",JSON.stringify(this.keywords))
-    formData.append("metakeywords", course.metakeywords)
-    formData.append("Certifications", course.certifications)
-    formData.append("ImageTitle", course.imagetitle)
-    formData.append("ImageCaption", course.imagecaption)
-    formData.append("ImageShortDescription", course.imageshortdescription)
-    formData.append("VideoCaption", course.videocaption)
+    formData.append("metakeywords", course.step5.metakeywords)
+    formData.append("Certifications", course.step2.certifications)
+    formData.append("ImageTitle", course.step4.imagetitle)
+    formData.append("ImageCaption", course.step4.imagecaption)
+    formData.append("ImageShortDescription", course.step4.imageshortdescription)
+    formData.append("VideoCaption", course.step4.videocaption)
     formData.append("Status", this.status.toString())
-    // formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
-    formData.append("EffectiveFrom", (moment(course.effectiveFrom).format("DD-MM-YYYY")))
-    formData.append("EffectiveTill", efeectivetill)
+     //formData.append("effectiveFrom", (course.step6.effectiveFrom.format("DD-MM-YYYY")))
+    formData.append("effectiveFrom", (moment(course.step6.effectiveFrom).format("DD-MM-YYYY")))
+    // formData.append("effectiveTill", course.step6.efeectivetill)
     formData.append("showOnWebsite", (this.showonwebsite).toString())
-    formData.append("FacultyId", course.instructor.toString())
+    formData.append("FacultyId", course.step1.instructor.toString())
     formData.append("VideoUrl", this.videoUrl)
     formData.append("VideoFileName", this.name2)
     if (course.relatedcourses == "") {
       course.relatedcourses = []
-      formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
+      formData.append("RelatedCourses", JSON.stringify(course.step1.relatedcourses))
 
     }
     else {
-      formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
+      formData.append("RelatedCourses", JSON.stringify(course.step1.relatedcourses))
     }
 
 
@@ -560,8 +623,8 @@ export class AddcourseComponent implements OnInit {
   checkprice() {
     
     const dataa = this.courseForm.getRawValue();
-    var price = dataa.price;
-    var offerprice = dataa.offerPrice;
+    var price = dataa.step3.price;
+    var offerprice = dataa.stepe3.offerPrice;
     if (price <= offerprice) {
       this.showAlert = true;
 
@@ -583,12 +646,15 @@ export class AddcourseComponent implements OnInit {
     
     if ($event.checked != undefined) {
       this.isofferactive = $event.checked;
+
+      
       if (this.isofferactive == true) {
-        const ctrl = this.courseForm.controls['offerPrice'];
-        ctrl.enable();
+        this.courseForm.controls.step3.get('offerPrice').enable();
+        // const ctrl = this.courseForm.controls['offerPrice'];
+        // ctrl.enable();
       }
       else {
-        const ctrl = this.courseForm.controls['offerPrice'];
+        const ctrl = this.courseForm.controls.step3.get('offerPrice');
         ctrl.disable();
         ctrl.setValue('0')
 
@@ -608,11 +674,12 @@ export class AddcourseComponent implements OnInit {
     if ($event.checked != undefined) {
       this.istax = $event.checked;
       if (this.istax == true) {
-        const ctrl = this.courseForm.controls['taxpercent'];
-        ctrl.enable();
+        this.courseForm.controls.step3.get('taxpercent').enable();
+        // const ctrl = this.courseForm.controls['taxpercent'];
+        // ctrl.enable();
       }
       else {
-        const ctrl = this.courseForm.controls['taxpercent'];
+        const ctrl = this.courseForm.controls.step3.get('taxpercent');
         ctrl.disable();
         ctrl.setValue('0')
 
@@ -716,11 +783,11 @@ export class AddcourseComponent implements OnInit {
 
 
   AddCourse(val: any) {
-    
+    debugger
     this.showAlert = false;
 
     const course = this.courseForm.getRawValue();
-    var efeectivetill = course.effectiveTill == "" ? null : course.effectiveTill.format("DD-MM-YYYY")
+    // var efeectivetill = course.effectiveTill == "" ? null : course.effectiveTill.format("DD-MM-YYYY")
 
     if (this.isofferactive == undefined) {
       this.isofferactive = false;
@@ -729,7 +796,7 @@ export class AddcourseComponent implements OnInit {
     }
     else {
       // this.horizontalStepperForm.controls['offerPrice'].enable();
-      this.OfferPrice = course.offerPrice;
+      this.OfferPrice = course.step3.offerPrice;
     }
     if (this.showonwebsite == undefined) {
       this.showonwebsite = true
@@ -737,46 +804,47 @@ export class AddcourseComponent implements OnInit {
 
     const formData: FormData = new FormData();
     // formData.append("CourseName", course.)
-    formData.append("StartingNumber", course.startingNumber)
-    formData.append("CourseName", course.courseName)
+    // formData.append("StartingNumber", course.step6.startingNumber)
+    formData.append("StartingNumber", this.startingNumber)
+    formData.append("CourseName", course.step1.courseName)
     formData.append("CreatedBy", (localStorage.getItem("LoginId")));
-    formData.append("TechnologyId", course.technologyId)
-    formData.append("Description", course.Description)
-    formData.append("FullDescription", course.Fulldescription)
-    formData.append("WhatLearn", course.Whatlearn)
-    formData.append("Requirements", course.requirements)
-    formData.append("Title", course.Title)
-    formData.append("Price", course.price)
+    formData.append("TechnologyId", course.step1.technologyId)
+    formData.append("Description", course.step2.Description)
+    formData.append("FullDescription", course.step2.Fulldescription)
+    formData.append("WhatLearn", course.step2.Whatlearn)
+    formData.append("Requirements", course.step2.requirements)
+    formData.append("Title", course.step1.Title)
+    formData.append("Price", course.step3.price)
     formData.append("DollarPrice", course.DollarPrice)
     formData.append("IsOffer", (this.isofferactive).toString())
     formData.append("OfferPrice", this.OfferPrice)
-    formData.append("TaxPercent", course.taxpercent)
-    formData.append("CourseHeader", course.courseheader)
-    formData.append("CourseUrl", course.courseurl)
-    formData.append("MetaDescription", course.metadiscription)
+    formData.append("TaxPercent", course.step3.taxpercent)
+    formData.append("CourseHeader", course.step5.courseheader)
+    formData.append("CourseUrl", course.step5.courseurl)
+    formData.append("MetaDescription", course.step5.metadiscription)
     // formData.append("keywords",JSON.stringify(this.keywords))
-    formData.append("metakeywords", course.metakeywords)
-    formData.append("Certifications", course.certifications)
-    formData.append("ImageTitle", course.imagetitle)
-    formData.append("ImageCaption", course.imagecaption)
-    formData.append("ImageShortDescription", course.imageshortdescription)
-    formData.append("VideoCaption", course.videocaption)
+    formData.append("metakeywords", course.step5.metakeywords)
+    formData.append("Certifications", course.step2.certifications)
+    formData.append("ImageTitle", course.step4.imagetitle)
+    formData.append("ImageCaption", course.step4.imagecaption)
+    formData.append("ImageShortDescription", course.step4.imageshortdescription)
+    formData.append("VideoCaption", course.step4.videocaption)
     formData.append("Status", this.status.toString())
-    // formData.append("EffectiveFrom", (course.effectiveFrom.format("DD-MM-YYYY")))
-    formData.append("EffectiveFrom", (moment(course.effectiveFrom).format("DD-MM-YYYY")))
-    formData.append("EffectiveTill", efeectivetill)
+     //formData.append("effectiveFrom", (course.step6.effectiveFrom.format("DD-MM-YYYY")))
+    formData.append("effectiveFrom", (moment(course.step6.effectiveFrom).format("DD-MM-YYYY")))
+     //formData.append("effectiveTill", course.step6.efeectivetill)
     formData.append("showOnWebsite", (this.showonwebsite).toString())
-    formData.append("FacultyId", course.instructor.toString())
+    formData.append("FacultyId", course.step1.instructor.toString())
     formData.append("VideoUrl", this.videoUrl)
     formData.append("VideoFileName", this.name2)
    
       if (course.relatedcourses == "") {
         course.relatedcourses = []
-        formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
+        formData.append("RelatedCourses", JSON.stringify(course.step1.relatedcourses))
 
       }
       else {
-        formData.append("RelatedCourses", JSON.stringify(course.relatedcourses))
+        formData.append("RelatedCourses", JSON.stringify(course.step1.relatedcourses))
       }
 
       if (this.files.length == 1) {
@@ -798,6 +866,7 @@ export class AddcourseComponent implements OnInit {
       //  IsActive: this.active,
       //  }
       this.blockUI.start('Saving..')
+      debugger
       this._authService.Addcourse(formData).subscribe((result: any) => {
         
         //var result = JSON.parse(result);

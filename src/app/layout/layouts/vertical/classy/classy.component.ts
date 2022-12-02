@@ -83,7 +83,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
            this. GetCompanydetails();
 
          
-          debugger;
+        //   debugger;
           setTimeout(() => {
             let data =  localStorage.getItem("LoginId");
             this._authService.emituserdetailsevent(data);
@@ -93,12 +93,12 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
 
     GetCompanydetails()
     {
-        debugger
+        // debugger
         this._authService.GetCompanydetails().subscribe((result: any) => {
-          debugger
+        //   debugger
              var result = JSON.parse(result);
               if (result.status == "200") {
-                  debugger
+                //   debugger
                   console.log('details',result.result)
                 if(result.result[0].companylogo!="")
                   this.companylogo=result.result[0].companylogo;

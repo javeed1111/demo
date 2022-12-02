@@ -136,12 +136,12 @@ export class UserComponent implements OnInit, OnDestroy
      */
     setTheme(theme: Theme,type): void
     {
-        debugger;
+        // debugger;
         this._fuseConfigService.config = {theme};
         var Id = localStorage.getItem('LoginId');
         if(type=="yes"){
         this._authService.setThemeColor(theme,Id).subscribe((finalresult: any) => {
-            debugger
+            // debugger
             // if (finalresult.status == "200") {
               
             //   console.log('getcompanydtls',finalresult.result);
@@ -160,7 +160,7 @@ export class UserComponent implements OnInit, OnDestroy
 
     getThemeColor(item){
         this._authService.Gettheme(item).subscribe((finalresult: any) => {
-            debugger
+            // debugger
             // if (finalresult.status == "200") {
               
             //   console.log('getcompanydtls',finalresult.result);

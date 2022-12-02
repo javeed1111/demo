@@ -15,8 +15,8 @@ export class AuthService {
    */
 
   constructor(private _httpClient: HttpClient, private _userService: UserService) {
-      this.baseUrl = 'https://localhost:44328/';
-    // this.baseUrl = 'https://ugetithome.mbascloud.com/';
+      //this.baseUrl = 'https://localhost:44328/';
+    this.baseUrl = 'https://ugetithome.mbascloud.com/';
     //this.baseUrl = 'https://testugetitapi.fadelsoft.com/';
     //this.baseUrl = 'http://testugetitapi.fadelsoft.com/';
     
@@ -186,7 +186,7 @@ export class AuthService {
     return this._httpClient.get(this.baseUrl + "api/Admin/GetAllCourses", { responseType: 'text' });
   }
   public Addcourse(formData) {
-    
+    debugger
    
     return this._httpClient.post(this.baseUrl + "api/Admin/AddCourses", formData);
 
@@ -404,6 +404,7 @@ export class AuthService {
   }
 
   public UploadVideo(formData) {
+    debugger
     
     return this._httpClient.post(this.baseUrl + "api/Admin/UploadVideo", formData);
   }
@@ -434,7 +435,7 @@ export class AuthService {
     return this._httpClient.get(this.baseUrl + "api/Admin/GetCompanyMaster");
   }
   public Gettheme(Id):Observable<any> {
-    debugger
+    // debugger
     return this._httpClient.get(this.baseUrl + "api/Admin/Gettheme?Id="+Id);
   }
   public GetEmails():Observable<any> {
