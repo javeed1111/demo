@@ -32,7 +32,7 @@
     <div class="flex flex-auto overflow-hidden">
   
       <!-- Products list -->
-      <div class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto">
+      <div class="flex flex-col flex-auto sm:-mb-4 overflow-hidden sm:overflow-y-auto">
         <ng-container>
           <ng-container>
             <div class="example-header">
@@ -78,17 +78,17 @@
                   <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
                   <mat-cell *matCellDef="let row">
                     <div>
-                        <a class="min-w-10 min-h-7 h-7 px-2 leading-6 mr-2" mat-stroked-button
+                        <a class="min-w-10 min-h-7 h-7 px-2 leading-6 mr-2" 
                         (click)="showViewModal(row.pcid,row.planId)">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:eye'">
                         </mat-icon>
                       </a>
-                      <a class="min-w-10 min-h-7 h-7 px-2 leading-6 mr-2" mat-stroked-button
+                      <a class="min-w-10 min-h-7 h-7 px-2 leading-6 mr-2" 
                         (click)="showEditModal(row.pcid,row.planId)">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil'">
                         </mat-icon>
                       </a>
-                      <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button
+                      <a class="min-w-10 min-h-7 h-7 px-2 leading-6" 
                         (click)="deleteCourse(row.pcid,row.planId)">
                         <mat-icon class="icon-size-5 " [svgIcon]="'heroicons_solid:trash'">
                         </mat-icon>
