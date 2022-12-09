@@ -805,6 +805,7 @@ debugger
         this.courseForm.controls.step2.get('requirements').setValue(finalresult.result.requirements)
         this.courseForm.controls.step2.get('certifications').setValue(finalresult.result.certifications)
         this.courseForm.controls.step3.get('price').setValue(finalresult.result.price)
+        this.courseForm.controls.step3.get('isOffer').setValue(finalresult.result.isOffer)
         this.courseForm.controls.step3.get('offerPrice').setValue(finalresult.result.offerPrice)
         this.courseForm.controls.step3.get('taxPercent').setValue(finalresult.result.taxPercent)
         this.courseForm.controls.step4.get('imageTitle').setValue(finalresult.result.imageTitle)

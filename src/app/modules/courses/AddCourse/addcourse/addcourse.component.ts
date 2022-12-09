@@ -220,7 +220,7 @@ export class AddcourseComponent implements OnInit {
     //   instructor: ['', [Validators.required]]
     // });
      var currentdate=new Date()
-
+debugger
     this.courseForm.controls.step6.get('effectiveFrom').setValue(new Date());
     this.courseForm.controls.step3.get('offerPrice').disable();
     // const ctrl = this.courseForm.controls['offerPrice']
@@ -489,9 +489,9 @@ this.startingNumber=this.courses1.result[0].startingNumber
     formData.append("ImageShortDescription", course.step4.imageshortdescription)
     formData.append("VideoCaption", course.step4.videocaption)
     formData.append("Status", this.status.toString())
-     //formData.append("effectiveFrom", (course.step6.effectiveFrom.format("DD-MM-YYYY")))
+    // formData.append("effectiveFrom", (course.step6.effectiveFrom.format("DD-MM-YYYY")))
     formData.append("effectiveFrom", (moment(course.step6.effectiveFrom).format("DD-MM-YYYY")))
-    // formData.append("effectiveTill", course.step6.efeectivetill)
+    //formData.append("effectiveTill", course.step6.efeectivetill)
     formData.append("showOnWebsite", (this.showonwebsite).toString())
     formData.append("FacultyId", course.step1.instructor.toString())
     formData.append("VideoUrl", this.videoUrl)
@@ -832,7 +832,7 @@ this.startingNumber=this.courses1.result[0].startingNumber
     formData.append("Status", this.status.toString())
      //formData.append("effectiveFrom", (course.step6.effectiveFrom.format("DD-MM-YYYY")))
     formData.append("effectiveFrom", (moment(course.step6.effectiveFrom).format("DD-MM-YYYY")))
-     //formData.append("effectiveTill", course.step6.efeectivetill)
+    // formData.append("effectiveTill", course.step6.efeectivetill)
     formData.append("showOnWebsite", (this.showonwebsite).toString())
     formData.append("FacultyId", course.step1.instructor.toString())
     formData.append("VideoUrl", this.videoUrl)

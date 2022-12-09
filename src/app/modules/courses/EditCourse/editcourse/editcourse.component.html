@@ -760,7 +760,7 @@
                                     <div>
                                         <ng-container>
                                             <div class="fuse-mat-no-subscript flex-auto">
-                                                <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'" id="status" (change)="Status($event)" [checked]="true">
+                                                <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [formControlName]="'status'" [color]="'primary'" id="status" (change)="Status($event)" [checked]="true">
                                                     Status
                                                 </mat-slide-toggle>
                                             </div>
@@ -771,9 +771,10 @@
                                     <div>
                                         <ng-container>
                                             <div class="fuse-mat-no-subscript flex-auto">
-                                                <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [color]="'primary'" id="onwebsite" (change)="onwebsite($event)" [checked]="true">
+                                                <mat-slide-toggle labelPosition="before" class="mt-6 mb-4 sm:mt-0 sm:ml-auto" [formControlName]="'showOnWebsite'"  [color]="'primary'" id="onwebsite" (change)="onwebsite($event)" [checked]="true">
                                                     show on website
                                                 </mat-slide-toggle>
+                                                
                                             </div>
                                         </ng-container>
                                     </div>

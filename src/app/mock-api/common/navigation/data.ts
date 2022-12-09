@@ -122,12 +122,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type    : 'collapsable',
                 icon    : 'heroicons_solid:users',
                 children: [
-                    {
-                        id   : 'students.studentstatus',
-                        title: 'Student Status',
-                        type : 'basic',
-                        link : '/students/studentstatus'
-                    },
+                    // {
+                    //     id   : 'students.studentstatus',
+                    //     title: 'Student Status',
+                    //     type : 'basic',
+                    //     link : '/students/studentstatus'
+                    // },
                     {
                         id   : 'students.studentdetails',
                         title: 'Student Details',

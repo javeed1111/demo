@@ -518,7 +518,7 @@ export class AddcoursecontentComponent implements OnInit {
 
 
   UploadVideo(value: any) {
-    
+    debugger    
     const formData: FormData = new FormData();
     if (value == 'save' || value == 'SaveNext') {
       if (this.files1.length >= 1) {
@@ -863,6 +863,7 @@ export class AddcoursecontentComponent implements OnInit {
     }
 
     // Get the contact object
+    debugger
     const coursecont = this.coursecontentForm.getRawValue();
 
     var LoginId = localStorage.getItem("LoginId");
