@@ -78,15 +78,15 @@
                                 <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
                                 <mat-cell *matCellDef="let row">
                                     <div>
-                                        <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="showViewModal(row.id)">
+                                        <a class="min-w-10 min-h-7 h-7 px-2 leading-6"  (click)="showViewModal(row.id)">
                                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:eye'">
                                             </mat-icon>
                                         </a>
-                                        <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="showEditModal(row.id)">
+                                        <a class="min-w-10 min-h-7 h-7 px-2 leading-6"  (click)="showEditModal(row.id)">
                                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil'">
                                             </mat-icon>
                                         </a>
-                                        <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button (click)="deleteContent(row.id)">
+                                        <a class="min-w-10 min-h-7 h-7 px-2 leading-6"  (click)="deleteContent(row.id)">
                                             <mat-icon class="icon-size-5 " [svgIcon]="'heroicons_solid:trash'">
                                             </mat-icon>
                                         </a>

@@ -166,7 +166,7 @@ export class AddcourseComponent implements OnInit {
     
     }),
     step5: this._formBuilder.group({
-      courseheader: ['', []],
+      courseheader: ['', [Validators.required]],
       courseurl: ['', []],
       metadiscription: ['', []],
       metakeywords: ['', []],

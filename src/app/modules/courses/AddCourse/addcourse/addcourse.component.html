@@ -137,7 +137,8 @@
                 
                                     <mat-step
                                         [formGroupName]="'step3'"
-                                        [stepControl]="courseForm.get('step3')">
+                                        [stepControl]="courseForm.get('step3')"
+                                        #courseFormStep3>
                                         <ng-template matStepLabel>Fees</ng-template>
                                         
                                         <div class="flex flex-col gt-sm:flex-row">
@@ -216,6 +217,7 @@
                                                 class="px-8"
                                                 mat-flat-button
                                                 [color]="'primary'"
+                                                [disabled]="courseFormStep3.stepControl.pristine || courseFormStep3.stepControl.invalid"
                                                 type="button"
                                                 matStepperNext>
                                                 Next
@@ -380,7 +382,8 @@
                                 </mat-step>
                                 <mat-step
                                 [formGroupName]="'step5'"
-                                [stepControl]="courseForm.get('step3')">
+                                [stepControl]="courseForm.get('step5')"
+                                #courseFormStep5>
                                 <ng-template matStepLabel>Meta Data</ng-template>
                                 
                                 <div class="flex mt-4">
@@ -425,6 +428,7 @@
                                         class="px-8"
                                         mat-flat-button
                                         [color]="'primary'"
+                                        [disabled]="courseFormStep5.stepControl.pristine || courseFormStep5.stepControl.invalid"
                                         type="button"
                                         matStepperNext>
                                         Next

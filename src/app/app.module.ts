@@ -30,7 +30,7 @@ const routerConfig: ExtraOptions = {
         AppComponent,
         SalesComponent,
         ProgressspinnerComponent,
-        ProgressSpinnerDemoComponent
+        ProgressSpinnerDemoComponent,
     ],
     imports     : [
         BrowserModule,
