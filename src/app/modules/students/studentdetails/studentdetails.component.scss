@@ -10,7 +10,100 @@
     }
 
     @screen lg {
-        // grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
-        grid-template-columns: 11px 112px 24px 112px 56px 224px 72px;
+        // grid-template-columns: 48px 112px auto 112px 96px 96px 72px; 80/51 56/213
+        grid-template-columns: 55px 112px 51px 77px 213px 224px 72px;
+        grid-template-columns: 55px 112px 221px 253px 221px ;
     }
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 200%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 767px) {
+
+    .cart-table {
+        table {
+            thead {
+                tr {
+                    th {
+                        padding: 0 20px 15px;
+                        font-size: 14px;
+                        
+                        &:nth-child(1) {
+                            padding-left: 0;
+                        }
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    td {
+                        padding: {
+                            left: 20px;
+                            right: 20px;
+                        };
+                        &:nth-child(1) {
+                            padding-left: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .cart-buttons {
+        .text-end {
+            text-align: center !important;
+            margin-top: 25px;
+        }
+    }
+    .cart-totals {
+        padding: 25px;
+        max-width: 100%;
+        margin-top: 40px;
+
+        h3 {
+            font-size: 18px;
+        }
+    }
+
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+    
+    .cart-buttons {
+        .text-end {
+            text-align: end !important;
+            margin-top: 0;
+        }
+    }
+
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+}
+@media only screen and (min-width: 1200px) and (max-width: 1275px) {
+
 }

@@ -85,7 +85,7 @@ export class EdittechnologyComponent implements OnInit {
     }
   }
   Edit(id: any, value: any) {
-    //
+    debugger
     var baseurl = this._authService.baseUrl;
     if (baseurl == "https://localhost:44358/") {
       baseurl = "https://localhost:44358"
@@ -105,6 +105,7 @@ export class EdittechnologyComponent implements OnInit {
       this.techForm.controls['isActive'].enable();
 
     }
+    debugger
     this.Id = id;
     this._authService.GetechnologyById(this.Id).subscribe((finalresult: any) => {
       //

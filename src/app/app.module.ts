@@ -29,6 +29,7 @@ const routerConfig: ExtraOptions = {
     declarations: [
         AppComponent,
         SalesComponent,
+        
         ProgressspinnerComponent,
         ProgressSpinnerDemoComponent,
     ],

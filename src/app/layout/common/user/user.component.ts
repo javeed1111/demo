@@ -68,13 +68,13 @@ export class UserComponent implements OnInit, OnDestroy
      subscription: any;
     ngOnInit(): void
     {
-        debugger;
+        // debugger;
         var Id = this.approute.snapshot.params['Id'];
         this.firstname=localStorage.getItem("firstname");
         this.lastname=localStorage.getItem("lastname");
         this.email=localStorage.getItem("email");
         this.subscription = this._authService.getuserchangeemitter().subscribe(item =>{
-        debugger;
+        // debugger;
        this.getThemeColor(item)
       });
         

@@ -200,6 +200,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
                         link : '/reports/referencelist'
                     },
                     {
+                        id   : 'reports.studentlist',
+                        title: 'Student List',
+                        type : 'basic',
+                        link : '/reports/studentlist'
+                    },
+                    {
                         id   : 'reports.usersenquiry',
                         title: 'Users Enquiry',
                         type : 'basic',

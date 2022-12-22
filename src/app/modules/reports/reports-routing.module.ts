@@ -4,6 +4,7 @@ import { DaywiseenquireComponent } from './daywiseenquire/daywiseenquire.compone
 import { ReferencelistComponent } from './referencelist/referencelist.component';
 import { ReferralrequestsComponent } from './referralrequests/referralrequests.component';
 import { ReportsComponent } from './reports.component';
+import { StudentDetailsComponent } from './student-details/student-details.component';
 import { UsersenquiryComponent } from './usersenquiry/usersenquiry.component';
 import { UserssubscribedcoursesComponent } from './userssubscribedcourses/userssubscribedcourses.component';
 
@@ -17,7 +18,8 @@ const routes: Routes = [
         { path: 'usersenquiry', component: UsersenquiryComponent },
         { path: 'userssubcourses', component: UserssubscribedcoursesComponent },
         { path: 'daywiseenquire', component: DaywiseenquireComponent },
-        { path: 'referralrequests', component: ReferralrequestsComponent }
+        { path: 'referralrequests', component: ReferralrequestsComponent },
+        {path: 'studentlist', component:StudentDetailsComponent}
 
       ]
 

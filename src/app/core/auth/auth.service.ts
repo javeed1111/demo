@@ -122,6 +122,18 @@ export class AuthService {
     return this._httpClient.get(`${this.baseUrl}/files`);
   }
 
+
+  public GetStudentsDetails():Observable<any> {
+    
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetStudentsDetails");
+  }
+
+   public Getcourses(customerId){
+   debugger
+
+  return this._httpClient.get(this.baseUrl + "api/Admin/GetStudentsDetails?customerId=", { params: { customerId } });
+  }
+
   public Adduser(data) {
     
     return this._httpClient.post(this.baseUrl + "api/Admin/CreateUser", data, { responseType: 'text' });

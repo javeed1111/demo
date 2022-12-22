@@ -8,6 +8,7 @@ import { UsersenquiryComponent } from './usersenquiry/usersenquiry.component';
 import { UserssubscribedcoursesComponent } from './userssubscribedcourses/userssubscribedcourses.component';
 import { DaywiseenquireComponent } from './daywiseenquire/daywiseenquire.component';
 import { ReferralrequestsComponent } from './referralrequests/referralrequests.component';
+import { StudentDetailsComponent } from './student-details/student-details.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ReferralrequestsComponent } from './referralrequests/referralrequests.c
     UsersenquiryComponent,
     UserssubscribedcoursesComponent,
     DaywiseenquireComponent,
-    ReferralrequestsComponent
+    ReferralrequestsComponent,
+    StudentDetailsComponent
   ],
   imports: [
     CommonModule,
