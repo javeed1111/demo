@@ -1,0 +1,238 @@
+<div class="flex flex-col flex-auto min-w-0">
+<div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-4 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div class="flex-1 min-w-0">
+
+
+        
+        <div class="flex flex-wrap items-center font-medium">
+            <div>
+                <a class="color" >Reports</a>
+            </div>
+            <div class="flex items-center ml-1 whitespace-nowrap">
+                <mat-icon
+                    class="icon-size-5 text-secondary"
+                    [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+                <a class="color">Registration Details</a>
+            </div>
+            <!-- <div class="flex items-center ml-1 whitespace-nowrap">
+                <mat-icon
+                    class="icon-size-5 text-secondary"
+                    [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+                <span class="ml-1 text-secondary">Common</span>
+            </div> -->
+        </div>
+       
+        <div class="mt-2">
+            <h2 class="text-3xl md:text-3xl font-bold tracking-tight leading-7 sm:leading-10 truncate">
+                Registration Details
+            </h2>
+        </div>
+    </div>
+    <button
+        class="-ml-3 sm:ml-0 mb-2 sm:mb-0 order-first sm:order-last"
+        mat-icon-button
+        (click)="toggleDrawer()">
+        <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
+    </button>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="p-4 bg-card shadow rounded overflow-hidden">
+    <div class=" flex flex-cols items-center grid grid-cols-3 pl-10 gap-2 " >
+      
+       <div class="flex">
+        <mat-form-field class="flex-auto ">
+            <mat-label>Course Name</mat-label>
+            <!-- multiple -->
+            <mat-select  name="technologyId" placeholder="Related Courses" [(ngModel)]="slectedCourse" class="input-full-width" >
+                <mat-option   *ngFor="let value of courses " [value]="value.courseId">{{ value.courseName }}</mat-option>
+            </mat-select>
+            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:academic-cap'">
+            </mat-icon>
+        </mat-form-field>
+    </div>
+       <mat-form-field>
+         <input (dateInput)="OnDateChange($event.value)" matInput [matDatepicker]="picker" 
+         [placeholder]="'StartDate'" />
+         <mat-label>Start Date</mat-label>
+         <mat-datepicker-toggle matSuffix [for]="picker"> </mat-datepicker-toggle>
+         <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+         <input (dateInput)="OnEndDateChange($event.value)" matInput [matDatepicker]="Endpicker" 
+         [placeholder]="'EndDate'" />
+         <mat-label>End Date</mat-label>
+         <mat-datepicker-toggle matSuffix [for]="Endpicker"> </mat-datepicker-toggle>
+         <mat-datepicker #Endpicker></mat-datepicker>
+        </mat-form-field>
+         
+        <!-- <button class="ml-4" mat-flat-button [color]="'primary'" (click)="createProduct()">
+         <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+         <span class="ml-2 mr-1">Add</span>
+       </button> -->
+
+
+
+   </div>
+   
+ 
+   <div class="flex flex-cols   justify-end  mt-6 sm:mt-0 sm:ml-4">
+    
+
+    <button class="ml-4" mat-flat-button [color]="'primary'" (click)="Getbycoursename()" >
+        <mat-icon >search</mat-icon>
+          <span class="ml-2 mr-1">Search</span>
+        </button>
+    
+    <button class="ml-4" mat-flat-button [color]="'primary'" type="reset"(click)="reset()"
+    >
+    <mat-icon svgIcon="heroicons_solid:refresh"></mat-icon>
+    <span  class="ml-2 mr-1">Reset</span> 
+    </button>
+    <button class="ml-4" mat-flat-button [color]="'primary'" (click)="exportArray()"  >
+    <mat-icon [svgIcon]="'heroicons_outline:chevron-up'"></mat-icon>
+    <span class="ml-2 mr-1">Export</span>
+    </button>
+    <mat-form-field class="ml-4" appearance="fill">           
+        <mat-select [(value)]="selected">
+          <mat-option value="none">Select</mat-option>
+          <mat-option value="option1" >Day</mat-option>
+          <mat-option value="option2">week</mat-option>
+          <mat-option value="option3">Month</mat-option>
+        </mat-select>
+      </mat-form-field>
+    <!-- <div class="lex flex-cols  mt-6 sm:mt-0 sm:ml-auto">
+        <mat-form-field appearance="fill">
+           
+            <mat-select [(value)]="selected">
+              <mat-option value="none">Select Mode</mat-option>
+              <mat-option value="option1">Day</mat-option>
+              <mat-option value="option2">week</mat-option>
+              <mat-option value="option3">Month</mat-option>
+            </mat-select>
+          </mat-form-field>
+    </div> -->
+</div>
+
+</div>
+<div class="grid" *ngIf="isVisible" >
+                                
+    <ng-container>
+        <ng-container>
+       <!-- <div class="example-header " >
+            <mat-form-field >
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" >
+            </mat-form-field>
+        </div> -->
+
+           <div class="example-container mat-elevation-z8" > 
+            <!-- *ngFor="let item of getdata; index as i;" -->
+             <table class="table" #table [dataSource]="dataSource">  
+              <thead>
+                <tr >
+                  
+                  <th scope="col">S.No</th>
+                  <th scope="col">Student Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone No</th>
+                  <th scope="col">Course Name</th>
+                  <th scope="col">Invoice No</th>
+                  <th scope="col">Invoice Date</th>
+                  <th scope="col">Total Amount</th>
+                  <!-- <th scope="col">Total Tax</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <!-- {{searchedData | json}} -->
+                <tr *ngFor="let item of getdata; index as i;">
+
+                <th scope="row">{{i+1}}</th>
+               
+                  <td>{{item.customerName}}</td> 
+                  <td>{{item.email}}</td> 
+                  <td>{{item.mobileNumber}}</td> 
+                  <td>{{item.courseName}}</td>
+                  <td>{{item.invoiceNo}}</td>
+                  <td>{{item.invoiceDate}}</td>
+                  <td>{{item.totalAmount}}</td>
+                  <!-- <td>{{plns.totalTax}}</td>-->
+                </tr>
+              </tbody>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </table>
+        
+            <!-- <mat-table #table [dataSource]="dataSource" matSort  >
+
+            
+              <ng-container matColumnDef="sno">
+                <mat-header-cell *matHeaderCellDef> SNO. </mat-header-cell>
+                <mat-cell *matCellDef="let row; let i=index">
+                  {{ (i+1) + (myPaginator.pageIndex * myPaginator.pageSize) }}</mat-cell>
+              </ng-container>
+          
+           
+              <ng-container matColumnDef="studentName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Student Name</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                studentName </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="courseName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Course Name </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                   courseName </mat-cell>
+                   
+              </ng-container>
+              <ng-container matColumnDef="mobileno">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile No </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+              mobileno </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="Email">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Email </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+              Email </mat-cell>
+              </ng-container>
+              
+              <ng-container matColumnDef="invoice">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>invoiceDate </mat-header-cell>
+                <mat-cell *matCellDef="let row"> invoiceDate </mat-cell>
+              </ng-container>
+
+              
+              <ng-container matColumnDef="totalamount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Total Amount </mat-header-cell>
+                <mat-cell *matCellDef="let row"> totalAmount </mat-cell>
+              </ng-container>
+
+              
+            
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;">
+              </mat-row>
+            </mat-table>
+ -->
+            <!-- <mat-paginator #myPaginator [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page of users"></mat-paginator> -->
+          
+  <mat-paginator #paginator
+  [pageSize]="10"
+  [pageSizeOptions]="[5, 10, 20]">
+</mat-paginator> 
+            </div>
+
+        </ng-container>
+      </ng-container>
+
+
+    </div>
+
+
+</div>

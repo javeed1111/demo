@@ -1,11 +1,13 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
-import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import { catchError, Observable, of, ReplaySubject, switchMap, throwError } from 'rxjs';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 
 @Injectable()
 export class AuthService {
+    private _onMediaChange: ReplaySubject<{ matchingAliases: string[]; matchingQueries: any }> = new ReplaySubject<{ matchingAliases: string[]; matchingQueries: any }>(1);
+
   private _authenticated: boolean = false;
   baseUrl: any
   
@@ -46,6 +48,10 @@ export class AuthService {
   get accessToken(): string {
     //
     return localStorage.getItem('accessToken') ?? '';
+  }
+  get onMediaChange$(): Observable<{ matchingAliases: string[]; matchingQueries: any }>
+  {
+      return this._onMediaChange.asObservable();
   }
 
   // -----------------------------------------------------------------------------------------------------
@@ -128,11 +134,11 @@ export class AuthService {
     return this._httpClient.get(this.baseUrl + "api/Admin/GetStudentsDetails");
   }
 
-   public Getcourses(customerId){
-   debugger
+  //  public Getcourses(customerId){
+  //  debugger
 
-  return this._httpClient.get(this.baseUrl + "api/Admin/GetStudentsDetails?customerId=", { params: { customerId } });
-  }
+  // return this._httpClient.get(this.baseUrl + "api/Admin/GetStudentsDetails?customerId=", { params: { customerId } });
+  // }
 
   public Adduser(data) {
     
@@ -542,8 +548,16 @@ export class AuthService {
   public setThemeColor(theme,id) {
     return this._httpClient.get(this.baseUrl + "api/Admin/settheme?Theme="+theme+"&ID="+id, {responseType: 'text'});
   }
+  public GetDailyenrolled(datepicker,todatepicker):Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/GetDailyenrolled?FromDate="+datepicker+"&ToDate=" +todatepicker, {responseType: 'text'});
+  }
+  public Getbycoursename(courseName,datepicker,todatepicker):Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/Getbycoursename?CourseName="+courseName+"&FromDate="+datepicker+"&ToDate=" +todatepicker, {responseType: 'text'});
+  }
 
-
+                                                                           
 
 
 

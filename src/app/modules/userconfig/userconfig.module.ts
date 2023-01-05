@@ -41,7 +41,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { DashboardComponent } from './Dashboard/dashboard/dashboard.component';
-
+// import { BrowserModule } from '@angular/platform-browser';
+// import { ChartsModule } from 'ng2-charts';
 
 //import {MatPaginator} from '@angular/material/paginator'
 
@@ -62,6 +63,18 @@ import { DashboardComponent } from './Dashboard/dashboard/dashboard.component';
 
   ],
   imports: [
+    
+    
+    
+    
+  
+
+  
+    // MatSortModule,
+   
+   
+    // NgApexchartsModule,
+    // SharedModule,
     CommonModule,
     UserconfigRoutingModule,
     RouterModule,

@@ -7,6 +7,9 @@ import { ApexOptions } from 'ng-apexcharts';
 import { AuthService } from 'app/core/auth/auth.service';
 import { ProjectService } from '../../project.service';
 
+import {  ViewChild, ElementRef } from '@angular/core';
+import ApexCharts from 'apexcharts';
+// import 'chartjs-plugin-annotation';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +19,18 @@ import { ProjectService } from '../../project.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit {
+
+    chartVisitors: ApexOptions;
+
+    @ViewChild('myCanvas')
+    public canvas: ElementRef;
+    public context: CanvasRenderingContext2D;
+    public chartType: string = 'line';
+    public chartData: any[];
+    public chartLabels: any[];
+    public chartColors: any[];
+    public chartOptions: any;
+
   customerlength:any;
     chartGithubIssues: ApexOptions = {};
     chartTaskDistribution: ApexOptions = {};
@@ -37,6 +52,8 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+
     // Get the data
     this._projectService.data$
     .pipe(takeUntil(this._unsubscribeAll))
@@ -137,12 +154,15 @@ window['Apex'] = {
      */
     private _prepareChartData(): void
     {
+
+
+
         // Github issues
         this.chartGithubIssues = {
             chart      : {
                 fontFamily: 'inherit',
                 foreColor : 'inherit',
-                height    : '100%',
+                // height    : '100%',
                 type      : 'line',
                 toolbar   : {
                     show: false

@@ -187,50 +187,52 @@ export const defaultNavigation: FuseNavigationItem[] = [
                     // }
                 // ]
             },
-            {
-                id      : 'reports',
-                title   : 'Reports',
-                type    : 'collapsable',
-                icon    : 'heroicons_solid:clipboard-check',
-                children: [
-                    {
-                        id   : 'reports.referencelist',
-                        title: 'Reference List',
-                        type : 'basic',
-                        link : '/reports/referencelist'
-                    },
-                    {
-                        id   : 'reports.studentlist',
-                        title: 'Student List',
-                        type : 'basic',
-                        link : '/reports/studentlist'
-                    },
-                    {
-                        id   : 'reports.usersenquiry',
-                        title: 'Users Enquiry',
-                        type : 'basic',
-                        link : '/reports/usersenquiry'
-                    },
-                    {
-                        id   : 'reports.userssubcourses',
-                        title: 'Users Subscribed Courses',
-                        type : 'basic',
-                        link : '/reports/userssubcourses'
-                    },
-                    {
-                        id   : 'reports.daywiseenquire',
-                        title: 'Day Wise Enquire',
-                        type : 'basic',
-                        link : '/reports/daywiseenquire'
-                    },
-                    {
-                        id   : 'reports.referralrequests',
-                        title: 'Referral Requests',
-                        type : 'basic',
-                        link : '/reports/referralrequests'
-                    }
-                ]
-            },
+
+          
+            // {
+            //     id      : 'reports',
+            //     title   : 'Reports',
+            //     type    : 'collapsable',
+            //     icon    : 'heroicons_solid:clipboard-check',
+            //     children: [
+            //         {
+            //             id   : 'reports.referencelist',
+            //             title: 'Reference List',
+            //             type : 'basic',
+            //             link : '/reports/referencelist'
+            //         },
+            //         {
+            //             id   : 'reports.studentlist',
+            //             title: 'Student List',
+            //             type : 'basic',
+            //             link : '/reports/studentlist'
+            //         },
+            //         {
+            //             id   : 'reports.usersenquiry',
+            //             title: 'Users Enquiry',
+            //             type : 'basic',
+            //             link : '/reports/usersenquiry'
+            //         },
+            //         {
+            //             id   : 'reports.userssubcourses',
+            //             title: 'Users Subscribed Courses',
+            //             type : 'basic',
+            //             link : '/reports/userssubcourses'
+            //         },
+            //         {
+            //             id   : 'reports.daywiseenquire',
+            //             title: 'Day Wise Enquire',
+            //             type : 'basic',
+            //             link : '/reports/daywiseenquire'
+            //         },
+            //         {
+            //             id   : 'reports.referralrequests',
+            //             title: 'Referral Requests',
+            //             type : 'basic',
+            //             link : '/reports/referralrequests'
+            //         }
+            //     ]
+            // },
             // {
             //     id      : 'emailconfig',
             //     title   : 'Email',
@@ -340,7 +342,41 @@ export const defaultNavigation: FuseNavigationItem[] = [
             // },
             
         ]
-},
+
+
+
+
+
+    },
+
+    
+
+
+
+
+
+
+    {
+        id      : 'user-interface',
+        title   : 'User Interface',
+        subtitle: 'Building blocks of the UI & UX',
+        type    : 'group',
+        icon    : 'heroicons_outline:collection',
+        children: [
+          
+            
+            {
+                id   : 'user-interface.other-components',
+                title: 'Reports',
+                type : 'basic',
+                icon : 'heroicons_outline:chart-square-bar',
+                link : '/ui/other-components'
+            },
+           
+          
+            
+        ]
+    },
 ];
 
 export const compactNavigation: FuseNavigationItem[] = [

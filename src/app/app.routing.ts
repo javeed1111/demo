@@ -91,9 +91,41 @@ export const appRoutes: Route[] = [
             {path: 'feedetails', loadChildren: () => import('app/modules/feedetails/feedetails.module').then(m => m.FeedetailsModule)},
             {path: 'faculty', loadChildren: () => import('app/modules/faculty/faculty.module').then(m => m.FacultyModule)},
             {path: 'masters', loadChildren: () => import('app/modules/sales/sales.module').then(m => m.SalesModule)},
+           
+            {path: 'ui', children: [
 
-        ]
-    }
+                // Material Components
+        
+                // Fuse Components
+        
+                // Other Components
+                {path: 'other-components', loadChildren: () => import('app/modules/other-components/other-components.module').then(m => m.OtherComponentsModule)},
+        
+                // TailwindCSS
+        
+                // Advanced Search
+        
+                // Animations
+        
+                 // Cards
+        
+                // Colors
+        
+                // Confirmation Dialog
+        
+                // Datatable
+        
+                // Forms
+            ]},
+            // {path: 'other-components', loadChildren: () => import('./mock-api/ui/other-components/other-components.module').then(m => m.OtherComponentsModule)},
+        // Other Components
+        // {path: 'other-components', loadChildren: () => import('app/modules/other-components/other-components.module').then(m => m.OtherComponentsModule)},
+        ],
+        
+    },
+     // User Interface
+   
+  
         
 ];
 // @NgModule({

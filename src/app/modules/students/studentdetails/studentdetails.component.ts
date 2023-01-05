@@ -73,65 +73,60 @@ export class StudentdetailsComponent implements OnInit {
     // var id = this.approute.snapshot.params['id'];
     var id =localStorage.getItem("cartcourseid")
 
-    this.CartItems();
+   // this.CartItems();
    
   }
 
 
   
 
-  CartItems(){
+  // CartItems(){
    
-    var userid=localStorage.getItem('AzureUserId')
-    this._authService.Getcourses(userid).subscribe((finalresult: any) => {
-      debugger
-      console.log(finalresult);
-      // var finalresult=JSON.parse(finalresult)
-      this.courses=finalresult.result
-      localStorage.setItem('cartlength',this.courses.length)
-      for(let i=0;i<this.courses.length;i++){
-        const obj=new CartItems()
-        // if(this.courses[i].offerPrice!=0){
-        //   obj.totalTax=((this.courses[i].offerPrice)*(this.courses[i].taxPercent))/100
-        // }
-        // else{
-        //   obj.totalTax= ((this.courses[i].price)*(this.courses[i].taxPercent))/100
-        // }
+  //   var userid=localStorage.getItem('AzureUserId')
+  //   this._authService.Getcourses(userid).subscribe((finalresult: any) => {
+  //     debugger
+  //     console.log(finalresult);
+  //     // var finalresult=JSON.parse(finalresult)
+  //     this.courses=finalresult.result
+  //     localStorage.setItem('cartlength',this.courses.length)
+  //     for(let i=0;i<this.courses.length;i++){
+  //       const obj=new CartItems()
+      
 
-                if (this.courses[i].imageURL != null) {
-                  obj.imageURL = this.courses[i].imageURL;
-                  // this.noimage=true;
+  //               if (this.courses[i].imageURL != null) {
+  //                 obj.imageURL = this.courses[i].imageURL;
+  //                 // this.noimage=true;
         
-                }
-                else {
-                  obj.iconUrl="https://ugetit.blob.core.windows.net/courseimages/1997d693-1f4d-404b-a3fc-19a5fade0397-Image-2.jpg";
-                  // this.ImageURL = baseurl + "/courseFiles/dummy identityproof.png";
+  //               }
+  //               else {
+  //                 obj.iconUrl="https://ugetit.blob.core.windows.net/courseimages/1997d693-1f4d-404b-a3fc-19a5fade0397-Image-2.jpg";
+  //                 // this.ImageURL = baseurl + "/courseFiles/dummy identityproof.png";
         
-                }
+  //               }
 
         
-        obj.courseId=this.courses[i].courseId,
-        obj.courseName= this.courses[0].courseName,
+  //       obj.courseId=this.courses[i].courseId,
+  //       obj.courseName= this.courses[0].courseName,
        
-        obj.IsPlan=this.courses[i].isPlan,
-        // obj.imageURL=this.courses[i].imageURL,
-        obj.totalAmount=this.courses[i].totalAmount
-        if(this.courses[i].offerPrice!=0){
-          obj.totalAmount=this.courses[i].offerPrice
+  //       obj.IsPlan=this.courses[i].isPlan,
+  //       // obj.imageURL=this.courses[i].imageURL,
+  //       obj.totalAmount=this.courses[i].totalAmount
+  //       if(this.courses[i].offerPrice!=0){
+  //         obj.totalAmount=this.courses[i].offerPrice
 
-        }
-        obj.totalAmount=obj.totalAmount+obj.totalTax
+  //       }
+  //       obj.totalAmount=obj.totalAmount+obj.totalTax
 
-        this.carttable.push(obj)
-        this.totalAmount=this.totalAmount+obj.totalAmount
-        this.totalTax=this.totalTax+obj.totalTax
-      }
-      this.Total=this.totalAmount+this.totalTax
+  //       this.carttable.push(obj)
+  //       this.totalAmount=this.totalAmount+obj.totalAmount
+  //       this.totalTax=this.totalTax+obj.totalTax
+  //     }
+  //     this.Total=this.totalAmount+this.totalTax
 
    
-    });
-    //return this.courses.length
-  }
+  //   });
+  //   //return this.courses.length
+  // }
 
 
   Getstudentdetails(){
@@ -140,10 +135,8 @@ export class StudentdetailsComponent implements OnInit {
       debugger
       //console.log(finalresult);
       //this.relatedcourses=finalresult.result;
-     
-
       if (finalresult.status == "200") {
-        // debugger
+        debugger
         console.log(finalresult)
         this.studentdetails = finalresult.result;
         for (let i = 0; i < this.studentdetails.length; i++) {
@@ -153,10 +146,7 @@ export class StudentdetailsComponent implements OnInit {
           // this.studentdetails=finalresult.result.courseName;
         
         }
-      
-       
-      }
-    
+      }  
     });
   }
 

@@ -182,7 +182,7 @@ course: any;
     }
 
   showEditModal(id) {
-    //
+    debugger
     var value="edit"
     this._router.navigate(['/courses/editcourse/'+id+'/'+value])
   }

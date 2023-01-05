@@ -1,13 +1,14 @@
-<div class="fuse-vertical-navigation-wrapper bg-primary">
+<div class="fuse-vertical-navigation-wrapper">
 
     <!-- Header -->
-    <div class="fuse-vertical-navigation-header" >
+    <div class="fuse-vertical-navigation-header " >
         <ng-content select="[fuseVerticalNavigationHeader]"></ng-content>
     </div>
 
     <!-- Content -->
     <div
-        class="fuse-vertical-navigation-content"
+        class="fuse-vertical-navigation-content "
+        
         fuseScrollbar
         [fuseScrollbarOptions]="{wheelPropagation: inner, suppressScrollX: true}"
         #navigationContent>
@@ -52,13 +53,15 @@
                 <!-- Divider -->
                 <ng-container *ngIf="item.type === 'divider'">
                     <fuse-vertical-navigation-divider-item
+                    
                         [item]="item"
                         [name]="name"></fuse-vertical-navigation-divider-item>
                 </ng-container>
 
                 <!-- Group -->
                 <ng-container *ngIf="item.type === 'group'">
-                    <fuse-vertical-navigation-group-item
+                    <fuse-vertical-navigation-group-item 
+                 
                         [item]="item"
                         [name]="name"
                         [autoCollapse]="autoCollapse"></fuse-vertical-navigation-group-item>
@@ -67,6 +70,7 @@
                 <!-- Spacer -->
                 <ng-container *ngIf="item.type === 'spacer'">
                     <fuse-vertical-navigation-spacer-item
+                    
                         [item]="item"
                         [name]="name"></fuse-vertical-navigation-spacer-item>
                 </ng-container>
