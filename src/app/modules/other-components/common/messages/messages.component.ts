@@ -110,22 +110,27 @@ export class MessagesComponent
     });
   }
 
-// searchedData:any=[]
-// GetDailyenrolled(){
-//     this.isVisible=true
-//     // this.isVisible=true;
-//     debugger
-//         this._authService.GetDailyenrolled(this.startDate,this.endDate).subscribe((finalresult: any) => {
-//       debugger
-//       //console.log(finalresult);
-//       //this.getdata=finalresult.result;
-//       var finalresult = JSON.parse(finalresult);
-//       debugger
-//       console.log(finalresult)
-// this.getdata = finalresult.result;
-//       debugger
-// });
-// }
+  selectedday:any;
+Daywise(){
+    this.isVisible=true
+    // this.isVisible=true;
+    debugger
+// let courseName= this.courses. find(x => {
+              
+//     return x.courseId ===this.slectedCourse
+
+//     })
+        this._authService.Daywise(this.selectedday,this.startDate,this.endDate).subscribe((finalresult: any) => {
+      debugger
+      //console.log(finalresult);
+      //this.getdata=finalresult.result;
+      var finalresult = JSON.parse(finalresult);
+      debugger
+      console.log(finalresult)
+this.getdata = finalresult.result;
+      debugger
+});
+}
   open(Getbycoursename){
     this.isVisible=true;
     Getbycoursename();

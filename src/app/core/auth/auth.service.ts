@@ -556,6 +556,10 @@ export class AuthService {
     debugger
     return this._httpClient.get(this.baseUrl + "api/Admin/Getbycoursename?CourseName="+courseName+"&FromDate="+datepicker+"&ToDate=" +todatepicker, {responseType: 'text'});
   }
+  public Daywise(selectedday,datepicker,todatepicker):Observable<any> {
+    debugger
+    return this._httpClient.get(this.baseUrl + "api/Admin/Daywise?CourseName="+selectedday+"&FromDate="+datepicker+"&ToDate=" +todatepicker, {responseType: 'text'});
+  }
 
                                                                            
 

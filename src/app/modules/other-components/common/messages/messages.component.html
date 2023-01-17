@@ -86,7 +86,7 @@
    <div class="flex flex-cols   justify-end  mt-6 sm:mt-0 sm:ml-4">
     
 
-    <button class="ml-4" mat-flat-button [color]="'primary'" (click)="Getbycoursename()" >
+    <button class="ml-4" mat-flat-button [color]="'primary'" (click)="Getbycoursename()"  >
         <mat-icon >search</mat-icon>
           <span class="ml-2 mr-1">Search</span>
         </button>
@@ -100,12 +100,12 @@
     <mat-icon [svgIcon]="'heroicons_outline:chevron-up'"></mat-icon>
     <span class="ml-2 mr-1">Export</span>
     </button>
-    <mat-form-field class="ml-4" appearance="fill">           
-        <mat-select [(value)]="selected">
+    <mat-form-field class="ml-4" appearance="fill" (click)="Daywise()">           
+        <mat-select [(value)]="selectedday" >
           <mat-option value="none">Select</mat-option>
-          <mat-option value="option1" >Day</mat-option>
-          <mat-option value="option2">week</mat-option>
-          <mat-option value="option3">Month</mat-option>
+          <mat-option value="1" >Day</mat-option>
+          <mat-option value="7">Week</mat-option>
+          <mat-option value="30">Month</mat-option>
         </mat-select>
       </mat-form-field>
     <!-- <div class="lex flex-cols  mt-6 sm:mt-0 sm:ml-auto">
