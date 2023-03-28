@@ -5,7 +5,7 @@
     <!-- Loader -->
 
     <!-- Title -->
-    <div class="text-4xl font-extrabold tracking-tight">Technologies</div>
+    <div class="text-4xl font-extrabold tracking-tight">Program</div>
     <!-- Alert -->
     <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type"
       [@shake]="alert.type === 'success'">
@@ -54,7 +54,7 @@
 
               <!-- Progress Column -->
               <ng-container matColumnDef="technologyName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Technology Name </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Program Name </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.technologyName}} </mat-cell>
               </ng-container>
 

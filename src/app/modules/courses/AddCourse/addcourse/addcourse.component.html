@@ -21,13 +21,81 @@
                                        
                                        
 
-                                        <div class="flex">
+                                      <div class="flex">
                                             <mat-form-field class="flex-auto">
                                                 <mat-label>Course Name</mat-label>
                                                 <input matInput appAutofocus [formControlName]="'courseName'" [placeholder]="'Course Name'">
                                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'"></mat-icon>
+                                                
                                             </mat-form-field>
                                         </div>
+                                        <div class="flex flex-col gt-xs:flex-row">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>Course Type</mat-label>
+                                                <mat-select name="technologyId" placeholder="Technology" [formControlName]="'technologyId'" class="input-full-width">
+                                                    <mat-option value="">Select coursetype</mat-option>
+                                                  <mat-option *ngFor="let courseType of course" [value]="courseType.value">
+                                                    {{courseType.viewValue}}
+                                                  </mat-option>
+                                                </mat-select>
+                                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'">
+                                                </mat-icon>
+                                              </mat-form-field>
+
+                                              <mat-form-field class="flex-auto gt-xs:pl-3">
+                                                <mat-label>Capacity</mat-label>
+                                         <input matInput [formControlName]="'Title'" [placeholder]="'Capacity'">
+                                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document-text'">
+                                         </mat-icon>
+                                             </mat-form-field>
+                                             <mat-form-field appearance="fill">
+                                                <mat-label>Region</mat-label>
+                                                <mat-select name="technologyId" placeholder="Region" [formControlName]="'technologyId'" class="input-full-width">
+                                                    <mat-option value="">Select Region</mat-option>
+                                                  <mat-option *ngFor="let regionType of region" [value]="regionType.value">
+                                                    {{regionType.viewValue}}
+                                                  </mat-option>
+                                                </mat-select>
+                                               <!--- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'">
+                                                </mat-icon>-->
+                                              </mat-form-field>
+                                              <mat-form-field appearance="fill">
+                                                <mat-label>Location</mat-label>
+                                                <mat-select name="technologyId" placeholder="Location" [formControlName]="'technologyId'" class="input-full-width">
+                                                    <mat-option value="">Select Location</mat-option>
+                                                  <mat-option *ngFor="let locationType of location" [value]="locationType.value">
+                                                    {{locationType.viewValue}}
+                                              
+                                                  </mat-option>
+                                                       
+                                                </mat-select>
+                                              
+                                              </mat-form-field>
+                                              
+                                        </div>
+                                        <!-- <div class="flex flex-col gt-xs:flex-row">
+                                            
+                                        <li class="nav-item"><a href="javascript:void(0)" class="nav-link">Courses location <i class='bx bx-chevron-down'></i></a>
+                                            <ul class="dropdown-menu">
+                                                
+                                                <li class="nav-item" ><a href="javascript:void(0)" class="nav-link" routerLinkActive="active" *ngFor="let locationType of location" [value]="locationType.value" > {{locationType.viewValue}}<i class='bx bx-chevron-right'></i></a>
+                                                    <ul class="dropdown-menu">
+                
+                                                        <li >
+                                                           
+                                                            <a style="cursor: pointer;" >courseName</a>
+                                                            
+                                                        </li>
+                
+                                                    </ul>
+                                                </li>
+                
+                
+                                                   </ul>
+                                        </li>
+                                    </div> -->
+
+
                                         <div class="flex flex-col gt-xs:flex-row">
                                             <mat-form-field class="flex-auto gt-xs:pr-3">
                                                 <mat-label>Technology</mat-label>

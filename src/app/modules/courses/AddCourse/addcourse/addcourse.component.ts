@@ -24,6 +24,18 @@ interface facultysearch {
   id: string;
   firstName: string;
 }
+interface courseType {
+  value: string;
+  viewValue: string;
+}
+interface regionType {
+  value: string;
+  viewValue: string;
+}
+interface locationType {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-addcourse',
@@ -33,6 +45,26 @@ interface facultysearch {
   animations: fuseAnimations
 })
 export class AddcourseComponent implements OnInit {
+  course: courseType[] = [
+    {value: 'men-0', viewValue: 'Men'},
+    {value: 'woman-1', viewValue: 'Woman'},
+    {value: 'both-2', viewValue: 'Both'},
+  ];
+
+
+    region: regionType[] = [
+      {value: 'west-0', viewValue: 'West'},
+      {value: 'south-1', viewValue: 'South'},
+      {value: 'north-2', viewValue: 'North'},
+      {value: 'east-3', viewValue: 'East'},
+    ];
+
+    location: locationType[] = [
+      {value: 'hyderbad-0', viewValue: 'HYDERBAD'},
+      {value: 'vizag-1', viewValue: 'VIZAG'},
+      {value: 'mumbai-2', viewValue: 'MUMBAI'},
+      {value: 'kolikata-3', viewValue: 'KOLIKATA'},
+    ];
   @BlockUI() blockUI: NgBlockUI;
   uploadvideo: boolean = true
   deletevideo: boolean = false

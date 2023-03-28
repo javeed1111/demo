@@ -78,7 +78,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 children: [
                     {
                         id   : 'courses.technology',
-                        title: 'Technology',
+                        title: 'Program',
                         type : 'basic',
                         link : '/courses/technology'
                     },

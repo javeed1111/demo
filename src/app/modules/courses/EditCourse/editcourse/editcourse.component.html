@@ -118,9 +118,9 @@
 
                                         <div class="flex">
                                             <mat-form-field class="flex-auto">
-                                                <mat-label>Course Name</mat-label>
+                                                <mat-label>Course Type</mat-label>
                                                 <input matInput appAutofocus [formControlName]="'courseName'"
-                                                    [placeholder]="'Course Name'">
+                                                    [placeholder]="'Course Type'">
                                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:book-open'">
                                                 </mat-icon>
                                             </mat-form-field>
@@ -142,7 +142,7 @@
                                             <mat-label>Technology</mat-label>
                                             <mat-select *ngFor="let tech of technology" [placeholder]="'Technology'" [formControlName]="'technologyId'">
                                                 <mat-option value="">Select Role Type</mat-option>
-                                                <mat-option [value]="tech.technologyId">{{tech.technologyName}}</mat-option>
+                                                <mat-option [value]="">{{tech.technologyName}}</mat-option>
                                             </mat-select>
                                             <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'">
                                             </mat-icon>
